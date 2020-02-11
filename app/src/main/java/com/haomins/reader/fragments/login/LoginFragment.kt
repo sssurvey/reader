@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.activities.main.MainActivity
 import com.haomins.reader.models.user.User
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -41,8 +40,7 @@ class LoginFragment : Fragment() {
             User(
                 userEmail = login_username_edit_text.text.toString(),
                 userPassword = login_password_edit_text.text.toString()
-            ), application = (activity?.application as ReaderApplication)
-        ) {
+            )) {
             //TODO: Handler login success ui change here, this is a callback to the observer
         }
     }

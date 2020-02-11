@@ -1,46 +1,33 @@
 package com.haomins.reader
 
+import android.app.Activity
 import android.app.Application
-import com.haomins.reader.networks.Url
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import io.reactivex.schedulers.Schedulers
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import androidx.fragment.app.Fragment
+import com.haomins.reader.di.DaggerAppComponent
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
-class ReaderApplication : Application() {
+class ReaderApplication : Application(), HasActivityInjector, HasSupportFragmentInjector {
 
-    private lateinit var retrofit: Retrofit
+    @Inject lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    @Inject lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate() {
         super.onCreate()
-        init()
+        initDagger()
     }
 
-    fun getRetrofitClient(): Retrofit {
-        return retrofit
-    }
+    override fun activityInjector() = activityDispatchingAndroidInjector
 
-    private fun init() {
-        buildRetrofitClient(getLoggedHttpClient())
-    }
+    override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
 
-    private fun getLoggedHttpClient(): OkHttpClient {
-        val httpLogInterceptor = HttpLoggingInterceptor()
-        val httpClientBuilder = OkHttpClient.Builder()
-        httpLogInterceptor.level = HttpLoggingInterceptor.Level.BASIC
-        httpClientBuilder.addInterceptor(httpLogInterceptor)
-        return httpClientBuilder.build()
+    private fun initDagger() {
+        DaggerAppComponent
+            .builder()
+            .application(this)
+            .build()
+            .inject(this)
     }
-
-    private fun buildRetrofitClient(httpClientBuilder: OkHttpClient) {
-        retrofit = Retrofit.Builder().apply {
-            baseUrl(Url.BASE_URL.string)
-            addConverterFactory(GsonConverterFactory.create())
-            addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            client(httpClientBuilder)
-        }.build()
-    }
-
 }

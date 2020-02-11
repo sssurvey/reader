@@ -5,7 +5,7 @@ import io.reactivex.Single
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface OldReaderApi {
+interface TheOldReaderService {
 
     @POST("accounts/ClientLogin")
     fun loginUser(
