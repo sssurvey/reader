@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleLoginFragment() {
         when (loginViewModel.isUserLoggedIn()) {
-            true -> showSubscriptionListFragment()
+            true -> { /**/
+            }
             false -> showUserLoginFragment()
         }
     }
@@ -47,9 +48,5 @@ class MainActivity : AppCompatActivity() {
             R.id.main_activity_frame_layout,
             LoginFragment()
         ).addToBackStack(LoginFragment.TAG).commit()
-    }
-
-    private fun showSubscriptionListFragment() {
-        
     }
 }
