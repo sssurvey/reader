@@ -41,9 +41,15 @@ class LoginFragment : Fragment() {
                 userEmail = login_username_edit_text.text.toString(),
                 userPassword = login_password_edit_text.text.toString()
             ), doOnSuccess = {
-                //TODO: UI -> Handler login success ui change here, this is a callback to the observer
+                popItself()
             }, doOnError = {
-
+                // no op
             })
+    }
+
+    private fun popItself() {
+        activity?.let {
+            it.supportFragmentManager.beginTransaction().remove(this).commit()
+        }
     }
 }
