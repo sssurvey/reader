@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.R
+import com.haomins.reader.activities.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment() {
@@ -16,7 +16,7 @@ class LoginFragment : Fragment() {
     }
 
     private val loginViewModel by lazy {
-        ViewModelProvider(this).get(LoginViewModel::class.java)
+        (activity as MainActivity).loginViewModel
     }
 
     override fun onCreateView(
@@ -33,5 +33,4 @@ class LoginFragment : Fragment() {
             loginViewModel.login("NOT", "FINISHED")
         }
     }
-
 }

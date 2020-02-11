@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 
 class MainActivityViewModel : ViewModel() {
 
-    fun isUserLoggedIn(): Boolean {
-        return false
-    }
+
 
 }

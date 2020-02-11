@@ -5,8 +5,11 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.R
 import com.haomins.reader.fragments.login.LoginFragment
+import com.haomins.reader.fragments.login.LoginViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    val loginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
 
     private val mainActivityViewModel by lazy {
         ViewModelProvider(this).get(MainActivityViewModel::class.java)
@@ -15,10 +18,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (mainActivityViewModel.isUserLoggedIn()) {
-            // no op
-        } else {
-            showUserLoginFragment()
+        handleLoginFragment()
+    }
+
+    override fun onBackPressed() {
+        when (loginViewModel.isUserLoggedIn()) {
+            true -> super.onBackPressed()
+            false -> finish()
+        }
+    }
+
+    private fun handleLoginFragment() {
+        when (loginViewModel.isUserLoggedIn()) {
+            true -> { /**/
+            }
+            false -> showUserLoginFragment()
         }
     }
 
