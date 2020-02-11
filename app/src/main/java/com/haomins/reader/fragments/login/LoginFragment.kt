@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.R
+import kotlinx.android.synthetic.main.fragment_login.*
 
-class LoginFragment: Fragment() {
+class LoginFragment : Fragment() {
 
     companion object {
         const val TAG = "LoginFragment"
     }
 
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel by lazy {
+        ViewModelProvider(this).get(LoginViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +29,9 @@ class LoginFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        login_button.setOnClickListener {
+            loginViewModel.login("NOT", "FINISHED")
+        }
     }
 
 }

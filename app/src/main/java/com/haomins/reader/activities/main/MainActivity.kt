@@ -8,12 +8,13 @@ import com.haomins.reader.fragments.login.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private val mainActivityViewModel by lazy {
+        ViewModelProvider(this).get(MainActivityViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        init()
         if (mainActivityViewModel.isUserLoggedIn()) {
             // no op
         } else {
@@ -26,9 +27,5 @@ class MainActivity : AppCompatActivity() {
             R.id.main_activity_frame_layout,
             LoginFragment()
         ).addToBackStack(LoginFragment.TAG).commit()
-    }
-
-    private fun init() {
-        mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
     }
 }
