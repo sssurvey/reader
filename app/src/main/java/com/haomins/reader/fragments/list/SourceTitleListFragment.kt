@@ -57,7 +57,7 @@ class SourceTitleListFragment : Fragment() {
     @VisibleForTesting
     private fun populateArr() {
         for (i in 0..99) {
-            testTitleData.add("This is title ${i} Testing for old reader ...")
+            testTitleData.add("This is title ${i} Very long Testing for old reader ...")
         }
     }
 }
