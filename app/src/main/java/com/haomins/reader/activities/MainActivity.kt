@@ -1,7 +1,8 @@
-package com.haomins.reader
+package com.haomins.reader.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.haomins.reader.R
 
 class MainActivity : AppCompatActivity() {
 
