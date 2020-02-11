@@ -14,6 +14,10 @@ class ReaderApplication : Application(), HasActivityInjector, HasSupportFragment
     @Inject lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
     @Inject lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
+    companion object {
+        const val SHARED_PREFERENCE_NAME = "READER_SHARED_PREF"
+    }
+
     override fun onCreate() {
         super.onCreate()
         initDagger()

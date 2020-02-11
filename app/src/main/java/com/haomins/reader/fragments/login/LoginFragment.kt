@@ -40,8 +40,10 @@ class LoginFragment : Fragment() {
             User(
                 userEmail = login_username_edit_text.text.toString(),
                 userPassword = login_password_edit_text.text.toString()
-            )) {
-            //TODO: Handler login success ui change here, this is a callback to the observer
-        }
+            ), doOnSuccess = {
+                //TODO: UI -> Handler login success ui change here, this is a callback to the observer
+            }, doOnError = {
+
+            })
     }
 }
