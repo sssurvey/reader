@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
+import com.haomins.reader.fragments.list.SourceTitleListFragment
 import com.haomins.reader.fragments.login.LoginFragment
 import com.haomins.reader.fragments.login.LoginViewModel
 import dagger.android.AndroidInjection
@@ -37,8 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleLoginFragment() {
         when (loginViewModel.isUserLoggedIn()) {
-            true -> { /**/
-            }
+            true -> showSourceTitleListFragment()
             false -> showUserLoginFragment()
         }
     }
@@ -46,7 +46,16 @@ class MainActivity : AppCompatActivity() {
     private fun showUserLoginFragment() {
         supportFragmentManager.beginTransaction().replace(
             R.id.main_activity_frame_layout,
-            LoginFragment()
-        ).addToBackStack(LoginFragment.TAG).commit()
+            LoginFragment(),
+            LoginFragment.TAG
+        ).commit()
+    }
+
+    private fun showSourceTitleListFragment() {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.main_activity_frame_layout,
+            SourceTitleListFragment(),
+            SourceTitleListFragment.TAG
+        ).commit()
     }
 }
