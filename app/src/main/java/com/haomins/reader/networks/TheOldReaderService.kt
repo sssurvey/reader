@@ -7,6 +7,10 @@ import retrofit2.http.Query
 
 interface TheOldReaderService {
 
+    enum class Url(val string: String) {
+        BASE_URL("https://theoldreader.com/"),
+    }
+
     @POST("accounts/ClientLogin")
     fun loginUser(
         @Query("Email") userEmail: String,
