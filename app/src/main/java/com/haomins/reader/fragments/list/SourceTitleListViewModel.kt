@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.reader.networks.SourceSubscriptionListRequest
+import com.haomins.reader.networks.TheOldReaderService
 import io.reactivex.observers.DisposableSingleObserver
+import java.net.URL
 import javax.inject.Inject
 
 class SourceTitleListViewModel @Inject constructor(
@@ -13,7 +15,7 @@ class SourceTitleListViewModel @Inject constructor(
 ) : ViewModel() {
 
     val sourceListUiDataSet by lazy {
-        MutableLiveData<List<Pair<String, String>>>()
+        MutableLiveData<List<Pair<String, URL>>>()
     }
 
     private lateinit var sourceListData: SubscriptionSourceListResponseModel
@@ -37,12 +39,12 @@ class SourceTitleListViewModel @Inject constructor(
     fun populatedSubSourceDataSet(
         subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel
     ) {
-        val sourceItemDisplayDataLists = ArrayList<Pair<String, String>>()
+        val sourceItemDisplayDataLists = ArrayList<Pair<String, URL>>()
         subscriptionSourceListResponseModel.subscriptions.forEach {
             sourceItemDisplayDataLists.add(
                 Pair(
                     first = it.title,
-                    second = it.iconUrl
+                    second = URL(TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl)
                 )
             )
         }

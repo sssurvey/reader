@@ -9,9 +9,11 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/source_icon_image_view"
+        android:padding="12dp"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@mipmap/ic_launcher" />
+        android:scaleType="fitCenter"
+        tools:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:id="@+id/source_title_text_view"

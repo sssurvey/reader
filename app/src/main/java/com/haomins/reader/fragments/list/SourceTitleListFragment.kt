@@ -10,10 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.haomins.reader.R
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_source_list_title.*
 import kotlinx.android.synthetic.main.source_title_recycler_view_item.view.*
+import java.net.URL
 import javax.inject.Inject
 
 class SourceTitleListFragment : Fragment() {
@@ -26,14 +28,14 @@ class SourceTitleListFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var sourceTitleListViewModel: SourceTitleListViewModel
 
-    private val sourceListDisplayDataList: MutableList<Pair<String, String>> = ArrayList()
+    private val sourceListDisplayDataList: MutableList<Pair<String, URL>> = ArrayList()
 
     private val sourceTitleListAdapter by lazy {
         SourceTitleListAdapter(sourceListDisplayDataList)
     }
     
     private val sourceListDataSetObserver by lazy {
-        Observer<List<Pair<String, String>>> {
+        Observer<List<Pair<String, URL>>> {
             sourceListDisplayDataList.clear()
             sourceListDisplayDataList.addAll(it)
             sourceTitleListAdapter.notifyDataSetChanged()
@@ -75,26 +77,34 @@ class SourceTitleListFragment : Fragment() {
         }
     }
 
-}
+    inner class SourceTitleListAdapter(private val subSourceDisplayItems: List<Pair<String, URL>>) :
+        RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
-private class SourceTitleListAdapter(private val subSourceDisplayItems: List<Pair<String, String>>) :
-    RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
+        inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
 
-    class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
+            val sourceListItemView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.source_title_recycler_view_item, parent, false)
+            return CustomViewHolder(sourceListItemView)
+        }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val sourceListItemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.source_title_recycler_view_item, parent, false)
-        return CustomViewHolder(sourceListItemView)
-    }
+        override fun getItemCount(): Int {
+            return subSourceDisplayItems.size
+        }
 
-    override fun getItemCount(): Int {
-        return subSourceDisplayItems.size
-    }
+        override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+            holder.viewHolder.source_title_text_view.text = subSourceDisplayItems[position].first
+            loadIconImage(holder, subSourceDisplayItems[position].second)
+        }
 
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        //TODO: holder.viewHolder.source_icon_image_view = add for image view
-        holder.viewHolder.source_title_text_view.text = subSourceDisplayItems[position].first
+        private fun loadIconImage(holder: CustomViewHolder, url: URL) {
+            Glide.with(this@SourceTitleListFragment)
+                .asDrawable()
+                .centerCrop()
+                .load(url)
+                .into(holder.viewHolder.source_icon_image_view)
+        }
+
     }
 
 }

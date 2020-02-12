@@ -13,6 +13,7 @@ interface TheOldReaderService {
     companion object {
         const val BASE_URL = "https://theoldreader.com/"
         const val AUTH_HEADER_VALUE_PREFIX = "GoogleLogin auth="
+        const val DEFAULT_PROTOCOL = "https:"
     }
 
     /**
