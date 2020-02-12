@@ -27,7 +27,7 @@ class AppModule {
         }
 
         return Retrofit.Builder().apply {
-            baseUrl(TheOldReaderService.Url.BASE_URL.string)
+            baseUrl(TheOldReaderService.BASE_URL)
             addConverterFactory(GsonConverterFactory.create())
             addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             client(getLoggedHttpClient())

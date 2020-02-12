@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_source_list_title.*
 import kotlinx.android.synthetic.main.source_title_recycler_view_item.view.*
+import javax.inject.Inject
 
 class SourceTitleListFragment : Fragment() {
 
@@ -18,7 +22,10 @@ class SourceTitleListFragment : Fragment() {
         const val TAG = "SourceTitleListFragment"
     }
 
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var sourceTitleListAdapter: SourceTitleListAdapter
+    private lateinit var sourceTitleListViewModel: SourceTitleListViewModel
+
     private val recyclerLayoutManager by lazy {
         LinearLayoutManager(context)
     }
@@ -38,6 +45,8 @@ class SourceTitleListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AndroidSupportInjection.inject(this)
+        sourceTitleListViewModel = ViewModelProviders.of(this, viewModelFactory)[SourceTitleListViewModel::class.java]
 
         setupTestEnv()
 
@@ -52,6 +61,7 @@ class SourceTitleListFragment : Fragment() {
     private fun setupTestEnv() {
         populateArr()
         sourceTitleListAdapter = SourceTitleListAdapter(testTitleData)
+        sourceTitleListViewModel.loadSourceSubscriptionList()
     }
 
     @VisibleForTesting
@@ -67,8 +77,9 @@ class SourceTitleListAdapter(private val sourceTitleList: ArrayList<String>): Re
     class CustomViewHolder(val viewHolder: View):RecyclerView.ViewHolder(viewHolder)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.source_title_recycler_view_item, parent, false)
-        return CustomViewHolder(itemView)
+        val sourceListItemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.source_title_recycler_view_item, parent, false)
+        return CustomViewHolder(sourceListItemView)
     }
 
     override fun getItemCount(): Int {
