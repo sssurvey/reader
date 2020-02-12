@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,17 +22,28 @@ class SourceTitleListFragment : Fragment() {
         const val TAG = "SourceTitleListFragment"
     }
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    data class SubSourceDisplayItem(
+        val sourceTitle: String,
+        val sourceIconUrl: String
+    )
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var sourceTitleListAdapter: SourceTitleListAdapter
     private lateinit var sourceTitleListViewModel: SourceTitleListViewModel
+
+    private var subSourceDisplayItems = ArrayList<SubSourceDisplayItem>()
 
     private val recyclerLayoutManager by lazy {
         LinearLayoutManager(context)
     }
 
-    @VisibleForTesting
-    private val testTitleData by lazy {
-        ArrayList<String>()
+    private val isSubscriptionListLoadedObserver by lazy {
+        Observer<Boolean> {
+            if (it == true) {
+                source_title_recycler_view.adapter?.notifyDataSetChanged()
+            }
+        }
     }
 
     override fun onCreateView(
@@ -46,10 +57,11 @@ class SourceTitleListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         AndroidSupportInjection.inject(this)
-        sourceTitleListViewModel = ViewModelProviders.of(this, viewModelFactory)[SourceTitleListViewModel::class.java]
-
-        setupTestEnv()
-
+        sourceTitleListViewModel =
+            ViewModelProviders.of(this, viewModelFactory)[SourceTitleListViewModel::class.java]
+        registerLiveDataObserver()
+        sourceTitleListAdapter = SourceTitleListAdapter(subSourceDisplayItems)
+        loadSubscriptionSourceList()
         source_title_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = recyclerLayoutManager
@@ -57,24 +69,24 @@ class SourceTitleListFragment : Fragment() {
         }
     }
 
-    @VisibleForTesting
-    private fun setupTestEnv() {
-        populateArr()
-        sourceTitleListAdapter = SourceTitleListAdapter(testTitleData)
-        sourceTitleListViewModel.loadSourceSubscriptionList()
+    private fun registerLiveDataObserver() {
+        sourceTitleListViewModel.isSubscriptionListLoaded.observe(
+            this,
+            isSubscriptionListLoadedObserver
+        )
     }
 
-    @VisibleForTesting
-    private fun populateArr() {
-        for (i in 0..99) {
-            testTitleData.add("This is title ${i} Very long Testing for old reader ...")
+    private fun loadSubscriptionSourceList() {
+        sourceTitleListViewModel.loadSourceSubscriptionList {
+            subSourceDisplayItems.addAll(it)
         }
     }
 }
 
-class SourceTitleListAdapter(private val sourceTitleList: ArrayList<String>): RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
+class SourceTitleListAdapter(private val subSourceDisplayItems: List<SourceTitleListFragment.SubSourceDisplayItem>) :
+    RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
-    class CustomViewHolder(val viewHolder: View):RecyclerView.ViewHolder(viewHolder)
+    class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val sourceListItemView = LayoutInflater.from(parent.context)
@@ -83,12 +95,12 @@ class SourceTitleListAdapter(private val sourceTitleList: ArrayList<String>): Re
     }
 
     override fun getItemCount(): Int {
-        return sourceTitleList.size
+        return subSourceDisplayItems.size
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         //TODO: holder.viewHolder.source_icon_image_view = add for image view
-        holder.viewHolder.source_title_text_view.text = sourceTitleList[position]
+        holder.viewHolder.source_title_text_view.text = subSourceDisplayItems[position].sourceTitle
     }
 
 }
