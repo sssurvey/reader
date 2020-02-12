@@ -37,6 +37,16 @@ interface TheOldReaderService {
         @Query("client") client: String = "Reader"
     ): Single<UserAuthResponseModel>
 
+    /**
+     * Get user's subscription list
+     *
+     * This get request will allows you to get json data of all the RSS source list user subscribed.
+     * The auth information of the user should be included in the Header of the request.
+     *
+     * @param headerAuthValue User's auth token and auth meta data
+     *
+     * @return Single<SubscriptionSourceListResponseModel>
+     */
     @GET("reader/api/0/subscription/list")
     fun loadSubscriptionSourceList(
         @Header("Authorization") headerAuthValue: String,
