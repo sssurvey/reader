@@ -38,14 +38,6 @@ class SourceTitleListFragment : Fragment() {
         LinearLayoutManager(context)
     }
 
-    private val isSubscriptionListLoadedObserver by lazy {
-        Observer<Boolean> {
-            if (it == true) {
-                source_title_recycler_view.adapter?.notifyDataSetChanged()
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,6 +58,14 @@ class SourceTitleListFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = recyclerLayoutManager
             adapter = sourceTitleListAdapter
+        }
+    }
+
+    private val isSubscriptionListLoadedObserver by lazy {
+        Observer<Boolean> {
+            if (it == true) {
+                source_title_recycler_view.adapter?.notifyDataSetChanged()
+            }
         }
     }
 
