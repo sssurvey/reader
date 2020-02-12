@@ -105,7 +105,7 @@ class SourceTitleListFragment : Fragment() {
         }
 
         private fun setOnClick(holder: CustomViewHolder, position: Int) {
-            holder.itemView.setOnClickListener {
+            holder.viewHolder.setOnClickListener {
                 sourceListRecyclerViewItemClickedAt(position)
             }
         }
