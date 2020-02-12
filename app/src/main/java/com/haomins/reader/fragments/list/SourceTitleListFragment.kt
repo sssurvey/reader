@@ -1,6 +1,7 @@
 package com.haomins.reader.fragments.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +34,7 @@ class SourceTitleListFragment : Fragment() {
     private val sourceTitleListAdapter by lazy {
         SourceTitleListAdapter(sourceListDisplayDataList)
     }
-    
+
     private val sourceListDataSetObserver by lazy {
         Observer<List<Pair<String, URL>>> {
             sourceListDisplayDataList.clear()
@@ -77,6 +78,11 @@ class SourceTitleListFragment : Fragment() {
         }
     }
 
+    private fun sourceListRecyclerViewItemClickedAt(position: Int) {
+        //TODO: Use this as entry point to open article list for that source
+        Log.d("xxxx", "----> $position")
+    }
+
     inner class SourceTitleListAdapter(private val subSourceDisplayItems: List<Pair<String, URL>>) :
         RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
@@ -95,6 +101,13 @@ class SourceTitleListFragment : Fragment() {
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             holder.viewHolder.source_title_text_view.text = subSourceDisplayItems[position].first
             loadIconImage(holder, subSourceDisplayItems[position].second)
+            setOnClick(holder, position)
+        }
+
+        private fun setOnClick(holder: CustomViewHolder, position: Int) {
+            holder.itemView.setOnClickListener {
+                sourceListRecyclerViewItemClickedAt(position)
+            }
         }
 
         private fun loadIconImage(holder: CustomViewHolder, url: URL) {
