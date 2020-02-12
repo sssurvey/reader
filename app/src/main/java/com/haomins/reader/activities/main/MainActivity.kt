@@ -5,11 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.haomins.reader.MyViewModelFactory
 import com.haomins.reader.R
 import com.haomins.reader.fragments.list.SourceTitleListFragment
 import com.haomins.reader.fragments.login.LoginFragment
-import com.haomins.reader.fragments.login.LoginViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
