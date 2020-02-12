@@ -1,6 +1,6 @@
 package com.haomins.reader.networks
 
-import com.haomins.reader.models.subscription.SubscriptionResponse
+import com.haomins.reader.models.subscription.SubscriptionSourceListResponse
 import com.haomins.reader.models.user.UserAuthResponse
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -40,5 +40,5 @@ interface TheOldReaderService {
     fun loadSubscriptionSourceList(
         @Header("Authorization") headerAuthValue: String,
         @Query("output") output: String = "json"
-    ): Single<SubscriptionResponse>
+    ): Single<SubscriptionSourceListResponse>
 }
