@@ -1,11 +1,13 @@
 package com.haomins.reader.activities.main
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
+import com.haomins.reader.activities.articles.ArticleListActivity
 import com.haomins.reader.fragments.list.SourceTitleListFragment
 import com.haomins.reader.fragments.login.LoginFragment
 import dagger.android.AndroidInjection
@@ -33,6 +35,12 @@ class MainActivity : AppCompatActivity() {
             true -> super.onBackPressed()
             false -> finish()
         }
+    }
+
+    fun startArticleListActivity(feedId: String) {
+        val intent = Intent(this, ArticleListActivity::class.java)
+        intent.putExtra("FEED_ID", feedId)
+        startActivity(intent)
     }
 
     fun showSourceTitleListFragment() {

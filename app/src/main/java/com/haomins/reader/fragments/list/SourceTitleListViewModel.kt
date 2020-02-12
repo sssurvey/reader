@@ -51,6 +51,10 @@ class SourceTitleListViewModel @Inject constructor(
         sourceListUiDataSet.postValue(sourceItemDisplayDataLists)
     }
 
+    fun getItemId(position: Int): String {
+        return sourceListData.subscriptions[position].id
+    }
+
     private fun refreshSourceListData(subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel) {
         sourceListData = subscriptionSourceListResponseModel
     }
