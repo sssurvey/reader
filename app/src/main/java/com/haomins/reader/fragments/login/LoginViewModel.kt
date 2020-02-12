@@ -4,12 +4,12 @@ import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.models.user.UserAuthResponseModel
-import com.haomins.reader.networks.LoginRequest
+import com.haomins.reader.networks.LoginRepository
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
-    private val loginRequest: LoginRequest,
+    private val loginRepository: LoginRepository,
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
@@ -26,7 +26,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun authorize(user: Pair<String, String>) {
-        loginRequest.start(user).subscribe(
+        loginRepository.start(user).subscribe(
             object :
                 DisposableSingleObserver<UserAuthResponseModel>() {
                 override fun onSuccess(t: UserAuthResponseModel) {

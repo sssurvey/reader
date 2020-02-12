@@ -6,7 +6,7 @@ import com.haomins.reader.models.subscription.SubscriptionSourceListResponseMode
 import io.reactivex.Single
 import javax.inject.Inject
 
-class SourceSubscriptionListRequest @Inject constructor(
+class SourceSubscriptionListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val sharedPreferences: SharedPreferences
 ) {

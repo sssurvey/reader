@@ -4,14 +4,14 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
-import com.haomins.reader.networks.SourceSubscriptionListRequest
+import com.haomins.reader.networks.SourceSubscriptionListRepository
 import com.haomins.reader.networks.TheOldReaderService
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URL
 import javax.inject.Inject
 
 class SourceTitleListViewModel @Inject constructor(
-    private val sourceSubscriptionListRequest: SourceSubscriptionListRequest
+    private val sourceSubscriptionListRepository: SourceSubscriptionListRepository
 ) : ViewModel() {
 
     val sourceListUiDataSet by lazy {
@@ -21,7 +21,7 @@ class SourceTitleListViewModel @Inject constructor(
     private lateinit var sourceListData: SubscriptionSourceListResponseModel
 
     fun loadSourceSubscriptionList() {
-        sourceSubscriptionListRequest.loadSubList().subscribe(
+        sourceSubscriptionListRepository.loadSubList().subscribe(
             object : DisposableSingleObserver<SubscriptionSourceListResponseModel>() {
                 override fun onSuccess(t: SubscriptionSourceListResponseModel) {
                     populatedSubSourceDataSet(subscriptionSourceListResponseModel = t)
