@@ -1,5 +1,6 @@
 package com.haomins.reader.activities.main
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -14,19 +15,17 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var loginViewModel: LoginViewModel
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        loginViewModel = ViewModelProviders.of(this, viewModelFactory)[LoginViewModel::class.java]
         setContentView(R.layout.activity_main)
         handleLoginFragment()
     }
 
     override fun onBackPressed() {
-        when (loginViewModel.isUserLoggedIn.value) {
+        when (!sharedPreferences.getString(LoginViewModel.AUTH_CODE_KEY, "").isNullOrEmpty()) {
             true -> super.onBackPressed()
             false -> finish()
         }
@@ -41,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleLoginFragment() {
-        when (loginViewModel.hasAuthKey()) {
+        when (!sharedPreferences.getString(LoginViewModel.AUTH_CODE_KEY, "").isNullOrEmpty()) {
             true -> showSourceTitleListFragment()
             false -> showUserLoginFragment()
         }
