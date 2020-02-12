@@ -1,7 +1,7 @@
 package com.haomins.reader.fragments.login
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.models.user.User
 import com.haomins.reader.models.user.UserAuthResponse
@@ -18,26 +18,26 @@ class LoginViewModel @Inject constructor(
         const val AUTH_CODE_KEY = "AUTH_CODE"
     }
 
-    fun isUserLoggedIn(): Boolean {
+    val isUserLoggedIn by lazy {
+        MutableLiveData<Boolean>(false)
+    }
+
+    fun hasAuthKey(): Boolean {
         return sharedPreferences.contains(AUTH_CODE_KEY)
     }
 
-    @SuppressLint("CheckResult")
-    fun login(user: User, doOnSuccess: () -> Unit, doOnError: () -> Unit) {
-
-        //TODO: REMOVE logs, and check suppress lint issue
-        
-        loginRequest.start(user).subscribeWith(
+    fun authorize(user: User) {
+        loginRequest.start(user).subscribe(
             object :
                 DisposableSingleObserver<UserAuthResponse>() {
                 override fun onSuccess(t: UserAuthResponse) {
                     saveAuthCode(t.auth)
-                    doOnSuccess()
+                    isUserLoggedIn.postValue(true)
                 }
 
                 override fun onError(e: Throwable) {
                     clearAuthCode()
-                    doOnError()
+                    isUserLoggedIn.postValue(false)
                 }
             })
     }

@@ -17,10 +17,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var loginViewModel: LoginViewModel
 
-//    private val mainActivityViewModel by lazy {
-//        ViewModelProvider(this).get(MainActivityViewModel::class.java)
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
@@ -30,14 +26,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        when (loginViewModel.isUserLoggedIn()) {
+        when (loginViewModel.isUserLoggedIn.value) {
             true -> super.onBackPressed()
             false -> finish()
         }
     }
 
+    fun showSourceTitleListFragment() {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.main_activity_frame_layout,
+            SourceTitleListFragment(),
+            SourceTitleListFragment.TAG
+        ).commit()
+    }
+
     private fun handleLoginFragment() {
-        when (loginViewModel.isUserLoggedIn()) {
+        when (loginViewModel.hasAuthKey()) {
             true -> showSourceTitleListFragment()
             false -> showUserLoginFragment()
         }
@@ -48,14 +52,6 @@ class MainActivity : AppCompatActivity() {
             R.id.main_activity_frame_layout,
             LoginFragment(),
             LoginFragment.TAG
-        ).commit()
-    }
-
-    private fun showSourceTitleListFragment() {
-        supportFragmentManager.beginTransaction().replace(
-            R.id.main_activity_frame_layout,
-            SourceTitleListFragment(),
-            SourceTitleListFragment.TAG
         ).commit()
     }
 }
