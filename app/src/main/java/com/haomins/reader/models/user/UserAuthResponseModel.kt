@@ -2,7 +2,7 @@ package com.haomins.reader.models.user
 
 import com.google.gson.annotations.SerializedName
 
-data class UserAuthResponse(
+data class UserAuthResponseModel(
 
     @SerializedName("SID")
     val sid: String = "none",

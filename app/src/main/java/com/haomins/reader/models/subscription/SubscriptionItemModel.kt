@@ -2,7 +2,7 @@ package com.haomins.reader.models.subscription
 
 import com.google.gson.annotations.SerializedName
 
-data class SubscriptionItem(
+data class SubscriptionItemModel(
 
     @SerializedName("id")
     val id: String = "",
@@ -32,7 +32,7 @@ data class SubscriptionItem(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as SubscriptionItem
+        other as SubscriptionItemModel
 
         if (id != other.id) return false
         if (title != other.title) return false

@@ -3,8 +3,7 @@ package com.haomins.reader.fragments.login
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.models.user.User
-import com.haomins.reader.models.user.UserAuthResponse
+import com.haomins.reader.models.user.UserAuthResponseModel
 import com.haomins.reader.networks.LoginRequest
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
@@ -26,11 +25,11 @@ class LoginViewModel @Inject constructor(
         return sharedPreferences.contains(AUTH_CODE_KEY)
     }
 
-    fun authorize(user: User) {
+    fun authorize(user: Pair<String, String>) {
         loginRequest.start(user).subscribe(
             object :
-                DisposableSingleObserver<UserAuthResponse>() {
-                override fun onSuccess(t: UserAuthResponse) {
+                DisposableSingleObserver<UserAuthResponseModel>() {
+                override fun onSuccess(t: UserAuthResponseModel) {
                     saveAuthCode(t.auth)
                     isUserLoggedIn.postValue(true)
                 }

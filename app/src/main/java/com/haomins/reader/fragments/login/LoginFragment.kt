@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.haomins.reader.R
 import com.haomins.reader.activities.main.MainActivity
-import com.haomins.reader.models.user.User
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment() {
@@ -52,9 +51,9 @@ class LoginFragment : Fragment() {
 
     private fun loginButtonOnClick() {
         loginViewModel.authorize(
-            User(
-                userEmail = login_username_edit_text.text.toString(),
-                userPassword = login_password_edit_text.text.toString()
+            user = Pair(
+                login_username_edit_text.text.toString(),
+                login_password_edit_text.text.toString()
             )
         )
     }
