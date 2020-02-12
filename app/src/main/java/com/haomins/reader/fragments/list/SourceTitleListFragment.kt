@@ -22,17 +22,23 @@ class SourceTitleListFragment : Fragment() {
         const val TAG = "SourceTitleListFragment"
     }
 
-    data class SubSourceDisplayItem(
-        val sourceTitle: String,
-        val sourceIconUrl: String
-    )
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var sourceTitleListAdapter: SourceTitleListAdapter
     private lateinit var sourceTitleListViewModel: SourceTitleListViewModel
 
-    private var subSourceDisplayItems = ArrayList<SubSourceDisplayItem>()
+    private val sourceListDisplayDataList: MutableList<Pair<String, String>> = ArrayList()
+
+    private val sourceTitleListAdapter by lazy {
+        SourceTitleListAdapter(sourceListDisplayDataList)
+    }
+    
+    private val sourceListDataSetObserver by lazy {
+        Observer<List<Pair<String, String>>> {
+            sourceListDisplayDataList.clear()
+            sourceListDisplayDataList.addAll(it)
+            sourceTitleListAdapter.notifyDataSetChanged()
+        }
+    }
 
     private val recyclerLayoutManager by lazy {
         LinearLayoutManager(context)
@@ -52,8 +58,7 @@ class SourceTitleListFragment : Fragment() {
         sourceTitleListViewModel =
             ViewModelProviders.of(this, viewModelFactory)[SourceTitleListViewModel::class.java]
         registerLiveDataObserver()
-        sourceTitleListAdapter = SourceTitleListAdapter(subSourceDisplayItems)
-        loadSubscriptionSourceList()
+        sourceTitleListViewModel.loadSourceSubscriptionList()
         source_title_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = recyclerLayoutManager
@@ -61,29 +66,18 @@ class SourceTitleListFragment : Fragment() {
         }
     }
 
-    private val isSubscriptionListLoadedObserver by lazy {
-        Observer<Boolean> {
-            if (it == true) {
-                source_title_recycler_view.adapter?.notifyDataSetChanged()
-            }
-        }
-    }
-
     private fun registerLiveDataObserver() {
-        sourceTitleListViewModel.isSubscriptionListLoaded.observe(
-            this,
-            isSubscriptionListLoadedObserver
-        )
-    }
-
-    private fun loadSubscriptionSourceList() {
-        sourceTitleListViewModel.loadSourceSubscriptionList {
-            subSourceDisplayItems.addAll(it)
+        sourceTitleListViewModel.apply {
+            sourceListDataSet.observe(
+                this@SourceTitleListFragment,
+                sourceListDataSetObserver
+            )
         }
     }
+
 }
 
-class SourceTitleListAdapter(private val subSourceDisplayItems: List<SourceTitleListFragment.SubSourceDisplayItem>) :
+private class SourceTitleListAdapter(private val subSourceDisplayItems: List<Pair<String, String>>) :
     RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
     class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
@@ -100,7 +94,7 @@ class SourceTitleListAdapter(private val subSourceDisplayItems: List<SourceTitle
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         //TODO: holder.viewHolder.source_icon_image_view = add for image view
-        holder.viewHolder.source_title_text_view.text = subSourceDisplayItems[position].sourceTitle
+        holder.viewHolder.source_title_text_view.text = subSourceDisplayItems[position].first
     }
 
 }

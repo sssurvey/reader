@@ -3,7 +3,6 @@ package com.haomins.reader.fragments.list
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.fragments.list.SourceTitleListFragment.SubSourceDisplayItem
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.reader.networks.SourceSubscriptionListRequest
 import io.reactivex.observers.DisposableSingleObserver
@@ -13,17 +12,15 @@ class SourceTitleListViewModel @Inject constructor(
     private val sourceSubscriptionListRequest: SourceSubscriptionListRequest
 ) : ViewModel() {
 
-    val isSubscriptionListLoaded by lazy {
-        MutableLiveData<Boolean>(false)
+    val sourceListDataSet by lazy {
+        MutableLiveData<List<Pair<String, String>>>()
     }
 
-    fun loadSourceSubscriptionList(doOnLoad: (List<SubSourceDisplayItem>) -> Unit) {
+    fun loadSourceSubscriptionList() {
         sourceSubscriptionListRequest.loadSubList().subscribe(
             object : DisposableSingleObserver<SubscriptionSourceListResponseModel>() {
                 override fun onSuccess(t: SubscriptionSourceListResponseModel) {
-                    val subSourceDisplayItems = convertResponseForDisplay(t)
-                    doOnLoad(subSourceDisplayItems)
-                    isSubscriptionListLoaded.postValue(true)
+                    populatedSubSourceDataSet(subscriptionSourceListResponseModel = t)
                 }
 
                 override fun onError(e: Throwable) {
@@ -34,17 +31,19 @@ class SourceTitleListViewModel @Inject constructor(
         )
     }
 
-    fun convertResponseForDisplay(subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel): List<SubSourceDisplayItem> {
-        val subSourceDisplayItems = ArrayList<SubSourceDisplayItem>()
+    fun populatedSubSourceDataSet(
+        subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel
+    ) {
+        val sourceItemDisplayDataLists = ArrayList<Pair<String, String>>()
         subscriptionSourceListResponseModel.subscriptions.forEach {
-            subSourceDisplayItems.add(
-                SubSourceDisplayItem(
-                    sourceTitle = it.title,
-                    sourceIconUrl = it.iconUrl
+            sourceItemDisplayDataLists.add(
+                Pair(
+                    first = it.title,
+                    second = it.iconUrl
                 )
             )
         }
-        return subSourceDisplayItems
+        sourceListDataSet.postValue(sourceItemDisplayDataLists)
     }
 
 }
