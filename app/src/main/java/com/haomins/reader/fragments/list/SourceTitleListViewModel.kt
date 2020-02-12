@@ -12,15 +12,18 @@ class SourceTitleListViewModel @Inject constructor(
     private val sourceSubscriptionListRequest: SourceSubscriptionListRequest
 ) : ViewModel() {
 
-    val sourceListDataSet by lazy {
+    val sourceListUiDataSet by lazy {
         MutableLiveData<List<Pair<String, String>>>()
     }
+
+    private lateinit var sourceListData: SubscriptionSourceListResponseModel
 
     fun loadSourceSubscriptionList() {
         sourceSubscriptionListRequest.loadSubList().subscribe(
             object : DisposableSingleObserver<SubscriptionSourceListResponseModel>() {
                 override fun onSuccess(t: SubscriptionSourceListResponseModel) {
                     populatedSubSourceDataSet(subscriptionSourceListResponseModel = t)
+                    refreshSourceListData(t)
                 }
 
                 override fun onError(e: Throwable) {
@@ -43,7 +46,11 @@ class SourceTitleListViewModel @Inject constructor(
                 )
             )
         }
-        sourceListDataSet.postValue(sourceItemDisplayDataLists)
+        sourceListUiDataSet.postValue(sourceItemDisplayDataLists)
+    }
+
+    private fun refreshSourceListData(subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel) {
+        sourceListData = subscriptionSourceListResponseModel
     }
 
 }

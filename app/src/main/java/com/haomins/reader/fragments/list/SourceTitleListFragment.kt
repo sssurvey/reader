@@ -68,7 +68,7 @@ class SourceTitleListFragment : Fragment() {
 
     private fun registerLiveDataObserver() {
         sourceTitleListViewModel.apply {
-            sourceListDataSet.observe(
+            sourceListUiDataSet.observe(
                 this@SourceTitleListFragment,
                 sourceListDataSetObserver
             )
