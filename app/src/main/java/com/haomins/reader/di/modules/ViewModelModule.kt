@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.MyViewModelFactory
 import com.haomins.reader.di.ViewModelKey
+import com.haomins.reader.fragments.list.SourceTitleListViewModel
 import com.haomins.reader.fragments.login.LoginViewModel
 import dagger.Binds
 import dagger.Module
@@ -16,6 +17,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
     abstract fun bindLoginViewModel(loginViewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SourceTitleListViewModel::class)
+    abstract fun bindSourceTitleListViewModel(sourceTitleListViewModel: SourceTitleListViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(myViewModelFactory: MyViewModelFactory): ViewModelProvider.Factory

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
+import com.haomins.reader.fragments.list.SourceTitleListFragment
 import com.haomins.reader.fragments.login.LoginFragment
 import com.haomins.reader.fragments.login.LoginViewModel
 import dagger.android.AndroidInjection
@@ -16,10 +17,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var loginViewModel: LoginViewModel
 
-//    private val mainActivityViewModel by lazy {
-//        ViewModelProvider(this).get(MainActivityViewModel::class.java)
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
@@ -29,16 +26,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        when (loginViewModel.isUserLoggedIn()) {
+        when (loginViewModel.isUserLoggedIn.value) {
             true -> super.onBackPressed()
             false -> finish()
         }
     }
 
+    fun showSourceTitleListFragment() {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.main_activity_frame_layout,
+            SourceTitleListFragment(),
+            SourceTitleListFragment.TAG
+        ).commit()
+    }
+
     private fun handleLoginFragment() {
-        when (loginViewModel.isUserLoggedIn()) {
-            true -> { /**/
-            }
+        when (loginViewModel.hasAuthKey()) {
+            true -> showSourceTitleListFragment()
             false -> showUserLoginFragment()
         }
     }
@@ -46,7 +50,8 @@ class MainActivity : AppCompatActivity() {
     private fun showUserLoginFragment() {
         supportFragmentManager.beginTransaction().replace(
             R.id.main_activity_frame_layout,
-            LoginFragment()
-        ).addToBackStack(LoginFragment.TAG).commit()
+            LoginFragment(),
+            LoginFragment.TAG
+        ).commit()
     }
 }
