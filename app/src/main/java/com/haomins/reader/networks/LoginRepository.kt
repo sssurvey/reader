@@ -6,7 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class LoginRequest @Inject constructor(private val theOldReaderService: TheOldReaderService) {
+class LoginRepository @Inject constructor(private val theOldReaderService: TheOldReaderService) {
 
     fun start(user: Pair<String, String>): Single<UserAuthResponseModel> {
         return theOldReaderService
