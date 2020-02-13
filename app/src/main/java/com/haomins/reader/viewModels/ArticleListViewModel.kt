@@ -9,8 +9,8 @@ class ArticleListViewModel @Inject constructor(
     private val articleListRepository: ArticleListRepository
 ) : ViewModel() {
 
-    fun sayHi() {
-        Log.d("xxx", "hi")
+    fun loadArticles(feedId: String) {
+        articleListRepository.loadArticleItemRefs(feedId)
     }
 
 }

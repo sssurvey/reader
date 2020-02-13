@@ -10,13 +10,17 @@ import com.haomins.reader.view.fragments.ArticleListFragment
 
 class ArticleListActivity : AppCompatActivity() {
 
+    companion object {
+        const val SOURCE_FEED_ID = "SOURCE_FEED_ID"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         slideInAnimation()
         overridePendingTransition(R.anim.start_slide_in_left, R.anim.start_slide_out_left)
         setContentView(R.layout.activity_article_list)
         showArticleListFragment()
-        showToast(intent.getStringExtra("FEED_ID"))
+        showToast(intent.getStringExtra(SOURCE_FEED_ID))
     }
 
     override fun onBackPressed() {
@@ -25,9 +29,13 @@ class ArticleListActivity : AppCompatActivity() {
     }
 
     private fun showArticleListFragment() {
+        val bundle = Bundle()
+        val articleListFragment = ArticleListFragment()
+        bundle.putString(SOURCE_FEED_ID, intent.getStringExtra(SOURCE_FEED_ID))
+        articleListFragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(
             R.id.article_list_activity_frame_layout,
-            ArticleListFragment(), ArticleListFragment.TAG
+            articleListFragment, ArticleListFragment.TAG
         ).commit()
     }
 }

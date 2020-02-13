@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
+import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
@@ -33,8 +34,15 @@ class ArticleListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         AndroidSupportInjection.inject(this)
-        articleListViewModel = ViewModelProviders.of(this, viewModelFactory)[ArticleListViewModel::class.java]
-        articleListViewModel.sayHi()
+        articleListViewModel =
+            ViewModelProviders.of(this, viewModelFactory)[ArticleListViewModel::class.java]
+        initiateArticleLoad(arguments)
+    }
+
+    private fun initiateArticleLoad(bundle: Bundle?) {
+        bundle?.getString(SOURCE_FEED_ID)?.let {
+            articleListViewModel.loadArticles(it)
+        }
     }
 
 }
