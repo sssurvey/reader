@@ -1,13 +1,13 @@
 package com.haomins.reader.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
-import com.haomins.reader.models.subscription.SubscriptionItemModel
 
 @Dao
 interface SubscriptionDao {
 
-    @Query("SELECT * FROM subscriptionitemmodel")
-    fun getAll(): List<SubscriptionItemModel>
+    @Query("SELECT * FROM subscription_entity")
+    fun getAll(): LiveData<List<SubscriptionEntity>>
 
 }
