@@ -1,11 +1,13 @@
 package com.haomins.reader.viewModels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.reader.repositories.SourceSubscriptionListRepository
 import com.haomins.reader.TheOldReaderService
+import com.haomins.reader.data.tables.SubscriptionEntity
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URL
 import javax.inject.Inject
@@ -16,6 +18,10 @@ class SourceTitleListViewModel @Inject constructor(
 
     val sourceListUiDataSet by lazy {
         MutableLiveData<List<Pair<String, URL>>>()
+    }
+
+    val sourceListDBTest by lazy {
+        loadSourceSubscriptionListFromDB()
     }
 
     private lateinit var sourceListData: SubscriptionSourceListResponseModel
@@ -34,6 +40,10 @@ class SourceTitleListViewModel @Inject constructor(
 
             }
         )
+    }
+
+    private fun loadSourceSubscriptionListFromDB(): LiveData<List<SubscriptionEntity>> {
+        return sourceSubscriptionListRepository.retrieveSubListFromDB()
     }
 
     fun populatedSubSourceDataSet(

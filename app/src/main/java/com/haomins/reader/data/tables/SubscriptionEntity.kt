@@ -30,7 +30,7 @@ data class SubscriptionEntity(
     @ColumnInfo(name = "iconUrl")
     var iconUrl: String = "",
 
-    @Ignore
+    @Ignore // <--- Add support later on
     var categories: Array<String> = emptyArray()
 
 ) {

@@ -1,10 +1,10 @@
 package com.haomins.reader.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.haomins.reader.R
-import com.haomins.reader.data.AppDatabase
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.SourceTitleListViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -30,11 +29,6 @@ class SourceTitleListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    //TODO: remove later on
-    @VisibleForTesting
-    @Inject
-    lateinit var appDatabase: AppDatabase
 
     private lateinit var sourceTitleListViewModel: SourceTitleListViewModel
 
@@ -88,20 +82,12 @@ class SourceTitleListFragment : Fragment() {
     }
 
     private fun sourceListRecyclerViewItemClickedAt(position: Int) {
-        //TODO: remove later on
-        testDB()
         val feedId = sourceTitleListViewModel.getItemId(position)
         activity?.let {
             (it as MainActivity).startArticleListActivity(feedId)
         }
     }
-
-    //TODO: remove later on
-    @VisibleForTesting
-    private fun testDB() {
-        appDatabase.subscriptionDao().getAll()
-    }
-
+    
     inner class SourceTitleListAdapter(private val subSourceDisplayItems: List<Pair<String, URL>>) :
         RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
