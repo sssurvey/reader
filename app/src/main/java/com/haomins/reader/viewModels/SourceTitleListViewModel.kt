@@ -1,13 +1,11 @@
 package com.haomins.reader.viewModels
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
-import com.haomins.reader.repositories.SourceSubscriptionListRepository
 import com.haomins.reader.TheOldReaderService
 import com.haomins.reader.data.tables.SubscriptionEntity
+import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
+import com.haomins.reader.repositories.SourceSubscriptionListRepository
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URL
 import javax.inject.Inject
@@ -20,37 +18,44 @@ class SourceTitleListViewModel @Inject constructor(
         MutableLiveData<List<Pair<String, URL>>>()
     }
 
-    val sourceListDBTest by lazy {
-        loadSourceSubscriptionListFromDB()
+    private lateinit var sourceListData: List<SubscriptionEntity>
+
+    fun getSubSourceId(position: Int): String {
+        return sourceListData[position].id
     }
 
-    private lateinit var sourceListData: SubscriptionSourceListResponseModel
-
     fun loadSourceSubscriptionList() {
-        sourceSubscriptionListRepository.loadSubList().subscribe(
-            object : DisposableSingleObserver<SubscriptionSourceListResponseModel>() {
+        sourceSubscriptionListRepository.loadSubList()
+            .subscribe(object : DisposableSingleObserver<SubscriptionSourceListResponseModel>() {
                 override fun onSuccess(t: SubscriptionSourceListResponseModel) {
-                    populatedSubSourceDataSet(subscriptionSourceListResponseModel = t)
-                    refreshSourceListData(t)
+                    sourceSubscriptionListRepository.saveSubListToDB(t)
+                    loadSourceSubscriptionListFromDB()
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.d("xxxx", "${e.printStackTrace()}")
+                    e.printStackTrace()
+                    loadSourceSubscriptionListFromDB()
+                }
+            })
+    }
+
+    private fun loadSourceSubscriptionListFromDB() {
+        sourceSubscriptionListRepository.retrieveSubListFromDB()
+            .subscribe(object : DisposableSingleObserver<List<SubscriptionEntity>>() {
+                override fun onSuccess(t: List<SubscriptionEntity>) {
+                    refreshSourceListData(t)
+                    populatedSubSourceDataSet(t)
                 }
 
-            }
-        )
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+            })
     }
 
-    private fun loadSourceSubscriptionListFromDB(): LiveData<List<SubscriptionEntity>> {
-        return sourceSubscriptionListRepository.retrieveSubListFromDB()
-    }
-
-    fun populatedSubSourceDataSet(
-        subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel
-    ) {
+    private fun populatedSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>) {
         val sourceItemDisplayDataLists = ArrayList<Pair<String, URL>>()
-        subscriptionSourceListResponseModel.subscriptions.forEach {
+        subscriptionEntities.forEach {
             sourceItemDisplayDataLists.add(
                 Pair(
                     first = it.title,
@@ -61,12 +66,8 @@ class SourceTitleListViewModel @Inject constructor(
         sourceListUiDataSet.postValue(sourceItemDisplayDataLists)
     }
 
-    fun getItemId(position: Int): String {
-        return sourceListData.subscriptions[position].id
-    }
-
-    private fun refreshSourceListData(subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel) {
-        sourceListData = subscriptionSourceListResponseModel
+    private fun refreshSourceListData(subscriptionEntities: List<SubscriptionEntity>) {
+        sourceListData = subscriptionEntities
     }
 
 }

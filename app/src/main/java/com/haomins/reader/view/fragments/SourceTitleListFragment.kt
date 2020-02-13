@@ -1,7 +1,6 @@
 package com.haomins.reader.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,12 +81,12 @@ class SourceTitleListFragment : Fragment() {
     }
 
     private fun sourceListRecyclerViewItemClickedAt(position: Int) {
-        val feedId = sourceTitleListViewModel.getItemId(position)
+        val feedId = sourceTitleListViewModel.getSubSourceId(position)
         activity?.let {
             (it as MainActivity).startArticleListActivity(feedId)
         }
     }
-    
+
     inner class SourceTitleListAdapter(private val subSourceDisplayItems: List<Pair<String, URL>>) :
         RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
