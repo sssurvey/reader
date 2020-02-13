@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.haomins.reader.R
 import com.haomins.reader.utils.QuickToast
+import com.haomins.reader.view.fragments.ArticleListFragment
 
 class ArticleListActivity : AppCompatActivity() {
 
@@ -11,11 +12,19 @@ class ArticleListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         overridePendingTransition(R.anim.start_slide_in_left, R.anim.start_slide_out_left)
         setContentView(R.layout.activity_article_list)
+        showArticleListFragment()
         QuickToast.show(this, intent.getStringExtra("FEED_ID"))
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.start_slide_in_right, R.anim.start_slide_out_right)
+    }
+
+    private fun showArticleListFragment() {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.article_list_activity_frame_layout,
+            ArticleListFragment(), ArticleListFragment.TAG
+        ).commit()
     }
 }
