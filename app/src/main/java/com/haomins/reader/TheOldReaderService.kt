@@ -1,5 +1,6 @@
 package com.haomins.reader
 
+import com.haomins.reader.models.article.ArticleResponseModel
 import com.haomins.reader.models.article.ItemRefListResponseModel
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.reader.models.user.UserAuthResponseModel
@@ -65,7 +66,7 @@ interface TheOldReaderService {
      * Get article refs based on feed (id)
      *
      * This get request will allow you to get json data of all article references under the provided
-     * feed, you can use the article `itemRef` to load more details about these articles
+     * feed, you can use the article `itemRef` to load more details about these articles.
      *
      * @param headerAuthValue User's auth token and auth meta data
      * @param feedId Feed ID for the source feed, all article returned belongs to this Feed ID
@@ -79,4 +80,22 @@ interface TheOldReaderService {
         @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT,
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ItemRefListResponseModel>
+
+    /**
+     * Get the article details and contents
+     *
+     * This get request will allow you get all the information for an article item via refItem id
+     * each refItem id is linked to exactly one article.
+     *
+     * @param headerAuthValue User's auth token and auth meta data
+     * @param i ref item ID that we can use to find the article
+     *
+     * @return
+     */
+    @GET(BASE_API + "stream/items/contents")
+    fun loadArticleDetailsByRefId(
+        @Header("Authorization") headerAuthValue: String,
+        @Query("i") refItemId: String,
+        @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
+    ): Single<ArticleResponseModel>
 }
