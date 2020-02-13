@@ -1,10 +1,10 @@
-package com.haomins.reader.fragments.login
+package com.haomins.reader.viewModels
 
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.models.user.UserAuthResponseModel
-import com.haomins.reader.networks.LoginRepository
+import com.haomins.reader.repositories.LoginRepository
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 

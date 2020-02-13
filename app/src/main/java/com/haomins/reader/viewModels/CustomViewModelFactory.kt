@@ -1,4 +1,4 @@
-package com.haomins.reader
+package com.haomins.reader.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,7 +8,7 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
-class MyViewModelFactory @Inject constructor(
+class CustomViewModelFactory @Inject constructor(
     private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

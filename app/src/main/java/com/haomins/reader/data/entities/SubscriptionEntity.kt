@@ -1,47 +1,53 @@
-package com.haomins.reader.models.subscription
+package com.haomins.reader.data.entities
 
-import com.google.gson.annotations.SerializedName
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 
-data class SubscriptionItemModel(
+@Entity(tableName = "subscription_entity")
+data class SubscriptionEntity(
 
-    @SerializedName("id")
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     var id: String = "",
 
-    @SerializedName("title")
+    @ColumnInfo(name = "title")
     var title: String = "",
 
-    @SerializedName("categories")
-    var categories: Array<String> = emptyArray(),
-
-    @SerializedName("sortid")
+    @ColumnInfo(name = "sortid")
     var sortId: String = "",
 
-    @SerializedName("firstitemmsec")
+    @ColumnInfo(name = "firstitemmsec")
     var firstItemMilSec: String = "",
 
-    @SerializedName("url")
+    @ColumnInfo(name = "url")
     var url: String = "",
 
-    @SerializedName("htmlUrl")
+    @ColumnInfo(name = "htmlUrl")
     var htmlUrl: String = "",
 
-    @SerializedName("iconUrl")
-    var iconUrl: String = ""
+    @ColumnInfo(name = "iconUrl")
+    var iconUrl: String = "",
+
+    @Ignore // <--- Add support later on
+    var categories: Array<String> = emptyArray()
+
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as SubscriptionItemModel
+        other as SubscriptionEntity
 
         if (id != other.id) return false
         if (title != other.title) return false
-        if (!categories.contentEquals(other.categories)) return false
         if (sortId != other.sortId) return false
         if (firstItemMilSec != other.firstItemMilSec) return false
         if (url != other.url) return false
         if (htmlUrl != other.htmlUrl) return false
         if (iconUrl != other.iconUrl) return false
+        if (!categories.contentEquals(other.categories)) return false
 
         return true
     }
@@ -49,12 +55,12 @@ data class SubscriptionItemModel(
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + title.hashCode()
-        result = 31 * result + categories.contentHashCode()
         result = 31 * result + sortId.hashCode()
         result = 31 * result + firstItemMilSec.hashCode()
         result = 31 * result + url.hashCode()
         result = 31 * result + htmlUrl.hashCode()
         result = 31 * result + iconUrl.hashCode()
+        result = 31 * result + categories.contentHashCode()
         return result
     }
 }

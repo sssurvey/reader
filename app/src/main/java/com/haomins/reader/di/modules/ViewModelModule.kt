@@ -2,11 +2,11 @@ package com.haomins.reader.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.haomins.reader.MyViewModelFactory
-import com.haomins.reader.activities.main.MainActivityViewModel
+import com.haomins.reader.viewModels.CustomViewModelFactory
+import com.haomins.reader.viewModels.MainActivityViewModel
 import com.haomins.reader.di.ViewModelKey
-import com.haomins.reader.fragments.list.SourceTitleListViewModel
-import com.haomins.reader.fragments.login.LoginViewModel
+import com.haomins.reader.viewModels.SourceTitleListViewModel
+import com.haomins.reader.viewModels.LoginViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -30,5 +30,5 @@ abstract class ViewModelModule {
     abstract fun bindMainActivityViewModel(mainActivityViewModel: MainActivityViewModel): ViewModel
 
     @Binds
-    abstract fun bindViewModelFactory(myViewModelFactory: MyViewModelFactory): ViewModelProvider.Factory
+    abstract fun bindViewModelFactory(customViewModelFactory: CustomViewModelFactory): ViewModelProvider.Factory
 }

@@ -1,7 +1,6 @@
-package com.haomins.reader.fragments.list
+package com.haomins.reader.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.haomins.reader.R
+import com.haomins.reader.view.activities.MainActivity
+import com.haomins.reader.viewModels.SourceTitleListViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_source_list_title.*
 import kotlinx.android.synthetic.main.source_title_recycler_view_item.view.*
@@ -27,6 +28,7 @@ class SourceTitleListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var sourceTitleListViewModel: SourceTitleListViewModel
 
     private val sourceListDisplayDataList: MutableList<Pair<String, URL>> = ArrayList()
@@ -79,8 +81,10 @@ class SourceTitleListFragment : Fragment() {
     }
 
     private fun sourceListRecyclerViewItemClickedAt(position: Int) {
-        //TODO: Use this as entry point to open article list for that source
-        Log.d("xxxx", "----> $position")
+        val feedId = sourceTitleListViewModel.getSubSourceId(position)
+        activity?.let {
+            (it as MainActivity).startArticleListActivity(feedId)
+        }
     }
 
     inner class SourceTitleListAdapter(private val subSourceDisplayItems: List<Pair<String, URL>>) :

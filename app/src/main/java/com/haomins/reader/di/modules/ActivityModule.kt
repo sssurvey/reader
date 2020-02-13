@@ -1,6 +1,6 @@
 package com.haomins.reader.di.modules
 
-import com.haomins.reader.activities.main.MainActivity
+import com.haomins.reader.view.activities.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
