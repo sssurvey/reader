@@ -39,6 +39,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
+                android:textColor="@color/darkGray"
                 tools:text="The Old Reader is a reader for the old people, that ..." />
         </RelativeLayout>
 
