@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardViewRadius">5dp</dimen>
+    <dimen name="cardViewElevation">0dp</dimen>
+    <dimen name="cardViewMargin">5dp</dimen>
+    <dimen name="textViewPadding">8dp</dimen>
+    <dimen name="imageIconViewPadding">12dp</dimen>
+    <dimen name="imageIconViewHeight">40dp</dimen>
+    <dimen name="articleTextViewHeight">20dp</dimen>
+    <dimen name="relativeLayoutPadding">10dp</dimen>
+
+    <item name="textViewDefaultLineRestriction" type="integer">1</item>
+</resources>

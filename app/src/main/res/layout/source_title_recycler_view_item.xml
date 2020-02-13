@@ -12,10 +12,10 @@
         android:id="@+id/source_title_recycler_view_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/cardViewMargin"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="0dp">
+        app:cardCornerRadius="@dimen/cardViewRadius"
+        app:cardElevation="@dimen/cardViewElevation">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,22 +23,22 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/source_icon_image_view"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="12dp"
+                android:layout_width="@dimen/imageIconViewHeight"
+                android:layout_height="@dimen/imageIconViewHeight"
+                android:padding="@dimen/imageIconViewPadding"
                 android:scaleType="fitCenter"
                 tools:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/source_title_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/articleTextViewHeight"
                 android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/source_icon_image_view"
-                android:elevation="0dp"
-                android:gravity="center_vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
+                android:layout_toEndOf="@id/source_icon_image_view"
+                android:layout_centerVertical="true"
+                android:maxLines="@integer/textViewDefaultLineRestriction"
+                android:paddingStart="@dimen/textViewPadding"
+                android:paddingEnd="@dimen/textViewPadding"
                 android:textColor="@color/darkGray"
                 tools:text="The Old Reader is a reader for the old people, that ..." />
         </RelativeLayout>
