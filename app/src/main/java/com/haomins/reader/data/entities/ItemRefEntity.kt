@@ -14,5 +14,4 @@ data class ItemRefEntity(
     @ColumnInfo(name = "timestampUsec")
     var timestampUsec: String
 
-
 )
