@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.models.user.UserAuthResponseModel
 import com.haomins.reader.repositories.LoginRepository
+import com.haomins.reader.utils.putValue
+import com.haomins.reader.utils.removeValue
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
@@ -42,10 +44,10 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun saveAuthCode(auth: String) {
-        sharedPreferences.edit().putString(AUTH_CODE_KEY, auth).apply()
+        sharedPreferences.putValue(AUTH_CODE_KEY, auth)
     }
 
     private fun clearAuthCode() {
-        sharedPreferences.edit().remove(AUTH_CODE_KEY).apply()
+        sharedPreferences.removeValue(AUTH_CODE_KEY)
     }
 }
