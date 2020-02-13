@@ -5,28 +5,28 @@ import com.google.gson.annotations.SerializedName
 data class SubscriptionItemModel(
 
     @SerializedName("id")
-    val id: String = "",
+    val id: String,
 
     @SerializedName("title")
-    val title: String = "",
+    val title: String,
 
     @SerializedName("categories")
-    val categories: Array<String> = emptyArray(),
+    val categories: Array<String>,
 
     @SerializedName("sortid")
-    val sortId: String = "",
+    val sortId: String,
 
     @SerializedName("firstitemmsec")
-    val firstItemMilSec: String = "",
+    val firstItemMilSec: String,
 
     @SerializedName("url")
-    val url: String = "",
+    val url: String,
 
     @SerializedName("htmlUrl")
-    val htmlUrl: String = "",
+    val htmlUrl: String,
 
     @SerializedName("iconUrl")
-    val iconUrl: String = ""
+    val iconUrl: String
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
