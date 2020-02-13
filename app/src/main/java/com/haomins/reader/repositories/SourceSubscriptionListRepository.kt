@@ -28,7 +28,9 @@ class SourceSubscriptionListRepository @Inject constructor(
         return appDatabase.subscriptionDao().getAll()
     }
 
-    fun saveSubListToDB(subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel) {
+    fun saveSubListToDB(subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel,
+                        clearOldTable: Boolean = true) {
+        if (clearOldTable) appDatabase.subscriptionDao().clearTable()
         val entityList =
             convertSubscriptionItemModelToEntity(subscriptionSourceListResponseModel.subscriptions)
         appDatabase.subscriptionDao().insertAll(*entityList.toTypedArray())
