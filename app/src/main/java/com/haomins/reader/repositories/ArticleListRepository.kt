@@ -47,6 +47,9 @@ class ArticleListRepository @Inject constructor(
         override fun onSuccess(t: ArticleResponseModel) {
             //TODO: FINISH ArticleResponseModel, save them to DB here
             Log.d("xxxxx", "ArticleResponseMode: ---> ${t.direction}")
+            Log.d("xxxxx", "ArticleResponseMode: ---> ${t.id}")
+            Log.d("xxxxx", "ArticleResponseMode: ---> ${t.title}")
+            Log.d("xxxxx", "ArticleResponseMode: ---> ${t.description}")
         }
 
         override fun onError(e: Throwable) {
