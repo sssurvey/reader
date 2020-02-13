@@ -3,7 +3,7 @@ package com.haomins.reader.repositories
 import android.content.SharedPreferences
 import com.haomins.reader.TheOldReaderService
 import com.haomins.reader.data.AppDatabase
-import com.haomins.reader.data.tables.SubscriptionEntity
+import com.haomins.reader.data.entities.SubscriptionEntity
 import com.haomins.reader.models.subscription.SubscriptionItemModel
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.reader.viewModels.LoginViewModel
