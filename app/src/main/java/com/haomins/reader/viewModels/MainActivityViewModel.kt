@@ -1,8 +1,7 @@
-package com.haomins.reader.activities.main
+package com.haomins.reader.viewModels
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.fragments.login.LoginViewModel
 import javax.inject.Inject
 
 class MainActivityViewModel @Inject constructor(

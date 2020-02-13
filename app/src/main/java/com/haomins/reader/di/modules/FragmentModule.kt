@@ -1,7 +1,7 @@
 package com.haomins.reader.di.modules
 
-import com.haomins.reader.fragments.list.SourceTitleListFragment
-import com.haomins.reader.fragments.login.LoginFragment
+import com.haomins.reader.view.fragments.SourceTitleListFragment
+import com.haomins.reader.view.fragments.LoginFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

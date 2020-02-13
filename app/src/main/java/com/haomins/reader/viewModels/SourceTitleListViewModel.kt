@@ -1,11 +1,11 @@
-package com.haomins.reader.fragments.list
+package com.haomins.reader.viewModels
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
-import com.haomins.reader.networks.SourceSubscriptionListRepository
-import com.haomins.reader.networks.TheOldReaderService
+import com.haomins.reader.repositories.SourceSubscriptionListRepository
+import com.haomins.reader.repositories.TheOldReaderService
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URL
 import javax.inject.Inject

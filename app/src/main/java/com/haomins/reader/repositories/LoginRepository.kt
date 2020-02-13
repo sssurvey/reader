@@ -1,4 +1,4 @@
-package com.haomins.reader.networks
+package com.haomins.reader.repositories
 
 import com.haomins.reader.models.user.UserAuthResponseModel
 import io.reactivex.Single

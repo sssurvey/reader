@@ -1,4 +1,4 @@
-package com.haomins.reader.fragments.login
+package com.haomins.reader.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
-import com.haomins.reader.activities.main.MainActivity
+import com.haomins.reader.view.activities.MainActivity
+import com.haomins.reader.viewModels.LoginViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject

@@ -1,7 +1,7 @@
-package com.haomins.reader.networks
+package com.haomins.reader.repositories
 
 import android.content.SharedPreferences
-import com.haomins.reader.fragments.login.LoginViewModel
+import com.haomins.reader.viewModels.LoginViewModel
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
 import io.reactivex.Single
 import javax.inject.Inject

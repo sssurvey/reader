@@ -1,4 +1,4 @@
-package com.haomins.reader.activities.main
+package com.haomins.reader.view.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
-import com.haomins.reader.activities.articles.ArticleListActivity
-import com.haomins.reader.fragments.list.SourceTitleListFragment
-import com.haomins.reader.fragments.login.LoginFragment
+import com.haomins.reader.viewModels.MainActivityViewModel
+import com.haomins.reader.view.fragments.SourceTitleListFragment
+import com.haomins.reader.view.fragments.LoginFragment
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 

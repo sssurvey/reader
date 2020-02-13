@@ -1,4 +1,4 @@
-package com.haomins.reader.activities.articles
+package com.haomins.reader.view.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
