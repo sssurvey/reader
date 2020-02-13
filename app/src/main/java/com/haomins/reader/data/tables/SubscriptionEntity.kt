@@ -1,4 +1,4 @@
-package com.haomins.reader.data
+package com.haomins.reader.data.tables
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "subscription_entity")
 data class SubscriptionEntity(
+
     @PrimaryKey
     @ColumnInfo(name = "id")
     var id: String = "",
