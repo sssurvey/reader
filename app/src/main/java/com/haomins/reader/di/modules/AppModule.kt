@@ -1,6 +1,6 @@
 package com.haomins.reader.di.modules
 
-import com.haomins.reader.repositories.TheOldReaderService
+import com.haomins.reader.TheOldReaderService
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides

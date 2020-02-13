@@ -1,6 +1,7 @@
 package com.haomins.reader.repositories
 
 import android.content.SharedPreferences
+import com.haomins.reader.TheOldReaderService
 import com.haomins.reader.viewModels.LoginViewModel
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
 import io.reactivex.Single

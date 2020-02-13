@@ -1,4 +1,4 @@
-package com.haomins.reader.repositories
+package com.haomins.reader
 
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.reader.models.user.UserAuthResponseModel
