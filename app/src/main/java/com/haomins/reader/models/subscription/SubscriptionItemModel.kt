@@ -1,32 +1,46 @@
 package com.haomins.reader.models.subscription
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class SubscriptionItemModel(
 
+    @PrimaryKey
     @SerializedName("id")
-    val id: String = "",
+    var id: String = "",
 
+    @ColumnInfo(name = "title")
     @SerializedName("title")
-    val title: String = "",
+    var title: String = "",
 
+    /*ROOM does not support auto convert of list to DB entities, ignore it for now*/
+    @Ignore
     @SerializedName("categories")
-    val categories: Array<String> = emptyArray(),
+    var categories: Array<String> = emptyArray(),
 
+    @ColumnInfo(name = "sortid")
     @SerializedName("sortid")
-    val sortId: String = "",
+    var sortId: String = "",
 
+    @ColumnInfo(name = "firstitemmsec")
     @SerializedName("firstitemmsec")
-    val firstItemMilSec: String = "",
+    var firstItemMilSec: String = "",
 
+    @ColumnInfo(name = "url")
     @SerializedName("url")
-    val url: String = "",
+    var url: String = "",
 
+    @ColumnInfo(name = "htmlUrl")
     @SerializedName("htmlUrl")
-    val htmlUrl: String = "",
+    var htmlUrl: String = "",
 
+    @ColumnInfo(name = "iconUrl")
     @SerializedName("iconUrl")
-    val iconUrl: String = ""
+    var iconUrl: String = ""
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

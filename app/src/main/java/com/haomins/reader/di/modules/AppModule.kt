@@ -1,6 +1,9 @@
 package com.haomins.reader.di.modules
 
+import android.app.Application
+import androidx.room.Room
 import com.haomins.reader.TheOldReaderService
+import com.haomins.reader.data.AppDatabase
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -32,5 +35,13 @@ class AppModule {
             addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             client(getLoggedHttpClient())
         }.build().create(TheOldReaderService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRoom(application: Application): AppDatabase {
+        return Room
+            .databaseBuilder(application, AppDatabase::class.java, AppDatabase.DATABASE_NAME)
+            .build()
     }
 }
