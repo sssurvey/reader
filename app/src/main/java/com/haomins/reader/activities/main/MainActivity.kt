@@ -1,8 +1,6 @@
 package com.haomins.reader.activities.main
 
-import android.app.ActivityOptions
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -16,8 +14,6 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var mainActivityViewModel: MainActivityViewModel
@@ -39,10 +35,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startArticleListActivity(feedId: String) {
-//        val options = ActivityOptions.makeSceneTransitionAnimation(this)
         val intent = Intent(this, ArticleListActivity::class.java)
         intent.putExtra("FEED_ID", feedId)
-//        startActivity(intent, options.toBundle())
         startActivity(intent)
     }
 
