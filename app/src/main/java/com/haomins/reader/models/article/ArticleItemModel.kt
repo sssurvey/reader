@@ -17,7 +17,10 @@ data class ArticleItemModel(
     val categories: List<String>,
 
     @SerializedName("title")
-    val title: String
+    val title: String,
+
+    @SerializedName("summary")
+    val summary: Summary
 
 //    @SerializedName("published")
 //    @SerializedName("updated")
