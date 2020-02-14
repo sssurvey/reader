@@ -20,7 +20,7 @@ data class ArticleResponseModel(
     val updated: Long,
 
     @SerializedName("items")
-    val items: List<ArticleItemResponseModel>,
+    val items: List<ArticleItemModel>,
 
     @SerializedName("author")
     val author: String,

@@ -2,7 +2,7 @@ package com.haomins.reader.models.article
 
 import com.google.gson.annotations.SerializedName
 
-data class ArticleItemResponseModel(
+data class ArticleItemModel(
 
     @SerializedName("crawlTimeMsec")
     val crawlTimeMsec: String,
@@ -24,6 +24,12 @@ data class ArticleItemResponseModel(
 //    @SerializedName("tor_identifier")
 )
 
-data class ArticleSummaryItem(
-    val string: String
+data class Summary(
+
+    @SerializedName("direction")
+    val direction: String,
+
+    @SerializedName("content")
+    val content: String
+
 )
