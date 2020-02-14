@@ -25,6 +25,7 @@
                 android:layout_height="@dimen/articleTextViewHeight"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@+id/article_publish_time_text_view"
+                android:maxLines="@integer/textViewDefaultLineRestriction"
                 android:paddingStart="@dimen/textViewPadding"
                 android:paddingEnd="@dimen/textViewPadding"
                 android:textColor="@color/darkGray"
