@@ -14,7 +14,25 @@ data class ArticleResponseModel(
     val title: String,
 
     @SerializedName("description")
-    val description: String
-    //TODO: complete this
+    val description: String,
+
+    @SerializedName("updated")
+    val updated: Long,
+
+    @SerializedName("items")
+    val items: List<ArticleItemResponseModel>,
+
+    @SerializedName("author")
+    val author: String,
+
+    @SerializedName("likingUsersCount")
+    val likingUsersCount: Long
+
+    /**
+     * TODO: complete this later
+     * @SerializedName("annotations")
+     * @SerializedName("likingUsers")
+     * @SerializedName("comments")
+     */
 
 )
