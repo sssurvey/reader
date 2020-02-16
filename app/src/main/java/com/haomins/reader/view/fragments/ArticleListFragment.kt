@@ -31,6 +31,22 @@ class ArticleListFragment : Fragment() {
         LinearLayoutManager(context)
     }
 
+    private val articleItemListObserver by lazy {
+        Observer<List<ArticleEntity>> {
+            Log.d("xxxx", it.size.toString())
+            val testList: MutableList<ArticleTitleListUiItem> = ArrayList()
+            it.forEach {
+                testList.add(
+                    ArticleTitleListUiItem(
+                        title = it.itemTitle,
+                        postTime = "33:33 TT"
+                    )
+                )
+            }
+            article_title_recycler_view.adapter = ArticleTitleListAdapter(testList)
+        }
+    }
+
     data class ArticleTitleListUiItem(
         val title: String,
         val postTime: String
@@ -78,19 +94,7 @@ class ArticleListFragment : Fragment() {
 
     private fun initiateArticleLoad(bundle: Bundle?) {
         bundle?.getString(SOURCE_FEED_ID)?.let {
-            articleListViewModel.loadArticles(it).observe(this, Observer<List<ArticleEntity>> {
-                //TODO: all this is working, but not clean
-                Log.d("xxxx", it.size.toString())
-                val testList: MutableList<ArticleTitleListUiItem> = ArrayList()
-                it.forEach {
-                    testList.add(
-                        ArticleTitleListUiItem(
-                            title = it.itemTitle,
-                            postTime = "33:33 TT"
-                    ))
-                }
-                article_title_recycler_view.adapter = ArticleTitleListAdapter(testList)
-            })
+            articleListViewModel.loadArticles(it).observe(this, articleItemListObserver)
         }
     }
 
