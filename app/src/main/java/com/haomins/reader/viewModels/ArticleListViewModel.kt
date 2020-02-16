@@ -13,4 +13,6 @@ class ArticleListViewModel @Inject constructor(
         articleListRepository.loadArticleItemRefs(feedId)
     }
 
+    
+
 }

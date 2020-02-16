@@ -43,9 +43,15 @@ class ArticleListRepository @Inject constructor(
         }
     }
 
-    class ArticleResponseModelObserver : DisposableSingleObserver<ArticleResponseModel>() {
+    private fun saveIndividualArticleToDatabase(articleResponseModel: ArticleResponseModel) {
+        //TODO: FINISH ArticleResponseModel, save them to DB here
+    }
+
+    inner class ArticleResponseModelObserver : DisposableSingleObserver<ArticleResponseModel>() {
         override fun onSuccess(t: ArticleResponseModel) {
-            //TODO: FINISH ArticleResponseModel, save them to DB here
+
+            saveIndividualArticleToDatabase(t)
+
             Log.d("xxxxx yyyy", "${t.items[0].summary}")
             Log.d("xxxxx", "ArticleResponseMode: ---> ${t.direction}")
             Log.d("xxxxx", "ArticleResponseMode: ---> ${t.id}")
