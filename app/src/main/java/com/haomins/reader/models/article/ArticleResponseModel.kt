@@ -22,8 +22,6 @@ data class ArticleResponseModel(
     @SerializedName("items")
     val items: List<ArticleItemModel>,
 
-    @SerializedName("author")
-    val author: String,
 
     @SerializedName("likingUsersCount")
     val likingUsersCount: Long
@@ -54,11 +52,18 @@ data class ArticleItemModel(
     val title: String,
 
     @SerializedName("summary")
-    val summary: Summary
+    val summary: Summary,
+
+    @SerializedName("published")
+    val publishedMillisecond: Long,
+
+    @SerializedName("updated")
+    val updatedMillisecond: Long,
+
+    @SerializedName("author")
+    val author: String
 
     /**
-     * @SerializedName("published")
-     * @SerializedName("updated")
      * @SerializedName("tor_identifier")
      */
 )

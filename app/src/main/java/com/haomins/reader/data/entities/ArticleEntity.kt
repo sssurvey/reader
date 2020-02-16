@@ -9,19 +9,19 @@ data class ArticleEntity(
 
     @PrimaryKey
     @ColumnInfo(name = "item_id")
-    val articleId: String,
+    val itemId: String,
 
     @ColumnInfo(name = "feed_id")
     val feedId: String,
 
     @ColumnInfo(name = "title")
-    val articleTitle: String,
+    val itemTitle: String,
 
     @ColumnInfo(name = "updated")
-    val articleUpdatedMillisecond: String,
+    val itemUpdatedMillisecond: String,
 
     @ColumnInfo(name = "published")
-    val articlePublishedMillisecond: String,
+    val itemPublishedMillisecond: String,
 
     @ColumnInfo(name = "author")
     val author: String,

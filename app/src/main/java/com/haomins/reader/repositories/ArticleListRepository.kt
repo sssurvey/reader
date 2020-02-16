@@ -4,10 +4,12 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.haomins.reader.TheOldReaderService
 import com.haomins.reader.data.AppDatabase
+import com.haomins.reader.data.entities.ArticleEntity
 import com.haomins.reader.models.article.ArticleResponseModel
 import com.haomins.reader.models.article.ItemRefListResponseModel
 import com.haomins.reader.utils.getValue
 import com.haomins.reader.viewModels.LoginViewModel
+import io.reactivex.Single
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
@@ -43,8 +45,22 @@ class ArticleListRepository @Inject constructor(
         }
     }
 
+    fun loadAllArticleFromDatabaseByfeedId(feedId: String): Single<List<ArticleEntity>> {
+        return appDatabase.articleDao().getAll()
+    }
+
     private fun saveIndividualArticleToDatabase(articleResponseModel: ArticleResponseModel) {
         //TODO: FINISH ArticleResponseModel, save them to DB here
+        val articleEntity = ArticleEntity(
+            itemId = articleResponseModel.items.first().id,
+            itemTitle = articleResponseModel.items.first().title,
+            itemUpdatedMillisecond = articleResponseModel.items.first().updatedMillisecond.toString(),
+            itemPublishedMillisecond = articleResponseModel.items.first().publishedMillisecond.toString(),
+            author = articleResponseModel.items.first().author,
+            content = articleResponseModel.items.first().summary.content,
+            feedId = articleResponseModel.id
+        )
+        appDatabase.articleDao().insert(articleEntity)
     }
 
     inner class ArticleResponseModelObserver : DisposableSingleObserver<ArticleResponseModel>() {

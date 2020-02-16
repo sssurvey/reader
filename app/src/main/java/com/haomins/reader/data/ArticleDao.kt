@@ -11,7 +11,7 @@ import io.reactivex.Single
 interface ArticleDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg articleEntity: ArticleEntity)
+    fun insert(vararg articleEntity: ArticleEntity)
 
     @Query("DELETE FROM article_entity")
     fun clearTable()
