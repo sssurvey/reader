@@ -1,5 +1,6 @@
 package com.haomins.reader.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -18,5 +19,8 @@ interface ArticleDao {
 
     @Query("SELECT * FROM article_entity")
     fun getAll(): Single<List<ArticleEntity>>
+
+    @Query("SELECT * FROM article_entity WHERE feed_id == :feedId")
+    fun selectAllArticleByFeedId(feedId: String): LiveData<List<ArticleEntity>>
 
 }

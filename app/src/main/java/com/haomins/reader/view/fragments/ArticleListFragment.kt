@@ -1,16 +1,19 @@
 package com.haomins.reader.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
+import com.haomins.reader.data.entities.ArticleEntity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -75,7 +78,19 @@ class ArticleListFragment : Fragment() {
 
     private fun initiateArticleLoad(bundle: Bundle?) {
         bundle?.getString(SOURCE_FEED_ID)?.let {
-            articleListViewModel.loadArticles(it)
+            articleListViewModel.loadArticles(it).observe(this, Observer<List<ArticleEntity>> {
+                //TODO: all this is working, but not clean
+                Log.d("xxxx", it.size.toString())
+                val testList: MutableList<ArticleTitleListUiItem> = ArrayList()
+                it.forEach {
+                    testList.add(
+                        ArticleTitleListUiItem(
+                            title = it.itemTitle,
+                            postTime = "33:33 TT"
+                    ))
+                }
+                article_title_recycler_view.adapter = ArticleTitleListAdapter(testList)
+            })
         }
     }
 
