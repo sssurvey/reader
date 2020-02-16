@@ -13,6 +13,7 @@ import retrofit2.http.Query
 interface TheOldReaderService {
 
     companion object {
+        const val EMPTY = ""
         const val BASE_URL = "https://theoldreader.com/"
         const val AUTH_HEADER_VALUE_PREFIX = "GoogleLogin auth="
         const val DEFAULT_PROTOCOL = "https:"
@@ -70,6 +71,7 @@ interface TheOldReaderService {
      *
      * @param headerAuthValue User's auth token and auth meta data
      * @param feedId Feed ID for the source feed, all article returned belongs to this Feed ID
+     * @param continueLoad An ID for continue load after the first N amount (specified in 'n=')
      *
      * @return Single<ItemRefListResponseModel>
      */
@@ -78,6 +80,7 @@ interface TheOldReaderService {
         @Header("Authorization") headerAuthValue: String,
         @Query("s") feedId: String,
         @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT,
+        @Query("c") continueLoad: String = EMPTY,
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ItemRefListResponseModel>
 
