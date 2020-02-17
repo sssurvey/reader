@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.haomins.reader.TheOldReaderService
 import com.haomins.reader.data.entities.ArticleEntity
 import com.haomins.reader.repositories.ArticleListRepository
+import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleListFragment
 import io.reactivex.observers.DisposableObserver
 import javax.inject.Inject
 
 class ArticleListViewModel @Inject constructor(
-    private val articleListRepository: ArticleListRepository
+    private val articleListRepository: ArticleListRepository,
+    private val dateUtils: DateUtils
 ) : ViewModel() {
 
     val articleTitleUiItemsList by lazy {
@@ -20,6 +22,7 @@ class ArticleListViewModel @Inject constructor(
 
     private val articleQueryObserver by lazy {
         object : DisposableObserver<List<ArticleEntity>>() {
+
             override fun onComplete() {
                 Log.d("::DisposableObserver", "onComplete: " +
                         "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles")
@@ -33,12 +36,12 @@ class ArticleListViewModel @Inject constructor(
                         articleTitleUiItems.add(
                             ArticleListFragment.ArticleTitleListUiItem(
                                 title = it.itemTitle,
-                                postTime = "33:33 TT"
+                                postTime = dateUtils.to24HrString(it.itemPublishedMillisecond.toLong())
                             )
                         )
                     }
                     articleTitleUiItemsList.postValue(articleTitleUiItems)
-                    this::onComplete
+                    onComplete()
                 }
             }
 
