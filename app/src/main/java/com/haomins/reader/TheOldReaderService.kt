@@ -17,8 +17,8 @@ interface TheOldReaderService {
         const val BASE_URL = "https://theoldreader.com/"
         const val AUTH_HEADER_VALUE_PREFIX = "GoogleLogin auth="
         const val DEFAULT_PROTOCOL = "https:"
+        const val DEFAULT_ARTICLE_AMOUNT = 15
 
-        private const val DEFAULT_ARTICLE_AMOUNT = "15"
         private const val DEFAULT_OUTPUT_FORMAT = "json"
         private const val DEFAULT_SERVICE_NAME = "reader"
         private const val DEFAULT_CLIENT_NAME = "Reader"
@@ -79,7 +79,7 @@ interface TheOldReaderService {
     fun loadArticleListByFeed(
         @Header("Authorization") headerAuthValue: String,
         @Query("s") feedId: String,
-        @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT,
+        @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT.toString(),
         @Query("c") continueLoad: String = EMPTY,
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ItemRefListResponseModel>

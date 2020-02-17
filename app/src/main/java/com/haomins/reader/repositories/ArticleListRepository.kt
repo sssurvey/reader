@@ -1,7 +1,6 @@
 package com.haomins.reader.repositories
 
 import android.content.SharedPreferences
-import androidx.lifecycle.LiveData
 import com.haomins.reader.TheOldReaderService
 import com.haomins.reader.data.AppDatabase
 import com.haomins.reader.data.entities.ArticleEntity
@@ -9,7 +8,6 @@ import com.haomins.reader.models.article.ArticleResponseModel
 import com.haomins.reader.models.article.ItemRefListResponseModel
 import com.haomins.reader.utils.getValue
 import com.haomins.reader.viewModels.LoginViewModel
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject

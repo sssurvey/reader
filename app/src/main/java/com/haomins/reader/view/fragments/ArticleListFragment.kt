@@ -1,11 +1,9 @@
 package com.haomins.reader.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
-import com.haomins.reader.data.entities.ArticleEntity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -31,19 +28,9 @@ class ArticleListFragment : Fragment() {
         LinearLayoutManager(context)
     }
 
-    private val articleItemListObserver by lazy {
-        Observer<List<ArticleEntity>> {
-            Log.d("xxxx", it.size.toString())
-            val testList: MutableList<ArticleTitleListUiItem> = ArrayList()
-            it.forEach {
-                testList.add(
-                    ArticleTitleListUiItem(
-                        title = it.itemTitle,
-                        postTime = "33:33 TT"
-                    )
-                )
-            }
-            article_title_recycler_view.adapter = ArticleTitleListAdapter(testList)
+    private val articleTitleListUiItemObserver by lazy {
+        Observer<List<ArticleTitleListUiItem>> {
+            article_title_recycler_view.adapter = ArticleTitleListAdapter(it)
         }
     }
 
@@ -69,32 +56,26 @@ class ArticleListFragment : Fragment() {
         AndroidSupportInjection.inject(this)
         articleListViewModel =
             ViewModelProviders.of(this, viewModelFactory)[ArticleListViewModel::class.java]
+        registerLiveDataObservers()
         article_title_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = recyclerLayoutManager
         }
-        //TODO: Delete test
-        testData()
         initiateArticleLoad(arguments)
     }
 
-    @VisibleForTesting
-    private fun testData() {
-        val testList: MutableList<ArticleTitleListUiItem> = ArrayList()
-        for (i in 0..99) {
-            testList.add(
-                ArticleTitleListUiItem(
-                    title = "This is the test data ahah",
-                    postTime = "11:20 AM"
-                )
-            )
-        }
-        article_title_recycler_view.adapter = ArticleTitleListAdapter(testList)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        articleListViewModel.disposeObservers()
+    }
+
+    private fun registerLiveDataObservers() {
+        articleListViewModel.articleTitleUiItemsList.observe(this, articleTitleListUiItemObserver)
     }
 
     private fun initiateArticleLoad(bundle: Bundle?) {
         bundle?.getString(SOURCE_FEED_ID)?.let {
-            articleListViewModel.loadArticles(it).observe(this, articleItemListObserver)
+            articleListViewModel.loadArticles(it)
         }
     }
 
