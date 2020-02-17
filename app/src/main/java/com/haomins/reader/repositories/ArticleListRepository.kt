@@ -19,6 +19,7 @@ class ArticleListRepository @Inject constructor(
 ) {
 
     private var continueId = ""
+    private var isWaitingOnResponse = false
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
         theOldReaderService.loadArticleListByFeed(
@@ -39,21 +40,27 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun continueLoadArticleItemRefs(feedId: String) {
-        theOldReaderService.loadArticleListByFeed(
-            headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                    + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
-            feedId = feedId,
-            continueLoad = continueId
-        ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
-            override fun onSuccess(t: ItemRefListResponseModel) {
-                continueId = t.continuation
-                if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
-            }
+        //TODO: the flag for avoid executing multiple times is a bad solution, fix it
+        if (!isWaitingOnResponse) {
+            isWaitingOnResponse = true
+            theOldReaderService.loadArticleListByFeed(
+                headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
+                        + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
+                feedId = feedId,
+                continueLoad = continueId
+            ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+                override fun onSuccess(t: ItemRefListResponseModel) {
+                    continueId = t.continuation
+                    isWaitingOnResponse = false
+                    if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                }
 
-            override fun onError(e: Throwable) {
-                e.printStackTrace()
-            }
-        })
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+            })
+        }
+
     }
 
     private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel) {
