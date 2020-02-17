@@ -20,8 +20,8 @@ class ArticleListViewModel @Inject constructor(
         MutableLiveData<List<ArticleListFragment.ArticleTitleListUiItem>>()
     }
 
-    private val articleTitleUiItems: MutableList<ArticleListFragment.ArticleTitleListUiItem> =
-        ArrayList()
+    private val articleTitleUiItems: MutableSet<ArticleListFragment.ArticleTitleListUiItem> =
+        HashSet()
 
     private val articleItemQueryObserver = object : DisposableObserver<List<ArticleEntity>>() {
 
@@ -33,7 +33,6 @@ class ArticleListViewModel @Inject constructor(
         }
 
         override fun onNext(t: List<ArticleEntity>) {
-            Log.d("xxx", "currently loaded: ${t.size}")
             if (t.isNotEmpty()) {
                 t.forEach {
                     articleTitleUiItems.add(
@@ -43,7 +42,7 @@ class ArticleListViewModel @Inject constructor(
                         )
                     )
                 }
-                articleTitleUiItemsList.postValue(articleTitleUiItems)
+                articleTitleUiItemsList.postValue(articleTitleUiItems.toList())
             }
         }
 
