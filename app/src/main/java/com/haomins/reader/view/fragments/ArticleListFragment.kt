@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
+import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -30,7 +31,8 @@ class ArticleListFragment : Fragment() {
 
     private val articleTitleListUiItemObserver by lazy {
         Observer<List<ArticleTitleListUiItem>> {
-            article_title_recycler_view.adapter = ArticleTitleListAdapter(it)
+            if (it.isEmpty()) this.showToast("Empty list, is feed valid?")
+            else article_title_recycler_view.adapter = ArticleTitleListAdapter(it)
         }
     }
 

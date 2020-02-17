@@ -25,7 +25,7 @@ class ArticleListRepository @Inject constructor(
             feedId = feedId
         ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
             override fun onSuccess(t: ItemRefListResponseModel) {
-                loadIndividualArticleInformation(t)
+                if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
             }
 
             override fun onError(e: Throwable) {
