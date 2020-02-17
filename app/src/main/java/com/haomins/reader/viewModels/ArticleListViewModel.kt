@@ -8,7 +8,6 @@ import com.haomins.reader.data.entities.ArticleEntity
 import com.haomins.reader.repositories.ArticleListRepository
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleListFragment
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import javax.inject.Inject
 
@@ -23,38 +22,19 @@ class ArticleListViewModel @Inject constructor(
 
     private val articleTitleUiItems: MutableList<ArticleListFragment.ArticleTitleListUiItem> =
         ArrayList()
-    private val compositeDisposable = CompositeDisposable()
 
-    fun loadArticles(feedId: String) {
-        articleListRepository.loadArticleItemRefs(feedId).subscribe(ArticleQueryObserver())
-    }
-
-    fun continueLoadArticles(feedId: String) {
-        articleListRepository.continueLoadArticleItemRefs(feedId).subscribe(ArticleQueryObserver())
-    }
-
-    fun disposeObservers() {
-        if (!compositeDisposable.isDisposed) {
-            compositeDisposable.dispose()
-        }
-    }
-
-    inner class ArticleQueryObserver : DisposableObserver<List<ArticleEntity>>() {
-
-        init {
-            compositeDisposable.add(this)
-        }
+    private val articleItemQueryObserver = object : DisposableObserver<List<ArticleEntity>>() {
 
         override fun onComplete() {
             Log.d(
                 "::DisposableObserver", "onComplete: " +
                         "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles"
             )
-            dispose()
         }
 
         override fun onNext(t: List<ArticleEntity>) {
-            if (t.size >= TheOldReaderService.DEFAULT_ARTICLE_AMOUNT) {
+            Log.d("xxx", "currently loaded: ${t.size}")
+            if (t.isNotEmpty()) {
                 t.forEach {
                     articleTitleUiItems.add(
                         ArticleListFragment.ArticleTitleListUiItem(
@@ -64,7 +44,6 @@ class ArticleListViewModel @Inject constructor(
                     )
                 }
                 articleTitleUiItemsList.postValue(articleTitleUiItems)
-                onComplete()
             }
         }
 
@@ -73,4 +52,15 @@ class ArticleListViewModel @Inject constructor(
         }
     }
 
+    fun loadArticles(feedId: String) {
+        articleListRepository.loadArticleItemRefs(feedId).subscribe(articleItemQueryObserver)
+    }
+
+    fun continueLoadArticles(feedId: String) {
+        articleListRepository.continueLoadArticleItemRefs(feedId)
+    }
+
+    fun disposeObservers() {
+        articleItemQueryObserver.dispose()
+    }
 }
