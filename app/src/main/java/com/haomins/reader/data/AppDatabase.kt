@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.haomins.reader.data.entities.ArticleEntity
 import com.haomins.reader.data.entities.SubscriptionEntity
 
-@Database(entities = [SubscriptionEntity::class, ArticleEntity::class], version = 1)
+@Database(entities = [SubscriptionEntity::class, ArticleEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

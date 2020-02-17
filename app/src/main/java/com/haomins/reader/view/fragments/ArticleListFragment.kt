@@ -98,7 +98,7 @@ class ArticleListFragment : Fragment() {
         }
     }
 
-    inner class ArticleTitleListAdapter(private val articleTitleListUiItems: List<ArticleTitleListUiItem>) :
+    private inner class ArticleTitleListAdapter(private val articleTitleListUiItems: List<ArticleTitleListUiItem>) :
         RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
 
         inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
