@@ -30,7 +30,7 @@ class ArticleListViewModel @Inject constructor(
             }
 
             override fun onNext(t: List<ArticleEntity>) {
-                if (t.size == TheOldReaderService.DEFAULT_ARTICLE_AMOUNT) {
+                if (t.size >= TheOldReaderService.DEFAULT_ARTICLE_AMOUNT) {
                     val articleTitleUiItems: MutableList<ArticleListFragment.ArticleTitleListUiItem> = ArrayList()
                     t.forEach {
                         articleTitleUiItems.add(
