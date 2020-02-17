@@ -94,11 +94,6 @@ class ArticleListFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        articleListViewModel.disposeObservers()
-    }
-
     private fun registerLiveDataObservers() {
         articleListViewModel.articleTitleUiItemsList.observe(this, articleTitleListUiItemObserver)
     }

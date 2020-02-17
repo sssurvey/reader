@@ -23,43 +23,38 @@ class ArticleListViewModel @Inject constructor(
     private val articleTitleUiItems: MutableSet<ArticleListFragment.ArticleTitleListUiItem> =
         HashSet()
 
-    private val articleItemQueryObserver = object : DisposableObserver<List<ArticleEntity>>() {
-
-        override fun onComplete() {
-            Log.d(
-                "::DisposableObserver", "onComplete: " +
-                        "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles"
-            )
-        }
-
-        override fun onNext(t: List<ArticleEntity>) {
-            if (t.isNotEmpty()) {
-                t.forEach {
-                    articleTitleUiItems.add(
-                        ArticleListFragment.ArticleTitleListUiItem(
-                            title = it.itemTitle,
-                            postTime = dateUtils.to24HrString(it.itemPublishedMillisecond)
-                        )
-                    )
-                }
-                articleTitleUiItemsList.postValue(articleTitleUiItems.toList())
-            }
-        }
-
-        override fun onError(e: Throwable) {
-            Log.d("::DisposableObserver", "onError: ${e.printStackTrace()}")
-        }
-    }
-
     fun loadArticles(feedId: String) {
-        articleListRepository.loadArticleItemRefs(feedId).subscribe(articleItemQueryObserver)
+        articleListRepository.loadArticleItemRefs(feedId).subscribe(object : DisposableObserver<List<ArticleEntity>>() {
+
+            override fun onComplete() {
+                Log.d(
+                    "::DisposableObserver", "onComplete: " +
+                            "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles"
+                )
+            }
+
+            override fun onNext(t: List<ArticleEntity>) {
+                if (t.isNotEmpty()) {
+                    t.forEach {
+                        articleTitleUiItems.add(
+                            ArticleListFragment.ArticleTitleListUiItem(
+                                title = it.itemTitle,
+                                postTime = dateUtils.to24HrString(it.itemPublishedMillisecond)
+                            )
+                        )
+                    }
+                    articleTitleUiItemsList.postValue(articleTitleUiItems.toList())
+                }
+            }
+
+            override fun onError(e: Throwable) {
+                Log.d("::DisposableObserver", "onError: ${e.printStackTrace()}")
+            }
+        })
     }
 
     fun continueLoadArticles(feedId: String) {
         articleListRepository.continueLoadArticleItemRefs(feedId)
     }
 
-    fun disposeObservers() {
-        articleItemQueryObserver.dispose()
-    }
 }
