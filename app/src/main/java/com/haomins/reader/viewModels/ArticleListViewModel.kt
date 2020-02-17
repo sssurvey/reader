@@ -39,7 +39,8 @@ class ArticleListViewModel @Inject constructor(
                         articleTitleUiItems.add(
                             ArticleListFragment.ArticleTitleListUiItem(
                                 title = it.itemTitle,
-                                postTime = dateUtils.to24HrString(it.itemPublishedMillisecond)
+                                postTime = dateUtils.to24HrString(it.itemPublishedMillisecond),
+                                postTimeMillisecond = it.itemPublishedMillisecond
                             )
                         )
                     }

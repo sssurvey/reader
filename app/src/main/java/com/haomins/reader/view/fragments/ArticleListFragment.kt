@@ -50,6 +50,9 @@ class ArticleListFragment : Fragment() {
                         articleTitleUiItems.add(item)
                     }
                 }
+                articleTitleUiItems.sortByDescending {
+                    it.postTimeMillisecond
+                }
                 article_title_recycler_view.adapter?.notifyDataSetChanged()
             }
         }
@@ -68,7 +71,8 @@ class ArticleListFragment : Fragment() {
 
     data class ArticleTitleListUiItem(
         val title: String,
-        val postTime: String
+        val postTime: String,
+        val postTimeMillisecond: Long
     )
 
     override fun onCreateView(
