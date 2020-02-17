@@ -56,12 +56,12 @@ class ArticleListFragment : Fragment() {
         AndroidSupportInjection.inject(this)
         articleListViewModel =
             ViewModelProviders.of(this, viewModelFactory)[ArticleListViewModel::class.java]
+        loadArticleList(arguments)
         registerLiveDataObservers()
         article_title_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = recyclerLayoutManager
         }
-        initiateArticleLoad(arguments)
     }
 
     override fun onDestroyView() {
@@ -73,7 +73,7 @@ class ArticleListFragment : Fragment() {
         articleListViewModel.articleTitleUiItemsList.observe(this, articleTitleListUiItemObserver)
     }
 
-    private fun initiateArticleLoad(bundle: Bundle?) {
+    private fun loadArticleList(bundle: Bundle?) {
         bundle?.getString(SOURCE_FEED_ID)?.let {
             articleListViewModel.loadArticles(it)
         }
