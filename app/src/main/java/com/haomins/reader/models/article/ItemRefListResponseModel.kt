@@ -5,7 +5,10 @@ import com.google.gson.annotations.SerializedName
 data class ItemRefListResponseModel(
 
     @SerializedName("itemRefs")
-    val itemRefs: List<RefItemModel>
+    val itemRefs: List<RefItemModel>,
+
+    @SerializedName("continuation")
+    val continuation: String
 
 )
 

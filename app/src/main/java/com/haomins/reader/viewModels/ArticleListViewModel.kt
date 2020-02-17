@@ -8,6 +8,7 @@ import com.haomins.reader.data.entities.ArticleEntity
 import com.haomins.reader.repositories.ArticleListRepository
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleListFragment
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import javax.inject.Inject
 
@@ -20,44 +21,55 @@ class ArticleListViewModel @Inject constructor(
         MutableLiveData<List<ArticleListFragment.ArticleTitleListUiItem>>()
     }
 
-    private val articleQueryObserver by lazy {
-        object : DisposableObserver<List<ArticleEntity>>() {
-
-            override fun onComplete() {
-                Log.d("::DisposableObserver", "onComplete: " +
-                        "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles")
-                dispose()
-            }
-
-            override fun onNext(t: List<ArticleEntity>) {
-                if (t.size >= TheOldReaderService.DEFAULT_ARTICLE_AMOUNT) {
-                    val articleTitleUiItems: MutableList<ArticleListFragment.ArticleTitleListUiItem> = ArrayList()
-                    t.forEach {
-                        articleTitleUiItems.add(
-                            ArticleListFragment.ArticleTitleListUiItem(
-                                title = it.itemTitle,
-                                postTime = dateUtils.to24HrString(it.itemPublishedMillisecond.toLong())
-                            )
-                        )
-                    }
-                    articleTitleUiItemsList.postValue(articleTitleUiItems)
-                    onComplete()
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                Log.d("::DisposableObserver", "onError: ${e.printStackTrace()}")
-            }
-        }
-    }
+    private val articleTitleUiItems: MutableList<ArticleListFragment.ArticleTitleListUiItem> =
+        ArrayList()
+    private val compositeDisposable = CompositeDisposable()
 
     fun loadArticles(feedId: String) {
-        articleListRepository.loadArticleItemRefs(feedId).subscribe(articleQueryObserver)
+        articleListRepository.loadArticleItemRefs(feedId).subscribe(ArticleQueryObserver())
+    }
+
+    fun continueLoadArticles(feedId: String) {
+        articleListRepository.continueLoadArticleItemRefs(feedId).subscribe(ArticleQueryObserver())
     }
 
     fun disposeObservers() {
-        if (!articleQueryObserver.isDisposed) {
-            articleQueryObserver.dispose()
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.dispose()
+        }
+    }
+
+    inner class ArticleQueryObserver : DisposableObserver<List<ArticleEntity>>() {
+
+        init {
+            compositeDisposable.add(this)
+        }
+
+        override fun onComplete() {
+            Log.d(
+                "::DisposableObserver", "onComplete: " +
+                        "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles"
+            )
+            dispose()
+        }
+
+        override fun onNext(t: List<ArticleEntity>) {
+            if (t.size >= TheOldReaderService.DEFAULT_ARTICLE_AMOUNT) {
+                t.forEach {
+                    articleTitleUiItems.add(
+                        ArticleListFragment.ArticleTitleListUiItem(
+                            title = it.itemTitle,
+                            postTime = dateUtils.to24HrString(it.itemPublishedMillisecond.toLong())
+                        )
+                    )
+                }
+                articleTitleUiItemsList.postValue(articleTitleUiItems)
+                onComplete()
+            }
+        }
+
+        override fun onError(e: Throwable) {
+            Log.d("::DisposableObserver", "onError: ${e.printStackTrace()}")
         }
     }
 

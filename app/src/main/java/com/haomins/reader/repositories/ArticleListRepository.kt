@@ -18,21 +18,37 @@ class ArticleListRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) {
 
-    fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
-        theOldReaderService.loadArticleListByFeed(
-            headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                    + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
-            feedId = feedId
-        ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+    private var continueId = ""
+    private val loadArticleItemRefObserver by lazy {
+        object : DisposableSingleObserver<ItemRefListResponseModel>() {
             override fun onSuccess(t: ItemRefListResponseModel) {
+                continueId = t.continuation
                 if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                dispose()
             }
 
             override fun onError(e: Throwable) {
                 e.printStackTrace()
             }
-        })
+        }
+    }
 
+    fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
+        theOldReaderService.loadArticleListByFeed(
+            headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
+                    + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
+            feedId = feedId
+        ).subscribe(loadArticleItemRefObserver)
+        return appDatabase.articleDao().selectAllArticleByFeedId(feedId)
+    }
+
+    fun continueLoadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
+        theOldReaderService.loadArticleListByFeed(
+            headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
+                    + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
+            feedId = feedId,
+            continueLoad = continueId
+        ).subscribe(loadArticleItemRefObserver)
         return appDatabase.articleDao().selectAllArticleByFeedId(feedId)
     }
 

@@ -21,9 +21,17 @@ import javax.inject.Inject
 
 class ArticleListFragment : Fragment() {
 
+    companion object {
+
+        const val TAG = "ArticleListFragment"
+
+        private const val CONTINUE_LOAD_THRASH_HOLD = 0.9F
+    }
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var articleListViewModel: ArticleListViewModel
+    private lateinit var feedId: String
 
     private val recyclerLayoutManager by lazy {
         LinearLayoutManager(context)
@@ -36,14 +44,25 @@ class ArticleListFragment : Fragment() {
         }
     }
 
+    private val recyclerViewOnScrollListener by lazy {
+        object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = recyclerView.adapter!!.itemCount
+                val lastItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                val loadMore = lastItemPosition.toFloat()/totalItemCount.toFloat() > CONTINUE_LOAD_THRASH_HOLD
+
+                super.onScrolled(recyclerView, dx, dy)
+                if (loadMore) {
+                    articleListViewModel.continueLoadArticles(feedId)
+                }
+            }
+        }
+    }
+
     data class ArticleTitleListUiItem(
         val title: String,
         val postTime: String
     )
-
-    companion object {
-        const val TAG = "ArticleListFragment"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,6 +82,7 @@ class ArticleListFragment : Fragment() {
         article_title_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = recyclerLayoutManager
+            addOnScrollListener(recyclerViewOnScrollListener)
         }
     }
 
@@ -77,7 +97,8 @@ class ArticleListFragment : Fragment() {
 
     private fun loadArticleList(bundle: Bundle?) {
         bundle?.getString(SOURCE_FEED_ID)?.let {
-            articleListViewModel.loadArticles(it)
+            feedId = it
+            articleListViewModel.loadArticles(feedId)
         }
     }
 
