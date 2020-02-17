@@ -19,37 +19,41 @@ class ArticleListRepository @Inject constructor(
 ) {
 
     private var continueId = ""
-    private val loadArticleItemRefObserver by lazy {
-        object : DisposableSingleObserver<ItemRefListResponseModel>() {
-            override fun onSuccess(t: ItemRefListResponseModel) {
-                continueId = t.continuation
-                if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
-                dispose()
-            }
-
-            override fun onError(e: Throwable) {
-                e.printStackTrace()
-            }
-        }
-    }
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
         theOldReaderService.loadArticleListByFeed(
             headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
                     + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
             feedId = feedId
-        ).subscribe(loadArticleItemRefObserver)
+        ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+            override fun onSuccess(t: ItemRefListResponseModel) {
+                continueId = t.continuation
+                if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+            }
+
+            override fun onError(e: Throwable) {
+                e.printStackTrace()
+            }
+        })
         return appDatabase.articleDao().selectAllArticleByFeedId(feedId)
     }
 
-    fun continueLoadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
+    fun continueLoadArticleItemRefs(feedId: String) {
         theOldReaderService.loadArticleListByFeed(
             headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
                     + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
             feedId = feedId,
             continueLoad = continueId
-        ).subscribe(loadArticleItemRefObserver)
-        return appDatabase.articleDao().selectAllArticleByFeedId(feedId)
+        ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+            override fun onSuccess(t: ItemRefListResponseModel) {
+                continueId = t.continuation
+                if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+            }
+
+            override fun onError(e: Throwable) {
+                e.printStackTrace()
+            }
+        })
     }
 
     private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel) {
@@ -66,8 +70,8 @@ class ArticleListRepository @Inject constructor(
         val articleEntity = ArticleEntity(
             itemId = articleResponseModel.items.first().id,
             itemTitle = articleResponseModel.items.first().title,
-            itemUpdatedMillisecond = articleResponseModel.items.first().updatedMillisecond.toString(),
-            itemPublishedMillisecond = articleResponseModel.items.first().publishedMillisecond.toString(),
+            itemUpdatedMillisecond = articleResponseModel.items.first().updatedMillisecond,
+            itemPublishedMillisecond = articleResponseModel.items.first().publishedMillisecond,
             author = articleResponseModel.items.first().author,
             content = articleResponseModel.items.first().summary.content,
             feedId = articleResponseModel.id

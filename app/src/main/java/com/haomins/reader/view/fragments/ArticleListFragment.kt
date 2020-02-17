@@ -33,6 +33,8 @@ class ArticleListFragment : Fragment() {
     private lateinit var articleListViewModel: ArticleListViewModel
     private lateinit var feedId: String
 
+    private val articleTitleUiItems: MutableList<ArticleTitleListUiItem> = ArrayList()
+
     private val recyclerLayoutManager by lazy {
         LinearLayoutManager(context)
     }
@@ -40,19 +42,24 @@ class ArticleListFragment : Fragment() {
     private val articleTitleListUiItemObserver by lazy {
         Observer<List<ArticleTitleListUiItem>> {
             if (it.isEmpty()) this.showToast("Empty list, is feed valid?")
-            else article_title_recycler_view.adapter = ArticleTitleListAdapter(it)
+            else {
+                //TODO: This is some crazy shit code, change it, needs to optimize the performance
+                val set = articleTitleUiItems.toSet()
+                for (item in it) {
+                    if (!set.contains(item)) {
+                        articleTitleUiItems.add(item)
+                    }
+                }
+                article_title_recycler_view.adapter?.notifyDataSetChanged()
+            }
         }
     }
 
     private val recyclerViewOnScrollListener by lazy {
         object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val totalItemCount = recyclerView.adapter!!.itemCount
-                val lastItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                val loadMore = lastItemPosition.toFloat()/totalItemCount.toFloat() > CONTINUE_LOAD_THRASH_HOLD
-
-                super.onScrolled(recyclerView, dx, dy)
-                if (loadMore) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
                     articleListViewModel.continueLoadArticles(feedId)
                 }
             }
@@ -81,6 +88,7 @@ class ArticleListFragment : Fragment() {
         registerLiveDataObservers()
         article_title_recycler_view.apply {
             setHasFixedSize(true)
+            adapter = ArticleTitleListAdapter(articleTitleUiItems)
             layoutManager = recyclerLayoutManager
             addOnScrollListener(recyclerViewOnScrollListener)
         }

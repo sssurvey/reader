@@ -18,10 +18,10 @@ data class ArticleEntity(
     val itemTitle: String,
 
     @ColumnInfo(name = "updated")
-    val itemUpdatedMillisecond: String,
+    val itemUpdatedMillisecond: Long,
 
     @ColumnInfo(name = "published")
-    val itemPublishedMillisecond: String,
+    val itemPublishedMillisecond: Long,
 
     @ColumnInfo(name = "author")
     val author: String,
