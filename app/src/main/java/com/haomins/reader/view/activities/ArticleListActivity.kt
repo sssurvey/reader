@@ -28,7 +28,7 @@ class ArticleListActivity : AppCompatActivity() {
     }
 
     fun showArticleDetailsFragment(articleId: String) {
-        this.showToast(articleId)
+        showToast(articleId)
     }
 
     private fun showArticleListFragment() {
