@@ -137,9 +137,8 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun articleTitleListRecyclerViewItemClickedAt(position: Int) {
-        val articleId = articleListViewModel.getArticleId(position)
         activity?.let {
-            (it as ArticleListActivity).showArticleDetailsFragment(articleId)
+            (it as ArticleListActivity).startArticleDetailActivity(position, ArrayList())
         }
     }
 

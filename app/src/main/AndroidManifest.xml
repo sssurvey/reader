@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.haomins.reader.view.activities.ArticleListActivity"/>
+        <activity android:name="com.haomins.reader.view.activities.ArticleDetailActivity"/>
 
     </application>
 

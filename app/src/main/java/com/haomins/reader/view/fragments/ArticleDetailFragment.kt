@@ -10,7 +10,6 @@ import com.haomins.reader.R
 class ArticleDetailFragment : Fragment() {
 
     companion object {
-
         const val TAG = "ArticleDetailFragment"
     }
 
