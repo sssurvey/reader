@@ -3,6 +3,7 @@ package com.haomins.reader.view.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.haomins.reader.R
+import com.haomins.reader.utils.showToast
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.ArticleListFragment
@@ -24,6 +25,10 @@ class ArticleListActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         slideOutAnimation()
+    }
+
+    fun startArticleActivity(articleId: String) {
+        this.showToast(articleId)
     }
 
     private fun showArticleListFragment() {

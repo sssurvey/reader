@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
 import com.haomins.reader.utils.showToast
+import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -106,6 +107,13 @@ class ArticleListFragment : Fragment() {
         }
     }
 
+    private fun articleTitleListRecyclerViewItemClickedAt(position: Int) {
+        val articleId = articleListViewModel.getArticleId(position)
+        activity?.let {
+            (it as ArticleListActivity).startArticleActivity(articleId)
+        }
+    }
+
     private inner class ArticleTitleListAdapter(private val articleTitleListUiItems: List<ArticleTitleListUiItem>) :
         RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
 
@@ -125,6 +133,13 @@ class ArticleListFragment : Fragment() {
             holder.viewHolder.article_title_text_view.text = articleTitleListUiItems[position].title
             holder.viewHolder.article_publish_time_text_view.text =
                 articleTitleListUiItems[position].postTime
+            setOnClick(holder, position)
+        }
+
+        private fun setOnClick(holder: CustomViewHolder, position: Int) {
+            holder.viewHolder.setOnClickListener {
+                articleTitleListRecyclerViewItemClickedAt(position)
+            }
         }
 
     }

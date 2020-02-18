@@ -22,6 +22,7 @@ class ArticleListViewModel @Inject constructor(
 
     private val articleTitleUiItems: MutableSet<ArticleListFragment.ArticleTitleListUiItem> =
         HashSet()
+    private var queryResultList: List<ArticleEntity> = ArrayList()
 
     fun loadArticles(feedId: String) {
         articleListRepository.loadArticleItemRefs(feedId).subscribe(object : DisposableObserver<List<ArticleEntity>>() {
@@ -35,6 +36,7 @@ class ArticleListViewModel @Inject constructor(
 
             override fun onNext(t: List<ArticleEntity>) {
                 if (t.isNotEmpty()) {
+                    queryResultList = t
                     t.forEach {
                         articleTitleUiItems.add(
                             ArticleListFragment.ArticleTitleListUiItem(
@@ -56,6 +58,10 @@ class ArticleListViewModel @Inject constructor(
 
     fun continueLoadArticles(feedId: String) {
         articleListRepository.continueLoadArticleItemRefs(feedId)
+    }
+
+    fun getArticleId(position: Int): String {
+        return queryResultList[position].itemId
     }
 
 }
