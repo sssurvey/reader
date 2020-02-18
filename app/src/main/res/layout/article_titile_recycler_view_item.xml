@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -11,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/cardViewMargin"
+        android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="@dimen/cardViewRadius"
         app:cardElevation="@dimen/cardViewElevation">
 

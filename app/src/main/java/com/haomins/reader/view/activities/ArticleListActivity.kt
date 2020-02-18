@@ -27,7 +27,7 @@ class ArticleListActivity : AppCompatActivity() {
         slideOutAnimation()
     }
 
-    fun startArticleActivity(articleId: String) {
+    fun showArticleDetailsFragment(articleId: String) {
         this.showToast(articleId)
     }
 
