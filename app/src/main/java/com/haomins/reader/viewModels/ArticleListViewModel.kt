@@ -46,7 +46,8 @@ class ArticleListViewModel @Inject constructor(
                             ArticleListFragment.ArticleTitleListUiItem(
                                 title = it.itemTitle,
                                 postTime = dateUtils.to24HrString(it.itemPublishedMillisecond),
-                                _postTimeMillisecond = it.itemPublishedMillisecond
+                                _postTimeMillisecond = it.itemPublishedMillisecond,
+                                _itemId = it.itemId
                             )
                         )
                     }
@@ -65,9 +66,4 @@ class ArticleListViewModel @Inject constructor(
         isLoading.postValue(true)
         articleListRepository.continueLoadArticleItemRefs(feedId)
     }
-
-    fun getArticleId(position: Int): String {
-        return queryResultList[position].itemId
-    }
-
 }

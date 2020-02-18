@@ -1,15 +1,14 @@
 package com.haomins.reader.view.activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import com.haomins.reader.R
 import com.haomins.reader.view.fragments.ArticleDetailFragment
 
 class ArticleDetailActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_detail)
         showArticleDetailFragment()
     }
@@ -21,9 +20,9 @@ class ArticleDetailActivity : AppCompatActivity() {
             ArticleListActivity.ARTICLE_ITEM_POSITION,
             intent.getIntExtra(ArticleListActivity.ARTICLE_ITEM_POSITION, -1)
         )
-        bundle.putStringArrayList(
-            ArticleListActivity.ARTICLE_ITEM_ID_LIST,
-            intent.getStringArrayListExtra(ArticleListActivity.ARTICLE_ITEM_ID_LIST)
+        bundle.putStringArray(
+            ArticleListActivity.ARTICLE_ITEM_ID_ARRAY,
+            intent.getStringArrayExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
         )
         articleDetailFragment.arguments = bundle
 

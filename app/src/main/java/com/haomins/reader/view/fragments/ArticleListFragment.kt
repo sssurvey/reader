@@ -33,7 +33,8 @@ class ArticleListFragment : Fragment() {
     data class ArticleTitleListUiItem(
         val title: String,
         val postTime: String,
-        val _postTimeMillisecond: Long
+        val _postTimeMillisecond: Long,
+        val _itemId: String
     )
 
     @Inject
@@ -137,8 +138,11 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun articleTitleListRecyclerViewItemClickedAt(position: Int) {
+        val itemIdList: List<String> = articleTitleUiItems.map {
+            it._itemId
+        }
         activity?.let {
-            (it as ArticleListActivity).startArticleDetailActivity(position, ArrayList())
+            (it as ArticleListActivity).startArticleDetailActivity(position, itemIdList.toTypedArray())
         }
     }
 

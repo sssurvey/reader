@@ -13,7 +13,7 @@ class ArticleListActivity : AppCompatActivity() {
     companion object {
         const val SOURCE_FEED_ID = "SOURCE_FEED_ID"
         const val ARTICLE_ITEM_POSITION = "ARTICLE_ITEM_POSITION"
-        const val ARTICLE_ITEM_ID_LIST = "ARTICLE_ITEM_ID_LIST"
+        const val ARTICLE_ITEM_ID_ARRAY = "ARTICLE_ITEM_ID_ARRAY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,10 +28,10 @@ class ArticleListActivity : AppCompatActivity() {
         slideOutAnimation()
     }
 
-    fun startArticleDetailActivity(position: Int, articleIdList: ArrayList<String>) {
+    fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
         val intent = Intent(this, ArticleDetailActivity::class.java)
         intent.putExtra(ARTICLE_ITEM_POSITION, position)
-        intent.putStringArrayListExtra(ARTICLE_ITEM_ID_LIST, articleIdList)
+        intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleIdArray)
         startActivity(intent)
     }
 
