@@ -6,6 +6,7 @@ import com.haomins.reader.data.AppDatabase
 import com.haomins.reader.data.entities.SubscriptionEntity
 import com.haomins.reader.models.subscription.SubscriptionItemModel
 import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
+import com.haomins.reader.utils.getValue
 import com.haomins.reader.viewModels.LoginViewModel
 import io.reactivex.Single
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class SourceSubscriptionListRepository @Inject constructor(
     fun loadSubList(): Single<SubscriptionSourceListResponseModel> {
         return theOldReaderService.loadSubscriptionSourceList(
             headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                    + sharedPreferences.getString(LoginViewModel.AUTH_CODE_KEY, ""))
+                    + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY))
         )
     }
 
@@ -27,7 +28,9 @@ class SourceSubscriptionListRepository @Inject constructor(
         return appDatabase.subscriptionDao().getAll()
     }
 
-    fun saveSubListToDB(subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel) {
+    fun saveSubListToDB(subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel,
+                        clearOldTable: Boolean = true) {
+        if (clearOldTable) appDatabase.subscriptionDao().clearTable()
         val entityList =
             convertSubscriptionItemModelToEntity(subscriptionSourceListResponseModel.subscriptions)
         appDatabase.subscriptionDao().insertAll(*entityList.toTypedArray())
