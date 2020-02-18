@@ -28,6 +28,12 @@ class ArticleListFragment : Fragment() {
         private const val CONTINUE_LOAD_THRASH_HOLD = 0.9F
     }
 
+    data class ArticleTitleListUiItem(
+        val title: String,
+        val postTime: String,
+        val _postTimeMillisecond: Long
+    )
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var articleListViewModel: ArticleListViewModel
@@ -51,7 +57,7 @@ class ArticleListFragment : Fragment() {
                     }
                 }
                 articleTitleUiItems.sortByDescending {
-                    it.postTimeMillisecond
+                    it._postTimeMillisecond
                 }
                 article_title_recycler_view.adapter?.notifyDataSetChanged()
             }
@@ -68,12 +74,6 @@ class ArticleListFragment : Fragment() {
             }
         }
     }
-
-    data class ArticleTitleListUiItem(
-        val title: String,
-        val postTime: String,
-        val postTimeMillisecond: Long
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater,

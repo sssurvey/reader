@@ -40,7 +40,7 @@ class ArticleListViewModel @Inject constructor(
                             ArticleListFragment.ArticleTitleListUiItem(
                                 title = it.itemTitle,
                                 postTime = dateUtils.to24HrString(it.itemPublishedMillisecond),
-                                postTimeMillisecond = it.itemPublishedMillisecond
+                                _postTimeMillisecond = it.itemPublishedMillisecond
                             )
                         )
                     }
