@@ -19,12 +19,16 @@ class ArticleListViewModel @Inject constructor(
     val articleTitleUiItemsList by lazy {
         MutableLiveData<List<ArticleListFragment.ArticleTitleListUiItem>>()
     }
+    val isLoading by lazy {
+        MutableLiveData<Boolean>(false)
+    }
 
     private val articleTitleUiItems: MutableSet<ArticleListFragment.ArticleTitleListUiItem> =
         HashSet()
     private var queryResultList: List<ArticleEntity> = ArrayList()
 
     fun loadArticles(feedId: String) {
+        isLoading.postValue(true)
         articleListRepository.loadArticleItemRefs(feedId).subscribe(object : DisposableObserver<List<ArticleEntity>>() {
 
             override fun onComplete() {
@@ -47,6 +51,7 @@ class ArticleListViewModel @Inject constructor(
                         )
                     }
                     articleTitleUiItemsList.postValue(articleTitleUiItems.toList())
+                    isLoading.postValue(false)
                 }
             }
 
@@ -57,6 +62,7 @@ class ArticleListViewModel @Inject constructor(
     }
 
     fun continueLoadArticles(feedId: String) {
+        isLoading.postValue(true)
         articleListRepository.continueLoadArticleItemRefs(feedId)
     }
 

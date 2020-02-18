@@ -1,6 +1,7 @@
 package com.haomins.reader.view.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,10 @@ import javax.inject.Inject
 class ArticleListFragment : Fragment() {
 
     companion object {
+
         const val TAG = "ArticleListFragment"
+
+        private const val PROGRESS_BAR_DELAY = 1500L
     }
 
     data class ArticleTitleListUiItem(
@@ -39,8 +43,19 @@ class ArticleListFragment : Fragment() {
 
     private val articleTitleUiItems: MutableList<ArticleTitleListUiItem> = ArrayList()
 
+    private val handler by lazy {
+        Handler()
+    }
+
     private val recyclerLayoutManager by lazy {
         LinearLayoutManager(context)
+    }
+
+    private val isLoadingObserver by lazy {
+        Observer<Boolean> {
+            if (it) showProgressBar()
+            else hideProgressBar()
+        }
     }
 
     private val articleTitleListUiItemObserver by lazy {
@@ -96,8 +111,22 @@ class ArticleListFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    private fun hideProgressBar() {
+        handler.postDelayed({ bottom_progress_bar.visibility = View.GONE }, PROGRESS_BAR_DELAY)
+    }
+
+    private fun showProgressBar() {
+        bottom_progress_bar.visibility = View.VISIBLE
+    }
+
     private fun registerLiveDataObservers() {
         articleListViewModel.articleTitleUiItemsList.observe(this, articleTitleListUiItemObserver)
+        articleListViewModel.isLoading.observe(this, isLoadingObserver)
     }
 
     private fun loadArticleList(bundle: Bundle?) {
