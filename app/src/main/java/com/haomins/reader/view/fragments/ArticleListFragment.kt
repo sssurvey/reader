@@ -22,10 +22,7 @@ import javax.inject.Inject
 class ArticleListFragment : Fragment() {
 
     companion object {
-
         const val TAG = "ArticleListFragment"
-
-        private const val CONTINUE_LOAD_THRASH_HOLD = 0.9F
     }
 
     data class ArticleTitleListUiItem(
