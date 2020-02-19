@@ -1,9 +1,9 @@
 package com.haomins.reader.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.haomins.reader.R
-import com.haomins.reader.utils.showToast
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.ArticleListFragment
@@ -12,12 +12,13 @@ class ArticleListActivity : AppCompatActivity() {
 
     companion object {
         const val SOURCE_FEED_ID = "SOURCE_FEED_ID"
+        const val ARTICLE_ITEM_POSITION = "ARTICLE_ITEM_POSITION"
+        const val ARTICLE_ITEM_ID_ARRAY = "ARTICLE_ITEM_ID_ARRAY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         slideInAnimation()
-        overridePendingTransition(R.anim.start_slide_in_left, R.anim.start_slide_out_left)
         setContentView(R.layout.activity_article_list)
         showArticleListFragment()
     }
@@ -27,8 +28,11 @@ class ArticleListActivity : AppCompatActivity() {
         slideOutAnimation()
     }
 
-    fun showArticleDetailsFragment(articleId: String) {
-        showToast(articleId)
+    fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
+        val intent = Intent(this, ArticleDetailActivity::class.java)
+        intent.putExtra(ARTICLE_ITEM_POSITION, position)
+        intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleIdArray)
+        startActivity(intent)
     }
 
     private fun showArticleListFragment() {
