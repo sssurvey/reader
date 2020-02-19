@@ -26,6 +26,8 @@ class ArticleDetailFragment : Fragment() {
         private const val BASE_URL = ""
         private const val MIME_TYPE = "text/html"
         private const val ENCODING = "UTF-8"
+        private const val IMAGE_CSS_STYLE =
+            "<style> img { display: block; max-width: 100%; height: auto; } </style>"
     }
 
     data class ArticleDetailUiItem(
@@ -51,7 +53,7 @@ class ArticleDetailFragment : Fragment() {
             article_detail_update_time_text_view.text = it.updateTime
             article_detail_web_view.loadDataWithBaseURL(
                 BASE_URL,
-                it.contentHtmlData,
+                (IMAGE_CSS_STYLE + it.contentHtmlData),
                 MIME_TYPE,
                 ENCODING,
                 BASE_URL
