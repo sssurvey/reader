@@ -1,55 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/white">
 
-    <TextView
-        android:id="@+id/article_detail_title_text_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/textViewMargin"
-        android:autoSizeTextType="uniform"
-        android:padding="@dimen/textViewPadding"
-        android:textColor="@color/darkGray"
-        android:textSize="@dimen/textSizeGiant"
-        tools:text="The Old reader is one of the oldest readers"
-        tools:targetApi="o" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/article_detail_author_text_view"
-            android:layout_width="wrap_content"
+            android:id="@+id/article_detail_title_text_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="@dimen/textViewMargin"
-            android:layout_toStartOf="@id/article_detail_update_time_text_view"
+            android:layout_margin="@dimen/textViewMargin"
+            android:autoSizeTextType="uniform"
             android:padding="@dimen/textViewPadding"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/textSizeSmall"
-            tools:text="Dr. Too Good" />
+            android:textColor="@color/darkGray"
+            android:textSize="@dimen/textSizeGiant"
+            tools:targetApi="o"
+            tools:text="The Old reader is one of the oldest readers" />
 
-        <TextView
-            android:id="@+id/article_detail_update_time_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/textViewMargin"
-            android:padding="@dimen/textViewPadding"
-            android:textColor="@color/lightGray"
-            android:textSize="@dimen/textSizeSmall"
-            tools:text="11:45 PM" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/article_detail_author_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/textViewMargin"
+                android:layout_toStartOf="@id/article_detail_update_time_text_view"
+                android:padding="@dimen/textViewPadding"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/textSizeSmall"
+                tools:text="Dr. Too Good" />
 
-    <WebView
-        android:id="@+id/article_detail_web_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/article_detail_update_time_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/textViewMargin"
+                android:padding="@dimen/textViewPadding"
+                android:textColor="@color/lightGray"
+                android:textSize="@dimen/textSizeSmall"
+                tools:text="11:45 PM" />
 
-</LinearLayout>
+        </RelativeLayout>
+
+        <WebView
+            android:id="@+id/article_detail_web_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>
