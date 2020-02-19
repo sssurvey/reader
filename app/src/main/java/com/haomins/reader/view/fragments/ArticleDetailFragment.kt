@@ -1,9 +1,11 @@
 package com.haomins.reader.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -72,6 +74,16 @@ class ArticleDetailFragment : Fragment() {
         loadArticleId(arguments)
         showArticle(currentArticlePosition)
         registerLiveDataObservers()
+        configWebView()
+    }
+
+    private fun configWebView() {
+        article_detail_web_view.settings.apply {
+            domStorageEnabled = true
+            loadsImagesAutomatically = true
+            setAppCacheEnabled(true)
+            setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW)
+        }
     }
 
     private fun registerLiveDataObservers() {
