@@ -24,7 +24,7 @@ class ArticleDetailViewModel @Inject constructor(
                 override fun onSuccess(t: ArticleEntity) {
                     val articleData = ArticleDetailFragment.ArticleDetailUiItem(
                         title = t.itemTitle,
-                        publishedTime = dateUtils.to24HrString(t.itemPublishedMillisecond),
+                        updateTime = dateUtils.to24HrString(t.itemUpdatedMillisecond),
                         author = t.author,
                         contentHtmlData = t.content
                     )

@@ -13,6 +13,7 @@ import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.viewModels.ArticleDetailViewModel
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_article_detail.*
 import javax.inject.Inject
 
 class ArticleDetailFragment : Fragment() {
@@ -24,7 +25,7 @@ class ArticleDetailFragment : Fragment() {
     data class ArticleDetailUiItem(
         val title: String,
         val author: String,
-        val publishedTime: String,
+        val updateTime: String,
         val contentHtmlData: String
     )
 
@@ -39,6 +40,9 @@ class ArticleDetailFragment : Fragment() {
         Observer<ArticleDetailUiItem> {
             //TODO, handle the data we loaded
             showToast(it.title)
+            article_detail_title_text_view.text = it.title
+            article_detail_author_text_view.text = it.author
+            article_detail_update_time_text_view.text = it.updateTime
         }
     }
 
