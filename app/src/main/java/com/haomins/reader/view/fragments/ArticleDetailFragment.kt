@@ -5,15 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
-import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity
+import com.haomins.reader.viewModels.ArticleDetailViewModel
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class ArticleDetailFragment : Fragment() {
 
     companion object {
         const val TAG = "ArticleDetailFragment"
     }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var articleDetailViewModel: ArticleDetailViewModel
+    private lateinit var articleItemIdArray: Array<String>
+    private var currentArticlePosition = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,14 +37,21 @@ class ArticleDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadArticleDetail(arguments)
+        AndroidSupportInjection.inject(this)
+        articleDetailViewModel = ViewModelProviders.of(this, viewModelFactory)[ArticleDetailViewModel::class.java]
+        loadArticleId(arguments)
+        showArticle(currentArticlePosition)
     }
 
-    private fun loadArticleDetail(bundle: Bundle?) {
+    private fun loadArticleId(bundle: Bundle?) {
         bundle?.let {
-            showToast(it.getInt(ArticleListActivity.ARTICLE_ITEM_POSITION).toString())
-            showToast(it.getStringArray(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY).toString())
+            currentArticlePosition = it.getInt(ArticleListActivity.ARTICLE_ITEM_POSITION)
+            articleItemIdArray = it.getStringArray(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
         }
     }
-    
+
+    private fun showArticle(position: Int) {
+        articleDetailViewModel.loadArticleDetail(articleItemIdArray[position])
+    }
+
 }

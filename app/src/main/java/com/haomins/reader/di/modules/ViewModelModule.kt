@@ -32,5 +32,10 @@ abstract class ViewModelModule {
     abstract fun bindArticleListViewModel(articleListViewModel: ArticleListViewModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(ArticleDetailViewModel::class)
+    abstract fun bindArticleDetailViewModel(articleDetailViewModel: ArticleDetailViewModel): ViewModel
+
+    @Binds
     abstract fun bindViewModelFactory(customViewModelFactory: CustomViewModelFactory): ViewModelProvider.Factory
 }
