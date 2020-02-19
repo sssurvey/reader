@@ -52,6 +52,10 @@
 
         </RelativeLayout>
 
+        <include
+            android:id="@+id/top_progress_bar"
+            layout="@layout/bottom_progress_bar" />
+
         <WebView
             android:id="@+id/article_detail_web_view"
             android:layout_width="match_parent"

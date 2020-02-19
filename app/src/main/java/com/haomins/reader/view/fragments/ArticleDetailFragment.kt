@@ -1,6 +1,8 @@
 package com.haomins.reader.view.fragments
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
-import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.viewModels.ArticleDetailViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -23,6 +24,7 @@ class ArticleDetailFragment : Fragment() {
     companion object {
         const val TAG = "ArticleDetailFragment"
 
+        private const val PROGRESS_BAR_DELAY = 1500L
         private const val BASE_URL = ""
         private const val MIME_TYPE = "text/html"
         private const val ENCODING = "UTF-8"
@@ -44,10 +46,12 @@ class ArticleDetailFragment : Fragment() {
     private lateinit var articleItemIdArray: Array<String>
     private var currentArticlePosition = -1
 
+    private val handler by lazy {
+        Handler()
+    }
+
     private val contentDataObserver by lazy {
         Observer<ArticleDetailUiItem> {
-            //TODO, handle the data we loaded
-            showToast(it.title)
             article_detail_title_text_view.text = it.title
             article_detail_author_text_view.text = it.author
             article_detail_update_time_text_view.text = it.updateTime
@@ -58,6 +62,21 @@ class ArticleDetailFragment : Fragment() {
                 ENCODING,
                 BASE_URL
             )
+        }
+    }
+
+    private val webViewClient by lazy {
+        object : WebViewClient() {
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                showProgressBar()
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                hideProgressBar()
+            }
         }
     }
 
@@ -80,6 +99,7 @@ class ArticleDetailFragment : Fragment() {
     }
 
     private fun configWebView() {
+        article_detail_web_view.webViewClient = webViewClient
         article_detail_web_view.settings.apply {
             domStorageEnabled = true
             loadsImagesAutomatically = true
@@ -101,6 +121,16 @@ class ArticleDetailFragment : Fragment() {
 
     private fun showArticle(position: Int) {
         articleDetailViewModel.loadArticleDetail(articleItemIdArray[position])
+    }
+
+    private fun hideProgressBar() {
+        handler.postDelayed({ top_progress_bar.visibility = View.INVISIBLE },
+            PROGRESS_BAR_DELAY
+        )
+    }
+
+    private fun showProgressBar() {
+        top_progress_bar.visibility = View.VISIBLE
     }
 
 }
