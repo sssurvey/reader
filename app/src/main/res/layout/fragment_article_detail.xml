@@ -10,10 +10,13 @@
         android:id="@+id/article_detail_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/textViewMargin"
+        android:autoSizeTextType="uniform"
         android:padding="@dimen/textViewPadding"
         android:textColor="@color/darkGray"
         android:textSize="@dimen/textSizeGiant"
-        tools:text="The Old reader is one of the oldest readers" />
+        tools:text="The Old reader is one of the oldest readers"
+        tools:targetApi="o" />
 
     <RelativeLayout
         android:layout_width="match_parent"
