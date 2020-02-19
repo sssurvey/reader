@@ -20,6 +20,10 @@ class ArticleDetailFragment : Fragment() {
 
     companion object {
         const val TAG = "ArticleDetailFragment"
+
+        private const val BASE_URL = ""
+        private const val MIME_TYPE = "text/html"
+        private const val ENCODING = "UTF-8"
     }
 
     data class ArticleDetailUiItem(
@@ -43,6 +47,13 @@ class ArticleDetailFragment : Fragment() {
             article_detail_title_text_view.text = it.title
             article_detail_author_text_view.text = it.author
             article_detail_update_time_text_view.text = it.updateTime
+            article_detail_web_view.loadDataWithBaseURL(
+                BASE_URL,
+                it.contentHtmlData,
+                MIME_TYPE,
+                ENCODING,
+                BASE_URL
+            )
         }
     }
 
