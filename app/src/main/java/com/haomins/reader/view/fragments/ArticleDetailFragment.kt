@@ -98,6 +98,11 @@ class ArticleDetailFragment : Fragment() {
         configWebView()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
+    }
+
     private fun configWebView() {
         article_detail_web_view.webViewClient = webViewClient
         article_detail_web_view.settings.apply {
@@ -124,13 +129,19 @@ class ArticleDetailFragment : Fragment() {
     }
 
     private fun hideProgressBar() {
-        handler.postDelayed({ top_progress_bar.visibility = View.INVISIBLE },
+        handler.postDelayed({
+            top_progress_bar?.let {
+                top_progress_bar.visibility = View.INVISIBLE
+            }
+        },
             PROGRESS_BAR_DELAY
         )
     }
 
     private fun showProgressBar() {
-        top_progress_bar.visibility = View.VISIBLE
+        top_progress_bar?.let {
+            top_progress_bar.visibility = View.VISIBLE
+        }
     }
 
 }
