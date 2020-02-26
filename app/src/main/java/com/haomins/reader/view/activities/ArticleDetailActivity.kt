@@ -1,38 +1,53 @@
 package com.haomins.reader.view.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.haomins.reader.R
 import com.haomins.reader.view.fragments.ArticleDetailFragment
+import kotlinx.android.synthetic.main.activity_article_detail.*
 
 class ArticleDetailActivity : AppCompatActivity() {
+
+    companion object {
+        const val ARTICLE_ITEM_ID = "ARTICLE_ITEM_ID"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_detail)
-        showArticleDetailFragment()
+        initViewPager()
     }
 
-    private fun showArticleDetailFragment() {
-        val bundle = Bundle()
-        val articleDetailFragment = ArticleDetailFragment()
-        bundle.putInt(
-            ArticleListActivity.ARTICLE_ITEM_POSITION,
-            intent.getIntExtra(ArticleListActivity.ARTICLE_ITEM_POSITION, -1)
+    private fun initViewPager() {
+        val currentPosition = intent.getIntExtra(ArticleListActivity.ARTICLE_ITEM_POSITION, -1)
+        val articleIdArray = intent.getStringArrayExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
+        val adapter = ArticleDetailFragmentAdapter(
+            this,
+            articleIdArray
         )
-        bundle.putStringArray(
-            ArticleListActivity.ARTICLE_ITEM_ID_ARRAY,
-            intent.getStringArrayExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
-        )
-        articleDetailFragment.arguments = bundle
+        article_detail_view_pager.adapter = adapter
+        article_detail_view_pager.currentItem = currentPosition
+    }
 
-        supportFragmentManager.beginTransaction().apply {
-            replace(
-                R.id.article_detail_activity_frame_layout,
-                articleDetailFragment,
-                ArticleDetailFragment.TAG
-            )
-            commit()
+    private inner class ArticleDetailFragmentAdapter(
+        articleDetailActivity: ArticleDetailActivity,
+        private val articleIdArray: Array<String>
+    ) :
+        FragmentStateAdapter(articleDetailActivity) {
+        override fun getItemCount(): Int {
+            return articleIdArray.size
+        }
+
+        override fun createFragment(position: Int): Fragment {
+            val bundle = Bundle()
+            val articleDetailFragment = ArticleDetailFragment()
+            bundle.putString(ARTICLE_ITEM_ID, articleIdArray[position])
+            articleDetailFragment.arguments = bundle
+            article_detail_view_pager.visibility = View.VISIBLE
+            return articleDetailFragment
         }
     }
 
