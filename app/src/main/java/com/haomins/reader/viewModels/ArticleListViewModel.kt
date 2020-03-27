@@ -29,37 +29,38 @@ class ArticleListViewModel @Inject constructor(
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
-        articleListRepository.loadArticleItemRefs(feedId).subscribe(object : DisposableObserver<List<ArticleEntity>>() {
+        articleListRepository.loadArticleItemRefs(feedId)
+            .subscribe(object : DisposableObserver<List<ArticleEntity>>() {
 
-            override fun onComplete() {
-                Log.d(
-                    "::DisposableObserver", "onComplete: " +
-                            "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles"
-                )
-            }
-
-            override fun onNext(t: List<ArticleEntity>) {
-                if (t.isNotEmpty()) {
-                    queryResultList = t
-                    t.forEach {
-                        articleTitleUiItems.add(
-                            ArticleListFragment.ArticleTitleListUiItem(
-                                title = it.itemTitle,
-                                postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
-                                _postTimeMillisecond = it.itemPublishedMillisecond,
-                                _itemId = it.itemId
-                            )
-                        )
-                    }
-                    articleTitleUiItemsList.postValue(articleTitleUiItems.toList())
-                    isLoading.postValue(false)
+                override fun onComplete() {
+                    Log.d(
+                        "::DisposableObserver", "onComplete: " +
+                                "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles"
+                    )
                 }
-            }
 
-            override fun onError(e: Throwable) {
-                Log.d("::DisposableObserver", "onError: ${e.printStackTrace()}")
-            }
-        })
+                override fun onNext(t: List<ArticleEntity>) {
+                    if (t.isNotEmpty()) {
+                        queryResultList = t
+                        t.forEach {
+                            articleTitleUiItems.add(
+                                ArticleListFragment.ArticleTitleListUiItem(
+                                    title = it.itemTitle,
+                                    postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
+                                    _postTimeMillisecond = it.itemPublishedMillisecond,
+                                    _itemId = it.itemId
+                                )
+                            )
+                        }
+                        articleTitleUiItemsList.postValue(articleTitleUiItems.toList())
+                        isLoading.postValue(false)
+                    }
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d("::DisposableObserver", "onError: ${e.printStackTrace()}")
+                }
+            })
     }
 
     fun continueLoadArticles(feedId: String) {

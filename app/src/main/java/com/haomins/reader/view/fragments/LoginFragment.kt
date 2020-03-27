@@ -59,7 +59,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun initiateUi() {
-        login_app_version_text_view.text = getString(R.string.version_description, BuildConfig.VERSION_NAME)
+        login_app_version_text_view.text =
+            getString(R.string.version_description, BuildConfig.VERSION_NAME)
     }
 
     private fun registerLiveDataObserver() {

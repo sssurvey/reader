@@ -12,7 +12,7 @@ import javax.inject.Inject
 class ArticleDetailViewModel @Inject constructor(
     private val articleDetailRepository: ArticleDetailRepository,
     private val dateUtils: DateUtils
-): ViewModel() {
+) : ViewModel() {
 
     val contentDataForDisplay by lazy {
         MutableLiveData<ArticleDetailFragment.ArticleDetailUiItem>()

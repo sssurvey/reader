@@ -11,8 +11,10 @@ import javax.inject.Inject
 
 class ReaderApplication : Application(), HasActivityInjector, HasSupportFragmentInjector {
 
-    @Inject lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-    @Inject lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    @Inject
+    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    @Inject
+    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     companion object {
         const val SHARED_PREFERENCE_NAME = "READER_SHARED_PREF"

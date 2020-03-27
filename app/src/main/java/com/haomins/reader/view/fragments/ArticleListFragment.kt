@@ -79,7 +79,7 @@ class ArticleListFragment : Fragment() {
     }
 
     private val recyclerViewOnScrollListener by lazy {
-        object: RecyclerView.OnScrollListener() {
+        object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
@@ -142,7 +142,10 @@ class ArticleListFragment : Fragment() {
             it._itemId
         }
         activity?.let {
-            (it as ArticleListActivity).startArticleDetailActivity(position, itemIdList.toTypedArray())
+            (it as ArticleListActivity).startArticleDetailActivity(
+                position,
+                itemIdList.toTypedArray()
+            )
         }
     }
 

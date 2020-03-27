@@ -29,7 +29,7 @@ class LoginViewModel @Inject constructor(
             .doOnError { isUserLoggedIn.postValue(false) }
             .subscribe({
                 saveAuthCode(it.auth)
-            },{
+            }, {
                 clearAuthCode()
             })
     }
