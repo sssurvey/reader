@@ -3,11 +3,10 @@ package com.haomins.reader.viewModels
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.models.user.UserAuthResponseModel
 import com.haomins.reader.repositories.LoginRepository
 import com.haomins.reader.utils.putValue
 import com.haomins.reader.utils.removeValue
-import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
@@ -16,30 +15,22 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
     companion object {
+        const val TAG = "LoginViewModel"
         const val AUTH_CODE_KEY = "AUTH_CODE"
     }
 
-    val isUserLoggedIn by lazy {
-        MutableLiveData<Boolean>(false)
-    }
-
-    fun hasAuthKey(): Boolean {
-        return sharedPreferences.contains(AUTH_CODE_KEY)
-    }
+    val isUserLoggedIn by lazy { MutableLiveData(false) }
+    private lateinit var disposable: Disposable
 
     fun authorize(user: Pair<String, String>) {
-        loginRepository.start(user).subscribe(
-            object :
-                DisposableSingleObserver<UserAuthResponseModel>() {
-                override fun onSuccess(t: UserAuthResponseModel) {
-                    saveAuthCode(t.auth)
-                    isUserLoggedIn.postValue(true)
-                }
-
-                override fun onError(e: Throwable) {
-                    clearAuthCode()
-                    isUserLoggedIn.postValue(false)
-                }
+        disposable = loginRepository
+            .start(user)
+            .doOnSuccess { isUserLoggedIn.postValue(true) }
+            .doOnError { isUserLoggedIn.postValue(false) }
+            .subscribe({
+                saveAuthCode(it.auth)
+            },{
+                clearAuthCode()
             })
     }
 
@@ -49,5 +40,10 @@ class LoginViewModel @Inject constructor(
 
     private fun clearAuthCode() {
         sharedPreferences.removeValue(AUTH_CODE_KEY)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.dispose()
     }
 }
