@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:itemCount="20"
-        tools:listitem="@layout/article_titile_recycler_view_item" />
+        tools:listitem="@layout/article_title_recycler_view_item" />
 
     <LinearLayout
         android:id="@+id/bottom_progress_bar"

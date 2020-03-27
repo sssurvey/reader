@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
-import com.haomins.reader.viewModels.MainActivityViewModel
-import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.view.fragments.LoginFragment
+import com.haomins.reader.view.fragments.SourceTitleListFragment
+import com.haomins.reader.viewModels.MainActivityViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 

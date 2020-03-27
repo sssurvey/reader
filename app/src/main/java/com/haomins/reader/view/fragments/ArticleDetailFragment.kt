@@ -91,7 +91,8 @@ class ArticleDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         AndroidSupportInjection.inject(this)
-        articleDetailViewModel = ViewModelProviders.of(this, viewModelFactory)[ArticleDetailViewModel::class.java]
+        articleDetailViewModel =
+            ViewModelProviders.of(this, viewModelFactory)[ArticleDetailViewModel::class.java]
         loadArticleId(arguments)
         showArticle()
         registerLiveDataObservers()
@@ -128,11 +129,12 @@ class ArticleDetailFragment : Fragment() {
     }
 
     private fun hideProgressBar() {
-        handler.postDelayed({
-            top_progress_bar?.let {
-                top_progress_bar.visibility = View.INVISIBLE
-            }
-        },
+        handler.postDelayed(
+            {
+                top_progress_bar?.let {
+                    top_progress_bar.visibility = View.INVISIBLE
+                }
+            },
             PROGRESS_BAR_DELAY
         )
     }

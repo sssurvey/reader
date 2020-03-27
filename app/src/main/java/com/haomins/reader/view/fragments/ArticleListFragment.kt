@@ -17,7 +17,7 @@ import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.article_titile_recycler_view_item.view.*
+import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
 
@@ -79,7 +79,7 @@ class ArticleListFragment : Fragment() {
     }
 
     private val recyclerViewOnScrollListener by lazy {
-        object: RecyclerView.OnScrollListener() {
+        object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
@@ -142,7 +142,10 @@ class ArticleListFragment : Fragment() {
             it._itemId
         }
         activity?.let {
-            (it as ArticleListActivity).startArticleDetailActivity(position, itemIdList.toTypedArray())
+            (it as ArticleListActivity).startArticleDetailActivity(
+                position,
+                itemIdList.toTypedArray()
+            )
         }
     }
 
@@ -153,7 +156,7 @@ class ArticleListFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             val articleListItemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.article_titile_recycler_view_item, parent, false)
+                .inflate(R.layout.article_title_recycler_view_item, parent, false)
             return CustomViewHolder(articleListItemView)
         }
 

@@ -1,6 +1,7 @@
 package com.haomins.reader.utils
 
 import android.app.Application
+import android.text.format.DateUtils
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -25,6 +26,14 @@ class DateUtils @Inject constructor(
     fun to24HrString(unixTimeStamp: Long): String {
         formatter.timeZone = timeZone
         return formatter.format(unixTimeStamp * ONE_THOUSAND_MILLISECOND)
+
     }
 
+    fun howLongAgo(unixTimeStamp: Long): String {
+        return DateUtils.getRelativeTimeSpanString(
+            unixTimeStamp * ONE_THOUSAND_MILLISECOND,
+            Calendar.getInstance().timeInMillis,
+            DateUtils.MINUTE_IN_MILLIS
+        ).toString()
+    }
 }
