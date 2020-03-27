@@ -14,7 +14,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -58,6 +58,7 @@ dependencies {
     implementation "androidx.room:room-rxjava2:$room_version"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation 'com.google.android.material:material:1.1.0'
 
     kapt "android.arch.lifecycle:compiler:$android_arch_lifecycle_version"
     kapt "com.google.dagger:dagger-compiler:$android_dagger_version"

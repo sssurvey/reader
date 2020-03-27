@@ -17,7 +17,7 @@ import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.article_titile_recycler_view_item.view.*
+import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
 
@@ -153,7 +153,7 @@ class ArticleListFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             val articleListItemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.article_titile_recycler_view_item, parent, false)
+                .inflate(R.layout.article_title_recycler_view_item, parent, false)
             return CustomViewHolder(articleListItemView)
         }
 

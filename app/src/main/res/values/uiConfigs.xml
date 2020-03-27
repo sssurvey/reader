@@ -11,6 +11,6 @@
     <dimen name="imageIconViewHeight">40dp</dimen>
     <dimen name="articleTextViewHeight">20dp</dimen>
     <dimen name="relativeLayoutPadding">10dp</dimen>
-
+    <dimen name="edit_text_default_height">60dp</dimen>
     <item name="textViewDefaultLineRestriction" type="integer">1</item>
 </resources>

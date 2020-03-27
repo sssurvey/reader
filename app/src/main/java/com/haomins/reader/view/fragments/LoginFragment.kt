@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.LoginViewModel
@@ -51,9 +52,14 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerLiveDataObserver()
+        initiateUi()
         login_button.setOnClickListener {
             loginButtonOnClick()
         }
+    }
+
+    private fun initiateUi() {
+        login_app_version_text_view.text = getString(R.string.version_description, BuildConfig.VERSION_NAME)
     }
 
     private fun registerLiveDataObserver() {
