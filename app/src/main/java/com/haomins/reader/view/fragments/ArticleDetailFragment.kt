@@ -3,17 +3,18 @@ package com.haomins.reader.view.fragments
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.*
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
-import com.haomins.reader.view.activities.ArticleListActivity
+import com.haomins.reader.view.activities.ArticleDetailActivity.Companion.ARTICLE_ITEM_ID
 import com.haomins.reader.viewModels.ArticleDetailViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_article_detail.*
@@ -43,8 +44,7 @@ class ArticleDetailFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var articleDetailViewModel: ArticleDetailViewModel
-    private lateinit var articleItemIdArray: Array<String>
-    private var currentArticlePosition = -1
+    private var articleId: String = ""
 
     private val handler by lazy {
         Handler()
@@ -93,7 +93,7 @@ class ArticleDetailFragment : Fragment() {
         AndroidSupportInjection.inject(this)
         articleDetailViewModel = ViewModelProviders.of(this, viewModelFactory)[ArticleDetailViewModel::class.java]
         loadArticleId(arguments)
-        showArticle(currentArticlePosition)
+        showArticle()
         registerLiveDataObservers()
         configWebView()
     }
@@ -119,13 +119,12 @@ class ArticleDetailFragment : Fragment() {
 
     private fun loadArticleId(bundle: Bundle?) {
         bundle?.let {
-            currentArticlePosition = it.getInt(ArticleListActivity.ARTICLE_ITEM_POSITION)
-            articleItemIdArray = it.getStringArray(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
+            articleId = it.getString(ARTICLE_ITEM_ID)
         }
     }
 
-    private fun showArticle(position: Int) {
-        articleDetailViewModel.loadArticleDetail(articleItemIdArray[position])
+    private fun showArticle() {
+        articleDetailViewModel.loadArticleDetail(articleId)
     }
 
     private fun hideProgressBar() {
