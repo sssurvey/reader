@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProgressBar android:id="@+id/bottom_loading_progress_bar"
+    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:indeterminate="true"
+    android:indeterminateDuration="@android:integer/config_longAnimTime"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
