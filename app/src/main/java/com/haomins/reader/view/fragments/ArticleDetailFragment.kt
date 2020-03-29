@@ -110,7 +110,7 @@ class ArticleDetailFragment : Fragment() {
             domStorageEnabled = true
             loadsImagesAutomatically = true
             setAppCacheEnabled(true)
-            setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW)
+            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
     }
 
