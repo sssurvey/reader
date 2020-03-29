@@ -29,7 +29,7 @@ class ArticleDetailActivity : AppCompatActivity() {
             articleIdArray
         )
         article_detail_view_pager.adapter = adapter
-        article_detail_view_pager.currentItem = currentPosition
+        article_detail_view_pager.setCurrentItem(currentPosition, false)
     }
 
     private inner class ArticleDetailFragmentAdapter(
@@ -46,7 +46,6 @@ class ArticleDetailActivity : AppCompatActivity() {
             val articleDetailFragment = ArticleDetailFragment()
             bundle.putString(ARTICLE_ITEM_ID, articleIdArray[position])
             articleDetailFragment.arguments = bundle
-            article_detail_view_pager.visibility = View.VISIBLE
             return articleDetailFragment
         }
     }
