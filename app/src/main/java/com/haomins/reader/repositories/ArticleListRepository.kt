@@ -53,7 +53,6 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun continueLoadArticleItemRefs(feedId: String) {
-        //TODO: the flag for avoid executing multiple times is a bad solution, fix it
         if (!isWaitingOnResponse) {
             isWaitingOnResponse = true
             theOldReaderService.loadArticleListByFeed(
