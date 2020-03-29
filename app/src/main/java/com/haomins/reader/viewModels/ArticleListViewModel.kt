@@ -29,8 +29,8 @@ class ArticleListViewModel @Inject constructor(
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
-        disposables.add(articleListRepository.loadArticleItemRefs(feedId).map {
-            val articleTitleUiItems = it.map {
+        disposables.add(articleListRepository.loadArticleItemRefs(feedId).map { list ->
+            val articleTitleUiItems = list.map {
                 ArticleListFragment.ArticleTitleListUiItem(
                     title = it.itemTitle,
                     postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
