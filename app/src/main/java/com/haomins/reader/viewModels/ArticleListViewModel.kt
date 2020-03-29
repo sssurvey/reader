@@ -16,6 +16,10 @@ class ArticleListViewModel @Inject constructor(
     private val dateUtils: DateUtils
 ) : ViewModel() {
 
+    companion object {
+        const val TAG = "ArticleListViewModel"
+    }
+
     val articleTitleUiItemsList by lazy {
         MutableLiveData<List<ArticleListFragment.ArticleTitleListUiItem>>()
     }
@@ -34,7 +38,7 @@ class ArticleListViewModel @Inject constructor(
 
                 override fun onComplete() {
                     Log.d(
-                        "::DisposableObserver", "onComplete: " +
+                        TAG, "onComplete: " +
                                 "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles"
                     )
                 }
@@ -58,7 +62,7 @@ class ArticleListViewModel @Inject constructor(
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.d("::DisposableObserver", "onError: ${e.printStackTrace()}")
+                    Log.d(TAG, "onError: ${e.printStackTrace()}")
                 }
             })
     }
