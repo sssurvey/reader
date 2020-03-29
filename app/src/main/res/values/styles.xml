@@ -19,7 +19,11 @@
         <!-- Specify notification bar color -->
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:textViewStyle">@style/ReaderTextViewStyle</item>
+    </style>
 
+    <style name="ReaderTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/google_product_sans_bold</item>
     </style>
 
 </resources>

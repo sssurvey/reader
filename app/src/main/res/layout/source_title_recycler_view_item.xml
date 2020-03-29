@@ -32,13 +32,16 @@
             <TextView
                 android:id="@+id/source_title_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/articleTextViewHeight"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/source_icon_image_view"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/source_icon_image_view"
-                android:layout_centerVertical="true"
+                android:height="@dimen/imageIconViewHeight"
+                android:gravity="center_vertical"
                 android:maxLines="@integer/textViewDefaultLineRestriction"
                 android:paddingStart="@dimen/textViewPadding"
                 android:paddingEnd="@dimen/textViewPadding"
+                android:textAlignment="gravity"
                 android:textColor="@color/darkGray"
                 tools:text="The Old Reader is a reader for the old people, that ..." />
         </RelativeLayout>
