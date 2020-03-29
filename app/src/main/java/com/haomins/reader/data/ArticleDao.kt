@@ -20,7 +20,7 @@ interface ArticleDao {
     @Query("SELECT * FROM article_entity")
     fun getAll(): Single<List<ArticleEntity>>
 
-    @Query("SELECT * FROM article_entity WHERE feed_id == :feedId ORDER BY published DESC")
+    @Query("SELECT * FROM article_entity WHERE feed_id == :feedId")
     fun selectAllArticleByFeedId(feedId: String): Observable<List<ArticleEntity>>
 
     @Query("SELECT * FROM article_entity WHERE item_id == :itemId")

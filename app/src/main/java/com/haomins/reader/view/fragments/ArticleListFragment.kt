@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
-import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
@@ -60,21 +59,13 @@ class ArticleListFragment : Fragment() {
     }
 
     private val articleTitleListUiItemObserver by lazy {
-        Observer<List<ArticleTitleListUiItem>> {
-            if (it.isEmpty()) this.showToast("Empty list, is feed valid?")
-            else {
-                //TODO: This is some crazy shit code, change it, needs to optimize the performance
-                val set = articleTitleUiItems.toSet()
-                for (item in it) {
-                    if (!set.contains(item)) {
-                        articleTitleUiItems.add(item)
-                    }
-                }
-                articleTitleUiItems.sortByDescending {
-                    it._postTimeMillisecond
-                }
-                article_title_recycler_view.adapter?.notifyDataSetChanged()
+        Observer<List<ArticleTitleListUiItem>> { list ->
+            articleTitleUiItems.apply {
+                clear()
+                addAll(list)
+                sortByDescending { it._postTimeMillisecond }
             }
+            article_title_recycler_view.adapter?.notifyDataSetChanged()
         }
     }
 
