@@ -44,10 +44,7 @@ class ArticleListRepository @Inject constructor(
                 continueId = t.continuation
                 if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
             }
-
-            override fun onError(e: Throwable) {
-                e.printStackTrace()
-            }
+            override fun onError(e: Throwable) { e.printStackTrace() }
         })
         return appDatabase.articleDao().selectAllArticleByFeedId(feedId)
     }
@@ -65,10 +62,7 @@ class ArticleListRepository @Inject constructor(
                     isWaitingOnResponse = false
                     if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
                 }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                }
+                override fun onError(e: Throwable) { e.printStackTrace() }
             })
         }
 
