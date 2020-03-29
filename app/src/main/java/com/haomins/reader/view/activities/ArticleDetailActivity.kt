@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.haomins.reader.R
+import com.haomins.reader.utils.slideInAnimation
+import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.ArticleDetailFragment
 import kotlinx.android.synthetic.main.activity_article_detail.*
 
@@ -17,8 +19,14 @@ class ArticleDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        slideInAnimation()
         setContentView(R.layout.activity_article_detail)
         initViewPager()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        slideOutAnimation()
     }
 
     private fun initViewPager() {
@@ -29,7 +37,7 @@ class ArticleDetailActivity : AppCompatActivity() {
             articleIdArray
         )
         article_detail_view_pager.adapter = adapter
-        article_detail_view_pager.currentItem = currentPosition
+        article_detail_view_pager.setCurrentItem(currentPosition, false)
     }
 
     private inner class ArticleDetailFragmentAdapter(
@@ -46,7 +54,6 @@ class ArticleDetailActivity : AppCompatActivity() {
             val articleDetailFragment = ArticleDetailFragment()
             bundle.putString(ARTICLE_ITEM_ID, articleIdArray[position])
             articleDetailFragment.arguments = bundle
-            article_detail_view_pager.visibility = View.VISIBLE
             return articleDetailFragment
         }
     }
