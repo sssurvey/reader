@@ -9,9 +9,12 @@ import com.haomins.reader.models.article.ArticleResponseModel
 import com.haomins.reader.models.article.ItemRefListResponseModel
 import com.haomins.reader.utils.getValue
 import com.haomins.reader.viewModels.LoginViewModel
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class ArticleListRepository @Inject constructor(
@@ -27,11 +30,14 @@ class ArticleListRepository @Inject constructor(
 
     private var continueId = ""
     private var isWaitingOnResponse = false
+    private val headerAuthValue by lazy {
+        (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
+                + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY))
+    }
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
         theOldReaderService.loadArticleListByFeed(
-            headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                    + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
+            headerAuthValue = headerAuthValue,
             feedId = feedId
         ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
             override fun onSuccess(t: ItemRefListResponseModel) {
@@ -51,8 +57,7 @@ class ArticleListRepository @Inject constructor(
         if (!isWaitingOnResponse) {
             isWaitingOnResponse = true
             theOldReaderService.loadArticleListByFeed(
-                headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                        + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
+                headerAuthValue = headerAuthValue,
                 feedId = feedId,
                 continueLoad = continueId
             ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
@@ -73,24 +78,29 @@ class ArticleListRepository @Inject constructor(
     private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel) {
         Observable.fromIterable(itemRefListResponseModel.itemRefs).flatMap({
             theOldReaderService.loadArticleDetailsByRefId(
-                headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                        + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY)),
+                headerAuthValue = headerAuthValue,
                 refItemId = it.id
             ).toObservable()
-        }, MAX_ALLOWED_CONCURRENCY).subscribe(ArticleResponseModelObserver())
+        }, MAX_ALLOWED_CONCURRENCY)
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(ArticleResponseModelObserver())
     }
 
     private fun saveIndividualArticleToDatabase(articleResponseModel: ArticleResponseModel) {
-        val articleEntity = ArticleEntity(
-            itemId = articleResponseModel.items.first().id,
-            itemTitle = articleResponseModel.items.first().title,
-            itemUpdatedMillisecond = articleResponseModel.items.first().updatedMillisecond,
-            itemPublishedMillisecond = articleResponseModel.items.first().publishedMillisecond,
-            author = articleResponseModel.items.first().author,
-            content = articleResponseModel.items.first().summary.content,
-            feedId = articleResponseModel.id
-        )
-        appDatabase.articleDao().insert(articleEntity)
+        Completable.fromAction {
+            appDatabase.articleDao().insert(
+                ArticleEntity(
+                    itemId = articleResponseModel.items.first().id,
+                    itemTitle = articleResponseModel.items.first().title,
+                    itemUpdatedMillisecond = articleResponseModel.items.first().updatedMillisecond,
+                    itemPublishedMillisecond = articleResponseModel.items.first().publishedMillisecond,
+                    author = articleResponseModel.items.first().author,
+                    content = articleResponseModel.items.first().summary.content,
+                    feedId = articleResponseModel.id
+                )
+            )
+        }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
 
     private inner class ArticleResponseModelObserver : DisposableObserver<ArticleResponseModel>() {
