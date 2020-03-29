@@ -3,7 +3,6 @@ package com.haomins.reader.viewModels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.TheOldReaderService
 import com.haomins.reader.data.entities.ArticleEntity
 import com.haomins.reader.repositories.ArticleListRepository
 import com.haomins.reader.utils.DateUtils
@@ -24,43 +23,29 @@ class ArticleListViewModel @Inject constructor(
         MutableLiveData<List<ArticleListFragment.ArticleTitleListUiItem>>()
     }
     val isLoading by lazy {
-        MutableLiveData<Boolean>(false)
+        MutableLiveData(false)
     }
-
-    private val articleTitleUiItems: MutableSet<ArticleListFragment.ArticleTitleListUiItem> =
-        HashSet()
-    private var queryResultList: List<ArticleEntity> = ArrayList()
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
         articleListRepository.loadArticleItemRefs(feedId)
             .subscribe(object : DisposableObserver<List<ArticleEntity>>() {
-
-                override fun onComplete() {
-                    Log.d(
-                        TAG, "onComplete: " +
-                                "Query Complete load ${TheOldReaderService.DEFAULT_ARTICLE_AMOUNT} articles"
-                    )
-                }
-
+                override fun onComplete() { Log.d(TAG, "onComplete: called") }
                 override fun onNext(t: List<ArticleEntity>) {
+                    Log.d(TAG, "onNext: articles loaded -> size: ${t.size}")
                     if (t.isNotEmpty()) {
-                        queryResultList = t
-                        t.forEach {
-                            articleTitleUiItems.add(
-                                ArticleListFragment.ArticleTitleListUiItem(
-                                    title = it.itemTitle,
-                                    postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
-                                    _postTimeMillisecond = it.itemPublishedMillisecond,
-                                    _itemId = it.itemId
-                                )
+                        val articleTitleUiItems = t.map {
+                            ArticleListFragment.ArticleTitleListUiItem(
+                                title = it.itemTitle,
+                                postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
+                                _postTimeMillisecond = it.itemPublishedMillisecond,
+                                _itemId = it.itemId
                             )
                         }
                         articleTitleUiItemsList.postValue(articleTitleUiItems.toList())
                         isLoading.postValue(false)
                     }
                 }
-
                 override fun onError(e: Throwable) {
                     Log.d(TAG, "onError: ${e.printStackTrace()}")
                 }
