@@ -29,7 +29,9 @@ class ArticleListViewModel @Inject constructor(
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
-        disposables.add(articleListRepository.loadArticleItemRefs(feedId).map { list ->
+        disposables.add(articleListRepository.loadArticleItemRefs(feedId)
+            .distinct { it.size }
+            .map { list ->
             val articleTitleUiItems = list.map {
                 ArticleListFragment.ArticleTitleListUiItem(
                     title = it.itemTitle,
