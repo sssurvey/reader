@@ -3,6 +3,7 @@ package com.haomins.reader.viewModels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.haomins.reader.data.entities.ArticleEntity
 import com.haomins.reader.repositories.ArticleListRepository
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleListFragment
@@ -30,7 +31,7 @@ class ArticleListViewModel @Inject constructor(
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
         disposables.add(articleListRepository.loadArticleItemRefs(feedId)
-            .distinctUntilChanged()
+            .distinctUntilChanged(List<ArticleEntity>::size)
             .map { list ->
                 val articleTitleUiItems = list.map {
                     ArticleListFragment.ArticleTitleListUiItem(
