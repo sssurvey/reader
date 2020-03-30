@@ -32,21 +32,21 @@ class ArticleListViewModel @Inject constructor(
         disposables.add(articleListRepository.loadArticleItemRefs(feedId)
             .distinct { it.size }
             .map { list ->
-            val articleTitleUiItems = list.map {
-                ArticleListFragment.ArticleTitleListUiItem(
-                    title = it.itemTitle,
-                    postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
-                    _postTimeMillisecond = it.itemPublishedMillisecond,
-                    _itemId = it.itemId
-                )
-            }
-            articleTitleUiItems
-        }.subscribe({
-            Log.d(TAG, "onNext: articles loaded -> size: ${it.size}")
-            articleTitleUiItemsList.postValue(it.toList())
-            isLoading.postValue(false)
-        }, { Log.d(TAG, "onError: ${it.printStackTrace()}") },
-            { Log.d(TAG, "onComplete: called") })
+                val articleTitleUiItems = list.map {
+                    ArticleListFragment.ArticleTitleListUiItem(
+                        title = it.itemTitle,
+                        postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
+                        _postTimeMillisecond = it.itemPublishedMillisecond,
+                        _itemId = it.itemId
+                    )
+                }
+                articleTitleUiItems
+            }.subscribe({
+                Log.d(TAG, "onNext: articles loaded -> size: ${it.size}")
+                articleTitleUiItemsList.postValue(it.toList())
+                isLoading.postValue(false)
+            }, { Log.d(TAG, "onError: ${it.printStackTrace()}") },
+                { Log.d(TAG, "onComplete: called") })
         )
     }
 
