@@ -3,10 +3,10 @@ package com.haomins.reader.viewModels
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.SharedPreferenceKey
-import com.haomins.reader.repositories.LoginRepository
-import com.haomins.reader.utils.putValue
-import com.haomins.reader.utils.removeValue
+import com.haomins.www.data.SharedPreferenceKey
+import com.haomins.www.data.repositories.LoginRepository
+import com.haomins.www.data.util.putValue
+import com.haomins.www.data.util.removeValue
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 

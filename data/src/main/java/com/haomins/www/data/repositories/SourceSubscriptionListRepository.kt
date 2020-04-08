@@ -1,9 +1,9 @@
-package com.haomins.reader.repositories
+package com.haomins.www.data.repositories
 
 import android.content.SharedPreferences
-import com.haomins.reader.SharedPreferenceKey
-import com.haomins.reader.TheOldReaderService
-import com.haomins.reader.utils.getValue
+import com.haomins.www.data.SharedPreferenceKey
+import com.haomins.www.data.service.TheOldReaderService
+import com.haomins.www.data.util.getValue
 import com.haomins.www.data.db.AppDatabase
 import com.haomins.www.data.db.entities.SubscriptionEntity
 import com.haomins.www.data.models.subscription.SubscriptionItemModel

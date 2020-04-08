@@ -1,10 +1,10 @@
-package com.haomins.reader.repositories
+package com.haomins.www.data.repositories
 
 import android.content.SharedPreferences
 import android.util.Log
-import com.haomins.reader.SharedPreferenceKey
-import com.haomins.reader.TheOldReaderService
-import com.haomins.reader.utils.getValue
+import com.haomins.www.data.SharedPreferenceKey
+import com.haomins.www.data.service.TheOldReaderService
+import com.haomins.www.data.util.getValue
 import com.haomins.www.data.db.AppDatabase
 import com.haomins.www.data.db.entities.ArticleEntity
 import com.haomins.www.data.models.article.ArticleResponseModel
@@ -74,7 +74,9 @@ class ArticleListRepository @Inject constructor(
                 headerAuthValue = headerAuthValue,
                 refItemId = it.id
             ).toObservable()
-        }, MAX_ALLOWED_CONCURRENCY)
+        },
+            MAX_ALLOWED_CONCURRENCY
+        )
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(ArticleResponseModelObserver())

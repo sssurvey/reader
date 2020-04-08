@@ -2,10 +2,10 @@ package com.haomins.reader.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.TheOldReaderService
+import com.haomins.www.data.service.TheOldReaderService
 import com.haomins.www.data.db.entities.SubscriptionEntity
 import com.haomins.www.data.models.subscription.SubscriptionSourceListResponseModel
-import com.haomins.reader.repositories.SourceSubscriptionListRepository
+import com.haomins.www.data.repositories.SourceSubscriptionListRepository
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URL
 import javax.inject.Inject

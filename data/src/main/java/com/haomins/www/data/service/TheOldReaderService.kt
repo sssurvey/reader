@@ -1,4 +1,4 @@
-package com.haomins.reader
+package com.haomins.www.data.service
 
 import com.haomins.www.data.models.article.ArticleResponseModel
 import com.haomins.www.data.models.article.ItemRefListResponseModel

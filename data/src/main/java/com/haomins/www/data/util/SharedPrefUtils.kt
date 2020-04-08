@@ -1,7 +1,7 @@
-package com.haomins.reader.utils
+package com.haomins.www.data.util
 
 import android.content.SharedPreferences
-import com.haomins.reader.SharedPreferenceKey
+import com.haomins.www.data.SharedPreferenceKey
 
 fun SharedPreferences.getValue(key: SharedPreferenceKey): String {
     return this.getString(key.string, "")!!

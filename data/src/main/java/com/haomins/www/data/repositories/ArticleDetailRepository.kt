@@ -1,4 +1,4 @@
-package com.haomins.reader.repositories
+package com.haomins.www.data.repositories
 
 import com.haomins.www.data.db.AppDatabase
 import com.haomins.www.data.db.entities.ArticleEntity
