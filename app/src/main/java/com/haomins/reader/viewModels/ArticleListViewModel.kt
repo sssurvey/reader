@@ -3,7 +3,7 @@ package com.haomins.reader.viewModels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.data.entities.ArticleEntity
+import com.haomins.www.data.db.entities.ArticleEntity
 import com.haomins.reader.repositories.ArticleListRepository
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleListFragment

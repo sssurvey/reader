@@ -1,15 +1,16 @@
 package com.haomins.reader.utils
 
 import android.content.SharedPreferences
+import com.haomins.reader.SharedPreferenceKey
 
-fun SharedPreferences.getValue(key: String): String {
-    return this.getString(key, "")!!
+fun SharedPreferences.getValue(key: SharedPreferenceKey): String {
+    return this.getString(key.string, "")!!
 }
 
-fun SharedPreferences.putValue(key: String, value: String) {
-    this.edit().putString(key, value).apply()
+fun SharedPreferences.putValue(key: SharedPreferenceKey, value: String) {
+    this.edit().putString(key.string, value).apply()
 }
 
-fun SharedPreferences.removeValue(key: String) {
-    this.edit().remove(key).apply()
+fun SharedPreferences.removeValue(key: SharedPreferenceKey) {
+    this.edit().remove(key.string).apply()
 }

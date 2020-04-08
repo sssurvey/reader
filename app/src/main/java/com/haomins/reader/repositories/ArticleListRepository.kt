@@ -2,13 +2,13 @@ package com.haomins.reader.repositories
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.haomins.reader.SharedPreferenceKey
 import com.haomins.reader.TheOldReaderService
-import com.haomins.reader.data.AppDatabase
-import com.haomins.reader.data.entities.ArticleEntity
-import com.haomins.reader.models.article.ArticleResponseModel
-import com.haomins.reader.models.article.ItemRefListResponseModel
 import com.haomins.reader.utils.getValue
-import com.haomins.reader.viewModels.LoginViewModel
+import com.haomins.www.data.db.AppDatabase
+import com.haomins.www.data.db.entities.ArticleEntity
+import com.haomins.www.data.models.article.ArticleResponseModel
+import com.haomins.www.data.models.article.ItemRefListResponseModel
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,7 +32,7 @@ class ArticleListRepository @Inject constructor(
     private var isWaitingOnResponse = false
     private val headerAuthValue by lazy {
         (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY))
+                + sharedPreferences.getValue(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {

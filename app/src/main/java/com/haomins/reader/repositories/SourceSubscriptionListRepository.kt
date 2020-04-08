@@ -1,13 +1,13 @@
 package com.haomins.reader.repositories
 
 import android.content.SharedPreferences
+import com.haomins.reader.SharedPreferenceKey
 import com.haomins.reader.TheOldReaderService
-import com.haomins.reader.data.AppDatabase
-import com.haomins.reader.data.entities.SubscriptionEntity
-import com.haomins.reader.models.subscription.SubscriptionItemModel
-import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.reader.utils.getValue
-import com.haomins.reader.viewModels.LoginViewModel
+import com.haomins.www.data.db.AppDatabase
+import com.haomins.www.data.db.entities.SubscriptionEntity
+import com.haomins.www.data.models.subscription.SubscriptionItemModel
+import com.haomins.www.data.models.subscription.SubscriptionSourceListResponseModel
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class SourceSubscriptionListRepository @Inject constructor(
     fun loadSubList(): Single<SubscriptionSourceListResponseModel> {
         return theOldReaderService.loadSubscriptionSourceList(
             headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                    + sharedPreferences.getValue(LoginViewModel.AUTH_CODE_KEY))
+                    + sharedPreferences.getValue(SharedPreferenceKey.AUTH_CODE_KEY))
         )
     }
 

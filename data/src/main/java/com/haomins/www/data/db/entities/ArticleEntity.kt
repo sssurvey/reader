@@ -1,4 +1,4 @@
-package com.haomins.reader.data.entities
+package com.haomins.www.data.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

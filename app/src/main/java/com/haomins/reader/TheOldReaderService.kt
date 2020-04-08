@@ -1,9 +1,9 @@
 package com.haomins.reader
 
-import com.haomins.reader.models.article.ArticleResponseModel
-import com.haomins.reader.models.article.ItemRefListResponseModel
-import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
-import com.haomins.reader.models.user.UserAuthResponseModel
+import com.haomins.www.data.models.article.ArticleResponseModel
+import com.haomins.www.data.models.article.ItemRefListResponseModel
+import com.haomins.www.data.models.subscription.SubscriptionSourceListResponseModel
+import com.haomins.www.data.models.user.UserAuthResponseModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Header

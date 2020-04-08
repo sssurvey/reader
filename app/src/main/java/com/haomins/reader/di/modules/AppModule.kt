@@ -3,7 +3,7 @@ package com.haomins.reader.di.modules
 import android.app.Application
 import androidx.room.Room
 import com.haomins.reader.TheOldReaderService
-import com.haomins.reader.data.AppDatabase
+import com.haomins.www.data.db.AppDatabase
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides

@@ -3,8 +3,8 @@ package com.haomins.reader.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.TheOldReaderService
-import com.haomins.reader.data.entities.SubscriptionEntity
-import com.haomins.reader.models.subscription.SubscriptionSourceListResponseModel
+import com.haomins.www.data.db.entities.SubscriptionEntity
+import com.haomins.www.data.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.reader.repositories.SourceSubscriptionListRepository
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URL

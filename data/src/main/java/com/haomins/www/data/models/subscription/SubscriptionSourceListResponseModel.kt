@@ -1,4 +1,4 @@
-package com.haomins.reader.models.subscription
+package com.haomins.www.data.models.subscription
 
 import com.google.gson.annotations.SerializedName
 

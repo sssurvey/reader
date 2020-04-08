@@ -1,10 +1,10 @@
-package com.haomins.reader.data
+package com.haomins.www.data.db
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.haomins.reader.data.entities.SubscriptionEntity
+import com.haomins.www.data.db.entities.SubscriptionEntity
 import io.reactivex.Single
 
 @Dao

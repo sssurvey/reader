@@ -1,7 +1,7 @@
 package com.haomins.reader.repositories
 
-import com.haomins.reader.data.AppDatabase
-import com.haomins.reader.data.entities.ArticleEntity
+import com.haomins.www.data.db.AppDatabase
+import com.haomins.www.data.db.entities.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

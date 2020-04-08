@@ -1,7 +1,7 @@
 package com.haomins.reader.repositories
 
 import com.haomins.reader.TheOldReaderService
-import com.haomins.reader.models.user.UserAuthResponseModel
+import com.haomins.www.data.models.user.UserAuthResponseModel
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

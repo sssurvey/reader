@@ -1,9 +1,11 @@
-package com.haomins.reader.data
+package com.haomins.www.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.haomins.reader.data.entities.ArticleEntity
-import com.haomins.reader.data.entities.SubscriptionEntity
+import com.haomins.www.data.db.ArticleDao
+import com.haomins.www.data.db.SubscriptionDao
+import com.haomins.www.data.db.entities.ArticleEntity
+import com.haomins.www.data.db.entities.SubscriptionEntity
 
 @Database(
     entities = [SubscriptionEntity::class, ArticleEntity::class],
