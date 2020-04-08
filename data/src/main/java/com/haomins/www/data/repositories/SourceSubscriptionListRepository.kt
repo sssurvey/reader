@@ -5,6 +5,7 @@ import com.haomins.www.data.SharedPreferenceKey
 import com.haomins.www.data.service.TheOldReaderService
 import com.haomins.www.data.util.getValue
 import com.haomins.www.data.db.AppDatabase
+import com.haomins.www.data.db.RoomService
 import com.haomins.www.data.db.entities.SubscriptionEntity
 import com.haomins.www.data.models.subscription.SubscriptionItemModel
 import com.haomins.www.data.models.subscription.SubscriptionSourceListResponseModel
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 class SourceSubscriptionListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
-    private val appDatabase: AppDatabase,
+    private val roomService: RoomService,
     private val sharedPreferences: SharedPreferences
 ) {
 
@@ -25,17 +26,17 @@ class SourceSubscriptionListRepository @Inject constructor(
     }
 
     fun retrieveSubListFromDB(): Single<List<SubscriptionEntity>> {
-        return appDatabase.subscriptionDao().getAll()
+        return roomService.subscriptionDao().getAll()
     }
 
     fun saveSubListToDB(
         subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel,
         clearOldTable: Boolean = true
     ) {
-        if (clearOldTable) appDatabase.subscriptionDao().clearTable()
+        if (clearOldTable) roomService.subscriptionDao().clearTable()
         val entityList =
             convertSubscriptionItemModelToEntity(subscriptionSourceListResponseModel.subscriptions)
-        appDatabase.subscriptionDao().insertAll(*entityList.toTypedArray())
+        roomService.subscriptionDao().insertAll(*entityList.toTypedArray())
     }
 
     private fun convertSubscriptionItemModelToEntity(subscriptions: ArrayList<SubscriptionItemModel>): List<SubscriptionEntity> {

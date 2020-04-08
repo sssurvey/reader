@@ -2,8 +2,8 @@ package com.haomins.www.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.haomins.www.data.db.ArticleDao
-import com.haomins.www.data.db.SubscriptionDao
+import com.haomins.www.data.db.dao.ArticleDao
+import com.haomins.www.data.db.dao.SubscriptionDao
 import com.haomins.www.data.db.entities.ArticleEntity
 import com.haomins.www.data.db.entities.SubscriptionEntity
 

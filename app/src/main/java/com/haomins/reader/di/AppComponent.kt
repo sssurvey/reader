@@ -3,6 +3,8 @@ package com.haomins.reader.di
 import android.app.Application
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.di.modules.*
+import com.haomins.www.data.di.DataModule
+import com.haomins.www.data.di.PreferenceModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -13,7 +15,7 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         ActivityModule::class,
-        AppModule::class,
+        DataModule::class,
         FragmentModule::class,
         ViewModelModule::class,
         PreferenceModule::class

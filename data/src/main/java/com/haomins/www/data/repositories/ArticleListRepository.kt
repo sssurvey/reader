@@ -6,6 +6,7 @@ import com.haomins.www.data.SharedPreferenceKey
 import com.haomins.www.data.service.TheOldReaderService
 import com.haomins.www.data.util.getValue
 import com.haomins.www.data.db.AppDatabase
+import com.haomins.www.data.db.RoomService
 import com.haomins.www.data.db.entities.ArticleEntity
 import com.haomins.www.data.models.article.ArticleResponseModel
 import com.haomins.www.data.models.article.ItemRefListResponseModel
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 class ArticleListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
-    private val appDatabase: AppDatabase,
+    private val roomService: RoomService,
     private val sharedPreferences: SharedPreferences
 ) {
 
@@ -46,7 +47,7 @@ class ArticleListRepository @Inject constructor(
             }
             override fun onError(e: Throwable) { e.printStackTrace() }
         })
-        return appDatabase.articleDao().selectAllArticleByFeedId(feedId)
+        return roomService.articleDao().selectAllArticleByFeedId(feedId)
     }
 
     fun continueLoadArticleItemRefs(feedId: String) {
@@ -84,7 +85,7 @@ class ArticleListRepository @Inject constructor(
 
     private fun saveIndividualArticleToDatabase(articleResponseModel: ArticleResponseModel) {
         Completable.fromAction {
-            appDatabase.articleDao().insert(
+            roomService.articleDao().insert(
                 ArticleEntity(
                     itemId = articleResponseModel.items.first().id,
                     itemTitle = articleResponseModel.items.first().title,

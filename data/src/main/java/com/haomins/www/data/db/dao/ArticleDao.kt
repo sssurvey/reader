@@ -1,4 +1,4 @@
-package com.haomins.www.data.db
+package com.haomins.www.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
