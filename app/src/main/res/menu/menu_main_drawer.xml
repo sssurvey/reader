@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/test"
+        android:id="@+id/option_all_articles"
         android:icon="@mipmap/ic_launcher_foreground"
-        android:title="Test" />
+        android:title="@string/menu_all_articles" />
+    <item
+        android:id="@+id/option_friends"
+        android:icon="@mipmap/ic_launcher_foreground"
+        android:title="@string/menu_see_all_friends" />
+    <item
+        android:id="@+id/option_settings"
+        android:icon="@mipmap/ic_launcher_foreground"
+        android:title="@string/menu_settings" />
 </menu>
