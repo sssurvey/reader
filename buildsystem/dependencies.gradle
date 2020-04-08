@@ -53,4 +53,22 @@ ext {
             "com.google.dagger:dagger-android-processor:$android_dagger_version",
             "androidx.room:room-compiler:$room_version"
     ]
+
+    appTestImplementation = [
+            'junit:junit:4.12'
+    ]
+
+    appAndroidTestImplementation = [
+            'androidx.test.ext:junit:1.1.1',
+            'androidx.test.espresso:espresso-core:3.2.0'
+    ]
+
+    dataTestImplementation = [
+            'junit:junit:4.12'
+    ]
+
+    dataAndroidTestImplementation = [
+            'androidx.test.ext:junit:1.1.1',
+            'androidx.test.espresso:espresso-core:3.2.0'
+    ]
 }
