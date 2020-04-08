@@ -44,12 +44,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showSourceTitleListFragment() {
-        unlockDrawer()
+        initDrawer()
         supportFragmentManager.beginTransaction().replace(
             R.id.main_activity_frame_layout,
             SourceTitleListFragment(),
             SourceTitleListFragment.TAG
         ).commit()
+    }
+
+    private fun initDrawer() {
+        navigation_view.itemIconTintList = null
+        unlockDrawer()
     }
 
     private fun lockDrawer() {
