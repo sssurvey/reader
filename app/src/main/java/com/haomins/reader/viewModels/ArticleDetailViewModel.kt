@@ -2,8 +2,8 @@ package com.haomins.reader.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.data.entities.ArticleEntity
-import com.haomins.reader.repositories.ArticleDetailRepository
+import com.haomins.www.data.db.entities.ArticleEntity
+import com.haomins.www.data.repositories.ArticleDetailRepository
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleDetailFragment
 import io.reactivex.observers.DisposableSingleObserver

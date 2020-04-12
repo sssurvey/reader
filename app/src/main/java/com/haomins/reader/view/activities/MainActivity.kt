@@ -3,6 +3,7 @@ package com.haomins.reader.view.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
@@ -11,6 +12,7 @@ import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainActivityViewModel
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showSourceTitleListFragment() {
+        initDrawer()
         supportFragmentManager.beginTransaction().replace(
             R.id.main_activity_frame_layout,
             SourceTitleListFragment(),
@@ -49,7 +52,21 @@ class MainActivity : AppCompatActivity() {
         ).commit()
     }
 
+    private fun initDrawer() {
+        navigation_view.itemIconTintList = null
+        unlockDrawer()
+    }
+
+    private fun lockDrawer() {
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    private fun unlockDrawer() {
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
     private fun handleLoginFragment() {
+        lockDrawer()
         when (mainActivityViewModel.hasAuthToken()) {
             true -> showSourceTitleListFragment()
             false -> showUserLoginFragment()

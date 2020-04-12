@@ -3,7 +3,8 @@ package com.haomins.reader.viewModels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.repositories.ArticleListRepository
+import com.haomins.www.data.db.entities.ArticleEntity
+import com.haomins.www.data.repositories.ArticleListRepository
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleListFragment
 import io.reactivex.disposables.CompositeDisposable
@@ -29,22 +30,24 @@ class ArticleListViewModel @Inject constructor(
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
-        disposables.add(articleListRepository.loadArticleItemRefs(feedId).map { list ->
-            val articleTitleUiItems = list.map {
-                ArticleListFragment.ArticleTitleListUiItem(
-                    title = it.itemTitle,
-                    postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
-                    _postTimeMillisecond = it.itemPublishedMillisecond,
-                    _itemId = it.itemId
-                )
-            }
-            articleTitleUiItems
-        }.subscribe({
-            Log.d(TAG, "onNext: articles loaded -> size: ${it.size}")
-            articleTitleUiItemsList.postValue(it.toList())
-            isLoading.postValue(false)
-        }, { Log.d(TAG, "onError: ${it.printStackTrace()}") },
-            { Log.d(TAG, "onComplete: called") })
+        disposables.add(articleListRepository.loadArticleItemRefs(feedId)
+            .distinctUntilChanged(List<ArticleEntity>::size)
+            .map { list ->
+                val articleTitleUiItems = list.map {
+                    ArticleListFragment.ArticleTitleListUiItem(
+                        title = it.itemTitle,
+                        postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
+                        _postTimeMillisecond = it.itemPublishedMillisecond,
+                        _itemId = it.itemId
+                    )
+                }
+                articleTitleUiItems
+            }.subscribe({
+                Log.d(TAG, "onNext: articles loaded -> size: ${it.size}")
+                articleTitleUiItemsList.postValue(it.toList())
+                isLoading.postValue(false)
+            }, { Log.d(TAG, "onError: ${it.printStackTrace()}") },
+                { Log.d(TAG, "onComplete: called") })
         )
     }
 
