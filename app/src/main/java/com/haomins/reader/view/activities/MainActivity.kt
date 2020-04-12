@@ -3,10 +3,12 @@ package com.haomins.reader.view.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
+import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             ViewModelProviders.of(this, viewModelFactory)[MainActivityViewModel::class.java]
         setContentView(R.layout.activity_main)
         handleLoginFragment()
+        setOnClickListeners()
     }
 
     override fun onBackPressed() {
@@ -50,6 +53,20 @@ class MainActivity : AppCompatActivity() {
             SourceTitleListFragment(),
             SourceTitleListFragment.TAG
         ).commit()
+    }
+
+    private fun setOnClickListeners() {
+        setNavigationViewOnItemClickListener()
+    }
+
+    private fun setNavigationViewOnItemClickListener() {
+        navigation_view.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.option_all_articles -> showToast("clicked")
+            }
+            drawer_layout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
 
     private fun initDrawer() {
