@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.ArticleListActivity
+import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_ALL_ITEM
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -41,6 +42,7 @@ class ArticleListFragment : Fragment() {
     private lateinit var articleListViewModel: ArticleListViewModel
     private lateinit var feedId: String
 
+    private var isLoadAllArticles = false
     private val articleTitleUiItems: MutableList<ArticleTitleListUiItem> = ArrayList()
 
     private val handler by lazy {
@@ -73,9 +75,7 @@ class ArticleListFragment : Fragment() {
         object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-                    articleListViewModel.continueLoadArticles(feedId)
-                }
+                if (!recyclerView.canScrollVertically(1)) loadMoreArticles()
             }
         }
     }
@@ -122,9 +122,16 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun loadArticleList(bundle: Bundle?) {
-        bundle?.getString(SOURCE_FEED_ID)?.let {
-            feedId = it
-            articleListViewModel.loadArticles(feedId)
+        bundle?.let {
+            if (it.containsKey(LOAD_ALL_ITEM) && it.getBoolean(LOAD_ALL_ITEM)) {
+                isLoadAllArticles = true
+                articleListViewModel.loadAllArticles()
+            } else {
+                it.getString(SOURCE_FEED_ID)?.let {string ->
+                    feedId = string
+                    articleListViewModel.loadArticles(feedId)
+                }
+            }
         }
     }
 
@@ -138,6 +145,11 @@ class ArticleListFragment : Fragment() {
                 itemIdList.toTypedArray()
             )
         }
+    }
+
+    private fun loadMoreArticles() {
+        if (isLoadAllArticles) articleListViewModel.continueLoadAllArticles()
+        else articleListViewModel.continueLoadArticles(feedId)
     }
 
     private inner class ArticleTitleListAdapter(private val articleTitleListUiItems: List<ArticleTitleListUiItem>) :

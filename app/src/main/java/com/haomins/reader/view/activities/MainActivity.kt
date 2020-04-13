@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
 import com.haomins.reader.utils.showToast
+import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_ALL_ITEM
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
@@ -62,11 +63,17 @@ class MainActivity : AppCompatActivity() {
     private fun setNavigationViewOnItemClickListener() {
         navigation_view.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.option_all_articles -> showToast("clicked")
+                R.id.option_all_articles -> startArticleListActivityForAllItems()
             }
             drawer_layout.closeDrawer(GravityCompat.START)
             true
         }
+    }
+
+    private fun startArticleListActivityForAllItems() {
+        val intent = Intent(this, ArticleListActivity::class.java)
+        intent.putExtra(LOAD_ALL_ITEM, true)
+        startActivity(intent)
     }
 
     private fun initDrawer() {

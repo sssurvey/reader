@@ -25,7 +25,7 @@ class DataModule {
         fun getLoggedHttpClient(): OkHttpClient {
             val httpLogInterceptor = HttpLoggingInterceptor()
             val httpClientBuilder = OkHttpClient.Builder()
-            httpLogInterceptor.level = HttpLoggingInterceptor.Level.BASIC
+            httpLogInterceptor.level = HttpLoggingInterceptor.Level.BODY
             httpClientBuilder.addInterceptor(httpLogInterceptor)
             return httpClientBuilder.build()
         }

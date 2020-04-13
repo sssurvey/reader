@@ -3,13 +3,12 @@ package com.haomins.www.data.repositories
 import android.content.SharedPreferences
 import android.util.Log
 import com.haomins.www.data.SharedPreferenceKey
-import com.haomins.www.data.service.TheOldReaderService
-import com.haomins.www.data.util.getValue
-import com.haomins.www.data.db.AppDatabase
 import com.haomins.www.data.db.RoomService
 import com.haomins.www.data.db.entities.ArticleEntity
 import com.haomins.www.data.models.article.ArticleResponseModel
 import com.haomins.www.data.models.article.ItemRefListResponseModel
+import com.haomins.www.data.service.TheOldReaderService
+import com.haomins.www.data.util.getValue
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -36,6 +35,18 @@ class ArticleListRepository @Inject constructor(
                 + sharedPreferences.getValue(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
+    fun loadAllArticleItemRefs(): Observable<List<ArticleEntity>> {
+        theOldReaderService.loadAllArticles(headerAuthValue = headerAuthValue)
+            .subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+                override fun onSuccess(t: ItemRefListResponseModel) {
+                    continueId = t.continuation
+                    if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                }
+                override fun onError(e: Throwable) { e.printStackTrace() }
+            })
+        return roomService.articleDao().getAll()
+    }
+
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
         theOldReaderService.loadArticleListByFeed(
             headerAuthValue = headerAuthValue,
@@ -48,6 +59,23 @@ class ArticleListRepository @Inject constructor(
             override fun onError(e: Throwable) { e.printStackTrace() }
         })
         return roomService.articleDao().selectAllArticleByFeedId(feedId)
+    }
+
+    fun continueLoadAllArticleItemRefs() {
+        if (!isWaitingOnResponse) {
+            isWaitingOnResponse = true
+            theOldReaderService.loadAllArticles(
+                headerAuthValue = headerAuthValue,
+                continueLoad = continueId
+            ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+                override fun onSuccess(t: ItemRefListResponseModel) {
+                    continueId = t.continuation
+                    isWaitingOnResponse = false
+                    if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                }
+                override fun onError(e: Throwable) { e.printStackTrace() }
+            })
+        }
     }
 
     fun continueLoadArticleItemRefs(feedId: String) {
@@ -66,7 +94,6 @@ class ArticleListRepository @Inject constructor(
                 override fun onError(e: Throwable) { e.printStackTrace() }
             })
         }
-
     }
 
     private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel) {

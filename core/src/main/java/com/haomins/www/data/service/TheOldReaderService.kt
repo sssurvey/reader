@@ -5,10 +5,7 @@ import com.haomins.www.data.models.article.ItemRefListResponseModel
 import com.haomins.www.data.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.www.data.models.user.UserAuthResponseModel
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface TheOldReaderService {
 
@@ -79,6 +76,14 @@ interface TheOldReaderService {
     fun loadArticleListByFeed(
         @Header("Authorization") headerAuthValue: String,
         @Query("s") feedId: String,
+        @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT.toString(),
+        @Query("c") continueLoad: String = EMPTY,
+        @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
+    ): Single<ItemRefListResponseModel>
+
+    @GET(BASE_API + "stream/items/contents" + "s=user/-/state/com.google/reading-list")
+    fun loadAllArticles(
+        @Header("Authorization") headerAuthValue: String,
         @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT.toString(),
         @Query("c") continueLoad: String = EMPTY,
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
