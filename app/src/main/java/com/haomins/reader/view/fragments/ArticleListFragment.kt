@@ -17,6 +17,7 @@ import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_ALL
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
 import com.haomins.www.data.service.TheOldReaderService
+import com.haomins.www.data.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 import kotlinx.android.synthetic.main.fragment_article_list.*
@@ -29,6 +30,7 @@ class ArticleListFragment : Fragment() {
         const val TAG = "ArticleListFragment"
 
         private const val PROGRESS_BAR_DELAY = 1500L
+        private const val LOAD_MORE_OFFSET_SCALE = 0.7
     }
 
     data class ArticleTitleListUiItem(
@@ -45,7 +47,7 @@ class ArticleListFragment : Fragment() {
 
     private var isLoadAllArticles = false
     private val articleTitleUiItems: MutableList<ArticleTitleListUiItem> = ArrayList()
-    private var loadMoreArticleThreshold = TheOldReaderService.DEFAULT_ARTICLE_AMOUNT
+    private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
 
     private val handler by lazy {
         Handler()
