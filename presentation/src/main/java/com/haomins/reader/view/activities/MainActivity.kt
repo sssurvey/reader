@@ -17,6 +17,8 @@ import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainActivityViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar.*
+import kotlinx.android.synthetic.main.app_bar.view.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -85,9 +87,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initToolbar() {
-        toolbar_layout.visibility = View.VISIBLE
+        appbar_layout.visibility = View.VISIBLE
         setSupportActionBar(toolbar)
-        toolbar.apply {
+        appbar_layout.toolbar.apply {
             setNavigationOnClickListener { openDrawer() }
             setNavigationIcon(R.drawable.ic_menu_24px)
         }
