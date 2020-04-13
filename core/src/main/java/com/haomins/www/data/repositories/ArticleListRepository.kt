@@ -61,13 +61,15 @@ class ArticleListRepository @Inject constructor(
         return roomService.articleDao().selectAllArticleByFeedId(feedId)
     }
 
-    fun continueLoadAllArticleItemRefs() {
+    fun continueLoadAllArticleItemRefs(doAfterSuccess: () -> Unit) {
         if (!isWaitingOnResponse) {
             isWaitingOnResponse = true
             theOldReaderService.loadAllArticles(
                 headerAuthValue = headerAuthValue,
                 continueLoad = continueId
-            ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+            ).doAfterSuccess{
+                doAfterSuccess()
+            }.subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
                 override fun onSuccess(t: ItemRefListResponseModel) {
                     continueId = t.continuation
                     isWaitingOnResponse = false
@@ -78,14 +80,16 @@ class ArticleListRepository @Inject constructor(
         }
     }
 
-    fun continueLoadArticleItemRefs(feedId: String) {
+    fun continueLoadArticleItemRefs(feedId: String, doAfterSuccess: () -> Unit) {
         if (!isWaitingOnResponse) {
             isWaitingOnResponse = true
             theOldReaderService.loadArticleListByFeed(
                 headerAuthValue = headerAuthValue,
                 feedId = feedId,
                 continueLoad = continueId
-            ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+            ).doAfterSuccess{
+                doAfterSuccess()
+            }.subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
                 override fun onSuccess(t: ItemRefListResponseModel) {
                     continueId = t.continuation
                     isWaitingOnResponse = false

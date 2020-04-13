@@ -16,6 +16,7 @@ import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_ALL_ITEM
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
+import com.haomins.www.data.service.TheOldReaderService
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 import kotlinx.android.synthetic.main.fragment_article_list.*
@@ -44,6 +45,7 @@ class ArticleListFragment : Fragment() {
 
     private var isLoadAllArticles = false
     private val articleTitleUiItems: MutableList<ArticleTitleListUiItem> = ArrayList()
+    private var loadMoreArticleThreshold = TheOldReaderService.DEFAULT_ARTICLE_AMOUNT
 
     private val handler by lazy {
         Handler()
@@ -75,7 +77,7 @@ class ArticleListFragment : Fragment() {
         object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) loadMoreArticles()
+                if (!recyclerView.canScrollVertically(1)) loadMoreArticleRightNow()
             }
         }
     }
@@ -147,9 +149,17 @@ class ArticleListFragment : Fragment() {
         }
     }
 
-    private fun loadMoreArticles() {
+    private fun loadMoreArticleRightNow() {
         if (isLoadAllArticles) articleListViewModel.continueLoadAllArticles()
         else articleListViewModel.continueLoadArticles(feedId)
+    }
+
+    private fun loadMoreArticlesBasedOnPosition(position: Int) {
+        if (position >= loadMoreArticleThreshold) {
+            if (isLoadAllArticles) articleListViewModel.continueLoadAllArticles()
+            else articleListViewModel.continueLoadArticles(feedId)
+            loadMoreArticleThreshold += loadMoreArticleThreshold
+        }
     }
 
     private inner class ArticleTitleListAdapter(private val articleTitleListUiItems: List<ArticleTitleListUiItem>) :
@@ -172,6 +182,7 @@ class ArticleListFragment : Fragment() {
             holder.viewHolder.article_publish_time_text_view.text =
                 articleTitleListUiItems[position].postTime
             setOnClick(holder, position)
+            loadMoreArticlesBasedOnPosition(position)
         }
 
         private fun setOnClick(holder: CustomViewHolder, position: Int) {

@@ -76,12 +76,16 @@ class ArticleListViewModel @Inject constructor(
 
     fun continueLoadAllArticles() {
         isLoading.postValue(true)
-        articleListRepository.continueLoadAllArticleItemRefs()
+        articleListRepository.continueLoadAllArticleItemRefs {
+            isLoading.postValue(false)
+        }
     }
 
     fun continueLoadArticles(feedId: String) {
         isLoading.postValue(true)
-        articleListRepository.continueLoadArticleItemRefs(feedId)
+        articleListRepository.continueLoadArticleItemRefs(feedId) {
+            isLoading.postValue(false)
+        }
     }
 
     override fun onCleared() {
