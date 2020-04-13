@@ -2,6 +2,7 @@ package com.haomins.reader.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.option_all_articles -> startArticleListActivityForAllItems()
                 else -> showToast("Still under development...")
             }
-            drawer_layout.closeDrawer(GravityCompat.START)
+            closeDrawer()
             true
         }
     }
@@ -78,8 +79,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initDrawer() {
+        initToolbar()
         navigation_view.itemIconTintList = null
         unlockDrawer()
+    }
+
+    private fun initToolbar() {
+        toolbar_layout.visibility = View.VISIBLE
+        setSupportActionBar(toolbar)
+        toolbar.apply {
+            setNavigationOnClickListener { openDrawer() }
+            setNavigationIcon(R.drawable.ic_menu_24px)
+        }
+        supportActionBar?.apply {
+            setDisplayShowTitleEnabled(false)
+        }
     }
 
     private fun lockDrawer() {
@@ -88,6 +102,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun unlockDrawer() {
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    private fun openDrawer() {
+        drawer_layout.openDrawer(GravityCompat.START)
+    }
+
+    private fun closeDrawer() {
+        drawer_layout.closeDrawer(GravityCompat.START)
     }
 
     private fun handleLoginFragment() {
