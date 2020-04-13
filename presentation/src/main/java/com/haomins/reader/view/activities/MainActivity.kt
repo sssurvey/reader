@@ -93,9 +93,6 @@ class MainActivity : AppCompatActivity() {
             setNavigationOnClickListener { openDrawer() }
             setNavigationIcon(R.drawable.ic_menu_24px)
         }
-        supportActionBar?.apply {
-            setDisplayShowTitleEnabled(false)
-        }
     }
 
     private fun lockDrawer() {

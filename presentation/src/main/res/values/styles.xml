@@ -19,6 +19,7 @@
         <!-- Specify notification bar color -->
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:overScrollMode">never</item>
         <item name="android:textViewStyle">@style/ReaderTextViewStyle</item>
     </style>
 
@@ -28,6 +29,7 @@
 
     <style name="ToolBarStyle" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:background">@color/white</item>
+        <item name="titleTextColor">@color/lightGray</item>
     </style>
 
 </resources>
