@@ -3,13 +3,12 @@ package com.haomins.www.data.repositories
 import android.content.SharedPreferences
 import android.util.Log
 import com.haomins.www.data.SharedPreferenceKey
-import com.haomins.www.data.service.TheOldReaderService
-import com.haomins.www.data.util.getValue
-import com.haomins.www.data.db.AppDatabase
 import com.haomins.www.data.db.RoomService
 import com.haomins.www.data.db.entities.ArticleEntity
 import com.haomins.www.data.models.article.ArticleResponseModel
 import com.haomins.www.data.models.article.ItemRefListResponseModel
+import com.haomins.www.data.service.TheOldReaderService
+import com.haomins.www.data.util.getValue
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,7 +25,7 @@ class ArticleListRepository @Inject constructor(
 
     companion object {
         const val TAG = "ArticleListRepository"
-        private const val MAX_ALLOWED_CONCURRENCY = 5
+        private const val MAX_ALLOWED_CONCURRENCY = 3
     }
 
     private var continueId = ""
@@ -36,6 +35,18 @@ class ArticleListRepository @Inject constructor(
                 + sharedPreferences.getValue(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
+    fun loadAllArticleItemRefs(): Observable<List<ArticleEntity>> {
+        theOldReaderService.loadAllArticles(headerAuthValue = headerAuthValue)
+            .subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+                override fun onSuccess(t: ItemRefListResponseModel) {
+                    continueId = t.continuation
+                    if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
+                }
+                override fun onError(e: Throwable) { e.printStackTrace() }
+            })
+        return roomService.articleDao().getAll()
+    }
+
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
         theOldReaderService.loadArticleListByFeed(
             headerAuthValue = headerAuthValue,
@@ -43,30 +54,50 @@ class ArticleListRepository @Inject constructor(
         ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
             override fun onSuccess(t: ItemRefListResponseModel) {
                 continueId = t.continuation
-                if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
             }
             override fun onError(e: Throwable) { e.printStackTrace() }
         })
         return roomService.articleDao().selectAllArticleByFeedId(feedId)
     }
 
-    fun continueLoadArticleItemRefs(feedId: String) {
+    fun continueLoadAllArticleItemRefs(doAfterSuccess: () -> Unit) {
+        if (!isWaitingOnResponse) {
+            isWaitingOnResponse = true
+            theOldReaderService.loadAllArticles(
+                headerAuthValue = headerAuthValue,
+                continueLoad = continueId
+            ).doAfterSuccess{
+                doAfterSuccess()
+            }.subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+                override fun onSuccess(t: ItemRefListResponseModel) {
+                    continueId = t.continuation
+                    isWaitingOnResponse = false
+                    if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
+                }
+                override fun onError(e: Throwable) { e.printStackTrace() }
+            })
+        }
+    }
+
+    fun continueLoadArticleItemRefs(feedId: String, doAfterSuccess: () -> Unit) {
         if (!isWaitingOnResponse) {
             isWaitingOnResponse = true
             theOldReaderService.loadArticleListByFeed(
                 headerAuthValue = headerAuthValue,
                 feedId = feedId,
                 continueLoad = continueId
-            ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
+            ).doAfterSuccess{
+                doAfterSuccess()
+            }.subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
                 override fun onSuccess(t: ItemRefListResponseModel) {
                     continueId = t.continuation
                     isWaitingOnResponse = false
-                    if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                    if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
                 }
                 override fun onError(e: Throwable) { e.printStackTrace() }
             })
         }
-
     }
 
     private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel) {

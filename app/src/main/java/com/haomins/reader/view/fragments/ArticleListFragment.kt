@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.ArticleListActivity
+import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_ALL_ITEM
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
+import com.haomins.www.data.service.TheOldReaderService
+import com.haomins.www.data.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 import kotlinx.android.synthetic.main.fragment_article_list.*
@@ -27,6 +30,7 @@ class ArticleListFragment : Fragment() {
         const val TAG = "ArticleListFragment"
 
         private const val PROGRESS_BAR_DELAY = 1500L
+        private const val LOAD_MORE_OFFSET_SCALE = 0.7
     }
 
     data class ArticleTitleListUiItem(
@@ -41,7 +45,9 @@ class ArticleListFragment : Fragment() {
     private lateinit var articleListViewModel: ArticleListViewModel
     private lateinit var feedId: String
 
+    private var isLoadAllArticles = false
     private val articleTitleUiItems: MutableList<ArticleTitleListUiItem> = ArrayList()
+    private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
 
     private val handler by lazy {
         Handler()
@@ -73,9 +79,7 @@ class ArticleListFragment : Fragment() {
         object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-                    articleListViewModel.continueLoadArticles(feedId)
-                }
+                if (!recyclerView.canScrollVertically(1)) loadMoreArticleRightNow()
             }
         }
     }
@@ -122,9 +126,16 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun loadArticleList(bundle: Bundle?) {
-        bundle?.getString(SOURCE_FEED_ID)?.let {
-            feedId = it
-            articleListViewModel.loadArticles(feedId)
+        bundle?.let {
+            if (it.containsKey(LOAD_ALL_ITEM) && it.getBoolean(LOAD_ALL_ITEM)) {
+                isLoadAllArticles = true
+                articleListViewModel.loadAllArticles()
+            } else {
+                it.getString(SOURCE_FEED_ID)?.let {string ->
+                    feedId = string
+                    articleListViewModel.loadArticles(feedId)
+                }
+            }
         }
     }
 
@@ -137,6 +148,19 @@ class ArticleListFragment : Fragment() {
                 position,
                 itemIdList.toTypedArray()
             )
+        }
+    }
+
+    private fun loadMoreArticleRightNow() {
+        if (isLoadAllArticles) articleListViewModel.continueLoadAllArticles()
+        else articleListViewModel.continueLoadArticles(feedId)
+    }
+
+    private fun loadMoreArticlesBasedOnPosition(position: Int) {
+        if (position >= loadMoreArticleThreshold) {
+            if (isLoadAllArticles) articleListViewModel.continueLoadAllArticles()
+            else articleListViewModel.continueLoadArticles(feedId)
+            loadMoreArticleThreshold += loadMoreArticleThreshold
         }
     }
 
@@ -160,6 +184,7 @@ class ArticleListFragment : Fragment() {
             holder.viewHolder.article_publish_time_text_view.text =
                 articleTitleListUiItems[position].postTime
             setOnClick(holder, position)
+            loadMoreArticlesBasedOnPosition(position)
         }
 
         private fun setOnClick(holder: CustomViewHolder, position: Int) {

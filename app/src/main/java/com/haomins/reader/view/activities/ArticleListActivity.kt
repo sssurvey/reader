@@ -12,6 +12,7 @@ class ArticleListActivity : AppCompatActivity() {
 
     companion object {
         const val SOURCE_FEED_ID = "SOURCE_FEED_ID"
+        const val LOAD_ALL_ITEM = "LOAD_ALL_ITEM"
         const val ARTICLE_ITEM_POSITION = "ARTICLE_ITEM_POSITION"
         const val ARTICLE_ITEM_ID_ARRAY = "ARTICLE_ITEM_ID_ARRAY"
     }
@@ -20,7 +21,7 @@ class ArticleListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         slideInAnimation()
         setContentView(R.layout.activity_article_list)
-        showArticleListFragment()
+        checkIntent()
     }
 
     override fun onBackPressed() {
@@ -33,6 +34,22 @@ class ArticleListActivity : AppCompatActivity() {
         intent.putExtra(ARTICLE_ITEM_POSITION, position)
         intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleIdArray)
         startActivity(intent)
+    }
+
+    private fun checkIntent() {
+        if (intent.hasExtra(LOAD_ALL_ITEM)) showArticleListFragmentForAllItems()
+        else showArticleListFragment()
+    }
+
+    private fun showArticleListFragmentForAllItems() {
+        val bundle = Bundle()
+        val articleListFragment = ArticleListFragment()
+        bundle.putBoolean(LOAD_ALL_ITEM, intent.getBooleanExtra(LOAD_ALL_ITEM, true))
+        articleListFragment.arguments = bundle
+        supportFragmentManager.beginTransaction().replace(
+            R.id.article_list_activity_frame_layout,
+            articleListFragment, ArticleListFragment.TAG
+        ).commit()
     }
 
     private fun showArticleListFragment() {
