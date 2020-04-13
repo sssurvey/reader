@@ -37,6 +37,21 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:itemTextAppearance="@style/ReaderTextViewStyle"
-        app:menu="@menu/menu_main_drawer" />
+        app:menu="@menu/menu_main_drawer">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/drawer_login_app_version_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/textViewMargin"
+                android:paddingStart="@dimen/drawer_text_margin_start"
+                android:textSize="@dimen/textSizeSmall" />
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
 import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_ALL_ITEM
@@ -17,6 +18,7 @@ import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainActivityViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.app_bar.view.*
 import javax.inject.Inject
@@ -83,6 +85,8 @@ class MainActivity : AppCompatActivity() {
     private fun initDrawer() {
         initToolbar()
         navigation_view.itemIconTintList = null
+        navigation_view.drawer_login_app_version_text_view.text =
+            getString(R.string.version_description, BuildConfig.VERSION_NAME)
         unlockDrawer()
     }
 
