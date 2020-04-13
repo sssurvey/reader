@@ -25,7 +25,7 @@ class ArticleListRepository @Inject constructor(
 
     companion object {
         const val TAG = "ArticleListRepository"
-        private const val MAX_ALLOWED_CONCURRENCY = 5
+        private const val MAX_ALLOWED_CONCURRENCY = 3
     }
 
     private var continueId = ""
