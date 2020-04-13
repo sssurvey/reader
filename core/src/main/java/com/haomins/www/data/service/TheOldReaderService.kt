@@ -81,11 +81,23 @@ interface TheOldReaderService {
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ItemRefListResponseModel>
 
-    @GET(BASE_API + "stream/items/contents" + "s=user/-/state/com.google/reading-list")
+    /**
+     * Get all article refs for all recent articles
+     *
+     * This get request will allow you to get json data of all article references for all recent
+     * articles, you can use the article `itemRef` to load more details about these articles.
+     *
+     * @param headerAuthValue User's auth token and auth meta data
+     * @param continueLoad An ID for continue load after the first N amount (specified in 'n=')
+     * @param allItemQuery DO NOT USE, this is provided for request to return all articles' ref id
+     * @return Single<ItemRefListResponseModel>
+     */
+    @GET(BASE_API + "stream/items/ids")
     fun loadAllArticles(
         @Header("Authorization") headerAuthValue: String,
         @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT.toString(),
         @Query("c") continueLoad: String = EMPTY,
+        @Query(encoded = true, value = "s") allItemQuery: String = "user/-/state/com.google/reading-list",
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ItemRefListResponseModel>
 

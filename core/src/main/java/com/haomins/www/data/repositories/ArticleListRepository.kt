@@ -40,7 +40,7 @@ class ArticleListRepository @Inject constructor(
             .subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
                 override fun onSuccess(t: ItemRefListResponseModel) {
                     continueId = t.continuation
-                    if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                    if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
                 }
                 override fun onError(e: Throwable) { e.printStackTrace() }
             })
@@ -54,7 +54,7 @@ class ArticleListRepository @Inject constructor(
         ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
             override fun onSuccess(t: ItemRefListResponseModel) {
                 continueId = t.continuation
-                if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
             }
             override fun onError(e: Throwable) { e.printStackTrace() }
         })
@@ -73,7 +73,7 @@ class ArticleListRepository @Inject constructor(
                 override fun onSuccess(t: ItemRefListResponseModel) {
                     continueId = t.continuation
                     isWaitingOnResponse = false
-                    if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                    if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
                 }
                 override fun onError(e: Throwable) { e.printStackTrace() }
             })
@@ -93,7 +93,7 @@ class ArticleListRepository @Inject constructor(
                 override fun onSuccess(t: ItemRefListResponseModel) {
                     continueId = t.continuation
                     isWaitingOnResponse = false
-                    if (t.itemRefs.isNotEmpty()) loadIndividualArticleInformation(t)
+                    if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
                 }
                 override fun onError(e: Throwable) { e.printStackTrace() }
             })
