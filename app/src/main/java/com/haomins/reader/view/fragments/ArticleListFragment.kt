@@ -16,7 +16,6 @@ import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_ALL_ITEM
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
 import com.haomins.reader.viewModels.ArticleListViewModel
-import com.haomins.www.data.service.TheOldReaderService
 import com.haomins.www.data.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
