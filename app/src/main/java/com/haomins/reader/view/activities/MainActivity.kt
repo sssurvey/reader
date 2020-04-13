@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         navigation_view.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.option_all_articles -> startArticleListActivityForAllItems()
+                else -> showToast("Still under development...")
             }
             drawer_layout.closeDrawer(GravityCompat.START)
             true
