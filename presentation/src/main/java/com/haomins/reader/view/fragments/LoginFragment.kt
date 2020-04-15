@@ -1,9 +1,11 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -52,19 +54,53 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerLiveDataObserver()
-        initiateUi()
-        login_button.setOnClickListener {
-            loginButtonOnClick()
+        initiateUI()
+        setOnClickListener()
+        setOnTextChangedListener()
+    }
+
+    private fun setOnClickListener() {
+        login_button.setOnClickListener { loginButtonOnClick() }
+        sign_up_button.setOnClickListener { signUpButtonOnClick() }
+        login_sign_up_text_view.setOnClickListener { loginSignUpDescriptionOnClick() }
+    }
+
+    private fun setOnTextChangedListener() {
+        setLoginPasswordEditTextOnChangeListener()
+    }
+
+    private fun setLoginPasswordEditTextOnChangeListener() {
+        login_password_edit_text.addTextChangedListener {
+            it?.let {
+                sign_up_button.apply {
+                    isEnabled = it.isEmpty()
+                    if (it.isEmpty()) setTextColor(context!!.getColor(R.color.colorPrimary))
+                    else setTextColor(context!!.getColor(R.color.lightGray))
+                }
+            }
         }
     }
 
-    private fun initiateUi() {
+    private fun initiateUI() {
         login_app_version_text_view.text =
             getString(R.string.version_description, BuildConfig.VERSION_NAME)
     }
 
     private fun registerLiveDataObserver() {
         loginViewModel.isUserLoggedIn.observe(this, isUserLoggedInObserver)
+    }
+
+    private fun signUpButtonOnClick() {
+        startActivity(Intent(Intent.ACTION_VIEW, loginViewModel.getSignUpUrl()))
+    }
+
+    private fun loginSignUpDescriptionOnClick() {
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                loginViewModel.getGenerateAccountForGoogleOrFacebookUrl()
+            )
+        )
     }
 
     private fun loginButtonOnClick() {

@@ -20,8 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:gravity="center"
         android:layout_margin="@dimen/large_layout_margin"
+        android:gravity="center"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -54,16 +54,45 @@
                 android:textSize="@dimen/textSizeSmall" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/login_button"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/edit_text_default_height"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/button_text_login"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/textSizeSmall" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sign_up_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_text_default_height"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/button_text_sign_up"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSizeSmall" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/login_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_text_default_height"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/button_text_login"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/textSizeSmall" />
+        </LinearLayout>
 
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/login_sign_up_text_view"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/large_layout_margin"
+        android:justificationMode="inter_word"
+        android:text="@string/desc_sign_up"
+        android:textColor="@color/lightGray"
+        android:textSize="@dimen/textSizeTiny" />
 
 </RelativeLayout>
