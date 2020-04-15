@@ -17,6 +17,11 @@ android {
         versionName "0.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     buildTypes {
         release {
             minifyEnabled false

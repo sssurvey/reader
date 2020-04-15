@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -55,12 +56,29 @@ class LoginFragment : Fragment() {
         registerLiveDataObserver()
         initiateUI()
         setOnClickListener()
+        setOnTextChangedListener()
     }
 
     private fun setOnClickListener() {
         login_button.setOnClickListener { loginButtonOnClick() }
         sign_up_button.setOnClickListener { signUpButtonOnClick() }
         login_sign_up_text_view.setOnClickListener { loginSignUpDescriptionOnClick() }
+    }
+
+    private fun setOnTextChangedListener() {
+        setLoginPasswordEditTextOnChangeListener()
+    }
+
+    private fun setLoginPasswordEditTextOnChangeListener() {
+        login_password_edit_text.addTextChangedListener {
+            it?.let {
+                sign_up_button.apply {
+                    isEnabled = it.isEmpty()
+                    if (it.isEmpty()) setTextColor(context!!.getColor(R.color.colorPrimary))
+                    else setTextColor(context!!.getColor(R.color.lightGray))
+                }
+            }
+        }
     }
 
     private fun initiateUI() {
