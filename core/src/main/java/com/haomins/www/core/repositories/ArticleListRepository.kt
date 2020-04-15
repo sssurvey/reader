@@ -3,17 +3,16 @@ package com.haomins.www.core.repositories
 import android.content.SharedPreferences
 import android.util.Log
 import com.haomins.www.core.data.SharedPreferenceKey
-import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.data.entities.ArticleEntity
 import com.haomins.www.core.data.models.article.ArticleResponseModel
 import com.haomins.www.core.data.models.article.ItemRefListResponseModel
+import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.service.TheOldReaderService
 import com.haomins.www.core.util.getValue
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
-import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -36,28 +35,20 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun loadAllArticleItemRefs(): Observable<List<ArticleEntity>> {
-        theOldReaderService.loadAllArticles(headerAuthValue = headerAuthValue)
-            .subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
-                override fun onSuccess(t: ItemRefListResponseModel) {
-                    continueId = t.continuation
-                    if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
-                }
-                override fun onError(e: Throwable) { e.printStackTrace() }
-            })
+        theOldReaderService
+            .loadAllArticles(headerAuthValue = headerAuthValue)
+            .doOnSuccess(::fetchIndividualArticleInformation)
+            .doOnError(::onLoadError)
+            .subscribe()
         return roomService.articleDao().getAll()
     }
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
-        theOldReaderService.loadArticleListByFeed(
-            headerAuthValue = headerAuthValue,
-            feedId = feedId
-        ).subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
-            override fun onSuccess(t: ItemRefListResponseModel) {
-                continueId = t.continuation
-                if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
-            }
-            override fun onError(e: Throwable) { e.printStackTrace() }
-        })
+        theOldReaderService
+            .loadArticleListByFeed(headerAuthValue = headerAuthValue, feedId = feedId)
+            .doOnSuccess(::fetchIndividualArticleInformation)
+            .doOnError(::onLoadError)
+            .subscribe()
         return roomService.articleDao().selectAllArticleByFeedId(feedId)
     }
 
@@ -67,16 +58,14 @@ class ArticleListRepository @Inject constructor(
             theOldReaderService.loadAllArticles(
                 headerAuthValue = headerAuthValue,
                 continueLoad = continueId
-            ).doAfterSuccess{
-                doAfterSuccess()
-            }.subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
-                override fun onSuccess(t: ItemRefListResponseModel) {
-                    continueId = t.continuation
+            )
+                .doAfterSuccess {
                     isWaitingOnResponse = false
-                    if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
+                    doAfterSuccess()
                 }
-                override fun onError(e: Throwable) { e.printStackTrace() }
-            })
+                .doOnSuccess(::fetchIndividualArticleInformation)
+                .doOnError(::onLoadError)
+                .subscribe()
         }
     }
 
@@ -87,16 +76,14 @@ class ArticleListRepository @Inject constructor(
                 headerAuthValue = headerAuthValue,
                 feedId = feedId,
                 continueLoad = continueId
-            ).doAfterSuccess{
-                doAfterSuccess()
-            }.subscribe(object : DisposableSingleObserver<ItemRefListResponseModel>() {
-                override fun onSuccess(t: ItemRefListResponseModel) {
-                    continueId = t.continuation
+            )
+                .doAfterSuccess {
                     isWaitingOnResponse = false
-                    if (!t.itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(t)
+                    doAfterSuccess()
                 }
-                override fun onError(e: Throwable) { e.printStackTrace() }
-            })
+                .doOnSuccess(::fetchIndividualArticleInformation)
+                .doOnError(::onLoadError)
+                .subscribe()
         }
     }
 
@@ -106,9 +93,7 @@ class ArticleListRepository @Inject constructor(
                 headerAuthValue = headerAuthValue,
                 refItemId = it.id
             ).toObservable()
-        },
-            MAX_ALLOWED_CONCURRENCY
-        )
+        }, MAX_ALLOWED_CONCURRENCY)
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(ArticleResponseModelObserver())
@@ -127,12 +112,28 @@ class ArticleListRepository @Inject constructor(
                     feedId = articleResponseModel.id
                 )
             )
-        }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+        }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+    }
+
+    private fun fetchIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel) {
+        with(itemRefListResponseModel) {
+            continueId = continuation
+            if (!itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(this)
+        }
+    }
+
+    private fun onLoadError(e: Throwable) {
+        Log.d(TAG, "onError :: ${e.printStackTrace()}")
     }
 
     private inner class ArticleResponseModelObserver : DisposableObserver<ArticleResponseModel>() {
-        override fun onError(e: Throwable) { Log.d(TAG, "onError::${e.printStackTrace()}") }
-        override fun onComplete() { Log.d(TAG, "onComplete::called") }
+        override fun onError(e: Throwable) { onLoadError(e) }
+
+        override fun onComplete() {
+            Log.d(TAG, "onComplete::called")
+        }
+
         override fun onNext(t: ArticleResponseModel) {
             saveIndividualArticleToDatabase(t)
             onComplete()
