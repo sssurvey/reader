@@ -5,6 +5,7 @@
     <string name="version_description">version %s</string>
     <string name="menu_see_all_friends">Friends List</string>
     <string name="menu_all_articles">All Articles</string>
+    <string name="menu_read_articles">Read Articles</string>
     <string name="menu_settings">Settings</string>
     <string name="hint_username">username</string>
     <string name="hint_passcode">passcode</string>

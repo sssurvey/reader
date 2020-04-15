@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         appbar_layout.toolbar.apply {
             setNavigationOnClickListener { openDrawer() }
-            setNavigationIcon(R.drawable.ic_menu_24px)
+            setNavigationIcon(R.drawable.ic_menu)
         }
     }
 
