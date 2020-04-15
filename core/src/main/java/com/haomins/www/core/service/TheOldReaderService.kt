@@ -17,7 +17,8 @@ interface TheOldReaderService {
         const val BASE_URL = "https://theoldreader.com/"
         const val AUTH_HEADER_VALUE_PREFIX = "GoogleLogin auth="
         const val DEFAULT_PROTOCOL = "https:"
-        const val SIGN_UP_PAGE = "https://theoldreader.com/users/sign_up"
+        const val SIGN_UP_PAGE_URL = "https://theoldreader.com/users/sign_up"
+        const val GENERATE_ACCOUNT_PAGE_URL = "https://theoldreader.com/users/edit"
         const val DEFAULT_ARTICLE_AMOUNT = 35
 
         private const val DEFAULT_OUTPUT_FORMAT = "json"

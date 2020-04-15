@@ -8,4 +8,8 @@
     <string name="menu_settings">Settings</string>
     <string name="hint_username">username</string>
     <string name="hint_passcode">passcode</string>
+    <string name="desc_sign_up">Please note that apps require you to have a username and password in
+        The Old Reader. If you currently only use Google or Facebook to sign in, you will need to
+        create a username and password in <a href="https://theoldreader.com/users/edit">settings</a>.
+    </string>
 </resources>

@@ -53,16 +53,17 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerLiveDataObserver()
-        initiateUi()
+        initiateUI()
         setOnClickListener()
     }
 
     private fun setOnClickListener() {
         login_button.setOnClickListener { loginButtonOnClick() }
         sign_up_button.setOnClickListener { signUpButtonOnClick() }
+        login_sign_up_text_view.setOnClickListener { loginSignUpDescriptionOnClick() }
     }
 
-    private fun initiateUi() {
+    private fun initiateUI() {
         login_app_version_text_view.text =
             getString(R.string.version_description, BuildConfig.VERSION_NAME)
     }
@@ -73,6 +74,15 @@ class LoginFragment : Fragment() {
 
     private fun signUpButtonOnClick() {
         startActivity(Intent(Intent.ACTION_VIEW, loginViewModel.getSignUpUrl()))
+    }
+
+    private fun loginSignUpDescriptionOnClick() {
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                loginViewModel.getGenerateAccountForGoogleOrFacebookUrl()
+            )
+        )
     }
 
     private fun loginButtonOnClick() {

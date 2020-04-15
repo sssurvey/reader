@@ -17,7 +17,11 @@ class LoginRepository @Inject constructor(private val theOldReaderService: TheOl
     }
 
     fun getSignUpUrlString(): String {
-        return TheOldReaderService.SIGN_UP_PAGE
+        return TheOldReaderService.SIGN_UP_PAGE_URL
+    }
+
+    fun getGenerateAccountUrlString(): String {
+        return TheOldReaderService.GENERATE_ACCOUNT_PAGE_URL
     }
 
 }

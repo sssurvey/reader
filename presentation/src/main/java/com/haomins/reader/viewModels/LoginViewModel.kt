@@ -39,6 +39,10 @@ class LoginViewModel @Inject constructor(
         return Uri.parse(loginRepository.getSignUpUrlString())
     }
 
+    fun getGenerateAccountForGoogleOrFacebookUrl(): Uri {
+        return Uri.parse(loginRepository.getGenerateAccountUrlString())
+    }
+
     private fun saveAuthCode(auth: String) {
         sharedPreferences.putValue(SharedPreferenceKey.AUTH_CODE_KEY, auth)
     }
