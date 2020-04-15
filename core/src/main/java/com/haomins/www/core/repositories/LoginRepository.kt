@@ -16,4 +16,8 @@ class LoginRepository @Inject constructor(private val theOldReaderService: TheOl
             .observeOn(AndroidSchedulers.mainThread())
     }
 
+    fun getSignUpUrlString(): String {
+        return TheOldReaderService.SIGN_UP_PAGE
+    }
+
 }

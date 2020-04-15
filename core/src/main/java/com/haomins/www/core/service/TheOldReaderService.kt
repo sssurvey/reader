@@ -5,7 +5,10 @@ import com.haomins.www.core.data.models.article.ItemRefListResponseModel
 import com.haomins.www.core.data.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.www.core.data.models.user.UserAuthResponseModel
 import io.reactivex.Single
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface TheOldReaderService {
 
@@ -14,6 +17,7 @@ interface TheOldReaderService {
         const val BASE_URL = "https://theoldreader.com/"
         const val AUTH_HEADER_VALUE_PREFIX = "GoogleLogin auth="
         const val DEFAULT_PROTOCOL = "https:"
+        const val SIGN_UP_PAGE = "https://theoldreader.com/users/sign_up"
         const val DEFAULT_ARTICLE_AMOUNT = 35
 
         private const val DEFAULT_OUTPUT_FORMAT = "json"
@@ -97,7 +101,10 @@ interface TheOldReaderService {
         @Header("Authorization") headerAuthValue: String,
         @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT.toString(),
         @Query("c") continueLoad: String = EMPTY,
-        @Query(encoded = true, value = "s") allItemQuery: String = "user/-/state/com.google/reading-list",
+        @Query(
+            encoded = true,
+            value = "s"
+        ) allItemQuery: String = "user/-/state/com.google/reading-list",
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ItemRefListResponseModel>
 

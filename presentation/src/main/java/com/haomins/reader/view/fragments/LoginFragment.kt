@@ -1,5 +1,6 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,9 +54,12 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         registerLiveDataObserver()
         initiateUi()
-        login_button.setOnClickListener {
-            loginButtonOnClick()
-        }
+        setOnClickListener()
+    }
+
+    private fun setOnClickListener() {
+        login_button.setOnClickListener { loginButtonOnClick() }
+        sign_up_button.setOnClickListener { signUpButtonOnClick() }
     }
 
     private fun initiateUi() {
@@ -65,6 +69,10 @@ class LoginFragment : Fragment() {
 
     private fun registerLiveDataObserver() {
         loginViewModel.isUserLoggedIn.observe(this, isUserLoggedInObserver)
+    }
+
+    private fun signUpButtonOnClick() {
+        startActivity(Intent(Intent.ACTION_VIEW, loginViewModel.getSignUpUrl()))
     }
 
     private fun loginButtonOnClick() {

@@ -1,6 +1,7 @@
 package com.haomins.reader.viewModels
 
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.www.core.data.SharedPreferenceKey
@@ -32,6 +33,10 @@ class LoginViewModel @Inject constructor(
             }, {
                 clearAuthCode()
             })
+    }
+
+    fun getSignUpUrl(): Uri {
+        return Uri.parse(loginRepository.getSignUpUrlString())
     }
 
     private fun saveAuthCode(auth: String) {
