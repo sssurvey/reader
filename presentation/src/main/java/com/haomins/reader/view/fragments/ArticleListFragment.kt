@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.ArticleListActivity
-import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_ALL_ITEM
-import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
+import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.viewModels.ArticleListViewModel
 import com.haomins.www.core.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
 import dagger.android.support.AndroidSupportInjection
@@ -126,14 +125,18 @@ class ArticleListFragment : Fragment() {
 
     private fun loadArticleList(bundle: Bundle?) {
         bundle?.let {
-            if (it.containsKey(LOAD_ALL_ITEM) && it.getBoolean(LOAD_ALL_ITEM)) {
-                isLoadAllArticles = true
-                articleListViewModel.loadAllArticles()
-            } else {
-                it.getString(SOURCE_FEED_ID)?.let {string ->
-                    feedId = string
-                    articleListViewModel.loadArticles(feedId)
+            when (it.get(MODE)) {
+                ArticleListActivity.Mode.LOAD_ALL -> {
+                    isLoadAllArticles = true
+                    articleListViewModel.loadAllArticles()
                 }
+                ArticleListActivity.Mode.LOAD_BY_FEED_ID -> {
+                    it.getString(ArticleListActivity.Mode.LOAD_BY_FEED_ID.key)?.let { string ->
+                        feedId = string
+                        articleListViewModel.loadArticles(feedId)
+                    }
+                }
+                else -> {}
             }
         }
     }

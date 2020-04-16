@@ -11,8 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
 import com.haomins.reader.utils.showToast
-import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_ALL_ITEM
-import com.haomins.reader.view.activities.ArticleListActivity.Companion.SOURCE_FEED_ID
+import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainActivityViewModel
@@ -47,8 +46,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startArticleListActivity(feedId: String) {
-        val intent = Intent(this, ArticleListActivity::class.java)
-        intent.putExtra(SOURCE_FEED_ID, feedId)
+        val intent = Intent(this, ArticleListActivity::class.java).apply {
+            putExtra(MODE, ArticleListActivity.Mode.LOAD_BY_FEED_ID)
+            putExtra(ArticleListActivity.Mode.LOAD_BY_FEED_ID.key, feedId)
+        }
         startActivity(intent)
     }
 
@@ -77,8 +78,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startArticleListActivityForAllItems() {
-        val intent = Intent(this, ArticleListActivity::class.java)
-        intent.putExtra(LOAD_ALL_ITEM, true)
+        val intent = Intent(this, ArticleListActivity::class.java).apply {
+            putExtra(MODE, ArticleListActivity.Mode.LOAD_ALL)
+        }
         startActivity(intent)
     }
 
