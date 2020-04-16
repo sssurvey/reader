@@ -5,23 +5,22 @@
     android:layout_height="match_parent">
 
     <SwitchPreferenceCompat
-        app:iconSpaceReserved="false"
         android:icon="@drawable/ic_under_development"
+        app:iconSpaceReserved="false"
         app:key="notifications"
-        app:title="Enable dark mode" />
+        app:title="@string/settings_option_dark_mode" />
 
     <Preference
-        app:iconSpaceReserved="false"
         android:icon="@drawable/ic_under_development"
+        app:iconSpaceReserved="false"
         app:key="feedback"
         app:summary="Report technical issues or suggest new features"
-        app:title="Send feedback" />
+        app:title="@string/settings_option_send_feedback" />
 
     <Preference
-        app:iconSpaceReserved="false"
         android:icon="@drawable/ic_under_development"
+        app:iconSpaceReserved="false"
         app:key="about"
-        app:summary="Report technical issues or suggest new features"
-        app:title="About" />
+        app:title="@string/settings_option_about" />
 
 </PreferenceScreen>

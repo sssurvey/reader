@@ -12,4 +12,7 @@
         The Old Reader. If you currently only use Google or Facebook to sign in, you will need to
         create a username and password in <a href="https://theoldreader.com/users/edit">settings</a>.
     </string>
+    <string name="settings_option_dark_mode">Dark mode</string>
+    <string name="settings_option_send_feedback">Send feedback</string>
+    <string name="settings_option_about">About</string>
 </resources>
