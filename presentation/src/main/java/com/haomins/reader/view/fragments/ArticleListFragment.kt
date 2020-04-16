@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
+import com.haomins.reader.view.activities.ArticleListActivity.Mode
 import com.haomins.reader.viewModels.ArticleListViewModel
 import com.haomins.www.core.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
 import dagger.android.support.AndroidSupportInjection
@@ -41,20 +42,13 @@ class ArticleListFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var articleListViewModel: ArticleListViewModel
-    private lateinit var feedId: String
-
-    private var isLoadAllArticles = false
-    private val articleTitleUiItems: MutableList<ArticleTitleListUiItem> = ArrayList()
+    private lateinit var currentMode: Mode
     private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
+    private val articleTitleUiItems: MutableList<ArticleTitleListUiItem> = ArrayList()
 
-    private val handler by lazy {
-        Handler()
-    }
-
-    private val recyclerLayoutManager by lazy {
-        LinearLayoutManager(context)
-    }
-
+    private val feedId by lazy { arguments?.getString(currentMode.key).toString() }
+    private val handler by lazy { Handler() }
+    private val recyclerLayoutManager by lazy { LinearLayoutManager(context) }
     private val isLoadingObserver by lazy {
         Observer<Boolean> {
             if (it) showProgressBar()
@@ -95,6 +89,7 @@ class ArticleListFragment : Fragment() {
         AndroidSupportInjection.inject(this)
         articleListViewModel =
             ViewModelProviders.of(this, viewModelFactory)[ArticleListViewModel::class.java]
+        currentMode = arguments?.get(MODE) as Mode
         loadArticleList(arguments)
         registerLiveDataObservers()
         article_title_recycler_view.apply {
@@ -124,45 +119,38 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun loadArticleList(bundle: Bundle?) {
-        bundle?.let {
-            when (it.get(MODE)) {
-                ArticleListActivity.Mode.LOAD_ALL -> {
-                    isLoadAllArticles = true
-                    articleListViewModel.loadAllArticles()
-                }
-                ArticleListActivity.Mode.LOAD_BY_FEED_ID -> {
-                    it.getString(ArticleListActivity.Mode.LOAD_BY_FEED_ID.key)?.let { string ->
-                        feedId = string
-                        articleListViewModel.loadArticles(feedId)
-                    }
-                }
-                else -> {}
+        when (currentMode) {
+            Mode.LOAD_ALL -> articleListViewModel.loadAllArticles()
+            Mode.LOAD_BY_FEED_ID -> {
+                articleListViewModel.loadArticles(feedId)
             }
         }
     }
 
-    private fun articleTitleListRecyclerViewItemClickedAt(position: Int) {
-        val itemIdList: List<String> = articleTitleUiItems.map {
-            it._itemId
+    private fun loadMoreArticleRightNow() {
+        when (currentMode) {
+            Mode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(feedId)
+            Mode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
         }
+    }
+
+    private fun loadMoreArticlesBasedOnPosition(position: Int) {
+        if (position >= loadMoreArticleThreshold) {
+            when (currentMode) {
+                Mode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(feedId)
+                Mode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
+            }
+            loadMoreArticleThreshold += loadMoreArticleThreshold
+        }
+    }
+
+    private fun articleTitleListRecyclerViewItemClickedAt(position: Int) {
+        val itemIdList: List<String> = articleTitleUiItems.map { it._itemId }
         activity?.let {
             (it as ArticleListActivity).startArticleDetailActivity(
                 position,
                 itemIdList.toTypedArray()
             )
-        }
-    }
-
-    private fun loadMoreArticleRightNow() {
-        if (isLoadAllArticles) articleListViewModel.continueLoadAllArticles()
-        else articleListViewModel.continueLoadArticles(feedId)
-    }
-
-    private fun loadMoreArticlesBasedOnPosition(position: Int) {
-        if (position >= loadMoreArticleThreshold) {
-            if (isLoadAllArticles) articleListViewModel.continueLoadAllArticles()
-            else articleListViewModel.continueLoadArticles(feedId)
-            loadMoreArticleThreshold += loadMoreArticleThreshold
         }
     }
 
