@@ -28,9 +28,7 @@ class SourceTitleListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
     private lateinit var sourceTitleListViewModel: SourceTitleListViewModel
-
     private val sourceListDisplayDataList: MutableList<Pair<String, URL>> = ArrayList()
 
     private val sourceTitleListAdapter by lazy {
@@ -121,7 +119,5 @@ class SourceTitleListFragment : Fragment() {
                 .load(url)
                 .into(holder.viewHolder.source_icon_image_view)
         }
-
     }
-
 }

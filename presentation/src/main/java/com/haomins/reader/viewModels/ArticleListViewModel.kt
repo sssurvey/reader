@@ -19,77 +19,65 @@ class ArticleListViewModel @Inject constructor(
         const val TAG = "ArticleListViewModel"
     }
 
-    val articleTitleUiItemsList by lazy {
-        MutableLiveData<List<ArticleListFragment.ArticleTitleListUiItem>>()
-    }
-    val isLoading by lazy {
-        MutableLiveData(false)
-    }
-
+    val articleTitleUiItemsList by lazy { MutableLiveData<List<ArticleListFragment.ArticleTitleListUiItem>>() }
+    val isLoading by lazy { MutableLiveData(false) }
     private val disposables = CompositeDisposable()
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
-        disposables.add(articleListRepository.loadArticleItemRefs(feedId)
-            .distinctUntilChanged(List<ArticleEntity>::size)
-            .map { list ->
-                val articleTitleUiItems = list.map {
-                    ArticleListFragment.ArticleTitleListUiItem(
-                        title = it.itemTitle,
-                        postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
-                        _postTimeMillisecond = it.itemPublishedMillisecond,
-                        _itemId = it.itemId
-                    )
-                }
-                articleTitleUiItems
-            }.subscribe({
-                Log.d(TAG, "onNext: articles loaded -> size: ${it.size}")
-                articleTitleUiItemsList.postValue(it.toList())
-                isLoading.postValue(false)
-            }, { Log.d(TAG, "onError: ${it.printStackTrace()}") },
-                { Log.d(TAG, "onComplete: called") })
+        disposables.add(
+            articleListRepository.loadArticleItemRefs(feedId)
+                .distinctUntilChanged(List<ArticleEntity>::size)
+                .map(::mapEntitiesToUiItems)
+                .doOnNext(::onArticleLoaded)
+                .subscribe({},
+                    { Log.d(TAG, "onError: ${it.printStackTrace()}") },
+                    { Log.d(TAG, "onComplete: called") })
         )
     }
 
     fun loadAllArticles() {
         isLoading.postValue(true)
-        disposables.add(articleListRepository.loadAllArticleItemRefs()
-            .distinctUntilChanged(List<ArticleEntity>::size)
-            .map { list ->
-                val articleTitleUiItems = list.map {
-                    ArticleListFragment.ArticleTitleListUiItem(
-                        title = it.itemTitle,
-                        postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
-                        _postTimeMillisecond = it.itemPublishedMillisecond,
-                        _itemId = it.itemId
-                    )
-                }
-                articleTitleUiItems
-            }.subscribe({
-                Log.d(TAG, "onNext: articles loaded -> size: ${it.size}")
-                articleTitleUiItemsList.postValue(it.toList())
-                isLoading.postValue(false)
-            }, { Log.d(TAG, "onError: ${it.printStackTrace()}") },
-                { Log.d(TAG, "onComplete: called") })
+        disposables.add(
+            articleListRepository.loadAllArticleItemRefs()
+                .distinctUntilChanged(List<ArticleEntity>::size)
+                .map(::mapEntitiesToUiItems)
+                .doOnNext(::onArticleLoaded)
+                .subscribe({},
+                    { Log.d(TAG, "onError: ${it.printStackTrace()}") },
+                    { Log.d(TAG, "onComplete: called") })
         )
     }
 
     fun continueLoadAllArticles() {
         isLoading.postValue(true)
-        articleListRepository.continueLoadAllArticleItemRefs {
-            isLoading.postValue(false)
-        }
+        articleListRepository.continueLoadAllArticleItemRefs { isLoading.postValue(false) }
     }
 
     fun continueLoadArticles(feedId: String) {
         isLoading.postValue(true)
-        articleListRepository.continueLoadArticleItemRefs(feedId) {
-            isLoading.postValue(false)
-        }
+        articleListRepository.continueLoadArticleItemRefs(feedId) { isLoading.postValue(false) }
     }
 
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
+    }
+
+    private fun onArticleLoaded(articleTitleListUiItems: List<ArticleListFragment.ArticleTitleListUiItem>) {
+        Log.d(TAG, "onNext: articles loaded -> size: ${articleTitleListUiItems.size}")
+        articleTitleUiItemsList.postValue(articleTitleListUiItems.toList())
+        isLoading.postValue(false)
+    }
+
+    private fun mapEntitiesToUiItems(articleEntities: List<ArticleEntity>): List<ArticleListFragment.ArticleTitleListUiItem> {
+        return articleEntities.map {
+            ArticleListFragment.ArticleTitleListUiItem(
+                title = it.itemTitle,
+                postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
+                _postTimeMillisecond = it.itemPublishedMillisecond,
+                _itemId = it.itemId
+            )
+        }
     }
 }

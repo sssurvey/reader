@@ -11,10 +11,14 @@ import com.haomins.reader.view.fragments.ArticleListFragment
 class ArticleListActivity : AppCompatActivity() {
 
     companion object {
-        const val SOURCE_FEED_ID = "SOURCE_FEED_ID"
-        const val LOAD_ALL_ITEM = "LOAD_ALL_ITEM"
+        const val MODE = "MODE"
         const val ARTICLE_ITEM_POSITION = "ARTICLE_ITEM_POSITION"
         const val ARTICLE_ITEM_ID_ARRAY = "ARTICLE_ITEM_ID_ARRAY"
+    }
+
+    enum class Mode(val key: String) {
+        LOAD_BY_FEED_ID("LOAD_BY_FEED_ID"),
+        LOAD_ALL("LOAD_ALL")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,14 +41,17 @@ class ArticleListActivity : AppCompatActivity() {
     }
 
     private fun checkIntent() {
-        if (intent.hasExtra(LOAD_ALL_ITEM)) showArticleListFragmentForAllItems()
-        else showArticleListFragment()
+        when (intent.getSerializableExtra(MODE)) {
+            Mode.LOAD_BY_FEED_ID -> showArticleListFragment()
+            Mode.LOAD_ALL -> showArticleListFragmentForAllItems()
+        }
     }
 
     private fun showArticleListFragmentForAllItems() {
         val bundle = Bundle()
         val articleListFragment = ArticleListFragment()
-        bundle.putBoolean(LOAD_ALL_ITEM, intent.getBooleanExtra(LOAD_ALL_ITEM, true))
+        bundle.putSerializable(MODE, intent.getSerializableExtra(MODE))
+        bundle.putBoolean(Mode.LOAD_ALL.key, intent.getBooleanExtra(Mode.LOAD_ALL.key, true))
         articleListFragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(
             R.id.article_list_activity_frame_layout,
@@ -55,7 +62,8 @@ class ArticleListActivity : AppCompatActivity() {
     private fun showArticleListFragment() {
         val bundle = Bundle()
         val articleListFragment = ArticleListFragment()
-        bundle.putString(SOURCE_FEED_ID, intent.getStringExtra(SOURCE_FEED_ID))
+        bundle.putSerializable(MODE, intent.getSerializableExtra(MODE))
+        bundle.putString(Mode.LOAD_BY_FEED_ID.key, intent.getStringExtra(Mode.LOAD_BY_FEED_ID.key))
         articleListFragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(
             R.id.article_list_activity_frame_layout,
