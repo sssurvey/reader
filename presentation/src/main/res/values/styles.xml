@@ -32,4 +32,8 @@
         <item name="titleTextColor">@color/lightGray</item>
     </style>
 
+    <style name="ReaderPreference" parent="Preference">
+        <item name="android:fontFamily">@font/google_product_sans_bold</item>
+    </style>
+
 </resources>

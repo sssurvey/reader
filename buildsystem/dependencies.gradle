@@ -16,6 +16,7 @@ ext {
             'io.reactivex.rxjava2:rxjava:2.2.6',
             'io.reactivex.rxjava2:rxandroid:2.1.1',
             "android.arch.lifecycle:extensions:$android_arch_lifecycle_version",
+            "androidx.preference:preference-ktx:$android_arch_lifecycle_version",
             "com.google.dagger:dagger:$android_dagger_version",
             "com.google.dagger:dagger-android-support:$android_dagger_version",
             "androidx.recyclerview:recyclerview:1.1.0",
