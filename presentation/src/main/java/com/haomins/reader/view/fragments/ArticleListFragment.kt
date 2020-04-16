@@ -25,9 +25,7 @@ import javax.inject.Inject
 class ArticleListFragment : Fragment() {
 
     companion object {
-
         const val TAG = "ArticleListFragment"
-
         private const val PROGRESS_BAR_DELAY = 1500L
         private const val LOAD_MORE_OFFSET_SCALE = 0.7
     }
