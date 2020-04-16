@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         navigation_view.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.option_all_articles -> startArticleListActivityForAllItems()
+                R.id.option_settings -> startSettingsActivity()
                 else -> showToast("Still under development...")
             }
             closeDrawer()
@@ -82,6 +83,10 @@ class MainActivity : AppCompatActivity() {
             putExtra(MODE, ArticleListActivity.Mode.LOAD_ALL)
         }
         startActivity(intent)
+    }
+
+    private fun startSettingsActivity() {
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
 
     private fun initDrawer() {
