@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SwitchPreferenceCompat
+        app:iconSpaceReserved="false"
+        android:icon="@drawable/ic_under_development"
+        app:key="notifications"
+        app:title="Enable dark mode" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        android:icon="@drawable/ic_under_development"
+        app:key="feedback"
+        app:summary="Report technical issues or suggest new features"
+        app:title="Send feedback" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        android:icon="@drawable/ic_under_development"
+        app:key="about"
+        app:summary="Report technical issues or suggest new features"
+        app:title="About" />
+
+</PreferenceScreen>

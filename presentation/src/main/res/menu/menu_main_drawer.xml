@@ -6,7 +6,7 @@
         android:title="@string/menu_all_articles" />
     <item
         android:id="@+id/option_friends"
-        android:icon="@drawable/ic_under_development"
+        android:icon="@drawable/ic_large_under_development"
         android:title="@string/menu_see_all_friends" />
     <item
         android:id="@+id/option_settings"
