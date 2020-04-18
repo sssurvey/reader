@@ -8,7 +8,7 @@ import com.haomins.www.core.data.models.article.ArticleResponseModel
 import com.haomins.www.core.data.models.article.ItemRefListResponseModel
 import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.service.TheOldReaderService
-import com.haomins.www.core.util.getValue
+import com.haomins.www.core.util.getString
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,7 +31,7 @@ class ArticleListRepository @Inject constructor(
     private var isWaitingOnResponse = false
     private val headerAuthValue by lazy {
         (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                + sharedPreferences.getValue(SharedPreferenceKey.AUTH_CODE_KEY))
+                + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
     fun loadAllArticleItemRefs(): Observable<List<ArticleEntity>> {

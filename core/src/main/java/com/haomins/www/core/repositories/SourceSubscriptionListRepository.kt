@@ -3,7 +3,7 @@ package com.haomins.www.core.repositories
 import android.content.SharedPreferences
 import com.haomins.www.core.data.SharedPreferenceKey
 import com.haomins.www.core.service.TheOldReaderService
-import com.haomins.www.core.util.getValue
+import com.haomins.www.core.util.getString
 import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.data.entities.SubscriptionEntity
 import com.haomins.www.core.data.models.subscription.SubscriptionItemModel
@@ -20,7 +20,7 @@ class SourceSubscriptionListRepository @Inject constructor(
     fun loadSubList(): Single<SubscriptionSourceListResponseModel> {
         return theOldReaderService.loadSubscriptionSourceList(
             headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                    + sharedPreferences.getValue(SharedPreferenceKey.AUTH_CODE_KEY))
+                    + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
         )
     }
 
