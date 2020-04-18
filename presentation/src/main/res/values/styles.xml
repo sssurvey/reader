@@ -1,10 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/lightGray</item>
-        <item name="colorPrimaryDark">@color/darkGray</item>
+        <item name="colorPrimaryDark">@color/default_text</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!-- Specify enter and exit transitions -->
         <item name="android:windowEnterTransition">@transition/explode</item>
@@ -14,10 +14,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!-- Specify navigation bar color -->
-        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/default_background</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <!-- Specify notification bar color -->
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/default_background</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:overScrollMode">never</item>
         <item name="android:textViewStyle">@style/ReaderTextViewStyle</item>
@@ -28,12 +28,17 @@
     </style>
 
     <style name="ToolBarStyle" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/default_background</item>
         <item name="titleTextColor">@color/lightGray</item>
     </style>
 
     <style name="ReaderPreference" parent="Preference">
-        <item name="android:fontFamily">@font/google_product_sans_bold</item>
+        <item name="android:windowBackground">@color/default_background</item>
+        <item name="android:background">@color/default_background</item>
+    </style>
+
+    <style name="ReaderCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/default_background</item>
     </style>
 
 </resources>

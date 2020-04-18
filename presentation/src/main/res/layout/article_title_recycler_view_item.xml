@@ -8,8 +8,9 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/article_title_recycler_view_item"
+        style="@style/ReaderCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/cardViewMargin"
@@ -22,7 +23,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/relativeLayoutPadding">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/article_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/articleTextViewHeight"
@@ -31,10 +32,10 @@
                 android:maxLines="@integer/textViewDefaultLineRestriction"
                 android:paddingStart="@dimen/textViewPadding"
                 android:paddingEnd="@dimen/textViewPadding"
-                android:textColor="@color/darkGray"
+                android:textColor="@color/default_text"
                 tools:text="The Mac release 1994 is out of this world." />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/article_publish_time_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/articleTextViewHeight"
@@ -44,6 +45,6 @@
 
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

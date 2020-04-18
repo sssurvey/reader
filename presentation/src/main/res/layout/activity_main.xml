@@ -45,7 +45,7 @@
             android:layout_gravity="bottom"
             android:orientation="vertical">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/drawer_login_app_version_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

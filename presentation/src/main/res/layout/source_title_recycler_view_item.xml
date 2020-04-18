@@ -8,8 +8,10 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <!-- Material Card View has no ripple bug-->
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/source_title_recycler_view_item"
+        style="@style/ReaderCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/cardViewMargin"
@@ -29,7 +31,7 @@
                 android:scaleType="fitCenter"
                 tools:src="@mipmap/ic_launcher" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/source_title_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,11 +44,11 @@
                 android:paddingStart="@dimen/textViewPadding"
                 android:paddingEnd="@dimen/textViewPadding"
                 android:textAlignment="gravity"
-                android:textColor="@color/darkGray"
+                android:textColor="@color/default_text"
                 tools:text="The Old Reader is a reader for the old people, that ..." />
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </LinearLayout>

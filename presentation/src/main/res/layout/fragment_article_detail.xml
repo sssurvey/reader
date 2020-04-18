@@ -3,22 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/default_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/default_background"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/article_detail_title_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/textViewMargin"
             android:autoSizeTextType="uniform"
             android:padding="@dimen/textViewPadding"
-            android:textColor="@color/darkGray"
+            android:textColor="@color/default_text"
             android:textSize="@dimen/textSizeGiant"
             tools:targetApi="o"
             tools:text="The Old reader is one of the oldest readers" />
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/article_detail_author_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:textSize="@dimen/textSizeSmall"
                 tools:text="Dr. Too Good" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/article_detail_update_time_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,6 +60,5 @@
             android:id="@+id/article_detail_web_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 </ScrollView>
