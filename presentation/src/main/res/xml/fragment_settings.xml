@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <SwitchPreferenceCompat
-        android:icon="@drawable/ic_under_development"
         app:iconSpaceReserved="false"
         app:key="dark_mode"
         app:title="@string/settings_option_dark_mode" />
