@@ -61,7 +61,6 @@ class SourceTitleListFragment : Fragment() {
         sourceTitleListViewModel =
             ViewModelProviders.of(this, viewModelFactory)[SourceTitleListViewModel::class.java]
         registerLiveDataObserver()
-        sourceTitleListViewModel.loadSourceSubscriptionList()
         source_title_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = recyclerLayoutManager
@@ -69,10 +68,15 @@ class SourceTitleListFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        sourceTitleListViewModel.loadSourceSubscriptionList()
+    }
+
     private fun registerLiveDataObserver() {
         sourceTitleListViewModel.apply {
             sourceListUiDataSet.observe(
-                this@SourceTitleListFragment,
+                viewLifecycleOwner,
                 sourceListDataSetObserver
             )
         }
