@@ -1,9 +1,6 @@
 package com.haomins.reader.di.modules
 
-import com.haomins.reader.view.fragments.ArticleDetailFragment
-import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.reader.view.fragments.LoginFragment
-import com.haomins.reader.view.fragments.SourceTitleListFragment
+import com.haomins.reader.view.fragments.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -21,4 +18,7 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeArticleDetailFragment(): ArticleDetailFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSettingsFragment(): SettingsFragment
 }
