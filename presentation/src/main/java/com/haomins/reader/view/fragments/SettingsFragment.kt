@@ -1,6 +1,5 @@
 package com.haomins.reader.view.fragments
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
@@ -16,8 +15,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
         const val TAG = "SettingsFragment"
-        const val DARK_MODE_ENABLED_FLAG = 32
-        const val DARK_MODE_DISABLED_FLAG = 16
         private const val DARK_MODE_OPTION = "dark_mode"
     }
 
@@ -39,10 +36,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun configPreference() {
-        when ((resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)) {
-            DARK_MODE_ENABLED_FLAG -> darkModeSwitchPreferenceCompat?.isChecked = true
-            DARK_MODE_DISABLED_FLAG -> darkModeSwitchPreferenceCompat?.isChecked = false
-        }
+        darkModeSwitchPreferenceCompat?.isChecked = settingsViewModel.isDarkModeEnabled()
     }
 
     private fun setOnclickListeners() {
@@ -50,8 +44,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             isPersistent = true
             setOnPreferenceClickListener {
                 when (isChecked) {
-                    true -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    false -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    true -> settingsViewModel.enableDarkMode()
+                    false -> settingsViewModel.disableDarkMode()
                 }
                 true
             }

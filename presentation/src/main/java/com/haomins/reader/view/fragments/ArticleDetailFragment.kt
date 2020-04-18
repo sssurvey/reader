@@ -1,6 +1,5 @@
 package com.haomins.reader.view.fragments
 
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
@@ -18,7 +17,6 @@ import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.ArticleDetailActivity.Companion.ARTICLE_ITEM_ID
-import com.haomins.reader.view.fragments.SettingsFragment.Companion.DARK_MODE_ENABLED_FLAG
 import com.haomins.reader.viewModels.ArticleDetailViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_article_detail.*
@@ -121,7 +119,7 @@ class ArticleDetailFragment : Fragment() {
 
     private fun checkDarkModeSupport() {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)
-            && (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == DARK_MODE_ENABLED_FLAG
+            && articleDetailViewModel.isDarkModeEnabled()
         ) {
             context?.getColor(R.color.default_background)?.let {
                 article_detail_web_view.setBackgroundColor(it)
