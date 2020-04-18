@@ -18,6 +18,7 @@ import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.ArticleDetailActivity.Companion.ARTICLE_ITEM_ID
+import com.haomins.reader.view.fragments.SettingsFragment.Companion.DARK_MODE_ENABLED_FLAG
 import com.haomins.reader.viewModels.ArticleDetailViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_article_detail.*
@@ -28,7 +29,6 @@ class ArticleDetailFragment : Fragment() {
     companion object {
         const val TAG = "ArticleDetailFragment"
 
-        private const val DARK_MODE_ENABLED_FLAG = 32
         private const val PROGRESS_BAR_DELAY = 1500L
         private const val BASE_URL = ""
         private const val MIME_TYPE = "text/html"
