@@ -7,7 +7,7 @@
     <SwitchPreferenceCompat
         android:icon="@drawable/ic_under_development"
         app:iconSpaceReserved="false"
-        app:key="notifications"
+        app:key="dark_mode"
         app:title="@string/settings_option_dark_mode" />
 
     <Preference
