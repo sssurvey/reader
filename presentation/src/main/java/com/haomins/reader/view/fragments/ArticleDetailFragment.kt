@@ -1,5 +1,6 @@
 package com.haomins.reader.view.fragments
 
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.ArticleDetailActivity.Companion.ARTICLE_ITEM_ID
 import com.haomins.reader.viewModels.ArticleDetailViewModel
@@ -25,6 +28,7 @@ class ArticleDetailFragment : Fragment() {
     companion object {
         const val TAG = "ArticleDetailFragment"
 
+        private const val DARK_MODE_ENABLED_FLAG = 32
         private const val PROGRESS_BAR_DELAY = 1500L
         private const val BASE_URL = ""
         private const val MIME_TYPE = "text/html"
@@ -105,6 +109,7 @@ class ArticleDetailFragment : Fragment() {
     }
 
     private fun configWebView() {
+        checkDarkModeSupport()
         article_detail_web_view.webViewClient = webViewClient
         article_detail_web_view.settings.apply {
             domStorageEnabled = true
@@ -114,8 +119,19 @@ class ArticleDetailFragment : Fragment() {
         }
     }
 
+    private fun checkDarkModeSupport() {
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)
+            && (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == DARK_MODE_ENABLED_FLAG
+        ) {
+            WebSettingsCompat.setForceDark(
+                article_detail_web_view.settings,
+                WebSettingsCompat.FORCE_DARK_ON
+            )
+        }
+    }
+
     private fun registerLiveDataObservers() {
-        articleDetailViewModel.contentDataForDisplay.observe(this, contentDataObserver)
+        articleDetailViewModel.contentDataForDisplay.observe(viewLifecycleOwner, contentDataObserver)
     }
 
     private fun loadArticleId(bundle: Bundle?) {

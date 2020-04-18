@@ -20,6 +20,7 @@ ext {
             "com.google.dagger:dagger:$android_dagger_version",
             "com.google.dagger:dagger-android-support:$android_dagger_version",
             "androidx.recyclerview:recyclerview:1.1.0",
+            "androidx.webkit:webkit:1.2.0",
             "com.github.bumptech.glide:glide:4.11.0",
             "androidx.cardview:cardview:1.0.0",
             "androidx.cardview:cardview:1.0.0",
