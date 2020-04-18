@@ -11,6 +11,7 @@
     <!-- Material Card View has no ripple bug-->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/source_title_recycler_view_item"
+        style="@style/ReaderCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/cardViewMargin"

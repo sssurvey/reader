@@ -10,6 +10,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/article_title_recycler_view_item"
+        style="@style/ReaderCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/cardViewMargin"

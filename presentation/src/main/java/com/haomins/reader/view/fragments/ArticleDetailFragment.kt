@@ -123,6 +123,9 @@ class ArticleDetailFragment : Fragment() {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)
             && (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == DARK_MODE_ENABLED_FLAG
         ) {
+            context?.getColor(R.color.default_background)?.let {
+                article_detail_web_view.setBackgroundColor(it)
+            }
             WebSettingsCompat.setForceDark(
                 article_detail_web_view.settings,
                 WebSettingsCompat.FORCE_DARK_ON
@@ -131,7 +134,10 @@ class ArticleDetailFragment : Fragment() {
     }
 
     private fun registerLiveDataObservers() {
-        articleDetailViewModel.contentDataForDisplay.observe(viewLifecycleOwner, contentDataObserver)
+        articleDetailViewModel.contentDataForDisplay.observe(
+            viewLifecycleOwner,
+            contentDataObserver
+        )
     }
 
     private fun loadArticleId(bundle: Bundle?) {
