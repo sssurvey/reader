@@ -5,4 +5,9 @@
         <item name="cardBackgroundColor">@color/default_background</item>
     </style>
 
+    <style name="ReaderPreference" parent="Preference">
+        <item name="android:windowBackground">@color/default_background</item>
+        <item name="android:background">@color/default_background</item>
+    </style>
+
 </resources>

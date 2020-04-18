@@ -33,7 +33,8 @@
     </style>
 
     <style name="ReaderPreference" parent="Preference">
-        <item name="android:fontFamily">@font/google_product_sans_bold</item>
+        <item name="android:windowBackground">@color/default_background</item>
+        <item name="android:background">@color/default_background</item>
     </style>
 
     <style name="ReaderCardView" parent="Widget.MaterialComponents.CardView">
