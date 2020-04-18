@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProgressBar android:id="@+id/bottom_loading_progress_bar"
     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-    android:background="@color/white"
+    android:background="@color/default_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:indeterminate="true"

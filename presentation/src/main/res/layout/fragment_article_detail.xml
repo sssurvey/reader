@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/default_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/default_background"
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
@@ -18,7 +18,7 @@
             android:layout_margin="@dimen/textViewMargin"
             android:autoSizeTextType="uniform"
             android:padding="@dimen/textViewPadding"
-            android:textColor="@color/darkGray"
+            android:textColor="@color/default_text"
             android:textSize="@dimen/textSizeGiant"
             tools:targetApi="o"
             tools:text="The Old reader is one of the oldest readers" />

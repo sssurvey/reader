@@ -43,7 +43,7 @@
                 android:paddingStart="@dimen/textViewPadding"
                 android:paddingEnd="@dimen/textViewPadding"
                 android:textAlignment="gravity"
-                android:textColor="@color/darkGray"
+                android:textColor="@color/default_text"
                 tools:text="The Old Reader is a reader for the old people, that ..." />
         </RelativeLayout>
 
