@@ -83,7 +83,7 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/login_sign_up_text_view"
         android:clickable="true"
         android:layout_width="match_parent"

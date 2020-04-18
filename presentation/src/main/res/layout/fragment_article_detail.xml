@@ -11,7 +11,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/article_detail_title_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/article_detail_author_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:textSize="@dimen/textSizeSmall"
                 tools:text="Dr. Too Good" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/article_detail_update_time_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
