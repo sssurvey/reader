@@ -74,8 +74,8 @@ class LoginFragment : Fragment() {
             it?.let {
                 sign_up_button.apply {
                     isEnabled = it.isEmpty()
-                    if (it.isEmpty()) setTextColor(context!!.getColor(R.color.colorPrimary))
-                    else setTextColor(context!!.getColor(R.color.lightGray))
+                    if (it.isEmpty()) setTextColor(requireContext().getColor(R.color.colorPrimary))
+                    else setTextColor(requireContext().getColor(R.color.lightGray))
                 }
             }
         }
@@ -87,7 +87,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun registerLiveDataObserver() {
-        loginViewModel.isUserLoggedIn.observe(this, isUserLoggedInObserver)
+        loginViewModel.isUserLoggedIn.observe(viewLifecycleOwner, isUserLoggedInObserver)
     }
 
     private fun signUpButtonOnClick() {

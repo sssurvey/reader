@@ -1,7 +1,7 @@
 package com.haomins.www.core.repositories
 
-import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.data.entities.ArticleEntity
+import com.haomins.www.core.service.RoomService
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

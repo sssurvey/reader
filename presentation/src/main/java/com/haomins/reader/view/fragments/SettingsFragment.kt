@@ -1,7 +1,6 @@
 package com.haomins.reader.view.fragments
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceFragmentCompat
