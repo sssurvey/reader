@@ -2,7 +2,9 @@ package com.haomins.reader.di
 
 import android.app.Application
 import com.haomins.reader.ReaderApplication
-import com.haomins.reader.di.modules.*
+import com.haomins.reader.di.modules.ActivityModule
+import com.haomins.reader.di.modules.FragmentModule
+import com.haomins.reader.di.modules.ViewModelModule
 import com.haomins.www.core.di.DataModule
 import com.haomins.www.core.di.PreferenceModule
 import dagger.BindsInstance

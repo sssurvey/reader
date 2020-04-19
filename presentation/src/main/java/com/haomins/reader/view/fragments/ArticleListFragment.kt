@@ -112,8 +112,8 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun registerLiveDataObservers() {
-        articleListViewModel.articleTitleUiItemsList.observe(this, articleTitleListUiItemObserver)
-        articleListViewModel.isLoading.observe(this, isLoadingObserver)
+        articleListViewModel.articleTitleUiItemsList.observe(viewLifecycleOwner, articleTitleListUiItemObserver)
+        articleListViewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
     }
 
     private fun loadArticleList(bundle: Bundle?) {

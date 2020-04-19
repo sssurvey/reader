@@ -1,7 +1,7 @@
 package com.haomins.www.core.repositories
 
-import com.haomins.www.core.service.TheOldReaderService
 import com.haomins.www.core.data.models.user.UserAuthResponseModel
+import com.haomins.www.core.service.TheOldReaderService
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
