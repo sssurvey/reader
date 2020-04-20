@@ -35,8 +35,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation dataDependencies
-    kapt dataKaptDependencies
-    testImplementation dataTestImplementation
-    androidTestImplementation dataAndroidTestImplementation
+    implementation coreDependencies
+    kapt coreKaptDependencies
+    testImplementation coreTestImplementation
+    androidTestImplementation coreAndroidTestImplementation
 }

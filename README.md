@@ -1,10 +1,10 @@
 # Reader
-The reader application is a client application for the website <https://theoldreader.com/feeds>. Currently the app version is ```v0.0.3``` and you can see all you subscription list, and read articles with it.
+The reader application is a client application for the website <https://theoldreader.com/feeds>. Currently the app version is ```v0.1.4``` and you can see all you subscription list, and read articles with it.
 
-The application is written in 100% ```Kotlin``` and is utlizing the library:
+The application is written in 100% ```Kotlin``` and is utilizing the library:
 
 - Retrofit 2: For the communication with The Old Reader API
-- RxJava 2: For concurency
+- RxJava 2: For concurrency
 - Dagger 2: For dependency Injection
 - Room database: For offline reading
 
