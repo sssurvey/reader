@@ -11,5 +11,8 @@ data class AddSubscriptionResponseModel(
     val numResults: Int,
 
     @SerializedName("streamId")
-    val streamId: String
+    val streamId: String?,
+
+    @SerializedName("error")
+    val error: String?
 )
