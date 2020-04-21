@@ -8,6 +8,7 @@
     <color name="default_background">#ffffff</color>
     <color name="default_icon_color">#000000</color>
     <color name="default_text">#3d4849</color>
+    <color name="default_text_light">#a9a9a9</color>
     <color name="lightGray">#a9a9a9</color>
     <color name="transparent">#80000000</color>
 </resources>

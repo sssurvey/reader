@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
 import com.haomins.reader.viewModels.AddSourceViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -43,6 +44,7 @@ class AddSourceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         AndroidSupportInjection.inject(this)
+        addSourceViewModel = ViewModelProviders.of(this, viewModelFactory)[AddSourceViewModel::class.java]
         registerLiveDataObservers()
     }
 
