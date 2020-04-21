@@ -1,6 +1,5 @@
 package com.haomins.reader.utils
 
-import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT

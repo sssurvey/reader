@@ -52,6 +52,7 @@ class AddSourceViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
+        isSourceAdded.postValue(Pair(AddSourceStatus.DEFAULT, ""))
         compositeDisposable.clear()
     }
 
