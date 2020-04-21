@@ -2,6 +2,7 @@ package com.haomins.www.core.service
 
 import com.haomins.www.core.data.models.article.ArticleResponseModel
 import com.haomins.www.core.data.models.article.ItemRefListResponseModel
+import com.haomins.www.core.data.models.subscription.AddSubscriptionResponseModel
 import com.haomins.www.core.data.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.www.core.data.models.user.UserAuthResponseModel
 import io.reactivex.Single
@@ -118,7 +119,7 @@ interface TheOldReaderService {
      * @param headerAuthValue User's auth token and auth meta data
      * @param i ref item ID that we can use to find the article
      *
-     * @return
+     * @return Single<ArticleResponseModel>
      */
     @GET(BASE_API + "stream/items/contents")
     fun loadArticleDetailsByRefId(
@@ -134,10 +135,12 @@ interface TheOldReaderService {
      *
      * @param headerAuthValue User's auth token and auth meta data
      * @param quickAddSubscription A string value for the RSS feed link (URL)
+     *
+     * @return Single<AddSubscriptionResponseModel>
      */
     @POST(BASE_API + "subscription/quickadd")
     fun addSubscription(
         @Header("Authorization") headerAuthValue: String,
         @Query("quickadd") quickAddSubscription: String
-    )
+    ): Single<AddSubscriptionResponseModel>
 }
