@@ -14,7 +14,7 @@ import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
-import com.haomins.reader.viewModels.MainActivityViewModel
+import com.haomins.reader.viewModels.MainViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
@@ -26,20 +26,20 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        mainActivityViewModel =
-            ViewModelProviders.of(this, viewModelFactory)[MainActivityViewModel::class.java]
+        mainViewModel =
+            ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
         setContentView(R.layout.activity_main)
         handleLoginFragment()
         setOnClickListeners()
     }
 
     override fun onBackPressed() {
-        when (mainActivityViewModel.hasAuthToken()) {
+        when (mainViewModel.hasAuthToken()) {
             true -> super.onBackPressed()
             false -> finish()
         }
@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.option_all_articles -> startArticleListActivityForAllItems()
                 R.id.option_settings -> startSettingsActivity()
+                R.id.option_add_source -> startAddSourceActivity()
                 else -> showToast("Still under development...")
             }
             closeDrawer()
@@ -87,6 +88,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun startSettingsActivity() {
         startActivity(Intent(this, SettingsActivity::class.java))
+    }
+
+    private fun startAddSourceActivity() {
+        startActivity(Intent(this, AddSourceActivity::class.java))
     }
 
     private fun initDrawer() {
@@ -124,7 +129,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleLoginFragment() {
         lockDrawer()
-        when (mainActivityViewModel.hasAuthToken()) {
+        when (mainViewModel.hasAuthToken()) {
             true -> showSourceTitleListFragment()
             false -> showUserLoginFragment()
         }
