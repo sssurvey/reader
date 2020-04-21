@@ -24,4 +24,6 @@
     <string name="feed_input_desc">Enter RSS link here.</string>
     <string name="medium_feed_sample_desc_template">medium.com/feed/%s</string>
     <string name="medium_feed_sample_desc">medium.com/feed/@Author or /publication</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="snackbar_feed_add_success">Successfully added feed</string>
 </resources>
