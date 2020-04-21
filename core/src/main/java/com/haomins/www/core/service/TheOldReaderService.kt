@@ -126,4 +126,18 @@ interface TheOldReaderService {
         @Query("i") refItemId: String,
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ArticleResponseModel>
+
+    /**
+     * POST the subscription for Old reader to add it
+     *
+     * This post request will allow you to add a specified subscription to you source list.
+     *
+     * @param headerAuthValue User's auth token and auth meta data
+     * @param quickAddSubscription A string value for the RSS feed link (URL)
+     */
+    @POST(BASE_API + "subscription/quickadd")
+    fun addSubscription(
+        @Header("Authorization") headerAuthValue: String,
+        @Query("quickadd") quickAddSubscription: String
+    )
 }
