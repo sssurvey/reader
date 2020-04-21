@@ -19,7 +19,8 @@ class AddSourceRepository @Inject constructor(
 
     fun addSource(source: String): Single<AddSubscriptionResponseModel> {
         return theOldReaderService.addSubscription(
-            headerAuthValue = sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY),
+            headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
+                    + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY)),
             quickAddSubscription = source
         ).observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
     }

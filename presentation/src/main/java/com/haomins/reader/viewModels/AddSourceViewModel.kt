@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.www.core.data.models.subscription.AddSubscriptionResponseModel
 import com.haomins.www.core.repositories.AddSourceRepository
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,18 +23,25 @@ class AddSourceViewModel @Inject constructor(
         MutableLiveData(false)
     }
 
+    private val compositeDisposable = CompositeDisposable()
+
     fun addSource(source: String) {
-        addSourceRepository.addSource(source = source)
+        compositeDisposable.add(addSourceRepository.addSource(source = source)
             .doOnSuccess(::checkIfSuccess)
-            .doOnError(::printError)
-            .subscribe()
+            .subscribe({}, { printError(it) })
+        )
     }
 
     fun addMediumSource(source: String) {
-        addSourceRepository.addSource(source = MEDIUM_RSS_FEED_BASE + source)
+        compositeDisposable.add(addSourceRepository.addSource(source = MEDIUM_RSS_FEED_BASE + source)
             .doOnSuccess(::checkIfSuccess)
-            .doOnError(::printError)
-            .subscribe()
+            .subscribe({}, { printError(it) })
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 
     private fun printError(t: Throwable) {

@@ -141,6 +141,7 @@ interface TheOldReaderService {
     @POST(BASE_API + "subscription/quickadd")
     fun addSubscription(
         @Header("Authorization") headerAuthValue: String,
-        @Query("quickadd") quickAddSubscription: String
+        @Query("quickadd") quickAddSubscription: String,
+        @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<AddSubscriptionResponseModel>
 }
