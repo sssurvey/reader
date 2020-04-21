@@ -1,9 +1,6 @@
 package com.haomins.reader.di.modules
 
-import com.haomins.reader.view.activities.ArticleDetailActivity
-import com.haomins.reader.view.activities.ArticleListActivity
-import com.haomins.reader.view.activities.MainActivity
-import com.haomins.reader.view.activities.SettingsActivity
+import com.haomins.reader.view.activities.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -22,4 +19,6 @@ abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract fun contributeSettingsActivity(): SettingsActivity
 
+    @ContributesAndroidInjector
+    abstract fun contributeAddSourceActivity(): AddSourceActivity
 }

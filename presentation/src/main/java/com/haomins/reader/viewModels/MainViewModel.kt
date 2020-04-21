@@ -6,7 +6,7 @@ import com.haomins.www.core.data.SharedPreferenceKey
 import com.haomins.www.core.util.getString
 import javax.inject.Inject
 
-class MainActivityViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 

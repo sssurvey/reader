@@ -7,7 +7,7 @@
     <item
         android:id="@+id/option_add_source"
         android:icon="@drawable/ic_add_source"
-        android:title="@string/menu_see_all_friends" />
+        android:title="@string/menu_add_source" />
     <item
         android:id="@+id/option_friends"
         android:icon="@drawable/ic_large_under_development"

@@ -21,4 +21,7 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSettingsFragment(): SettingsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeAddSourceFragment(): AddSourceFragment
 }
