@@ -2,6 +2,7 @@
 <resources>
     <dimen name="fab_button_margin">20dp</dimen>
     <dimen name="large_layout_margin">60dp</dimen>
+    <dimen name="settings_layout_margin">10dp</dimen>
     <dimen name="no_elevation">0dp</dimen>
     <dimen name="default_navigation_view_width">240dp</dimen>
     <dimen name="drawer_text_margin_start">16dp</dimen>
