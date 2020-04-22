@@ -10,12 +10,14 @@
         app:title="@string/settings_option_dark_mode" />
 
     <Preference
+        android:enabled="true"
         app:iconSpaceReserved="false"
         app:key="feedback"
         app:summary="Report technical issues or suggest new features"
         app:title="@string/settings_option_send_feedback" />
 
     <Preference
+        android:enabled="true"
         app:iconSpaceReserved="false"
         app:key="about"
         app:title="@string/settings_option_about" />
