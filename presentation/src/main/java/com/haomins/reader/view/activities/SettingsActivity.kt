@@ -29,6 +29,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun showSettingsFragment() {
         supportFragmentManager.beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .replace(
                 R.id.settings_container,
                 SettingsFragment(),
