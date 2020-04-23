@@ -30,4 +30,6 @@
     <string name="email_feed_back_greet_body">Hi there, </string>
     <string name="email_feed_back_greet_subject">Reader: I would like to suggest some changes/bug to the app</string>
     <string name="email_client_choose">Send Feedback</string>
+    <string name="settings_option_send_feedback_summary">Report technical issues or suggest new features</string>
+    <string name="settings_option_about_summary">See application version, build info, etc</string>
 </resources>
