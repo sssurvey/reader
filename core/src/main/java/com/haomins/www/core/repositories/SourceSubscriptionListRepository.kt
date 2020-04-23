@@ -1,19 +1,23 @@
 package com.haomins.www.core.repositories
 
 import android.content.SharedPreferences
+import android.widget.ImageView
 import com.haomins.www.core.data.SharedPreferenceKey
 import com.haomins.www.core.data.entities.SubscriptionEntity
 import com.haomins.www.core.data.models.subscription.SubscriptionItemModel
 import com.haomins.www.core.data.models.subscription.SubscriptionSourceListResponseModel
+import com.haomins.www.core.service.GlideService
 import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.service.TheOldReaderService
 import com.haomins.www.core.util.getString
 import io.reactivex.Single
+import java.net.URL
 import javax.inject.Inject
 
 class SourceSubscriptionListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val roomService: RoomService,
+    private val glideService: GlideService,
     private val sharedPreferences: SharedPreferences
 ) {
 
@@ -22,6 +26,10 @@ class SourceSubscriptionListRepository @Inject constructor(
             headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
                     + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
         )
+    }
+
+    fun loadIconImage(imageView: ImageView, url: URL) {
+        glideService.loadIconImage(imageView, url)
     }
 
     fun retrieveSubListFromDB(): Single<List<SubscriptionEntity>> {

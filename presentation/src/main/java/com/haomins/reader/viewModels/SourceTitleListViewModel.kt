@@ -1,5 +1,6 @@
 package com.haomins.reader.viewModels
 
+import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.www.core.data.entities.SubscriptionEntity
@@ -22,6 +23,10 @@ class SourceTitleListViewModel @Inject constructor(
 
     fun getSubSourceId(position: Int): String {
         return sourceListData[position].id
+    }
+
+    fun loadImageIcon(imageView: ImageView, url: URL) {
+        sourceSubscriptionListRepository.loadIconImage(imageView, url)
     }
 
     fun loadSourceSubscriptionList() {
