@@ -1,24 +1,24 @@
 package com.haomins.reader.view.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
 
-class AboutFragment : Fragment() {
+class AboutFragment : PreferenceFragmentCompat() {
 
     companion object {
         const val TAG = "AboutFragment"
+        private const val ABOUT_APP_VERSION = "app_version"
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_about, container, false)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.fragment_about, rootKey)
+        configPreferences()
     }
 
+    private fun configPreferences() {
+        findPreference<Preference>(ABOUT_APP_VERSION)?.summary = BuildConfig.VERSION_NAME
+    }
 }
