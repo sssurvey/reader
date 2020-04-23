@@ -1,5 +1,7 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -19,6 +21,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         private const val DARK_MODE_OPTION = "dark_mode"
         private const val PREFERENCE_ABOUT = "about"
         private const val PREFERENCE_FEEDBACK = "feedback"
+        private const val FEED_BACK_EMAIL = "mailto:youngmobileachiever@gmail.com"
     }
 
     @Inject
@@ -41,10 +44,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
             PREFERENCE_ABOUT -> (activity as? SettingsActivity)?.showAboutFragment()
-            PREFERENCE_FEEDBACK -> Unit
+            PREFERENCE_FEEDBACK -> showEmailApp()
             else -> Unit
         }
         return super.onPreferenceTreeClick(preference)
+    }
+
+    private fun showEmailApp() {
+        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse(FEED_BACK_EMAIL)
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_feed_back_greet_subject))
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.email_feed_back_greet_body))
+        }
+        startActivity(Intent.createChooser(emailIntent, getString(R.string.email_client_choose)))
     }
 
     private fun configPreference() {

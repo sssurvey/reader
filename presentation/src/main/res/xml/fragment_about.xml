@@ -7,5 +7,5 @@
     <Preference
         app:iconSpaceReserved="false"
         app:key="app_version"
-        app:title="Application version" />
+        app:title="@string/about_app_version_desc" />
 </PreferenceScreen>
