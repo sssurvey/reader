@@ -10,16 +10,17 @@
         app:title="@string/settings_option_dark_mode" />
 
     <Preference
-        android:icon="@drawable/ic_under_development"
+        android:enabled="true"
         app:iconSpaceReserved="false"
         app:key="feedback"
-        app:summary="Report technical issues or suggest new features"
+        app:summary="@string/settings_option_send_feedback_summary"
         app:title="@string/settings_option_send_feedback" />
 
     <Preference
-        android:icon="@drawable/ic_under_development"
+        android:enabled="true"
         app:iconSpaceReserved="false"
         app:key="about"
+        app:summary="@string/settings_option_about_summary"
         app:title="@string/settings_option_about" />
 
 </PreferenceScreen>

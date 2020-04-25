@@ -12,8 +12,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class DataModule {
+object DataModule {
 
+    @JvmStatic
     @Singleton
     @Provides
     fun provideTheOldReaderService(): TheOldReaderService {

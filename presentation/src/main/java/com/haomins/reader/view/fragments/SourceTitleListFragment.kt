@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.haomins.reader.R
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.SourceTitleListViewModel
@@ -61,7 +60,6 @@ class SourceTitleListFragment : Fragment() {
         sourceTitleListViewModel =
             ViewModelProviders.of(this, viewModelFactory)[SourceTitleListViewModel::class.java]
         registerLiveDataObserver()
-        sourceTitleListViewModel.loadSourceSubscriptionList()
         source_title_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = recyclerLayoutManager
@@ -69,10 +67,15 @@ class SourceTitleListFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        sourceTitleListViewModel.loadSourceSubscriptionList()
+    }
+
     private fun registerLiveDataObserver() {
         sourceTitleListViewModel.apply {
             sourceListUiDataSet.observe(
-                this@SourceTitleListFragment,
+                viewLifecycleOwner,
                 sourceListDataSetObserver
             )
         }
@@ -113,11 +116,10 @@ class SourceTitleListFragment : Fragment() {
         }
 
         private fun loadIconImage(holder: CustomViewHolder, url: URL) {
-            Glide.with(this@SourceTitleListFragment)
-                .asDrawable()
-                .centerCrop()
-                .load(url)
-                .into(holder.viewHolder.source_icon_image_view)
+            sourceTitleListViewModel.loadImageIcon(
+                imageView = holder.viewHolder.source_icon_image_view,
+                url = url
+            )
         }
     }
 }
