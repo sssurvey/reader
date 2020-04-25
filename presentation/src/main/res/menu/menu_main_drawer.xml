@@ -9,10 +9,6 @@
         android:icon="@drawable/ic_add_source"
         android:title="@string/menu_add_source" />
     <item
-        android:id="@+id/option_friends"
-        android:icon="@drawable/ic_large_under_development"
-        android:title="@string/menu_see_all_friends" />
-    <item
         android:id="@+id/option_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/menu_settings" />
