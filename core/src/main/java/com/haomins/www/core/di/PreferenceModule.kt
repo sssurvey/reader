@@ -8,12 +8,11 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class PreferenceModule {
+object PreferenceModule {
 
-    companion object {
-        private const val SHARED_PREFERENCE_NAME = "READER_SHARED_PREF"
-    }
+    private const val SHARED_PREFERENCE_NAME = "READER_SHARED_PREF"
 
+    @JvmStatic
     @Provides
     @Singleton
     fun provideSharedPreference(application: Application): SharedPreferences {
