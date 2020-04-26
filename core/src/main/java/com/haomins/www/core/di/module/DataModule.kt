@@ -4,6 +4,7 @@ import com.haomins.www.core.service.TheOldReaderService
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 object DataModule {
 
+    @Reusable
     @JvmStatic
     @Provides
     fun provideTheOldReaderService(okHttpClient: OkHttpClient): TheOldReaderService {
@@ -24,6 +26,7 @@ object DataModule {
         }.build().create(TheOldReaderService::class.java)
     }
 
+    @Reusable
     @JvmStatic
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
