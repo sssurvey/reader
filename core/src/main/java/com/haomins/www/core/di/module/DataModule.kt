@@ -1,4 +1,4 @@
-package com.haomins.www.core.di
+package com.haomins.www.core.di.module
 
 import com.haomins.www.core.service.TheOldReaderService
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

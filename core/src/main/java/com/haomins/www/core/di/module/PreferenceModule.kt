@@ -1,4 +1,4 @@
-package com.haomins.www.core.di
+package com.haomins.www.core.di.module
 
 import android.app.Application
 import android.content.Context

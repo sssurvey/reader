@@ -5,8 +5,8 @@ import com.haomins.reader.ReaderApplication
 import com.haomins.reader.di.modules.ActivityModule
 import com.haomins.reader.di.modules.FragmentModule
 import com.haomins.reader.di.modules.ViewModelModule
-import com.haomins.www.core.di.DataModule
-import com.haomins.www.core.di.PreferenceModule
+import com.haomins.www.core.di.module.DataModule
+import com.haomins.www.core.di.module.PreferenceModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
