@@ -9,28 +9,28 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 object DataModule {
 
     @JvmStatic
     @Provides
-    fun provideTheOldReaderService(): TheOldReaderService {
-
-        fun getLoggedHttpClient(): OkHttpClient {
-            val httpLogInterceptor = HttpLoggingInterceptor()
-            val httpClientBuilder = OkHttpClient.Builder()
-            httpLogInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            httpClientBuilder.addInterceptor(httpLogInterceptor)
-            return httpClientBuilder.build()
-        }
-
+    fun provideTheOldReaderService(okHttpClient: OkHttpClient): TheOldReaderService {
         return Retrofit.Builder().apply {
             baseUrl(TheOldReaderService.BASE_URL)
             addConverterFactory(GsonConverterFactory.create())
             addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            client(getLoggedHttpClient())
+            client(okHttpClient)
         }.build().create(TheOldReaderService::class.java)
+    }
+
+    @JvmStatic
+    @Provides
+    fun provideOkHttpClient(): OkHttpClient {
+        val httpLogInterceptor = HttpLoggingInterceptor()
+        val httpClientBuilder = OkHttpClient.Builder()
+        httpLogInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        httpClientBuilder.addInterceptor(httpLogInterceptor)
+        return httpClientBuilder.build()
     }
 }
