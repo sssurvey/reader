@@ -15,7 +15,6 @@ import javax.inject.Singleton
 object DataModule {
 
     @JvmStatic
-    @Singleton
     @Provides
     fun provideTheOldReaderService(): TheOldReaderService {
 

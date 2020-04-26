@@ -14,7 +14,6 @@ object PreferenceModule {
 
     @JvmStatic
     @Provides
-    @Singleton
     fun provideSharedPreference(application: Application): SharedPreferences {
         return application.getSharedPreferences(
             SHARED_PREFERENCE_NAME,
