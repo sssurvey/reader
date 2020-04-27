@@ -1,5 +1,6 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
@@ -82,6 +83,11 @@ class ArticleDetailFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -92,7 +98,6 @@ class ArticleDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AndroidSupportInjection.inject(this)
         articleDetailViewModel =
             ViewModelProviders.of(this, viewModelFactory)[ArticleDetailViewModel::class.java]
         loadArticleId(arguments)

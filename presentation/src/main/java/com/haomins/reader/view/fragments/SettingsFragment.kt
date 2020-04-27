@@ -1,5 +1,6 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -32,9 +33,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<SwitchPreferenceCompat>(DARK_MODE_OPTION)
     }
 
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.fragment_settings, rootKey)
-        AndroidSupportInjection.inject(this)
         settingsViewModel =
             ViewModelProviders.of(this, viewModelFactory)[SettingsViewModel::class.java]
         configPreference()

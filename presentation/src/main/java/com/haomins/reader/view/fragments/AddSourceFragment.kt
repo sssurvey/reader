@@ -1,5 +1,6 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +45,11 @@ class AddSourceFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,7 +60,6 @@ class AddSourceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AndroidSupportInjection.inject(this)
         addSourceViewModel =
             ViewModelProviders.of(this, viewModelFactory)[AddSourceViewModel::class.java]
         registerLiveDataObservers()

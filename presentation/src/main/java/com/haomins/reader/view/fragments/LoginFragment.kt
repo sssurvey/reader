@@ -1,5 +1,6 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,12 +29,6 @@ class LoginFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var loginViewModel: LoginViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        AndroidSupportInjection.inject(this)
-        loginViewModel = ViewModelProviders.of(this, viewModelFactory)[LoginViewModel::class.java]
-    }
-
     private val isUserLoggedInObserver by lazy {
         Observer<Boolean>() {
             if (it) {
@@ -41,6 +36,16 @@ class LoginFragment : Fragment() {
                 showSourceTitleListFragment()
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        loginViewModel = ViewModelProviders.of(this, viewModelFactory)[LoginViewModel::class.java]
     }
 
     override fun onCreateView(

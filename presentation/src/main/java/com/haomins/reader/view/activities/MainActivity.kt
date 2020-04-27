@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
         mainViewModel =
             ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
         setContentView(R.layout.activity_main)
