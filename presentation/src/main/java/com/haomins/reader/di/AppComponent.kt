@@ -9,12 +9,8 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    dependencies = [
-        CoreComponent::class
-    ],
-    modules = [
-        SubcomponentModule::class
-    ]
+    dependencies = [CoreComponent::class],
+    modules = [SubcomponentModule::class]
 )
 interface AppComponent {
 
