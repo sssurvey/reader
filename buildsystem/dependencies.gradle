@@ -1,7 +1,7 @@
 ext {
 
     def androidx_lifecycle = "2.2.0"
-    def android_dagger_version = "2.25.4"
+    def dagger_version = "2.25.4"
     def android_arch_lifecycle_version = "1.1.1"
     def com_square_up_retrofit2_version = "2.4.0"
     def room_version = "2.2.3"
@@ -17,8 +17,7 @@ ext {
             'io.reactivex.rxjava2:rxandroid:2.1.1',
             "android.arch.lifecycle:extensions:$android_arch_lifecycle_version",
             "androidx.preference:preference-ktx:$android_arch_lifecycle_version",
-            "com.google.dagger:dagger:$android_dagger_version",
-            "com.google.dagger:dagger-android-support:$android_dagger_version",
+            "com.google.dagger:dagger:$dagger_version",
             "androidx.recyclerview:recyclerview:1.1.0",
             "androidx.webkit:webkit:1.2.0",
             "androidx.cardview:cardview:1.0.0",
@@ -29,8 +28,7 @@ ext {
 
     appKaptDependencies = [
             "android.arch.lifecycle:compiler:$android_arch_lifecycle_version",
-            "com.google.dagger:dagger-compiler:$android_dagger_version",
-            "com.google.dagger:dagger-android-processor:$android_dagger_version"
+            "com.google.dagger:dagger-compiler:$dagger_version",
     ]
 
     coreDependencies = [
@@ -44,15 +42,13 @@ ext {
             'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0',
             "com.github.bumptech.glide:glide:4.11.0",
             'com.squareup.okhttp3:logging-interceptor:3.8.0',
-            "com.google.dagger:dagger:$android_dagger_version",
-            "com.google.dagger:dagger-android-support:$android_dagger_version",
+            "com.google.dagger:dagger:$dagger_version",
             "androidx.room:room-runtime:$room_version",
             "androidx.room:room-rxjava2:$room_version",
     ]
 
     coreKaptDependencies = [
-            "com.google.dagger:dagger-compiler:$android_dagger_version",
-            "com.google.dagger:dagger-android-processor:$android_dagger_version",
+            "com.google.dagger:dagger-compiler:$dagger_version",
             "androidx.room:room-compiler:$room_version"
     ]
 
