@@ -2,6 +2,7 @@ package com.haomins.reader.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.haomins.reader.di.CustomViewModelFactory
 import com.haomins.reader.di.ViewModelKey
 import com.haomins.reader.viewModels.*
 import dagger.Binds
