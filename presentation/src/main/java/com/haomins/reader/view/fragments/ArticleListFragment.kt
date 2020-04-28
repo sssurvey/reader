@@ -7,18 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
+import com.haomins.reader.ReaderApplication
 import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.activities.ArticleListActivity.Mode
 import com.haomins.reader.viewModels.ArticleListViewModel
 import com.haomins.www.core.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
@@ -40,7 +40,7 @@ class ArticleListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var articleListViewModel: ArticleListViewModel
+    private val articleListViewModel by viewModels<ArticleListViewModel> { viewModelFactory }
     private lateinit var currentMode: Mode
     private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
     private val articleTitleUiItems: MutableList<ArticleTitleListUiItem> = ArrayList()
@@ -76,7 +76,7 @@ class ArticleListFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
         super.onAttach(context)
     }
 
@@ -90,8 +90,6 @@ class ArticleListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        articleListViewModel =
-            ViewModelProviders.of(this, viewModelFactory)[ArticleListViewModel::class.java]
         currentMode = arguments?.get(MODE) as Mode
         loadArticleList(arguments)
         registerLiveDataObservers()

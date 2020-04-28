@@ -1,12 +1,10 @@
 package com.haomins.reader.di
 
 import com.haomins.reader.ReaderApplication
-import com.haomins.reader.di.modules.ActivityModule
-import com.haomins.reader.di.modules.FragmentModule
-import com.haomins.reader.di.modules.ViewModelModule
+import com.haomins.reader.di.modules.SubcomponentModule
+import com.haomins.reader.viewModels.di.ViewModelComponent
 import com.haomins.www.core.di.CoreComponent
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
@@ -15,15 +13,14 @@ import javax.inject.Singleton
         CoreComponent::class
     ],
     modules = [
-        AndroidInjectionModule::class,
-        ActivityModule::class,
-        FragmentModule::class,
-        ViewModelModule::class
+        SubcomponentModule::class
     ]
 )
 interface AppComponent {
 
     fun inject(readerApplication: ReaderApplication)
+
+    fun viewModelComponent(): ViewModelComponent.Builder
 
     @Component.Builder
     interface Builder {

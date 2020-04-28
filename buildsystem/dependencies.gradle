@@ -1,7 +1,7 @@
 ext {
 
     def androidx_lifecycle = "2.2.0"
-    def android_dagger_version = "2.16"
+    def android_dagger_version = "2.25.4"
     def android_arch_lifecycle_version = "1.1.1"
     def com_square_up_retrofit2_version = "2.4.0"
     def room_version = "2.2.3"
