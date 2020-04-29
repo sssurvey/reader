@@ -1,3 +1,2 @@
-include ':presentation'
+include ':presentation', ':core'
 rootProject.name='Reader'
-include ':core'

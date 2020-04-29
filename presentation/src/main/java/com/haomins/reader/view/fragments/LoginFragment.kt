@@ -1,5 +1,6 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
+import com.haomins.reader.ReaderApplication
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.LoginViewModel
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
 
@@ -26,13 +27,7 @@ class LoginFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var loginViewModel: LoginViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        AndroidSupportInjection.inject(this)
-        loginViewModel = ViewModelProviders.of(this, viewModelFactory)[LoginViewModel::class.java]
-    }
+    private val loginViewModel by viewModels<LoginViewModel> { viewModelFactory }
 
     private val isUserLoggedInObserver by lazy {
         Observer<Boolean>() {
@@ -41,6 +36,11 @@ class LoginFragment : Fragment() {
                 showSourceTitleListFragment()
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(

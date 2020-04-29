@@ -1,4 +1,4 @@
-package com.haomins.reader.di
+package com.haomins.reader.viewModels.di
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

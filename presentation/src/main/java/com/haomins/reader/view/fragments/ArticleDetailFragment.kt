@@ -1,5 +1,6 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
@@ -10,15 +11,15 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.haomins.reader.R
+import com.haomins.reader.ReaderApplication
 import com.haomins.reader.view.activities.ArticleDetailActivity.Companion.ARTICLE_ITEM_ID
 import com.haomins.reader.viewModels.ArticleDetailViewModel
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_article_detail.*
 import javax.inject.Inject
 
@@ -45,7 +46,7 @@ class ArticleDetailFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var articleDetailViewModel: ArticleDetailViewModel
+    private val articleDetailViewModel by viewModels<ArticleDetailViewModel> { viewModelFactory }
     private var articleId: String = ""
 
     private val handler by lazy {
@@ -82,6 +83,11 @@ class ArticleDetailFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -92,9 +98,6 @@ class ArticleDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AndroidSupportInjection.inject(this)
-        articleDetailViewModel =
-            ViewModelProviders.of(this, viewModelFactory)[ArticleDetailViewModel::class.java]
         loadArticleId(arguments)
         showArticle()
         registerLiveDataObservers()

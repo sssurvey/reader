@@ -1,44 +1,34 @@
 package com.haomins.reader
 
-import android.app.Activity
 import android.app.Application
-import androidx.fragment.app.Fragment
+import com.haomins.reader.di.AppComponent
 import com.haomins.reader.di.DaggerAppComponent
 import com.haomins.reader.utils.DarkModeManager
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.support.HasSupportFragmentInjector
+import com.haomins.www.core.di.DaggerCoreComponent
 import javax.inject.Inject
 
-class ReaderApplication : Application(), HasActivityInjector, HasSupportFragmentInjector {
+class ReaderApplication : Application() {
 
-    @Inject
-    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-    @Inject
-    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     @Inject
     lateinit var darkModeManager: DarkModeManager
 
+    lateinit var appComponent: AppComponent
+
     override fun onCreate() {
         super.onCreate()
-        initDagger()
+        initAppComponent()
         initDarkMode()
     }
 
-    override fun activityInjector() = activityDispatchingAndroidInjector
-
-    override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
-
-    private fun initDagger() {
-        DaggerAppComponent
-            .builder()
-            .application(this)
-            .build()
-            .inject(this)
+    private fun initAppComponent(): AppComponent {
+        val coreComponent = DaggerCoreComponent.builder().application(this).build()
+        appComponent = DaggerAppComponent.builder().setCoreComponent(coreComponent).build()
+        appComponent.inject(this)
+        return appComponent
     }
 
     private fun initDarkMode() {
-        if(darkModeManager.checkIsCurrentDarkModeEnabled()) darkModeManager.enableDarkMode()
+        if (darkModeManager.checkIsCurrentDarkModeEnabled()) darkModeManager.enableDarkMode()
         else darkModeManager.disableDarkMode()
     }
 }

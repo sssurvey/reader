@@ -1,17 +1,18 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.haomins.reader.R
+import com.haomins.reader.ReaderApplication
 import com.haomins.reader.view.activities.SettingsActivity
 import com.haomins.reader.viewModels.SettingsViewModel
-import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -26,17 +27,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var settingsViewModel: SettingsViewModel
+    private val settingsViewModel by viewModels<SettingsViewModel> { viewModelFactory }
 
     private val darkModeSwitchPreferenceCompat by lazy {
         findPreference<SwitchPreferenceCompat>(DARK_MODE_OPTION)
     }
 
+    override fun onAttach(context: Context) {
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.fragment_settings, rootKey)
-        AndroidSupportInjection.inject(this)
-        settingsViewModel =
-            ViewModelProviders.of(this, viewModelFactory)[SettingsViewModel::class.java]
         configPreference()
         setOnclickListeners()
     }

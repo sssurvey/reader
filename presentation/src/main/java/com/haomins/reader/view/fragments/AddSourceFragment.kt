@@ -1,19 +1,20 @@
 package com.haomins.reader.view.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.R
+import com.haomins.reader.ReaderApplication
 import com.haomins.reader.utils.hideKeyboard
 import com.haomins.reader.utils.showSnackbar
 import com.haomins.reader.viewModels.AddSourceViewModel
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_add_source.*
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class AddSourceFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var addSourceViewModel: AddSourceViewModel
+    private val addSourceViewModel by viewModels<AddSourceViewModel> { viewModelFactory }
 
     private val isSourceAddedObserver by lazy {
         Observer<Pair<AddSourceViewModel.AddSourceStatus, String>> {
@@ -44,6 +45,11 @@ class AddSourceFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,9 +60,6 @@ class AddSourceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AndroidSupportInjection.inject(this)
-        addSourceViewModel =
-            ViewModelProviders.of(this, viewModelFactory)[AddSourceViewModel::class.java]
         registerLiveDataObservers()
         configMediumFeedEditText()
         setOnclickListeners()

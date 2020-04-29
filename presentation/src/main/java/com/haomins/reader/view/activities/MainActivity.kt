@@ -3,19 +3,19 @@ package com.haomins.reader.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
+import com.haomins.reader.ReaderApplication
 import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainViewModel
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar.*
@@ -26,13 +26,11 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
-        mainViewModel =
-            ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
         setContentView(R.layout.activity_main)
         handleLoginFragment()
         setOnClickListeners()
