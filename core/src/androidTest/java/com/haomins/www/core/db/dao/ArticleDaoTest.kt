@@ -4,8 +4,8 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import com.haomins.www.core.data.entities.ArticleEntity
 import com.haomins.www.core.db.AppDatabase
-import junit.framework.Assert.assertTrue
 import org.junit.After
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
