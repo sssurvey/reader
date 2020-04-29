@@ -53,4 +53,38 @@ class ArticleDaoTest {
             counter++
         }
     }
+
+    @Test
+    fun testSelectAllArticleByFeedId() {
+        assertTrue(articleDao.selectArticleByItemId("0").blockingGet().feedId == "0")
+    }
+
+    @Test
+    fun testInsert() {
+        val originalSize = articleDao.getAll().blockingFirst().size
+        articleDao.insert(
+            ArticleEntity(
+                itemId = "$100",
+                feedId = "${100 * 2}",
+                itemTitle = "Test title",
+                itemUpdatedMillisecond = System.currentTimeMillis(),
+                itemPublishedMillisecond = System.currentTimeMillis(),
+                author = "Dr.StrangeLove",
+                content = "This is a test article, haha."
+            )
+        )
+        assertTrue(articleDao.getAll().blockingFirst().size > originalSize)
+    }
+
+    @Test
+    fun testSelectArticleByItemId() {
+        assertTrue(articleDao.selectArticleByItemId("1").blockingGet().itemId == 1.toString())
+    }
+
+    @Test
+    fun testClearTable() {
+        assertTrue(articleDao.getAll().blockingFirst().isNotEmpty())
+        articleDao.clearTable()
+        assertTrue(articleDao.getAll().blockingFirst().isEmpty())
+    }
 }
