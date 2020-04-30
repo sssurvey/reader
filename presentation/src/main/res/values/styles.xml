@@ -24,7 +24,7 @@
     </style>
 
     <style name="ReaderTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/google_product_sans_bold</item>
+        <item name="android:fontFamily">@font/font_manrope_bold</item>
     </style>
 
     <style name="ToolBarStyle" parent="Widget.MaterialComponents.Toolbar">
