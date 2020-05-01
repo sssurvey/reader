@@ -9,6 +9,15 @@ data class SubscriptionSourceListResponseModel(
 
 )
 
+data class Category(
+
+    @SerializedName("id")
+    val id: String,
+
+    @SerializedName("label")
+    val label: String
+)
+
 data class SubscriptionItemModel(
 
     @SerializedName("id")
@@ -18,7 +27,7 @@ data class SubscriptionItemModel(
     val title: String,
 
     @SerializedName("categories")
-    val categories: Array<String>,
+    val categories: Array<Category>,
 
     @SerializedName("sortid")
     val sortId: String,
