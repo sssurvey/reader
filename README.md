@@ -5,7 +5,7 @@
 # Reader
 The reader application is a client application for the website <https://theoldreader.com/feeds>. Currently the app version is ```v0.2.7``` and you can see all you subscription list, and read articles with it.
 <div>
-<table margin="center">
+<table align="center">
 	<tr>
 		<th style="padding: 5px 10px 5px 5px;">
     		<img src="https://github.com/sssurvey/reader/blob/documentation-better-read-me/readmeRes/sources_list.png?raw=true" alt="source list screenshot with half dark mode" height="400px" style="margin:0px 50px"/>
