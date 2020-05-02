@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://raw.githubusercontent.com/sssurvey/reader/documentation-better-read-me/readmeRes/read_banner.png?token=AASC2PLAWANIVCDH7GDSEH26VTJXM" alt="add source screenshot with half dark mode" height="200 px" style="margin:0px 10px"/>
+</p>
+
 # Reader
 The reader application is a client application for the website <https://theoldreader.com/feeds>. Currently the app version is ```v0.2.7``` and you can see all you subscription list, and read articles with it.
 
