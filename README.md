@@ -1,5 +1,24 @@
+<p align="center">
+<img src="https://github.com/sssurvey/reader/blob/develop/readmeRes/read_banner.png?raw=true" alt="add source screenshot with half dark mode" height="200 px" style="margin:0px 10px"/>
+</p>
+
 # Reader
-The reader application is a client application for the website <https://theoldreader.com/feeds>. Currently the app version is ```v0.2.7``` and you can see all you subscription list, and read articles with it.
+The reader application is a client application for the website <https://theoldreader.com>. Currently the app version is ```v0.2.8``` and you can see all your subscription list, and read articles with it.
+<div>
+<table align="center">
+	<tr>
+		<th style="padding: 5px 20px 5px 5px;">
+    		<img src="https://github.com/sssurvey/reader/blob/documentation-better-read-me/readmeRes/sources_list.png?raw=true" alt="source list screenshot with half dark mode" height="400px" style="margin:0px 50px"/>
+		</th>
+		<th style="padding: 5px 20px 5px 5px;">
+    		<img src="https://github.com/sssurvey/reader/blob/documentation-better-read-me/readmeRes/add_articles.png?raw=true" alt="add source screenshot with half dark mode" height="400px" style="margin:0px 50px"/>
+		</th>
+		<th style="padding: 5px 20px 5px 5px;">
+    		<img src="https://github.com/sssurvey/reader/blob/develop/readmeRes/article_details.png?raw=true" alt="read article details webview" height="400px" style="margin:0px 50px"/>
+		</th>
+	</tr>
+</table>
+</div>
 
 The application is written in 100% ```Kotlin``` and is utilizing the library:
 
