@@ -3,7 +3,7 @@
 </p>
 
 # Reader
-The reader application is a client application for the website <https://theoldreader.com>. Currently the app version is ```v0.2.7``` and you can see all your subscription list, and read articles with it.
+The reader application is a client application for the website <https://theoldreader.com>. Currently the app version is ```v0.2.8``` and you can see all your subscription list, and read articles with it.
 <div>
 <table align="center">
 	<tr>
