@@ -1,4 +1,4 @@
-<p align="left">
+<p align="center">
 <img src="https://github.com/sssurvey/reader/blob/develop/readmeRes/read_banner.png?raw=true" alt="add source screenshot with half dark mode" height="200 px" style="margin:0px 10px"/>
 </p>
 
