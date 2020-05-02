@@ -14,7 +14,7 @@ The reader application is a client application for the website <https://theoldre
 </p>
 
 <p align="right">
-<img src="hhttps://github.com/sssurvey/reader/blob/develop/readmeRes/article_details.png?raw=true" alt="read article details webview" height="600px" style="margin:0px 10px"/>
+<img src="https://github.com/sssurvey/reader/blob/develop/readmeRes/article_details.png?raw=true" alt="read article details webview" height="600px" style="margin:0px 10px"/>
 </p>
 
 The application is written in 100% ```Kotlin``` and is utilizing the library:
