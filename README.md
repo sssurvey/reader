@@ -3,6 +3,9 @@
 </p>
 
 # Reader
+
+[![Download From Play Store](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.haomins.reader)
+
 The reader application is a client application for the website <https://theoldreader.com>. Currently the app version is ```v0.2.8``` and you can see all your subscription list, and read articles with it.
 <div>
 <table align="center">
