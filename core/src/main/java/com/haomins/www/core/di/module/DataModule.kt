@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import io.reactivex.schedulers.Schedulers
+import io.realm.Realm
 import io.realm.RealmConfiguration
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -42,10 +43,13 @@ object DataModule {
     @Reusable
     @JvmStatic
     @Provides
-    fun provideRealm(): RealmConfiguration {
-        return RealmConfiguration.Builder().apply {
-            name(CORE_REALM_NAME)
-            schemaVersion(0)
-        }.build()
+    fun provideRealm(): Realm {
+        Realm.setDefaultConfiguration(
+            RealmConfiguration.Builder().apply {
+                name(CORE_REALM_NAME)
+                schemaVersion(0)
+            }.build()
+        )
+        return Realm.getDefaultInstance()
     }
 }
