@@ -33,10 +33,9 @@ class SourceTitleListFragment : Fragment() {
     private val sourceTitleListAdapter by lazy {
         SourceTitleListAdapter(
             sourceListDisplayDataList,
-            sourceTitleListViewModel
-        ).apply {
-            registerItemOnClick(::sourceListRecyclerViewItemClickedAt)
-        }
+            sourceTitleListViewModel,
+            ::sourceListRecyclerViewItemClickedAt
+        )
     }
 
     private val sourceListDataSetObserver by lazy {

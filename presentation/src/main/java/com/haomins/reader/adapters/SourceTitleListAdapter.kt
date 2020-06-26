@@ -11,16 +11,11 @@ import java.net.URL
 
 class SourceTitleListAdapter(
     private val subSourceDisplayItems: List<Pair<String, URL>>,
-    private val sourceTitleListViewModel: SourceTitleListViewModel
+    private val sourceTitleListViewModel: SourceTitleListViewModel,
+    private val onRowItemClick: (pos: Int) -> Unit
 ) : RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
-    private lateinit var rowItemOnClick: (pos: Int) -> Unit
-
     inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
-
-    fun registerItemOnClick(onClick: (pos: Int) -> Unit) {
-        this.rowItemOnClick = onClick
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val sourceListItemView = LayoutInflater.from(parent.context)
@@ -52,6 +47,6 @@ class SourceTitleListAdapter(
     }
 
     private fun sourceListRecyclerViewItemClickedAt(position: Int) {
-        rowItemOnClick(position)
+        onRowItemClick(position)
     }
 }
