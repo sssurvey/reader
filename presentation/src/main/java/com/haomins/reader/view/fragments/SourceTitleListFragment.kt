@@ -32,9 +32,9 @@ class SourceTitleListFragment : Fragment() {
 
     private val sourceTitleListAdapter by lazy {
         SourceTitleListAdapter(
-            sourceListDisplayDataList,
-            sourceTitleListViewModel,
-            ::sourceListRecyclerViewItemClickedAt
+            subSourceDisplayItems = sourceListDisplayDataList,
+            sourceTitleListViewModel = sourceTitleListViewModel,
+            onRowItemClicked = ::sourceListRecyclerViewItemClickedAt
         )
     }
 

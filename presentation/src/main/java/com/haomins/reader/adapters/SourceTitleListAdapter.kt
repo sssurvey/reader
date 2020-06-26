@@ -12,7 +12,7 @@ import java.net.URL
 class SourceTitleListAdapter(
     private val subSourceDisplayItems: List<Pair<String, URL>>,
     private val sourceTitleListViewModel: SourceTitleListViewModel,
-    private val onRowItemClick: (pos: Int) -> Unit
+    private val onRowItemClicked: (pos: Int) -> Unit
 ) : RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
     inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
@@ -47,6 +47,6 @@ class SourceTitleListAdapter(
     }
 
     private fun sourceListRecyclerViewItemClickedAt(position: Int) {
-        onRowItemClick(position)
+        onRowItemClicked(position)
     }
 }
