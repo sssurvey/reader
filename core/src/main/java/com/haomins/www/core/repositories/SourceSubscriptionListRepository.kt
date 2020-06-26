@@ -13,7 +13,9 @@ import com.haomins.www.core.util.getString
 import io.reactivex.Single
 import java.net.URL
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class SourceSubscriptionListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val roomService: RoomService,
@@ -23,8 +25,7 @@ class SourceSubscriptionListRepository @Inject constructor(
 
     fun loadSubList(): Single<SubscriptionSourceListResponseModel> {
         return theOldReaderService.loadSubscriptionSourceList(
-            headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                    + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
+            headerAuthValue = loadHeaderAuthValue()
         )
     }
 
@@ -44,6 +45,11 @@ class SourceSubscriptionListRepository @Inject constructor(
         val entityList =
             convertSubscriptionItemModelToEntity(subscriptionSourceListResponseModel.subscriptions)
         roomService.subscriptionDao().insertAll(*entityList.toTypedArray())
+    }
+
+    private fun loadHeaderAuthValue(): String {
+        return (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
+                + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
     private fun convertSubscriptionItemModelToEntity(subscriptions: ArrayList<SubscriptionItemModel>): List<SubscriptionEntity> {
