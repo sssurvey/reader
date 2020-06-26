@@ -3,6 +3,7 @@ package com.haomins.www.core.service
 import android.app.Application
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.haomins.www.core.R
 import java.net.URL
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,6 +22,7 @@ class GlideService @Inject constructor(
             .asDrawable()
             .centerCrop()
             .load(url)
+            .error(R.drawable.ic_broken_image)
             .into(imageView)
     }
 

@@ -5,6 +5,7 @@ ext {
     def android_arch_lifecycle_version = "1.1.1"
     def com_square_up_retrofit2_version = "2.4.0"
     def room_version = "2.2.3"
+    def glide_version = "4.11.0"
 
     appDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
@@ -40,7 +41,8 @@ ext {
             'io.reactivex.rxjava2:rxjava:2.2.6',
             'io.reactivex.rxjava2:rxandroid:2.1.1',
             'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0',
-            "com.github.bumptech.glide:glide:4.11.0",
+            "com.github.bumptech.glide:glide:$glide_version",
+            "com.github.bumptech.glide:annotations:$glide_version",
             'com.squareup.okhttp3:logging-interceptor:3.8.0',
             "com.google.dagger:dagger:$dagger_version",
             "androidx.room:room-runtime:$room_version",
@@ -49,7 +51,8 @@ ext {
 
     coreKaptDependencies = [
             "com.google.dagger:dagger-compiler:$dagger_version",
-            "androidx.room:room-compiler:$room_version"
+            "androidx.room:room-compiler:$room_version",
+            "com.github.bumptech.glide:compiler:$glide_version"
     ]
 
     appTestImplementation = [
