@@ -14,6 +14,9 @@ open class SubscriptionEntity(
     @RealmField(name = "title")
     var title: String = "",
 
+    @RealmField(name = "sort_id")
+    var sortId: String = "",
+
     @RealmField(name = "first_item_millisecond")
     var firstItemMilSec: String = "",
 
