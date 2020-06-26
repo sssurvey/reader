@@ -1,11 +1,13 @@
 package com.haomins.www.core.di.module
 
+import com.haomins.www.core.db.RealmUtil.CORE_REALM_NAME
 import com.haomins.www.core.service.TheOldReaderService
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import io.reactivex.schedulers.Schedulers
+import io.realm.RealmConfiguration
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -35,5 +37,15 @@ object DataModule {
         httpLogInterceptor.level = HttpLoggingInterceptor.Level.BODY
         httpClientBuilder.addInterceptor(httpLogInterceptor)
         return httpClientBuilder.build()
+    }
+
+    @Reusable
+    @JvmStatic
+    @Provides
+    fun provideRealm(): RealmConfiguration {
+        return RealmConfiguration.Builder().apply {
+            name(CORE_REALM_NAME)
+            schemaVersion(0)
+        }.build()
     }
 }
