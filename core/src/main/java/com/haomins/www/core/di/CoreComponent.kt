@@ -7,6 +7,7 @@ import com.haomins.www.core.di.module.PreferenceModule
 import com.haomins.www.core.service.TheOldReaderService
 import dagger.BindsInstance
 import dagger.Component
+import io.realm.RealmConfiguration
 
 @Component(modules = [
     DataModule::class,
@@ -19,6 +20,8 @@ interface CoreComponent {
     fun provideTheOldReaderService() : TheOldReaderService
 
     fun provideApplication() : Application
+
+    fun provideRealmConfiguration(): RealmConfiguration
 
     @Component.Builder
     interface Builder {
