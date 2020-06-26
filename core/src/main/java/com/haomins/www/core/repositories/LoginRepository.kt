@@ -6,7 +6,9 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class LoginRepository @Inject constructor(private val theOldReaderService: TheOldReaderService) {
 
     fun start(user: Pair<String, String>): Single<UserAuthResponseModel> {
