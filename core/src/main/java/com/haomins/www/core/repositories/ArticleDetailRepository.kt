@@ -6,7 +6,9 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class ArticleDetailRepository @Inject constructor(
     private val roomService: RoomService
 ) {
