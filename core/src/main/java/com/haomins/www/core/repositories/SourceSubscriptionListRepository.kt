@@ -52,7 +52,8 @@ class SourceSubscriptionListRepository @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
-    private fun convertSubscriptionItemModelToEntity(subscriptions: ArrayList<SubscriptionItemModel>): List<SubscriptionEntity> {
+    private fun convertSubscriptionItemModelToEntity(subscriptions: ArrayList<SubscriptionItemModel>)
+            : List<SubscriptionEntity> {
         return subscriptions.map {
             SubscriptionEntity(
                 id = it.id,
