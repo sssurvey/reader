@@ -43,21 +43,27 @@ class SourceTitleListViewModel @Inject constructor(
             .doOnSuccess { refreshSourceListData(it) }
             .toObservable()
             .flatMap { populatedSubSourceDataSet(it) }
-            .doOnNext { sourceListUiDataSet.postValue(sourceUiDataList) }
+            .doAfterNext { updateSourceListUiDataSet() }
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe()
     }
 
+    private fun updateSourceListUiDataSet() {
+        sourceListUiDataSet.postValue(sourceUiDataList)
+    }
+
     private fun populatedSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>): Observable<SubscriptionEntity> {
         return Observable.fromIterable(subscriptionEntities).doOnNext {
-            sourceUiDataList.add(
-                Pair(
-                    first = it.title,
-                    second = URL(TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl)
-                )
-            )
+            sourceUiDataList.add(it.toUiData())
         }
+    }
+
+    private fun SubscriptionEntity.toUiData(): Pair<String, URL> {
+        return Pair(
+            first = title,
+            second = URL(TheOldReaderService.DEFAULT_PROTOCOL + iconUrl)
+        )
     }
 
     private fun refreshSourceListData(subscriptionEntities: List<SubscriptionEntity>) {
