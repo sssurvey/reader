@@ -1,14 +1,14 @@
 package com.haomins.reader.viewModels
 
-import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.view.fragments.SourceTitleListFragment.Companion.TAG
 import com.haomins.www.core.data.entities.SubscriptionEntity
+import com.haomins.www.core.data.models.subscription.SubscriptionSourceListResponseModel
 import com.haomins.www.core.repositories.SourceSubscriptionListRepository
 import com.haomins.www.core.service.TheOldReaderService
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.net.URL
@@ -37,24 +37,26 @@ class SourceTitleListViewModel @Inject constructor(
     fun loadSourceSubscriptionList() {
         sourceSubscriptionListRepository
             .loadSubList()
-            .doOnSuccess {
-                sourceUiDataList.clear()
-                sourceSubscriptionListRepository.saveSubListToDB(it)
-            }
-            .flatMap { sourceSubscriptionListRepository.retrieveSubListFromDB() }
+            .flatMap { onLoadSuccess(it) }
+            .onErrorResumeNext { loadSubListFromDB() }
             .doOnSuccess { refreshSourceListData(it) }
             .toObservable()
             .flatMap { populatedSubSourceDataSet(it) }
             .doAfterNext { updateSourceListUiDataSet() }
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Log.d(
-                    TAG,
-                    "loadSourceSubscriptionList() onError :: ${it.printStackTrace()}"
-                )
-            }
             .subscribe()
+    }
+
+    private fun onLoadSuccess(subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel)
+            : Single<List<SubscriptionEntity>> {
+        sourceUiDataList.clear()
+        sourceSubscriptionListRepository.saveSubListToDB(subscriptionSourceListResponseModel)
+        return loadSubListFromDB()
+    }
+
+    private fun loadSubListFromDB(): Single<List<SubscriptionEntity>> {
+        return sourceSubscriptionListRepository.retrieveSubListFromDB()
     }
 
     private fun updateSourceListUiDataSet() {
@@ -77,5 +79,4 @@ class SourceTitleListViewModel @Inject constructor(
     private fun refreshSourceListData(subscriptionEntities: List<SubscriptionEntity>) {
         sourceListData = subscriptionEntities
     }
-
 }
