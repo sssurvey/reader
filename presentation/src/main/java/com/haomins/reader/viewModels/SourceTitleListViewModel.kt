@@ -43,14 +43,14 @@ class SourceTitleListViewModel @Inject constructor(
             .onErrorResumeNext { sourceSubscriptionListRepository.retrieveSubListFromDB() }
             .doOnSuccess { sourceListData = it }
             .toObservable()
-            .flatMap { populatedSubSourceDataSet(it) }
+            .flatMap { populateSubSourceDataSet(it) }
             .doAfterNext { sourceListUiDataSet.postValue(sourceUiDataList) }
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe()
     }
 
-    private fun populatedSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>) =
+    private fun populateSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>) =
         Observable.fromIterable(subscriptionEntities).doOnNext {
             sourceUiDataList.add(
                 Pair(
