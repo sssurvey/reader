@@ -28,7 +28,7 @@ class SourceTitleListFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val sourceTitleListViewModel by viewModels<SourceTitleListViewModel> { viewModelFactory }
-    private val sourceListDisplayDataList: MutableList<Pair<String, URL>> = ArrayList()
+    private val sourceListDisplayDataList: MutableList<Pair<String, URL>> = mutableListOf()
 
     private val sourceTitleListAdapter by lazy {
         SourceTitleListAdapter(
