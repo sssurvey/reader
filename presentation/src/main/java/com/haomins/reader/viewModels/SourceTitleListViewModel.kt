@@ -1,8 +1,10 @@
 package com.haomins.reader.viewModels
 
+import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.haomins.reader.view.fragments.SourceTitleListFragment.Companion.TAG
 import com.haomins.www.core.data.entities.SubscriptionEntity
 import com.haomins.www.core.repositories.SourceSubscriptionListRepository
 import com.haomins.www.core.service.TheOldReaderService
@@ -46,6 +48,12 @@ class SourceTitleListViewModel @Inject constructor(
             .doAfterNext { updateSourceListUiDataSet() }
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Log.d(
+                    TAG,
+                    "loadSourceSubscriptionList() onError :: ${it.printStackTrace()}"
+                )
+            }
             .subscribe()
     }
 
