@@ -35,7 +35,7 @@ class SourceTitleListViewModel @Inject constructor(
     fun loadSourceSubscriptionList() {
         sourceSubscriptionListRepository
             .loadSubList()
-            .doOnSuccess {
+            .flatMap {
                 sourceUiDataList.clear()
                 sourceSubscriptionListRepository.saveSubListToDB(it)
             }

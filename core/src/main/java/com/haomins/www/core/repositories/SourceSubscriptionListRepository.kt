@@ -10,7 +10,6 @@ import com.haomins.www.core.service.GlideService
 import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.service.TheOldReaderService
 import com.haomins.www.core.util.getString
-import io.reactivex.Completable
 import io.reactivex.Single
 import java.net.URL
 import javax.inject.Inject
@@ -41,8 +40,8 @@ class SourceSubscriptionListRepository @Inject constructor(
     fun saveSubListToDB(
         subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel,
         clearOldTable: Boolean = true
-    ): Completable {
-        return Completable.fromAction {
+    ): Single<Unit> {
+        return Single.fromCallable {
             if (clearOldTable) roomService.subscriptionDao().clearTable()
             val entityList =
                 convertSubscriptionItemModelToEntity(subscriptionSourceListResponseModel.subscriptions)
