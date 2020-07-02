@@ -31,7 +31,6 @@ class ArticleListRepository @Inject constructor(
     }
 
     private var continueId = ""
-    private var isWaitingOnResponse = false
     private val headerAuthValue by lazy {
         (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
@@ -111,7 +110,8 @@ class ArticleListRepository @Inject constructor(
         return Single.fromCallable {
             with(itemRefListResponseModel) {
                 continueId = continuation
-                if (!itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(this)
+                if (!itemRefs.isNullOrEmpty())
+                    loadIndividualArticleInformation(this)
             }
         }
     }
