@@ -50,13 +50,27 @@ class ArticleListViewModel @Inject constructor(
     }
 
     fun continueLoadAllArticles() {
-        isLoading.postValue(true)
-        articleListRepository.continueLoadAllArticleItemRefs { isLoading.postValue(false) }
+        disposables.add(
+            articleListRepository
+                .continueLoadAllArticleItemRefs()
+                .doOnSubscribe { isLoading.postValue(true) }
+                .subscribe(
+                    { isLoading.postValue(false) },
+                    { Log.d(TAG, "onError: ${it.printStackTrace()}") }
+                )
+        )
     }
 
     fun continueLoadArticles(feedId: String) {
-        isLoading.postValue(true)
-        articleListRepository.continueLoadArticleItemRefs(feedId) { isLoading.postValue(false) }
+        disposables.add(
+            articleListRepository
+                .continueLoadArticleItemRefs(feedId)
+                .doOnSubscribe { isLoading.postValue(true) }
+                .subscribe(
+                    { isLoading.postValue(false) },
+                    { Log.d(TAG, "onError: ${it.printStackTrace()}") }
+                )
+        )
     }
 
     override fun onCleared() {

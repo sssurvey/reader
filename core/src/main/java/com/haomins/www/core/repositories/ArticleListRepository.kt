@@ -57,41 +57,23 @@ class ArticleListRepository @Inject constructor(
             .distinctUntilChanged(List<ArticleEntity>::size)
     }
 
-    //TODO: make it Rx Enabled for real
-    fun continueLoadAllArticleItemRefs(doAfterSuccess: () -> Unit) {
-//        if (!isWaitingOnResponse) {
-//            isWaitingOnResponse = true
-//            theOldReaderService.loadAllArticles(
-//                headerAuthValue = headerAuthValue,
-//                continueLoad = continueId
-//            )
-//                .doAfterSuccess {
-//                    isWaitingOnResponse = false
-//                    doAfterSuccess()
-//                }
-//                .doOnSuccess(::fetchIndividualArticleInformation)
-//                .doOnError(::onLoadError)
-//                .subscribe()
-//        }
+    fun continueLoadAllArticleItemRefs(): Single<Unit> {
+        return theOldReaderService.loadAllArticles(
+            headerAuthValue = headerAuthValue,
+            continueLoad = continueId
+        )
+            .flatMap { fetchIndividualArticleInformation(it) }
+            .doOnError(::onLoadError)
     }
 
-    //TODO: make it Rx Enabled for real
-    fun continueLoadArticleItemRefs(feedId: String, doAfterSuccess: () -> Unit) {
-//        if (!isWaitingOnResponse) {
-//            isWaitingOnResponse = true
-//            theOldReaderService.loadArticleListByFeed(
-//                headerAuthValue = headerAuthValue,
-//                feedId = feedId,
-//                continueLoad = continueId
-//            )
-//                .doAfterSuccess {
-//                    isWaitingOnResponse = false
-//                    doAfterSuccess()
-//                }
-//                .doOnSuccess(::fetchIndividualArticleInformation)
-//                .doOnError(::onLoadError)
-//                .subscribe()
-//        }
+    fun continueLoadArticleItemRefs(feedId: String): Single<Unit> {
+        return theOldReaderService.loadArticleListByFeed(
+            headerAuthValue = headerAuthValue,
+            feedId = feedId,
+            continueLoad = continueId
+        )
+            .flatMap { fetchIndividualArticleInformation(it) }
+            .doOnError(::onLoadError)
     }
 
     //TODO: make it Rx Enabled for real
