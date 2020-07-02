@@ -11,6 +11,7 @@ import com.haomins.www.core.service.TheOldReaderService
 import com.haomins.www.core.util.getString
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
@@ -37,58 +38,63 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun loadAllArticleItemRefs(): Observable<List<ArticleEntity>> {
-        theOldReaderService
+        return theOldReaderService
             .loadAllArticles(headerAuthValue = headerAuthValue)
-            .doOnSuccess(::fetchIndividualArticleInformation)
             .doOnError(::onLoadError)
-            .subscribe()
-        return roomService.articleDao().getAll()
+            .flatMap { fetchIndividualArticleInformation(it) }
+            .onErrorReturn { roomService.articleDao().getAll() }
+            .flatMapObservable { roomService.articleDao().getAll() }
+            .distinctUntilChanged(List<ArticleEntity>::size)
     }
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
-        theOldReaderService
+        return theOldReaderService
             .loadArticleListByFeed(headerAuthValue = headerAuthValue, feedId = feedId)
-            .doOnSuccess(::fetchIndividualArticleInformation)
             .doOnError(::onLoadError)
-            .subscribe()
-        return roomService.articleDao().selectAllArticleByFeedId(feedId)
+            .flatMap { fetchIndividualArticleInformation(it) }
+            .onErrorReturn { roomService.articleDao().selectAllArticleByFeedId(feedId) }
+            .flatMapObservable { roomService.articleDao().selectAllArticleByFeedId(feedId) }
+            .distinctUntilChanged(List<ArticleEntity>::size)
     }
 
+    //TODO: make it Rx Enabled for real
     fun continueLoadAllArticleItemRefs(doAfterSuccess: () -> Unit) {
-        if (!isWaitingOnResponse) {
-            isWaitingOnResponse = true
-            theOldReaderService.loadAllArticles(
-                headerAuthValue = headerAuthValue,
-                continueLoad = continueId
-            )
-                .doAfterSuccess {
-                    isWaitingOnResponse = false
-                    doAfterSuccess()
-                }
-                .doOnSuccess(::fetchIndividualArticleInformation)
-                .doOnError(::onLoadError)
-                .subscribe()
-        }
+//        if (!isWaitingOnResponse) {
+//            isWaitingOnResponse = true
+//            theOldReaderService.loadAllArticles(
+//                headerAuthValue = headerAuthValue,
+//                continueLoad = continueId
+//            )
+//                .doAfterSuccess {
+//                    isWaitingOnResponse = false
+//                    doAfterSuccess()
+//                }
+//                .doOnSuccess(::fetchIndividualArticleInformation)
+//                .doOnError(::onLoadError)
+//                .subscribe()
+//        }
     }
 
+    //TODO: make it Rx Enabled for real
     fun continueLoadArticleItemRefs(feedId: String, doAfterSuccess: () -> Unit) {
-        if (!isWaitingOnResponse) {
-            isWaitingOnResponse = true
-            theOldReaderService.loadArticleListByFeed(
-                headerAuthValue = headerAuthValue,
-                feedId = feedId,
-                continueLoad = continueId
-            )
-                .doAfterSuccess {
-                    isWaitingOnResponse = false
-                    doAfterSuccess()
-                }
-                .doOnSuccess(::fetchIndividualArticleInformation)
-                .doOnError(::onLoadError)
-                .subscribe()
-        }
+//        if (!isWaitingOnResponse) {
+//            isWaitingOnResponse = true
+//            theOldReaderService.loadArticleListByFeed(
+//                headerAuthValue = headerAuthValue,
+//                feedId = feedId,
+//                continueLoad = continueId
+//            )
+//                .doAfterSuccess {
+//                    isWaitingOnResponse = false
+//                    doAfterSuccess()
+//                }
+//                .doOnSuccess(::fetchIndividualArticleInformation)
+//                .doOnError(::onLoadError)
+//                .subscribe()
+//        }
     }
 
+    //TODO: make it Rx Enabled for real
     private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel) {
         Observable.fromIterable(itemRefListResponseModel.itemRefs).flatMap({
             theOldReaderService.loadArticleDetailsByRefId(
@@ -101,6 +107,7 @@ class ArticleListRepository @Inject constructor(
             .subscribe(ArticleResponseModelObserver())
     }
 
+    //TODO: make it Rx Enabled
     private fun saveIndividualArticleToDatabase(articleResponseModel: ArticleResponseModel) {
         Completable.fromAction {
             roomService.articleDao().insert(
@@ -118,10 +125,12 @@ class ArticleListRepository @Inject constructor(
             .subscribe()
     }
 
-    private fun fetchIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel) {
-        with(itemRefListResponseModel) {
-            continueId = continuation
-            if (!itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(this)
+    private fun fetchIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel): Single<Unit> {
+        return Single.fromCallable {
+            with(itemRefListResponseModel) {
+                continueId = continuation
+                if (!itemRefs.isNullOrEmpty()) loadIndividualArticleInformation(this)
+            }
         }
     }
 

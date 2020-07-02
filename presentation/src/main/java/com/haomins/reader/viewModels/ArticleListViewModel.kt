@@ -26,11 +26,11 @@ class ArticleListViewModel @Inject constructor(
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
         disposables.add(
-            articleListRepository.loadArticleItemRefs(feedId)
-                .distinctUntilChanged(List<ArticleEntity>::size)
+            articleListRepository
+                .loadArticleItemRefs(feedId)
                 .map(::mapEntitiesToUiItems)
-                .doOnNext(::onArticleLoaded)
-                .subscribe({},
+                .subscribe(
+                    { onArticleLoaded(it) },
                     { Log.d(TAG, "onError: ${it.printStackTrace()}") },
                     { Log.d(TAG, "onComplete: called") })
         )
@@ -39,11 +39,11 @@ class ArticleListViewModel @Inject constructor(
     fun loadAllArticles() {
         isLoading.postValue(true)
         disposables.add(
-            articleListRepository.loadAllArticleItemRefs()
-                .distinctUntilChanged(List<ArticleEntity>::size)
+            articleListRepository
+                .loadAllArticleItemRefs()
                 .map(::mapEntitiesToUiItems)
-                .doOnNext(::onArticleLoaded)
-                .subscribe({},
+                .subscribe(
+                    { onArticleLoaded(it) },
                     { Log.d(TAG, "onError: ${it.printStackTrace()}") },
                     { Log.d(TAG, "onComplete: called") })
         )
