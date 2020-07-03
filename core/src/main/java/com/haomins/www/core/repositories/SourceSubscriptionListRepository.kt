@@ -9,6 +9,7 @@ import com.haomins.www.core.data.models.subscription.SubscriptionSourceListRespo
 import com.haomins.www.core.service.GlideService
 import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.service.TheOldReaderService
+import com.haomins.www.core.util.defaultSchedulingPolicy
 import com.haomins.www.core.util.getString
 import io.reactivex.Single
 import java.net.URL
@@ -26,7 +27,7 @@ class SourceSubscriptionListRepository @Inject constructor(
     fun loadSubList(): Single<SubscriptionSourceListResponseModel> {
         return theOldReaderService.loadSubscriptionSourceList(
             headerAuthValue = loadHeaderAuthValue()
-        )
+        ).defaultSchedulingPolicy()
     }
 
     fun loadIconImage(imageView: ImageView, url: URL) {

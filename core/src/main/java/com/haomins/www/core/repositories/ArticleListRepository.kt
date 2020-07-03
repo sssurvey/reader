@@ -8,13 +8,10 @@ import com.haomins.www.core.data.models.article.ArticleResponseModel
 import com.haomins.www.core.data.models.article.ItemRefListResponseModel
 import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.service.TheOldReaderService
+import com.haomins.www.core.util.defaultSchedulingPolicy
 import com.haomins.www.core.util.getString
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,7 +24,6 @@ class ArticleListRepository @Inject constructor(
 
     companion object {
         const val TAG = "ArticleListRepository"
-        private const val MAX_ALLOWED_CONCURRENCY = 3
     }
 
     private var continueId = ""
@@ -40,57 +36,62 @@ class ArticleListRepository @Inject constructor(
         return theOldReaderService
             .loadAllArticles(headerAuthValue = headerAuthValue)
             .doOnError(::onLoadError)
-            .flatMap { fetchIndividualArticleInformation(it) }
+            .flatMapObservable { loadIndividualArticleInformation(it) }
             .onErrorReturn { roomService.articleDao().getAll() }
-            .flatMapObservable { roomService.articleDao().getAll() }
+            .flatMap { roomService.articleDao().getAll() }
             .distinctUntilChanged(List<ArticleEntity>::size)
+            .defaultSchedulingPolicy()
     }
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
         return theOldReaderService
             .loadArticleListByFeed(headerAuthValue = headerAuthValue, feedId = feedId)
             .doOnError(::onLoadError)
-            .flatMap { fetchIndividualArticleInformation(it) }
+            .flatMapObservable { loadIndividualArticleInformation(it) }
             .onErrorReturn { roomService.articleDao().selectAllArticleByFeedId(feedId) }
-            .flatMapObservable { roomService.articleDao().selectAllArticleByFeedId(feedId) }
+            .flatMap { roomService.articleDao().selectAllArticleByFeedId(feedId) }
             .distinctUntilChanged(List<ArticleEntity>::size)
+            .defaultSchedulingPolicy()
     }
 
-    fun continueLoadAllArticleItemRefs(): Single<Unit> {
-        return theOldReaderService.loadAllArticles(
-            headerAuthValue = headerAuthValue,
-            continueLoad = continueId
-        )
-            .flatMap { fetchIndividualArticleInformation(it) }
+    fun continueLoadAllArticleItemRefs(): Observable<Unit> {
+        return theOldReaderService
+            .loadAllArticles(headerAuthValue = headerAuthValue, continueLoad = continueId)
             .doOnError(::onLoadError)
+            .doOnSuccess { continueId = it.continuation }
+            .flatMapObservable { loadIndividualArticleInformation(it) }
+            .defaultSchedulingPolicy()
     }
 
-    fun continueLoadArticleItemRefs(feedId: String): Single<Unit> {
-        return theOldReaderService.loadArticleListByFeed(
-            headerAuthValue = headerAuthValue,
-            feedId = feedId,
-            continueLoad = continueId
-        )
-            .flatMap { fetchIndividualArticleInformation(it) }
-            .doOnError(::onLoadError)
-    }
-
-    //TODO: make it Rx Enabled for real
-    private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel) {
-        Observable.fromIterable(itemRefListResponseModel.itemRefs).flatMap({
-            theOldReaderService.loadArticleDetailsByRefId(
+    fun continueLoadArticleItemRefs(feedId: String): Observable<Unit> {
+        return theOldReaderService
+            .loadArticleListByFeed(
                 headerAuthValue = headerAuthValue,
-                refItemId = it.id
-            ).toObservable()
-        }, MAX_ALLOWED_CONCURRENCY)
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(ArticleResponseModelObserver())
+                feedId = feedId,
+                continueLoad = continueId
+            )
+            .doOnError(::onLoadError)
+            .doOnSuccess { continueId = it.continuation }
+            .flatMapObservable { loadIndividualArticleInformation(it) }
+            .defaultSchedulingPolicy()
     }
 
-    //TODO: make it Rx Enabled
-    private fun saveIndividualArticleToDatabase(articleResponseModel: ArticleResponseModel) {
-        Completable.fromAction {
+    private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel)
+            : Observable<Unit> {
+        return Observable
+            .fromIterable(itemRefListResponseModel.itemRefs)
+            .flatMapSingle {
+                theOldReaderService.loadArticleDetailsByRefId(
+                    headerAuthValue = headerAuthValue,
+                    refItemId = it.id
+                )
+            }
+            .flatMapSingle { saveIndividualArticleToDatabase(it) }
+    }
+
+    private fun saveIndividualArticleToDatabase(articleResponseModel: ArticleResponseModel)
+            : Single<Unit> {
+        return Single.fromCallable {
             roomService.articleDao().insert(
                 ArticleEntity(
                     itemId = articleResponseModel.items.first().id,
@@ -102,35 +103,11 @@ class ArticleListRepository @Inject constructor(
                     feedId = articleResponseModel.id
                 )
             )
-        }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-    }
-
-    private fun fetchIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel): Single<Unit> {
-        return Single.fromCallable {
-            with(itemRefListResponseModel) {
-                continueId = continuation
-                if (!itemRefs.isNullOrEmpty())
-                    loadIndividualArticleInformation(this)
-            }
         }
     }
 
     private fun onLoadError(e: Throwable) {
         Log.d(TAG, "onError :: ${e.printStackTrace()}")
-    }
-
-    private inner class ArticleResponseModelObserver : DisposableObserver<ArticleResponseModel>() {
-        override fun onError(e: Throwable) { onLoadError(e) }
-
-        override fun onComplete() {
-            Log.d(TAG, "onComplete::called")
-        }
-
-        override fun onNext(t: ArticleResponseModel) {
-            saveIndividualArticleToDatabase(t)
-            onComplete()
-        }
     }
 
 }

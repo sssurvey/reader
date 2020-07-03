@@ -7,8 +7,6 @@ import com.haomins.www.core.data.entities.SubscriptionEntity
 import com.haomins.www.core.repositories.SourceSubscriptionListRepository
 import com.haomins.www.core.service.TheOldReaderService
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.net.URL
 import javax.inject.Inject
 
@@ -45,8 +43,6 @@ class SourceTitleListViewModel @Inject constructor(
             .toObservable()
             .flatMap { populateSubSourceDataSet(it) }
             .doAfterNext { sourceListUiDataSet.postValue(sourceUiDataList) }
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe()
     }
 
