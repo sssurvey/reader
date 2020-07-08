@@ -12,6 +12,7 @@ import com.haomins.www.core.util.defaultSchedulingPolicy
 import com.haomins.www.core.util.getString
 import io.reactivex.Observable
 import io.reactivex.Single
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,6 +25,7 @@ class ArticleListRepository @Inject constructor(
 
     companion object {
         const val TAG = "ArticleListRepository"
+        private const val DEFAULT_DEBOUNCE_TIME_IN_MILLISECOND = 500L
     }
 
     private var continueId = ""
@@ -39,7 +41,7 @@ class ArticleListRepository @Inject constructor(
             .flatMapObservable { loadIndividualArticleInformation(it) }
             .onErrorReturn { roomService.articleDao().getAll() }
             .flatMap { roomService.articleDao().getAll() }
-            .distinctUntilChanged(List<ArticleEntity>::size)
+            .debounce(DEFAULT_DEBOUNCE_TIME_IN_MILLISECOND, TimeUnit.MILLISECONDS)
             .defaultSchedulingPolicy()
     }
 
@@ -50,7 +52,7 @@ class ArticleListRepository @Inject constructor(
             .flatMapObservable { loadIndividualArticleInformation(it) }
             .onErrorReturn { roomService.articleDao().selectAllArticleByFeedId(feedId) }
             .flatMap { roomService.articleDao().selectAllArticleByFeedId(feedId) }
-            .distinctUntilChanged(List<ArticleEntity>::size)
+            .debounce(DEFAULT_DEBOUNCE_TIME_IN_MILLISECOND, TimeUnit.MILLISECONDS)
             .defaultSchedulingPolicy()
     }
 
