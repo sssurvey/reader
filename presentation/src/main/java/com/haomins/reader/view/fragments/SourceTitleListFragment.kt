@@ -90,9 +90,9 @@ class SourceTitleListFragment : Fragment() {
     }
 
     private fun sourceListRecyclerViewItemClickedAt(position: Int) {
-        val feedId = sourceTitleListViewModel.getSubSourceId(position)
         activity?.let {
-            (it as MainActivity).startArticleListActivity(feedId)
+            (it as MainActivity)
+                .startArticleListActivity(sourceTitleListViewModel.getSubSourceId(position))
         }
     }
 }
