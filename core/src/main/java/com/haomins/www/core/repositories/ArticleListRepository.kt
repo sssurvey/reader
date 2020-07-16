@@ -6,9 +6,9 @@ import com.haomins.www.core.data.SharedPreferenceKey
 import com.haomins.www.core.data.entities.ArticleEntity
 import com.haomins.www.core.data.models.article.ArticleResponseModel
 import com.haomins.www.core.data.models.article.ItemRefListResponseModel
+import com.haomins.www.core.policy.RxSchedulingPolicy
 import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.service.TheOldReaderService
-import com.haomins.www.core.util.defaultSchedulingPolicy
 import com.haomins.www.core.util.getString
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -20,7 +20,8 @@ import javax.inject.Singleton
 class ArticleListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val roomService: RoomService,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
+    private val rxSchedulingPolicy: RxSchedulingPolicy
 ) {
 
     companion object {
@@ -35,47 +36,55 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun loadAllArticleItemRefs(): Observable<List<ArticleEntity>> {
-        return theOldReaderService
-            .loadAllArticles(headerAuthValue = headerAuthValue)
-            .doOnError(::onLoadError)
-            .flatMapObservable { loadIndividualArticleInformation(it) }
-            .onErrorReturn { roomService.articleDao().getAll() }
-            .flatMap { roomService.articleDao().getAll() }
-            .debounce(DEFAULT_DEBOUNCE_TIME_IN_MILLISECOND, TimeUnit.MILLISECONDS)
-            .defaultSchedulingPolicy()
+        with(rxSchedulingPolicy) {
+            return theOldReaderService
+                .loadAllArticles(headerAuthValue = headerAuthValue)
+                .doOnError(::onLoadError)
+                .flatMapObservable { loadIndividualArticleInformation(it) }
+                .onErrorReturn { roomService.articleDao().getAll() }
+                .flatMap { roomService.articleDao().getAll() }
+                .debounce(DEFAULT_DEBOUNCE_TIME_IN_MILLISECOND, TimeUnit.MILLISECONDS)
+                .defaultSchedulingPolicy()
+        }
     }
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
-        return theOldReaderService
-            .loadArticleListByFeed(headerAuthValue = headerAuthValue, feedId = feedId)
-            .doOnError(::onLoadError)
-            .flatMapObservable { loadIndividualArticleInformation(it) }
-            .onErrorReturn { roomService.articleDao().selectAllArticleByFeedId(feedId) }
-            .flatMap { roomService.articleDao().selectAllArticleByFeedId(feedId) }
-            .debounce(DEFAULT_DEBOUNCE_TIME_IN_MILLISECOND, TimeUnit.MILLISECONDS)
-            .defaultSchedulingPolicy()
+        with(rxSchedulingPolicy) {
+            return theOldReaderService
+                .loadArticleListByFeed(headerAuthValue = headerAuthValue, feedId = feedId)
+                .doOnError(::onLoadError)
+                .flatMapObservable { loadIndividualArticleInformation(it) }
+                .onErrorReturn { roomService.articleDao().selectAllArticleByFeedId(feedId) }
+                .flatMap { roomService.articleDao().selectAllArticleByFeedId(feedId) }
+                .debounce(DEFAULT_DEBOUNCE_TIME_IN_MILLISECOND, TimeUnit.MILLISECONDS)
+                .defaultSchedulingPolicy()
+        }
     }
 
     fun continueLoadAllArticleItemRefs(): Observable<Unit> {
-        return theOldReaderService
-            .loadAllArticles(headerAuthValue = headerAuthValue, continueLoad = continueId)
-            .doOnError(::onLoadError)
-            .doOnSuccess { continueId = it.continuation }
-            .flatMapObservable { loadIndividualArticleInformation(it) }
-            .defaultSchedulingPolicy()
+        with(rxSchedulingPolicy) {
+            return theOldReaderService
+                .loadAllArticles(headerAuthValue = headerAuthValue, continueLoad = continueId)
+                .doOnError(::onLoadError)
+                .doOnSuccess { continueId = it.continuation }
+                .flatMapObservable { loadIndividualArticleInformation(it) }
+                .defaultSchedulingPolicy()
+        }
     }
 
     fun continueLoadArticleItemRefs(feedId: String): Observable<Unit> {
-        return theOldReaderService
-            .loadArticleListByFeed(
-                headerAuthValue = headerAuthValue,
-                feedId = feedId,
-                continueLoad = continueId
-            )
-            .doOnError(::onLoadError)
-            .doOnSuccess { continueId = it.continuation }
-            .flatMapObservable { loadIndividualArticleInformation(it) }
-            .defaultSchedulingPolicy()
+        with(rxSchedulingPolicy) {
+            return theOldReaderService
+                .loadArticleListByFeed(
+                    headerAuthValue = headerAuthValue,
+                    feedId = feedId,
+                    continueLoad = continueId
+                )
+                .doOnError(::onLoadError)
+                .doOnSuccess { continueId = it.continuation }
+                .flatMapObservable { loadIndividualArticleInformation(it) }
+                .defaultSchedulingPolicy()
+        }
     }
 
     private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel)

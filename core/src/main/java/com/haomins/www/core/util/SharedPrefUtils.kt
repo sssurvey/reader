@@ -8,7 +8,7 @@ fun SharedPreferences.getString(key: SharedPreferenceKey): String {
 }
 
 fun SharedPreferences.getBoolean(key: SharedPreferenceKey): Boolean {
-    return this.getBoolean(key.string, false)!!
+    return this.getBoolean(key.string, false)
 }
 
 fun SharedPreferences.putValue(key: SharedPreferenceKey, value: String) {

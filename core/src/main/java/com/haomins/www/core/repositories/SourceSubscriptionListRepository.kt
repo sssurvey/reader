@@ -6,10 +6,10 @@ import com.haomins.www.core.data.SharedPreferenceKey
 import com.haomins.www.core.data.entities.SubscriptionEntity
 import com.haomins.www.core.data.models.subscription.SubscriptionItemModel
 import com.haomins.www.core.data.models.subscription.SubscriptionSourceListResponseModel
+import com.haomins.www.core.policy.RxSchedulingPolicy
 import com.haomins.www.core.service.GlideService
 import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.service.TheOldReaderService
-import com.haomins.www.core.util.defaultSchedulingPolicy
 import com.haomins.www.core.util.getString
 import io.reactivex.Single
 import java.net.URL
@@ -21,13 +21,16 @@ class SourceSubscriptionListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val roomService: RoomService,
     private val glideService: GlideService,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
+    private val rxSchedulingPolicy: RxSchedulingPolicy
 ) {
 
     fun loadSubList(): Single<SubscriptionSourceListResponseModel> {
-        return theOldReaderService.loadSubscriptionSourceList(
-            headerAuthValue = loadHeaderAuthValue()
-        ).defaultSchedulingPolicy()
+        with(rxSchedulingPolicy) {
+            return theOldReaderService.loadSubscriptionSourceList(
+                headerAuthValue = loadHeaderAuthValue()
+            ).defaultSchedulingPolicy()
+        }
     }
 
     fun loadIconImage(imageView: ImageView, url: URL) {
