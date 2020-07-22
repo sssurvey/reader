@@ -6,7 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SchedulingPolicy @Inject constructor() : RxSchedulingPolicy {
+class DefaultSchedulingPolicy @Inject constructor() : RxSchedulingPolicy {
 
     override fun <T> Observable<T>.defaultSchedulingPolicy(): Observable<T> {
         return this

@@ -65,7 +65,8 @@ ext {
     ]
 
     coreTestImplementation = [
-            'junit:junit:4.12'
+            'junit:junit:4.12',
+            'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
     ]
 
     coreAndroidTestImplementation = [

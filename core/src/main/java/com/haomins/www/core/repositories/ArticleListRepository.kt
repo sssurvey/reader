@@ -21,7 +21,7 @@ class ArticleListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val roomService: RoomService,
     private val sharedPreferences: SharedPreferences,
-    private val rxSchedulingPolicy: RxSchedulingPolicy
+    private val defaultSchedulingPolicy: RxSchedulingPolicy
 ) {
 
     companion object {
@@ -36,7 +36,7 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun loadAllArticleItemRefs(): Observable<List<ArticleEntity>> {
-        with(rxSchedulingPolicy) {
+        with(defaultSchedulingPolicy) {
             return theOldReaderService
                 .loadAllArticles(headerAuthValue = headerAuthValue)
                 .doOnError(::onLoadError)
@@ -49,7 +49,7 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
-        with(rxSchedulingPolicy) {
+        with(defaultSchedulingPolicy) {
             return theOldReaderService
                 .loadArticleListByFeed(headerAuthValue = headerAuthValue, feedId = feedId)
                 .doOnError(::onLoadError)
@@ -62,7 +62,7 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun continueLoadAllArticleItemRefs(): Observable<Unit> {
-        with(rxSchedulingPolicy) {
+        with(defaultSchedulingPolicy) {
             return theOldReaderService
                 .loadAllArticles(headerAuthValue = headerAuthValue, continueLoad = continueId)
                 .doOnError(::onLoadError)
@@ -73,7 +73,7 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun continueLoadArticleItemRefs(feedId: String): Observable<Unit> {
-        with(rxSchedulingPolicy) {
+        with(defaultSchedulingPolicy) {
             return theOldReaderService
                 .loadArticleListByFeed(
                     headerAuthValue = headerAuthValue,
