@@ -3,7 +3,7 @@ package com.haomins.www.core.repositories
 import android.content.SharedPreferences
 import com.haomins.www.core.data.SharedPreferenceKey
 import com.haomins.www.core.data.models.subscription.AddSubscriptionResponseModel
-import com.haomins.www.core.policy.RxSchedulingPolicy
+import com.haomins.www.core.strategies.RxSchedulingStrategy
 import com.haomins.www.core.service.TheOldReaderService
 import com.haomins.www.core.util.getString
 import io.reactivex.Single
@@ -14,11 +14,11 @@ import javax.inject.Singleton
 class AddSourceRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val sharedPreferences: SharedPreferences,
-    private val defaultSchedulingPolicy: RxSchedulingPolicy
+    private val defaultSchedulingStrategy: RxSchedulingStrategy
 ) {
 
     fun addSource(source: String): Single<AddSubscriptionResponseModel> {
-        with (defaultSchedulingPolicy) {
+        with (defaultSchedulingStrategy) {
             return theOldReaderService.addSubscription(
                 headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
                         + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY)),

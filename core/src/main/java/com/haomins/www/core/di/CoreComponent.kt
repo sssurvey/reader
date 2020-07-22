@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.haomins.www.core.di.module.DataModule
 import com.haomins.www.core.di.module.PreferenceModule
 import com.haomins.www.core.di.module.RxModule
-import com.haomins.www.core.policy.RxSchedulingPolicy
+import com.haomins.www.core.strategies.RxSchedulingStrategy
 import com.haomins.www.core.service.TheOldReaderService
 import dagger.BindsInstance
 import dagger.Component
@@ -21,7 +21,7 @@ interface CoreComponent {
 
     fun provideTheOldReaderService() : TheOldReaderService
 
-    fun provideRxSchedulingPolicy() : RxSchedulingPolicy
+    fun provideRxSchedulingPolicy() : RxSchedulingStrategy
 
     fun provideApplication() : Application
 

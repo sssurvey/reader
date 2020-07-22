@@ -1,6 +1,6 @@
 package com.haomins.www.core
 
-import com.haomins.www.core.policy.RxSchedulingPolicy
+import com.haomins.www.core.strategies.RxSchedulingStrategy
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -14,10 +14,10 @@ import io.reactivex.Single
  * @param subscribeOnScheduler
  * @param observeOnScheduler default same scheduler as subscribeOnScheduler if no scheduler is provided
  */
-class TestSchedulingPolicy(
+class TestSchedulingStrategy(
     val subscribeOnScheduler: Scheduler,
     val observeOnScheduler: Scheduler = subscribeOnScheduler
-) : RxSchedulingPolicy {
+) : RxSchedulingStrategy {
 
     override fun <T> Observable<T>.defaultSchedulingPolicy(): Observable<T> {
         return this.subscribeOn(subscribeOnScheduler).observeOn(observeOnScheduler)

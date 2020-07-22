@@ -1,6 +1,6 @@
 package com.haomins.www.core.repositories
 
-import com.haomins.www.core.TestSchedulingPolicy
+import com.haomins.www.core.TestSchedulingStrategy
 import com.haomins.www.core.data.models.user.UserAuthResponseModel
 import com.haomins.www.core.service.TheOldReaderService
 import io.reactivex.Single
@@ -22,7 +22,8 @@ class LoginRepositoryTest {
     lateinit var mockTheOldReaderService: TheOldReaderService
 
     private val testScheduler = TestScheduler()
-    private val testSchedulingPolicy = TestSchedulingPolicy(subscribeOnScheduler = testScheduler)
+    private val testSchedulingStrategy =
+        TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
     private lateinit var loginRepository: LoginRepository
 
     @Before
@@ -30,7 +31,7 @@ class LoginRepositoryTest {
         MockitoAnnotations.initMocks(this)
         loginRepository = LoginRepository(
             theOldReaderService = mockTheOldReaderService,
-            defaultSchedulingPolicy = testSchedulingPolicy
+            defaultSchedulingStrategy = testSchedulingStrategy
         )
         mockHelper()
     }

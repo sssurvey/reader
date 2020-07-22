@@ -1,7 +1,7 @@
 package com.haomins.www.core.di.module
 
-import com.haomins.www.core.policy.RxSchedulingPolicy
-import com.haomins.www.core.policy.DefaultSchedulingPolicy
+import com.haomins.www.core.strategies.RxSchedulingStrategy
+import com.haomins.www.core.strategies.DefaultSchedulingStrategy
 import dagger.Binds
 import dagger.Module
 
@@ -9,6 +9,6 @@ import dagger.Module
 interface RxModule {
 
     @Binds
-    fun provideRxSchedulingPolicy(defaultSchedulingPolicy: DefaultSchedulingPolicy): RxSchedulingPolicy
+    fun provideRxSchedulingPolicy(defaultSchedulingPolicy: DefaultSchedulingStrategy): RxSchedulingStrategy
 
 }

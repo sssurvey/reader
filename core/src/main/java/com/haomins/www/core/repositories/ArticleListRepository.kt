@@ -6,7 +6,7 @@ import com.haomins.www.core.data.SharedPreferenceKey
 import com.haomins.www.core.data.entities.ArticleEntity
 import com.haomins.www.core.data.models.article.ArticleResponseModel
 import com.haomins.www.core.data.models.article.ItemRefListResponseModel
-import com.haomins.www.core.policy.RxSchedulingPolicy
+import com.haomins.www.core.strategies.RxSchedulingStrategy
 import com.haomins.www.core.service.RoomService
 import com.haomins.www.core.service.TheOldReaderService
 import com.haomins.www.core.util.getString
@@ -21,7 +21,7 @@ class ArticleListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val roomService: RoomService,
     private val sharedPreferences: SharedPreferences,
-    private val defaultSchedulingPolicy: RxSchedulingPolicy
+    private val defaultSchedulingStrategy: RxSchedulingStrategy
 ) {
 
     companion object {
@@ -36,7 +36,7 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun loadAllArticleItemRefs(): Observable<List<ArticleEntity>> {
-        with(defaultSchedulingPolicy) {
+        with(defaultSchedulingStrategy) {
             return theOldReaderService
                 .loadAllArticles(headerAuthValue = headerAuthValue)
                 .doOnError(::onLoadError)
@@ -49,7 +49,7 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
-        with(defaultSchedulingPolicy) {
+        with(defaultSchedulingStrategy) {
             return theOldReaderService
                 .loadArticleListByFeed(headerAuthValue = headerAuthValue, feedId = feedId)
                 .doOnError(::onLoadError)
@@ -62,7 +62,7 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun continueLoadAllArticleItemRefs(): Observable<Unit> {
-        with(defaultSchedulingPolicy) {
+        with(defaultSchedulingStrategy) {
             return theOldReaderService
                 .loadAllArticles(headerAuthValue = headerAuthValue, continueLoad = continueId)
                 .doOnError(::onLoadError)
@@ -73,7 +73,7 @@ class ArticleListRepository @Inject constructor(
     }
 
     fun continueLoadArticleItemRefs(feedId: String): Observable<Unit> {
-        with(defaultSchedulingPolicy) {
+        with(defaultSchedulingStrategy) {
             return theOldReaderService
                 .loadArticleListByFeed(
                     headerAuthValue = headerAuthValue,
