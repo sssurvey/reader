@@ -22,11 +22,11 @@ class SourceSubscriptionListRepository @Inject constructor(
     private val roomService: RoomService,
     private val glideService: GlideService,
     private val sharedPreferences: SharedPreferences,
-    private val rxSchedulingPolicy: RxSchedulingPolicy
+    private val defaultSchedulingPolicy: RxSchedulingPolicy
 ) {
 
     fun loadSubList(): Single<SubscriptionSourceListResponseModel> {
-        with(rxSchedulingPolicy) {
+        with(defaultSchedulingPolicy) {
             return theOldReaderService.loadSubscriptionSourceList(
                 headerAuthValue = loadHeaderAuthValue()
             ).defaultSchedulingPolicy()

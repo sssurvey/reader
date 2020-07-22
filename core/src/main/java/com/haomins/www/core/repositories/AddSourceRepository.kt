@@ -14,11 +14,11 @@ import javax.inject.Singleton
 class AddSourceRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val sharedPreferences: SharedPreferences,
-    private val rxSchedulingPolicy: RxSchedulingPolicy
+    private val defaultSchedulingPolicy: RxSchedulingPolicy
 ) {
 
     fun addSource(source: String): Single<AddSubscriptionResponseModel> {
-        with (rxSchedulingPolicy) {
+        with (defaultSchedulingPolicy) {
             return theOldReaderService.addSubscription(
                 headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
                         + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY)),
