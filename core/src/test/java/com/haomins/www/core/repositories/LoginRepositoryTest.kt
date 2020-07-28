@@ -18,7 +18,8 @@ import java.util.concurrent.TimeUnit
 
 class LoginRepositoryTest {
 
-    @Mock lateinit var mockTheOldReaderService: TheOldReaderService
+    @Mock
+    lateinit var mockTheOldReaderService: TheOldReaderService
 
     private val testScheduler = TestScheduler()
     private val testSchedulingStrategy =
