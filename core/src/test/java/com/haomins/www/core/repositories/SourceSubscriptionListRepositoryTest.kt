@@ -22,6 +22,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.times
 import org.mockito.MockitoAnnotations
 import java.net.URL
 import java.util.*
@@ -91,7 +92,7 @@ class SourceSubscriptionListRepositoryTest {
     }
 
     @Test
-    fun retrieveSubListFromDB() {
+    fun `test retrieveSubListFromDB() success`() {
         val observer = TestObserver<List<SubscriptionEntity>>()
         sourceSubscriptionListRepository.retrieveSubListFromDB().subscribe(observer)
         observer.assertSubscribed()
@@ -102,8 +103,31 @@ class SourceSubscriptionListRepositoryTest {
     }
 
     @Test
-    fun saveSubListToDB() {
-        //TODO
+    fun `test saveSubListToDB() success with clear table == true`() {
+        val observer = TestObserver<Unit>()
+        sourceSubscriptionListRepository.saveSubListToDB(
+            subscriptionSourceListResponseModel = generateSourceListResponse(),
+            clearOldTable = true
+        ).subscribe(observer)
+        observer.assertSubscribed()
+        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
+        verify(mockSubscriptionDao).clearTable()
+        verify(mockSubscriptionDao).insertAll(com.nhaarman.mockitokotlin2.any())
+        observer.assertComplete()
+    }
+
+    @Test
+    fun `test saveSubListToDB() success with clear table == false`() {
+        val observer = TestObserver<Unit>()
+        sourceSubscriptionListRepository.saveSubListToDB(
+            subscriptionSourceListResponseModel = generateSourceListResponse(),
+            clearOldTable = false
+        ).subscribe(observer)
+        observer.assertSubscribed()
+        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
+        verify(mockSubscriptionDao, times(0)).clearTable()
+        verify(mockSubscriptionDao).insertAll(com.nhaarman.mockitokotlin2.any())
+        observer.assertComplete()
     }
 
     private fun mockHelper() {
