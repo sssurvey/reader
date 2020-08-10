@@ -8,13 +8,13 @@ import javax.inject.Inject
 
 class DefaultSchedulingStrategy @Inject constructor() : RxSchedulingStrategy {
 
-    override fun <T> Observable<T>.defaultSchedulingPolicy(): Observable<T> {
+    override fun <T> Observable<T>.useDefaultSchedulingPolicy(): Observable<T> {
         return this
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun <T> Single<T>.defaultSchedulingPolicy(): Single<T> {
+    override fun <T> Single<T>.useDefaultSchedulingPolicy(): Single<T> {
         return this
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())

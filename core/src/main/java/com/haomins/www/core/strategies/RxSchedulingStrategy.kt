@@ -5,8 +5,8 @@ import io.reactivex.Single
 
 interface RxSchedulingStrategy {
 
-    fun <T> Observable<T>.defaultSchedulingPolicy(): Observable<T>
+    fun <T> Observable<T>.useDefaultSchedulingPolicy(): Observable<T>
 
-    fun <T> Single<T>.defaultSchedulingPolicy(): Single<T>
+    fun <T> Single<T>.useDefaultSchedulingPolicy(): Single<T>
 
 }

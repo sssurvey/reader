@@ -18,7 +18,7 @@ class ArticleDetailRepository @Inject constructor(
             return roomService
                 .articleDao()
                 .selectArticleByItemId(itemId)
-                .defaultSchedulingPolicy()
+                .useDefaultSchedulingPolicy()
         }
     }
 

@@ -19,11 +19,11 @@ class TestSchedulingStrategy(
     val observeOnScheduler: Scheduler = subscribeOnScheduler
 ) : RxSchedulingStrategy {
 
-    override fun <T> Observable<T>.defaultSchedulingPolicy(): Observable<T> {
+    override fun <T> Observable<T>.useDefaultSchedulingPolicy(): Observable<T> {
         return this.subscribeOn(subscribeOnScheduler).observeOn(observeOnScheduler)
     }
 
-    override fun <T> Single<T>.defaultSchedulingPolicy(): Single<T> {
+    override fun <T> Single<T>.useDefaultSchedulingPolicy(): Single<T> {
         return this.subscribeOn(subscribeOnScheduler).observeOn(observeOnScheduler)
     }
 

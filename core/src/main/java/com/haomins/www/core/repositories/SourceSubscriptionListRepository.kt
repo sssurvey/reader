@@ -29,7 +29,7 @@ class SourceSubscriptionListRepository @Inject constructor(
         with(defaultSchedulingStrategy) {
             return theOldReaderService.loadSubscriptionSourceList(
                 headerAuthValue = loadHeaderAuthValue()
-            ).defaultSchedulingPolicy()
+            ).useDefaultSchedulingPolicy()
         }
     }
 

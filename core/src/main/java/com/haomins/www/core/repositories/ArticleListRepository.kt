@@ -44,7 +44,7 @@ class ArticleListRepository @Inject constructor(
                 .onErrorReturn { roomService.articleDao().getAll() }
                 .flatMap { roomService.articleDao().getAll() }
                 .debounce(DEFAULT_DEBOUNCE_TIME_IN_MILLISECOND, TimeUnit.MILLISECONDS)
-                .defaultSchedulingPolicy()
+                .useDefaultSchedulingPolicy()
         }
     }
 
@@ -57,7 +57,7 @@ class ArticleListRepository @Inject constructor(
                 .onErrorReturn { roomService.articleDao().selectAllArticleByFeedId(feedId) }
                 .flatMap { roomService.articleDao().selectAllArticleByFeedId(feedId) }
                 .debounce(DEFAULT_DEBOUNCE_TIME_IN_MILLISECOND, TimeUnit.MILLISECONDS)
-                .defaultSchedulingPolicy()
+                .useDefaultSchedulingPolicy()
         }
     }
 
@@ -68,7 +68,7 @@ class ArticleListRepository @Inject constructor(
                 .doOnError(::onLoadError)
                 .doOnSuccess { continueId = it.continuation }
                 .flatMapObservable { loadIndividualArticleInformation(it) }
-                .defaultSchedulingPolicy()
+                .useDefaultSchedulingPolicy()
         }
     }
 
@@ -83,7 +83,7 @@ class ArticleListRepository @Inject constructor(
                 .doOnError(::onLoadError)
                 .doOnSuccess { continueId = it.continuation }
                 .flatMapObservable { loadIndividualArticleInformation(it) }
-                .defaultSchedulingPolicy()
+                .useDefaultSchedulingPolicy()
         }
     }
 

@@ -17,7 +17,7 @@ class LoginRepository @Inject constructor(
         with(defaultSchedulingStrategy) {
             return theOldReaderService
                 .loginUser(userEmail = user.first, userPassword = user.second)
-                .defaultSchedulingPolicy()
+                .useDefaultSchedulingPolicy()
 
         }
     }

@@ -23,7 +23,7 @@ class AddSourceRepository @Inject constructor(
                 headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
                         + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY)),
                 quickAddSubscription = source
-            ).defaultSchedulingPolicy()
+            ).useDefaultSchedulingPolicy()
         }
     }
 
