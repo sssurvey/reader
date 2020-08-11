@@ -37,7 +37,27 @@ class MockTheOldReaderService(
         continueLoad: String,
         output: String
     ): Single<ItemRefListResponseModel> {
-        TODO("Not yet implemented")
+
+        fun mockReturn(): ItemRefListResponseModel {
+            return ItemRefListResponseModel(
+                itemRefs = mutableListOf<RefItemModel>().also {
+                    for (index in 0 .. 9) {
+                        it.add(
+                            RefItemModel(
+                                "test_id",
+                                 mutableListOf("100$it", "100$it", "100$it"),
+                                "100100100"
+                            )
+                        )
+                    }
+                },
+                continuation = "test_continuation"
+            )
+        }
+
+        return Single
+            .timer(1000, TimeUnit.MILLISECONDS, testSchedulingStrategy.subscribeOnScheduler)
+            .flatMap{ Single.fromCallable(::mockReturn)}
     }
 
     override fun loadAllArticles(

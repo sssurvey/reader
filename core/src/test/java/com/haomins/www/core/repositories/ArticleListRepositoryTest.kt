@@ -67,6 +67,9 @@ class ArticleListRepositoryTest {
 
     @Test
     fun loadArticleItemRefs() {
+        val testObserver = TestObserver<List<ArticleEntity>>()
+        articleListRepository.loadArticleItemRefs("test_feed_id").subscribe(testObserver)
+        testObserver.assertSubscribed()
     }
 
     @Test
