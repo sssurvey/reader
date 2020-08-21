@@ -3,9 +3,7 @@ package com.haomins.reader.viewModels
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.utils.DarkModeManager
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class SettingsViewModel @Inject constructor(
     private val darkModeManager: DarkModeManager
 ): ViewModel() {

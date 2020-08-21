@@ -1,5 +1,6 @@
 package com.haomins.reader.viewModels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.utils.DarkModeManager
@@ -15,6 +16,10 @@ class ArticleDetailViewModel @Inject constructor(
     private val dateUtils: DateUtils,
     private val darkModeManager: DarkModeManager
 ) : ViewModel() {
+
+    companion object {
+        const val TAG = "ArticleDetailViewModel"
+    }
 
     val contentDataForDisplay by lazy {
         MutableLiveData<ArticleDetailFragment.ArticleDetailUiItem>()
@@ -34,7 +39,7 @@ class ArticleDetailViewModel @Inject constructor(
                 }
 
                 override fun onError(e: Throwable) {
-
+                    Log.d(TAG, "onError :: ${e.printStackTrace()}")
                 }
             }
         )
