@@ -85,10 +85,32 @@ class ArticleListRepositoryTest {
 
     @Test
     fun continueLoadAllArticleItemRefs() {
+        val testObserver = TestObserver<Unit>()
+        articleListRepository.continueLoadAllArticleItemRefs().subscribe(testObserver)
+        testObserver.assertSubscribed()
+        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockTheOldReaderService)
+            .loadAllArticles(any(), any(), any(), any(), any())
+        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockTheOldReaderService, times(10))
+            .loadArticleDetailsByRefId(any(), any(), any())
+        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockRoomService, times(10)).articleDao()
     }
 
     @Test
     fun continueLoadArticleItemRefs() {
+        val testObserver = TestObserver<Unit>()
+        articleListRepository.continueLoadArticleItemRefs("test_feed_id").subscribe(testObserver)
+        testObserver.assertSubscribed()
+        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockTheOldReaderService)
+            .loadArticleListByFeed(any(), any(), any(), any(), any())
+        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockTheOldReaderService, times(10))
+            .loadArticleDetailsByRefId(any(), any(), any())
+        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockRoomService, times(10)).articleDao()
     }
 
     private fun mockHelper() {
