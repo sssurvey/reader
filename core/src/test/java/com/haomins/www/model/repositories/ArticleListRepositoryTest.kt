@@ -24,6 +24,14 @@ import java.util.concurrent.TimeUnit
 
 class ArticleListRepositoryTest {
 
+    private val testScheduler = TestScheduler()
+    private val testSchedulingStrategy =
+        TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
+    private lateinit var articleListRepository: ArticleListRepository
+
+    @Spy
+    val mockTheOldReaderService = MockTheOldReaderService(testSchedulingStrategy)
+
     @Mock
     lateinit var mockRoomService: RoomService
 
@@ -32,14 +40,6 @@ class ArticleListRepositoryTest {
 
     @Mock
     lateinit var mockSharedPreferences: SharedPreferences
-
-    private val testScheduler = TestScheduler()
-    private val testSchedulingStrategy =
-        TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
-    private lateinit var articleListRepository: ArticleListRepository
-
-    @Spy
-    val mockTheOldReaderService = MockTheOldReaderService(testSchedulingStrategy)
 
     @Before
     fun setUp() {
