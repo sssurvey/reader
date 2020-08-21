@@ -3,9 +3,9 @@ package com.haomins.reader.viewModels
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.www.core.data.entities.SubscriptionEntity
-import com.haomins.www.core.repositories.SourceSubscriptionListRepository
-import com.haomins.www.core.service.TheOldReaderService
+import com.haomins.www.model.data.entities.SubscriptionEntity
+import com.haomins.www.model.repositories.SourceSubscriptionListRepository
+import com.haomins.www.model.service.TheOldReaderService
 import io.reactivex.Observable
 import java.net.URL
 import javax.inject.Inject

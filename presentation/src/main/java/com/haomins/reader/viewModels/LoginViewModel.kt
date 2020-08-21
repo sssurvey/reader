@@ -4,10 +4,10 @@ import android.content.SharedPreferences
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.www.core.data.SharedPreferenceKey
-import com.haomins.www.core.repositories.LoginRepository
-import com.haomins.www.core.util.putValue
-import com.haomins.www.core.util.removeValue
+import com.haomins.www.model.data.SharedPreferenceKey
+import com.haomins.www.model.repositories.LoginRepository
+import com.haomins.www.model.util.putValue
+import com.haomins.www.model.util.removeValue
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
