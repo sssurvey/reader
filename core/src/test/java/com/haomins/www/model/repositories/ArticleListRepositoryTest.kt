@@ -19,6 +19,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.times
 import org.mockito.MockitoAnnotations
+import org.mockito.Spy
 import java.util.concurrent.TimeUnit
 
 class ArticleListRepositoryTest {
@@ -33,9 +34,12 @@ class ArticleListRepositoryTest {
     lateinit var mockSharedPreferences: SharedPreferences
 
     private val testScheduler = TestScheduler()
-    private val testSchedulingStrategy = TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
-    private val mockTheOldReaderService = MockTheOldReaderService(testSchedulingStrategy)
+    private val testSchedulingStrategy =
+        TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
     private lateinit var articleListRepository: ArticleListRepository
+
+    @Spy
+    val mockTheOldReaderService = MockTheOldReaderService(testSchedulingStrategy)
 
     @Before
     fun setUp() {
@@ -54,7 +58,7 @@ class ArticleListRepositoryTest {
     }
 
     @Test
-    fun loadAllArticleItemRefs() {
+    fun `test loadAllArticleItemRefs() order verification`() {
         val testObserver = TestObserver<List<ArticleEntity>>()
         articleListRepository.loadAllArticleItemRefs().subscribe(testObserver)
         testObserver.assertSubscribed()
@@ -66,10 +70,17 @@ class ArticleListRepositoryTest {
     }
 
     @Test
-    fun loadArticleItemRefs() {
+    fun `test loadArticleItemRefs() order verification`() {
         val testObserver = TestObserver<List<ArticleEntity>>()
         articleListRepository.loadArticleItemRefs("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
+        verify(mockTheOldReaderService)
+            .loadArticleListByFeed(any(), any(), any(), any(), any())
+        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockTheOldReaderService, times(10))
+            .loadArticleDetailsByRefId(any(), any(), any())
+        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockRoomService, times(2)).articleDao()
     }
 
     @Test
@@ -81,44 +92,46 @@ class ArticleListRepositoryTest {
     }
 
     private fun mockHelper() {
-        `when`(mockSharedPreferences
-            .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, ""))
+        `when`(
+            mockSharedPreferences
+                .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, "")
+        )
             .thenReturn("test_auth_code")
         `when`(mockRoomService.articleDao())
             .thenReturn(mockArticleDao)
         `when`(mockArticleDao.getAll())
             .thenReturn(
-                        Observable.just(
-                            mutableListOf(
-                                ArticleEntity(
-                                    "1",
-                                    "2",
-                                    "test_title",
-                                    1,
-                                    1,
-                                    "test_author",
-                                    "test_content"
-                                ),
-                                ArticleEntity(
-                                    "2",
-                                    "2",
-                                    "test_title",
-                                    1,
-                                    1,
-                                    "test_author",
-                                    "test_content"
-                                ),
-                                ArticleEntity(
-                                    "3",
-                                    "2",
-                                    "test_title",
-                                    1,
-                                    1,
-                                    "test_author",
-                                    "test_content"
-                                )
-                            )
+                Observable.just(
+                    mutableListOf(
+                        ArticleEntity(
+                            "1",
+                            "2",
+                            "test_title",
+                            1,
+                            1,
+                            "test_author",
+                            "test_content"
+                        ),
+                        ArticleEntity(
+                            "2",
+                            "2",
+                            "test_title",
+                            1,
+                            1,
+                            "test_author",
+                            "test_content"
+                        ),
+                        ArticleEntity(
+                            "3",
+                            "2",
+                            "test_title",
+                            1,
+                            1,
+                            "test_author",
+                            "test_content"
                         )
+                    )
+                )
             )
     }
 }
