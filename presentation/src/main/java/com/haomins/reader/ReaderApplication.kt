@@ -4,7 +4,7 @@ import android.app.Application
 import com.haomins.reader.di.AppComponent
 import com.haomins.reader.di.DaggerAppComponent
 import com.haomins.reader.utils.DarkModeManager
-import com.haomins.www.core.di.DaggerCoreComponent
+import com.haomins.www.model.di.DaggerCoreComponent
 import javax.inject.Inject
 
 class ReaderApplication : Application() {

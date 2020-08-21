@@ -18,7 +18,7 @@ import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.activities.ArticleListActivity.Mode
 import com.haomins.reader.viewModels.ArticleListViewModel
-import com.haomins.www.core.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
+import com.haomins.www.model.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
