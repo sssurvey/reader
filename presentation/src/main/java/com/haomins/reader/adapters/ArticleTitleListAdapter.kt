@@ -8,19 +8,19 @@ import com.haomins.reader.R
 import com.haomins.reader.view.fragments.ArticleListFragment
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 
-interface ArticleTitleListOnClickListener {
-
-    fun onArticleAtPositionClicked(position: Int)
-
-    fun onLoadMoreArticlesBasedOnPosition(position: Int)
-
-}
-
 class ArticleTitleListAdapter(
     private val articleTitleListUiItems: List<ArticleListFragment.ArticleTitleListUiItem>,
     private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
 ) :
     RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
+
+    interface ArticleTitleListOnClickListener {
+
+        fun onArticleAtPositionClicked(position: Int)
+
+        fun onLoadMoreArticlesBasedOnPosition(position: Int)
+
+    }
 
     inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
 

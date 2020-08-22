@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.adapters.ArticleTitleListAdapter
-import com.haomins.reader.adapters.ArticleTitleListOnClickListener
 import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.activities.ArticleListActivity.Mode
@@ -24,7 +23,7 @@ import com.haomins.www.model.service.TheOldReaderService.Companion.DEFAULT_ARTIC
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
 
-class ArticleListFragment : Fragment(), ArticleTitleListOnClickListener {
+class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleListOnClickListener {
 
     companion object {
         const val TAG = "ArticleListFragment"
