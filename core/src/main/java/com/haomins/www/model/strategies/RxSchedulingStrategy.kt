@@ -9,4 +9,6 @@ interface RxSchedulingStrategy {
 
     fun <T> Single<T>.useDefaultSchedulingPolicy(): Single<T>
 
+    fun <T> Single<T>.useIoThreadsOnly(): Single<T>
+
 }

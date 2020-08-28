@@ -27,4 +27,8 @@ class TestSchedulingStrategy(
         return this.subscribeOn(subscribeOnScheduler).observeOn(observeOnScheduler)
     }
 
+    override fun <T> Single<T>.useIoThreadsOnly(): Single<T> {
+        return this.subscribeOn(subscribeOnScheduler)
+    }
+
 }

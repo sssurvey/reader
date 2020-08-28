@@ -1,5 +1,6 @@
 package com.haomins.www.model.repositories
 
+import android.util.Log
 import com.haomins.www.model.data.entities.ArticleEntity
 import com.haomins.www.model.strategies.RxSchedulingStrategy
 import com.haomins.www.model.service.RoomService
@@ -13,12 +14,17 @@ class ArticleDetailRepository @Inject constructor(
     private val defaultSchedulingStrategy: RxSchedulingStrategy
 ) {
 
+    companion object {
+        const val TAG = "ArticleDetailRepository"
+    }
+
     fun loadArticleDetail(itemId: String): Single<ArticleEntity> {
         with(defaultSchedulingStrategy) {
             return roomService
                 .articleDao()
                 .selectArticleByItemId(itemId)
-                .useDefaultSchedulingPolicy()
+                .doOnError { Log.d(TAG, "onError :: ${it.printStackTrace()}") }
+                .useIoThreadsOnly()
         }
     }
 

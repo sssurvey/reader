@@ -9,9 +9,7 @@ import com.haomins.www.model.data.models.subscription.AddSubscriptionResponseMod
 import com.haomins.www.model.repositories.AddSourceRepository
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class AddSourceViewModel @Inject constructor(
     private val addSourceRepository: AddSourceRepository,
     private val application: Application

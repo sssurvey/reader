@@ -14,16 +14,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
+import com.haomins.reader.adapters.ArticleTitleListAdapter
 import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.activities.ArticleListActivity.Mode
 import com.haomins.reader.viewModels.ArticleListViewModel
 import com.haomins.www.model.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
-import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
 
-class ArticleListFragment : Fragment() {
+class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleListOnClickListener {
 
     companion object {
         const val TAG = "ArticleListFragment"
@@ -76,7 +76,8 @@ class ArticleListFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
+            .build().inject(this)
         super.onAttach(context)
     }
 
@@ -95,9 +96,32 @@ class ArticleListFragment : Fragment() {
         registerLiveDataObservers()
         article_title_recycler_view.apply {
             setHasFixedSize(true)
-            adapter = ArticleTitleListAdapter(articleTitleUiItems)
+            adapter = ArticleTitleListAdapter(
+                articleTitleUiItems,
+                this@ArticleListFragment
+            )
             layoutManager = recyclerLayoutManager
             addOnScrollListener(recyclerViewOnScrollListener)
+        }
+    }
+
+    override fun onArticleAtPositionClicked(position: Int) {
+        val itemIdList: List<String> = articleTitleUiItems.map { it._itemId }
+        activity?.let {
+            (it as ArticleListActivity).startArticleDetailActivity(
+                position,
+                itemIdList.toTypedArray()
+            )
+        }
+    }
+
+    override fun onLoadMoreArticlesBasedOnPosition(position: Int) {
+        if (position >= loadMoreArticleThreshold) {
+            when (currentMode) {
+                Mode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(feedId)
+                Mode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
+            }
+            loadMoreArticleThreshold += loadMoreArticleThreshold
         }
     }
 
@@ -115,7 +139,10 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun registerLiveDataObservers() {
-        articleListViewModel.articleTitleUiItemsList.observe(viewLifecycleOwner, articleTitleListUiItemObserver)
+        articleListViewModel.articleTitleUiItemsList.observe(
+            viewLifecycleOwner,
+            articleTitleListUiItemObserver
+        )
         articleListViewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
     }
 
@@ -133,57 +160,6 @@ class ArticleListFragment : Fragment() {
             Mode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(feedId)
             Mode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
         }
-    }
-
-    private fun loadMoreArticlesBasedOnPosition(position: Int) {
-        if (position >= loadMoreArticleThreshold) {
-            when (currentMode) {
-                Mode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(feedId)
-                Mode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
-            }
-            loadMoreArticleThreshold += loadMoreArticleThreshold
-        }
-    }
-
-    private fun articleTitleListRecyclerViewItemClickedAt(position: Int) {
-        val itemIdList: List<String> = articleTitleUiItems.map { it._itemId }
-        activity?.let {
-            (it as ArticleListActivity).startArticleDetailActivity(
-                position,
-                itemIdList.toTypedArray()
-            )
-        }
-    }
-
-    private inner class ArticleTitleListAdapter(private val articleTitleListUiItems: List<ArticleTitleListUiItem>) :
-        RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
-
-        inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-            val articleListItemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.article_title_recycler_view_item, parent, false)
-            return CustomViewHolder(articleListItemView)
-        }
-
-        override fun getItemCount(): Int {
-            return articleTitleListUiItems.size
-        }
-
-        override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-            holder.viewHolder.article_title_text_view.text = articleTitleListUiItems[position].title
-            holder.viewHolder.article_publish_time_text_view.text =
-                articleTitleListUiItems[position].postTime
-            setOnClick(holder, position)
-            loadMoreArticlesBasedOnPosition(position)
-        }
-
-        private fun setOnClick(holder: CustomViewHolder, position: Int) {
-            holder.viewHolder.setOnClickListener {
-                articleTitleListRecyclerViewItemClickedAt(position)
-            }
-        }
-
     }
 
 }
