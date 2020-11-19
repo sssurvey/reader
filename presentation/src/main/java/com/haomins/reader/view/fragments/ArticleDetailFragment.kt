@@ -84,7 +84,8 @@ class ArticleDetailFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
+            .build().inject(this)
         super.onAttach(context)
     }
 
@@ -143,7 +144,9 @@ class ArticleDetailFragment : Fragment() {
 
     private fun loadArticleId(bundle: Bundle?) {
         bundle?.let {
-            articleId = it.getString(ARTICLE_ITEM_ID)
+            it.getString(ARTICLE_ITEM_ID)?.let { id ->
+                articleId = id
+            }
         }
     }
 
