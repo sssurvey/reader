@@ -31,12 +31,14 @@ class ArticleDetailActivity : AppCompatActivity() {
     private fun initViewPager() {
         val currentPosition = intent.getIntExtra(ArticleListActivity.ARTICLE_ITEM_POSITION, -1)
         val articleIdArray = intent.getStringArrayExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
-        val adapter = ArticleDetailFragmentAdapter(
-            this,
-            articleIdArray
-        )
-        article_detail_view_pager.adapter = adapter
-        article_detail_view_pager.setCurrentItem(currentPosition, false)
+        articleIdArray?.let {
+            val adapter = ArticleDetailFragmentAdapter(
+                this,
+                it
+            )
+            article_detail_view_pager.adapter = adapter
+            article_detail_view_pager.setCurrentItem(currentPosition, false)
+        }
     }
 
     private inner class ArticleDetailFragmentAdapter(
