@@ -5,13 +5,11 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.R
-import com.haomins.www.core.data.models.subscription.AddSubscriptionResponseModel
-import com.haomins.www.core.repositories.AddSourceRepository
+import com.haomins.www.model.data.models.subscription.AddSubscriptionResponseModel
+import com.haomins.www.model.repositories.AddSourceRepository
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class AddSourceViewModel @Inject constructor(
     private val addSourceRepository: AddSourceRepository,
     private val application: Application

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.www.core.data.entities.ArticleEntity
-import com.haomins.www.core.repositories.ArticleListRepository
+import com.haomins.www.model.data.entities.ArticleEntity
+import com.haomins.www.model.repositories.ArticleListRepository
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -26,11 +26,11 @@ class ArticleListViewModel @Inject constructor(
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
         disposables.add(
-            articleListRepository.loadArticleItemRefs(feedId)
-                .distinctUntilChanged(List<ArticleEntity>::size)
+            articleListRepository
+                .loadArticleItemRefs(feedId)
                 .map(::mapEntitiesToUiItems)
-                .doOnNext(::onArticleLoaded)
-                .subscribe({},
+                .subscribe(
+                    { onArticleLoaded(it) },
                     { Log.d(TAG, "onError: ${it.printStackTrace()}") },
                     { Log.d(TAG, "onComplete: called") })
         )
@@ -39,24 +39,38 @@ class ArticleListViewModel @Inject constructor(
     fun loadAllArticles() {
         isLoading.postValue(true)
         disposables.add(
-            articleListRepository.loadAllArticleItemRefs()
-                .distinctUntilChanged(List<ArticleEntity>::size)
+            articleListRepository
+                .loadAllArticleItemRefs()
                 .map(::mapEntitiesToUiItems)
-                .doOnNext(::onArticleLoaded)
-                .subscribe({},
+                .subscribe(
+                    { onArticleLoaded(it) },
                     { Log.d(TAG, "onError: ${it.printStackTrace()}") },
                     { Log.d(TAG, "onComplete: called") })
         )
     }
 
     fun continueLoadAllArticles() {
-        isLoading.postValue(true)
-        articleListRepository.continueLoadAllArticleItemRefs { isLoading.postValue(false) }
+        disposables.add(
+            articleListRepository
+                .continueLoadAllArticleItemRefs()
+                .doOnSubscribe { isLoading.postValue(true) }
+                .subscribe(
+                    { isLoading.postValue(false) },
+                    { Log.d(TAG, "onError: ${it.printStackTrace()}") }
+                )
+        )
     }
 
     fun continueLoadArticles(feedId: String) {
-        isLoading.postValue(true)
-        articleListRepository.continueLoadArticleItemRefs(feedId) { isLoading.postValue(false) }
+        disposables.add(
+            articleListRepository
+                .continueLoadArticleItemRefs(feedId)
+                .doOnSubscribe { isLoading.postValue(true) }
+                .subscribe(
+                    { isLoading.postValue(false) },
+                    { Log.d(TAG, "onError: ${it.printStackTrace()}") }
+                )
+        )
     }
 
     override fun onCleared() {
