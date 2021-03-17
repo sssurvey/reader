@@ -32,7 +32,7 @@ ext {
             "com.google.dagger:dagger-compiler:$dagger_version",
     ]
 
-    coreDependencies = [
+    dataDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
             'com.google.code.gson:gson:2.8.5',
             "com.squareup.retrofit2:retrofit:$com_square_up_retrofit2_version",
@@ -49,7 +49,7 @@ ext {
             "androidx.room:room-rxjava2:$room_version",
     ]
 
-    coreKaptDependencies = [
+    dataKaptDependencies = [
             "com.google.dagger:dagger-compiler:$dagger_version",
             "androidx.room:room-compiler:$room_version",
             "com.github.bumptech.glide:compiler:$glide_version"
@@ -64,13 +64,13 @@ ext {
             'androidx.test.espresso:espresso-core:3.2.0'
     ]
 
-    coreTestImplementation = [
+    dataTestImplementation = [
             'junit:junit:4.12',
             'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0',
             'org.mockito:mockito-inline:2.13.0'
     ]
 
-    coreAndroidTestImplementation = [
+    dataAndroidTestImplementation = [
             'androidx.test.ext:junit:1.1.1',
             'androidx.test.espresso:espresso-core:3.2.0'
     ]

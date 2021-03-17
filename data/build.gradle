@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
@@ -7,15 +7,17 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 28
     buildToolsVersion "29.0.2"
+
     defaultConfig {
-        applicationId "com.haomins.reader2"
         minSdkVersion 26
-        targetSdkVersion 30
-        versionCode 9
-        versionName "0.2.9"
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     kotlinOptions {
@@ -24,25 +26,22 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
 }
 
 dependencies {
-
-    implementation project(':data')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation appDependencies
-    kapt appKaptDependencies
-
-    testImplementation appTestImplementation
-    androidTestImplementation appAndroidTestImplementation
+    implementation dataDependencies
+    kapt dataKaptDependencies
+    testImplementation dataTestImplementation
+    androidTestImplementation dataAndroidTestImplementation
 }

@@ -3,7 +3,7 @@ package com.haomins.reader.viewModels
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.www.model.data.entities.SubscriptionEntity
+import com.haomins.www.model.model.entities.SubscriptionEntity
 import com.haomins.www.model.repositories.SourceSubscriptionListRepository
 import com.haomins.www.model.service.TheOldReaderService
 import io.reactivex.Observable

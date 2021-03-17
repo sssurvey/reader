@@ -2,7 +2,7 @@ package com.haomins.reader.viewModels
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
-import com.haomins.www.model.data.SharedPreferenceKey
+import com.haomins.www.model.model.SharedPreferenceKey
 import com.haomins.www.model.util.getString
 import javax.inject.Inject
 

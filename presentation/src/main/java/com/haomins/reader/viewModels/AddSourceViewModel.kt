@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.R
-import com.haomins.www.model.data.models.subscription.AddSubscriptionResponseModel
+import com.haomins.www.model.model.responses.subscription.AddSubscriptionResponseModel
 import com.haomins.www.model.repositories.AddSourceRepository
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
