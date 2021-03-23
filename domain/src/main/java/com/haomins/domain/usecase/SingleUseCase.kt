@@ -14,7 +14,7 @@ abstract class SingleUseCase<in Params, T> constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    protected abstract fun buildUseCaseSingle(params: Params?): Single<T>
+    internal abstract fun buildUseCaseSingle(params: Params?): Single<T>
 
     open fun execute(observer: DisposableSingleObserver<T>, params: Params? = null) {
         this
