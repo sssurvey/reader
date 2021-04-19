@@ -8,30 +8,30 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "subscription_entity")
 data class SubscriptionEntity(
 
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    var id: String = "",
+        @PrimaryKey
+        @ColumnInfo(name = "id")
+        var id: String = "",
 
-    @ColumnInfo(name = "title")
-    var title: String = "",
+        @ColumnInfo(name = "title")
+        var title: String = "",
 
-    @ColumnInfo(name = "sortid")
-    var sortId: String = "",
+        @ColumnInfo(name = "sortid")
+        var sortId: String = "",
 
-    @ColumnInfo(name = "firstitemmsec")
-    var firstItemMilSec: String = "",
+        @ColumnInfo(name = "firstitemmsec")
+        var firstItemMilSec: String = "",
 
-    @ColumnInfo(name = "url")
-    var url: String = "",
+        @ColumnInfo(name = "url")
+        var url: String = "",
 
-    @ColumnInfo(name = "htmlUrl")
-    var htmlUrl: String = "",
+        @ColumnInfo(name = "htmlUrl")
+        var htmlUrl: String = "",
 
-    @ColumnInfo(name = "iconUrl")
-    var iconUrl: String = "",
+        @ColumnInfo(name = "iconUrl")
+        var iconUrl: String = "",
 
-    @Ignore // <--- Add support later on
-    var categories: Array<String> = emptyArray()
+        @Ignore // <--- Add support later on
+        var categories: Array<String> = emptyArray()
 
 ) {
     override fun equals(other: Any?): Boolean {

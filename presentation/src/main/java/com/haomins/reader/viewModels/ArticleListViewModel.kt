@@ -11,8 +11,8 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class ArticleListViewModel @Inject constructor(
-    private val articleListRepository: ArticleListRepository,
-    private val dateUtils: DateUtils
+        private val articleListRepository: ArticleListRepository,
+        private val dateUtils: DateUtils
 ) : ViewModel() {
 
     companion object {
@@ -26,50 +26,50 @@ class ArticleListViewModel @Inject constructor(
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
         disposables.add(
-            articleListRepository
-                .loadArticleItemRefs(feedId)
-                .map(::mapEntitiesToUiItems)
-                .subscribe(
-                    { onArticleLoaded(it) },
-                    { Log.d(TAG, "onError: ${it.printStackTrace()}") },
-                    { Log.d(TAG, "onComplete: called") })
+                articleListRepository
+                        .loadArticleItemRefs(feedId)
+                        .map(::mapEntitiesToUiItems)
+                        .subscribe(
+                                { onArticleLoaded(it) },
+                                { Log.d(TAG, "onError: ${it.printStackTrace()}") },
+                                { Log.d(TAG, "onComplete: called") })
         )
     }
 
     fun loadAllArticles() {
         isLoading.postValue(true)
         disposables.add(
-            articleListRepository
-                .loadAllArticleItemRefs()
-                .map(::mapEntitiesToUiItems)
-                .subscribe(
-                    { onArticleLoaded(it) },
-                    { Log.d(TAG, "onError: ${it.printStackTrace()}") },
-                    { Log.d(TAG, "onComplete: called") })
+                articleListRepository
+                        .loadAllArticleItemRefs()
+                        .map(::mapEntitiesToUiItems)
+                        .subscribe(
+                                { onArticleLoaded(it) },
+                                { Log.d(TAG, "onError: ${it.printStackTrace()}") },
+                                { Log.d(TAG, "onComplete: called") })
         )
     }
 
     fun continueLoadAllArticles() {
         disposables.add(
-            articleListRepository
-                .continueLoadAllArticleItemRefs()
-                .doOnSubscribe { isLoading.postValue(true) }
-                .subscribe(
-                    { isLoading.postValue(false) },
-                    { Log.d(TAG, "onError: ${it.printStackTrace()}") }
-                )
+                articleListRepository
+                        .continueLoadAllArticleItemRefs()
+                        .doOnSubscribe { isLoading.postValue(true) }
+                        .subscribe(
+                                { isLoading.postValue(false) },
+                                { Log.d(TAG, "onError: ${it.printStackTrace()}") }
+                        )
         )
     }
 
     fun continueLoadArticles(feedId: String) {
         disposables.add(
-            articleListRepository
-                .continueLoadArticleItemRefs(feedId)
-                .doOnSubscribe { isLoading.postValue(true) }
-                .subscribe(
-                    { isLoading.postValue(false) },
-                    { Log.d(TAG, "onError: ${it.printStackTrace()}") }
-                )
+                articleListRepository
+                        .continueLoadArticleItemRefs(feedId)
+                        .doOnSubscribe { isLoading.postValue(true) }
+                        .subscribe(
+                                { isLoading.postValue(false) },
+                                { Log.d(TAG, "onError: ${it.printStackTrace()}") }
+                        )
         )
     }
 
@@ -87,10 +87,10 @@ class ArticleListViewModel @Inject constructor(
     private fun mapEntitiesToUiItems(articleEntities: List<ArticleEntity>): List<ArticleListFragment.ArticleTitleListUiItem> {
         return articleEntities.map {
             ArticleListFragment.ArticleTitleListUiItem(
-                title = it.itemTitle,
-                postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
-                _postTimeMillisecond = it.itemPublishedMillisecond,
-                _itemId = it.itemId
+                    title = it.itemTitle,
+                    postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
+                    _postTimeMillisecond = it.itemPublishedMillisecond,
+                    _itemId = it.itemId
             )
         }
     }

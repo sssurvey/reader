@@ -2,8 +2,8 @@ package com.haomins.www.model.db.dao
 
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import com.haomins.www.model.model.entities.ArticleEntity
 import com.haomins.www.model.db.AppDatabase
+import com.haomins.www.model.model.entities.ArticleEntity
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -24,15 +24,15 @@ class ArticleDaoTest {
         // Create dummy articles
         for (counter in 0 until 100) {
             articleList.add(
-                ArticleEntity(
-                    itemId = "$counter",
-                    feedId = "${counter * 2}",
-                    itemTitle = "Test title",
-                    itemUpdatedMillisecond = System.currentTimeMillis(),
-                    itemPublishedMillisecond = System.currentTimeMillis(),
-                    author = "Dr.StrangeLove",
-                    content = "This is a test article, haha."
-                )
+                    ArticleEntity(
+                            itemId = "$counter",
+                            feedId = "${counter * 2}",
+                            itemTitle = "Test title",
+                            itemUpdatedMillisecond = System.currentTimeMillis(),
+                            itemPublishedMillisecond = System.currentTimeMillis(),
+                            author = "Dr.StrangeLove",
+                            content = "This is a test article, haha."
+                    )
             )
         }
 
@@ -63,15 +63,15 @@ class ArticleDaoTest {
     fun testInsert() {
         val originalSize = articleDao.getAll().blockingFirst().size
         articleDao.insert(
-            ArticleEntity(
-                itemId = "$100",
-                feedId = "${100 * 2}",
-                itemTitle = "Test title",
-                itemUpdatedMillisecond = System.currentTimeMillis(),
-                itemPublishedMillisecond = System.currentTimeMillis(),
-                author = "Dr.StrangeLove",
-                content = "This is a test article, haha."
-            )
+                ArticleEntity(
+                        itemId = "$100",
+                        feedId = "${100 * 2}",
+                        itemTitle = "Test title",
+                        itemUpdatedMillisecond = System.currentTimeMillis(),
+                        itemPublishedMillisecond = System.currentTimeMillis(),
+                        author = "Dr.StrangeLove",
+                        content = "This is a test article, haha."
+                )
         )
         assertTrue(articleDao.getAll().blockingFirst().size > originalSize)
     }

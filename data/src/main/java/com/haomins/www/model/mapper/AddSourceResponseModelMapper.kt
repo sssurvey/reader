@@ -4,12 +4,12 @@ import javax.inject.Inject
 import com.haomins.domain.model.AddSourceResponseModel as DomainModel
 import com.haomins.www.model.model.responses.subscription.AddSourceResponseModel as DataModel
 
-class AddSourceResponseModelMapper @Inject constructor(): BaseDataToDomainMapper<DataModel, DomainModel>() {
+class AddSourceResponseModelMapper @Inject constructor() : BaseDataToDomainMapper<DataModel, DomainModel>() {
 
     override fun dataModelToDomainModel(dataModel: DataModel): DomainModel {
         return DomainModel(
-            result = dataModel.numResults,
-            error = dataModel.error
+                result = dataModel.numResults,
+                error = dataModel.error
         )
     }
 

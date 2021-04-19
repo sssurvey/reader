@@ -7,7 +7,7 @@ import java.util.*
 import javax.inject.Inject
 
 class DateUtils @Inject constructor(
-    private val application: Application
+        private val application: Application
 ) {
 
     companion object {
@@ -31,9 +31,9 @@ class DateUtils @Inject constructor(
 
     fun howLongAgo(unixTimeStamp: Long): String {
         return DateUtils.getRelativeTimeSpanString(
-            unixTimeStamp * ONE_THOUSAND_MILLISECOND,
-            Calendar.getInstance().timeInMillis,
-            DateUtils.MINUTE_IN_MILLIS
+                unixTimeStamp * ONE_THOUSAND_MILLISECOND,
+                Calendar.getInstance().timeInMillis,
+                DateUtils.MINUTE_IN_MILLIS
         ).toString()
     }
 }

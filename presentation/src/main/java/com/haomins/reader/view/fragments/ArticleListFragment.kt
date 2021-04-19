@@ -32,10 +32,10 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     }
 
     data class ArticleTitleListUiItem(
-        val title: String,
-        val postTime: String,
-        val _postTimeMillisecond: Long,
-        val _itemId: String
+            val title: String,
+            val postTime: String,
+            val _postTimeMillisecond: Long,
+            val _itemId: String
     )
 
     @Inject
@@ -77,14 +77,14 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     override fun onAttach(context: Context) {
         (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-            .build().inject(this)
+                .build().inject(this)
         super.onAttach(context)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_article_list, container, false)
     }
@@ -97,8 +97,8 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         article_title_recycler_view.apply {
             setHasFixedSize(true)
             adapter = ArticleTitleListAdapter(
-                articleTitleUiItems,
-                this@ArticleListFragment
+                    articleTitleUiItems,
+                    this@ArticleListFragment
             )
             layoutManager = recyclerLayoutManager
             addOnScrollListener(recyclerViewOnScrollListener)
@@ -109,8 +109,8 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         val itemIdList: List<String> = articleTitleUiItems.map { it._itemId }
         activity?.let {
             (it as ArticleListActivity).startArticleDetailActivity(
-                position,
-                itemIdList.toTypedArray()
+                    position,
+                    itemIdList.toTypedArray()
             )
         }
     }
@@ -140,8 +140,8 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     private fun registerLiveDataObservers() {
         articleListViewModel.articleTitleUiItemsList.observe(
-            viewLifecycleOwner,
-            articleTitleListUiItemObserver
+                viewLifecycleOwner,
+                articleTitleListUiItemObserver
         )
         articleListViewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
     }

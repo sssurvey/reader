@@ -13,9 +13,9 @@ class RoomService @Inject constructor(application: Application) {
 
     private val roomDatabase by lazy {
         Room.databaseBuilder(application, AppDatabase::class.java,
-            AppDatabase.DATABASE_NAME
+                AppDatabase.DATABASE_NAME
         )
-            .build()
+                .build()
     }
 
     fun subscriptionDao(): SubscriptionDao {

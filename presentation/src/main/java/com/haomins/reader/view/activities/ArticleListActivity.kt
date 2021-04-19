@@ -54,8 +54,8 @@ class ArticleListActivity : AppCompatActivity() {
         bundle.putBoolean(Mode.LOAD_ALL.key, intent.getBooleanExtra(Mode.LOAD_ALL.key, true))
         articleListFragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(
-            R.id.article_list_activity_frame_layout,
-            articleListFragment, ArticleListFragment.TAG
+                R.id.article_list_activity_frame_layout,
+                articleListFragment, ArticleListFragment.TAG
         ).commit()
     }
 
@@ -66,8 +66,8 @@ class ArticleListActivity : AppCompatActivity() {
         bundle.putString(Mode.LOAD_BY_FEED_ID.key, intent.getStringExtra(Mode.LOAD_BY_FEED_ID.key))
         articleListFragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(
-            R.id.article_list_activity_frame_layout,
-            articleListFragment, ArticleListFragment.TAG
+                R.id.article_list_activity_frame_layout,
+                articleListFragment, ArticleListFragment.TAG
         ).commit()
     }
 }

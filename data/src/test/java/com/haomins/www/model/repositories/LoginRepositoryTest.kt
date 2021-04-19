@@ -23,15 +23,15 @@ class LoginRepositoryTest {
 
     private val testScheduler = TestScheduler()
     private val testSchedulingStrategy =
-        TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
+            TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
     private lateinit var loginRepository: LoginRepository
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         loginRepository = LoginRepository(
-            theOldReaderService = mockTheOldReaderService,
-            defaultSchedulingStrategy = testSchedulingStrategy
+                theOldReaderService = mockTheOldReaderService,
+                defaultSchedulingStrategy = testSchedulingStrategy
         )
         mockHelper()
     }
@@ -44,8 +44,8 @@ class LoginRepositoryTest {
     fun `test start() login call`() {
         val observer = TestObserver<UserAuthResponseModel>()
         loginRepository
-            .start(Pair("testId", "testPassword"))
-            .subscribe(observer)
+                .start(Pair("testId", "testPassword"))
+                .subscribe(observer)
         observer.assertSubscribed()
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         observer.assertComplete()
@@ -58,41 +58,41 @@ class LoginRepositoryTest {
     @Test
     fun `test getSignUpUrlString()`() {
         assertEquals(
-            TheOldReaderService.SIGN_UP_PAGE_URL,
-            loginRepository.getSignUpUrlString()
+                TheOldReaderService.SIGN_UP_PAGE_URL,
+                loginRepository.getSignUpUrlString()
         )
     }
 
     @Test
     fun `test getGenerateAccountUrlString()`() {
         assertEquals(
-            TheOldReaderService.GENERATE_ACCOUNT_PAGE_URL,
-            loginRepository.getGenerateAccountUrlString()
+                TheOldReaderService.GENERATE_ACCOUNT_PAGE_URL,
+                loginRepository.getGenerateAccountUrlString()
         )
     }
 
     private fun mockHelper() {
         `when`(
-            mockTheOldReaderService
-                .loginUser(
-                    userEmail = ArgumentMatchers.anyString(),
-                    userPassword = ArgumentMatchers.anyString(),
-                    output = ArgumentMatchers.anyString(),
-                    service = ArgumentMatchers.anyString(),
-                    accountType = ArgumentMatchers.anyString(),
-                    client = ArgumentMatchers.anyString()
-                )
-        )
-            .thenReturn(
-                Single.timer(100, TimeUnit.MILLISECONDS, testScheduler).flatMap {
-                    Single.just(
-                        UserAuthResponseModel(
-                            sid = "testSid",
-                            lsid = "testLsid",
-                            auth = "testAuth"
+                mockTheOldReaderService
+                        .loginUser(
+                                userEmail = ArgumentMatchers.anyString(),
+                                userPassword = ArgumentMatchers.anyString(),
+                                output = ArgumentMatchers.anyString(),
+                                service = ArgumentMatchers.anyString(),
+                                accountType = ArgumentMatchers.anyString(),
+                                client = ArgumentMatchers.anyString()
                         )
-                    )
-                }
-            )
+        )
+                .thenReturn(
+                        Single.timer(100, TimeUnit.MILLISECONDS, testScheduler).flatMap {
+                            Single.just(
+                                    UserAuthResponseModel(
+                                            sid = "testSid",
+                                            lsid = "testLsid",
+                                            auth = "testAuth"
+                                    )
+                            )
+                        }
+                )
     }
 }

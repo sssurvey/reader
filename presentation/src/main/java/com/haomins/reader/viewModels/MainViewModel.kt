@@ -7,7 +7,7 @@ import com.haomins.www.model.util.getString
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val sharedPreferences: SharedPreferences
+        private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
     fun hasAuthToken(): Boolean {

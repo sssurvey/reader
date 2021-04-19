@@ -31,14 +31,14 @@ class AddSourceResponseModelTest {
     @Test
     fun testParseToClassSuccess() {
         val addSubscriptionResponseModel =
-            gson.fromJson(testJsonSuccess, AddSourceResponseModel::class.java)
+                gson.fromJson(testJsonSuccess, AddSourceResponseModel::class.java)
         assertTrue("medium.com/feed/proandroiddev" == addSubscriptionResponseModel.query)
     }
 
     @Test
     fun testParseToClassFail() {
         val addSubscriptionResponseModel =
-            gson.fromJson(testJsonException, AddSourceResponseModel::class.java)
+                gson.fromJson(testJsonException, AddSourceResponseModel::class.java)
         assertTrue("No feeds found by that keyword or URL" == addSubscriptionResponseModel.error)
     }
 

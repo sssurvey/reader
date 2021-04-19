@@ -3,9 +3,9 @@ package com.haomins.www.model.repositories
 import android.content.SharedPreferences
 import com.haomins.www.model.MockTheOldReaderService
 import com.haomins.www.model.TestSchedulingStrategy
+import com.haomins.www.model.db.dao.ArticleDao
 import com.haomins.www.model.model.SharedPreferenceKey
 import com.haomins.www.model.model.entities.ArticleEntity
-import com.haomins.www.model.db.dao.ArticleDao
 import com.haomins.www.model.service.RoomService
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.verify
@@ -26,7 +26,7 @@ class ArticleListRepositoryTest {
 
     private val testScheduler = TestScheduler()
     private val testSchedulingStrategy =
-        TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
+            TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
     private lateinit var articleListRepository: ArticleListRepository
 
     @Spy
@@ -45,10 +45,10 @@ class ArticleListRepositoryTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         articleListRepository = ArticleListRepository(
-            mockTheOldReaderService,
-            mockRoomService,
-            mockSharedPreferences,
-            testSchedulingStrategy
+                mockTheOldReaderService,
+                mockRoomService,
+                mockSharedPreferences,
+                testSchedulingStrategy
         )
         mockHelper()
     }
@@ -75,10 +75,10 @@ class ArticleListRepositoryTest {
         articleListRepository.loadArticleItemRefs("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
-            .loadArticleListByFeed(any(), any(), any(), any(), any())
+                .loadArticleListByFeed(any(), any(), any(), any(), any())
         testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockTheOldReaderService, times(10))
-            .loadArticleDetailsByRefId(any(), any(), any())
+                .loadArticleDetailsByRefId(any(), any(), any())
         testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockRoomService, times(2)).articleDao()
     }
@@ -90,10 +90,10 @@ class ArticleListRepositoryTest {
         testObserver.assertSubscribed()
         testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockTheOldReaderService)
-            .loadAllArticles(any(), any(), any(), any(), any())
+                .loadAllArticles(any(), any(), any(), any(), any())
         testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockTheOldReaderService, times(10))
-            .loadArticleDetailsByRefId(any(), any(), any())
+                .loadArticleDetailsByRefId(any(), any(), any())
         testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockRoomService, times(10)).articleDao()
     }
@@ -105,55 +105,55 @@ class ArticleListRepositoryTest {
         testObserver.assertSubscribed()
         testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockTheOldReaderService)
-            .loadArticleListByFeed(any(), any(), any(), any(), any())
+                .loadArticleListByFeed(any(), any(), any(), any(), any())
         testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockTheOldReaderService, times(10))
-            .loadArticleDetailsByRefId(any(), any(), any())
+                .loadArticleDetailsByRefId(any(), any(), any())
         testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockRoomService, times(10)).articleDao()
     }
 
     private fun mockHelper() {
         `when`(
-            mockSharedPreferences
-                .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, "")
+                mockSharedPreferences
+                        .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, "")
         )
-            .thenReturn("test_auth_code")
+                .thenReturn("test_auth_code")
         `when`(mockRoomService.articleDao())
-            .thenReturn(mockArticleDao)
+                .thenReturn(mockArticleDao)
         `when`(mockArticleDao.getAll())
-            .thenReturn(
-                Observable.just(
-                    mutableListOf(
-                        ArticleEntity(
-                            "1",
-                            "2",
-                            "test_title",
-                            1,
-                            1,
-                            "test_author",
-                            "test_content"
-                        ),
-                        ArticleEntity(
-                            "2",
-                            "2",
-                            "test_title",
-                            1,
-                            1,
-                            "test_author",
-                            "test_content"
-                        ),
-                        ArticleEntity(
-                            "3",
-                            "2",
-                            "test_title",
-                            1,
-                            1,
-                            "test_author",
-                            "test_content"
+                .thenReturn(
+                        Observable.just(
+                                mutableListOf(
+                                        ArticleEntity(
+                                                "1",
+                                                "2",
+                                                "test_title",
+                                                1,
+                                                1,
+                                                "test_author",
+                                                "test_content"
+                                        ),
+                                        ArticleEntity(
+                                                "2",
+                                                "2",
+                                                "test_title",
+                                                1,
+                                                1,
+                                                "test_author",
+                                                "test_content"
+                                        ),
+                                        ArticleEntity(
+                                                "3",
+                                                "2",
+                                                "test_title",
+                                                1,
+                                                1,
+                                                "test_author",
+                                                "test_content"
+                                        )
+                                )
                         )
-                    )
                 )
-            )
     }
 }

@@ -1,7 +1,7 @@
 package com.haomins.www.model.model.responses.subscription
 
 import com.google.gson.Gson
-import org.junit.Assert.*
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 

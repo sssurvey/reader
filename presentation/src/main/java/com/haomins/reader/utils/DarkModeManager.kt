@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class DarkModeManager @Inject constructor(
-    private val sharedPreferences: SharedPreferences
+        private val sharedPreferences: SharedPreferences
 ) {
 
     fun enableDarkMode() {

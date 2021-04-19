@@ -12,8 +12,8 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
-    private val loginRepository: LoginRepository,
-    private val sharedPreferences: SharedPreferences
+        private val loginRepository: LoginRepository,
+        private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
     companion object {
@@ -25,14 +25,14 @@ class LoginViewModel @Inject constructor(
 
     fun authorize(user: Pair<String, String>) {
         disposable = loginRepository
-            .start(user)
-            .doOnSuccess { isUserLoggedIn.postValue(true) }
-            .doOnError { isUserLoggedIn.postValue(false) }
-            .subscribe({
-                saveAuthCode(it.auth)
-            }, {
-                clearAuthCode()
-            })
+                .start(user)
+                .doOnSuccess { isUserLoggedIn.postValue(true) }
+                .doOnError { isUserLoggedIn.postValue(false) }
+                .subscribe({
+                    saveAuthCode(it.auth)
+                }, {
+                    clearAuthCode()
+                })
     }
 
     fun getSignUpUrl(): Uri {

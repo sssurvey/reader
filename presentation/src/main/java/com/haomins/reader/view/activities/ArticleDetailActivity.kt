@@ -33,8 +33,8 @@ class ArticleDetailActivity : AppCompatActivity() {
         val articleIdArray = intent.getStringArrayExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
         articleIdArray?.let {
             val adapter = ArticleDetailFragmentAdapter(
-                this,
-                it
+                    this,
+                    it
             )
             article_detail_view_pager.adapter = adapter
             article_detail_view_pager.setCurrentItem(currentPosition, false)
@@ -42,10 +42,10 @@ class ArticleDetailActivity : AppCompatActivity() {
     }
 
     private inner class ArticleDetailFragmentAdapter(
-        articleDetailActivity: ArticleDetailActivity,
-        private val articleIdArray: Array<String>
+            articleDetailActivity: ArticleDetailActivity,
+            private val articleIdArray: Array<String>
     ) :
-        FragmentStateAdapter(articleDetailActivity) {
+            FragmentStateAdapter(articleDetailActivity) {
         override fun getItemCount(): Int {
             return articleIdArray.size
         }

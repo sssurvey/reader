@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class GlideService @Inject constructor(
-    private val application: Application
+        private val application: Application
 ) {
 
     private val glide by lazy {
@@ -19,11 +19,11 @@ class GlideService @Inject constructor(
 
     fun loadIconImage(imageView: ImageView, url: URL) {
         glide
-            .asDrawable()
-            .centerCrop()
-            .load(url)
-            .error(R.drawable.ic_broken_image)
-            .into(imageView)
+                .asDrawable()
+                .centerCrop()
+                .load(url)
+                .error(R.drawable.ic_broken_image)
+                .into(imageView)
     }
 
 }

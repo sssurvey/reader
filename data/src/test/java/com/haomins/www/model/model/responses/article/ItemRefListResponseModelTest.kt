@@ -58,7 +58,7 @@ class ItemRefListResponseModelTest {
     @Test
     fun testParseToClass() {
         val itemRefListResponseModel =
-            gson.fromJson(jsonString, ItemRefListResponseModel::class.java)
+                gson.fromJson(jsonString, ItemRefListResponseModel::class.java)
         assertTrue("5e286f06175ad672e1006ad7" == itemRefListResponseModel.itemRefs[0].id)
     }
 
@@ -76,7 +76,7 @@ class ItemRefListResponseModelTest {
                 "\"timestampUsec\":\"1523280729605000\"},{\"id\":\"5ac9a44bfea0e71e47000628\"," +
                 "\"directStreamIds\":[],\"timestampUsec\":\"1523138693000000\"}]}"
         val itemRefListResponseModel =
-            gson.fromJson(jsonString, ItemRefListResponseModel::class.java)
+                gson.fromJson(jsonString, ItemRefListResponseModel::class.java)
         val jsonString = gson.toJson(itemRefListResponseModel)
         assertTrue(validation == jsonString)
     }

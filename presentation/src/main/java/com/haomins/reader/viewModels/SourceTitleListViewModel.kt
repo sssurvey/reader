@@ -11,7 +11,7 @@ import java.net.URL
 import javax.inject.Inject
 
 class SourceTitleListViewModel @Inject constructor(
-    private val sourceSubscriptionListRepository: SourceSubscriptionListRepository
+        private val sourceSubscriptionListRepository: SourceSubscriptionListRepository
 ) : ViewModel() {
 
     val sourceListUiDataSet by lazy {
@@ -32,27 +32,27 @@ class SourceTitleListViewModel @Inject constructor(
 
     fun loadSourceSubscriptionList() {
         sourceSubscriptionListRepository
-            .loadSubList()
-            .flatMap {
-                sourceUiDataList.clear()
-                sourceSubscriptionListRepository.saveSubListToDB(it)
-            }
-            .flatMap { sourceSubscriptionListRepository.retrieveSubListFromDB() }
-            .onErrorResumeNext { sourceSubscriptionListRepository.retrieveSubListFromDB() }
-            .doOnSuccess { sourceListData = it }
-            .toObservable()
-            .flatMap { populateSubSourceDataSet(it) }
-            .doAfterNext { sourceListUiDataSet.postValue(sourceUiDataList) }
-            .subscribe()
+                .loadSubList()
+                .flatMap {
+                    sourceUiDataList.clear()
+                    sourceSubscriptionListRepository.saveSubListToDB(it)
+                }
+                .flatMap { sourceSubscriptionListRepository.retrieveSubListFromDB() }
+                .onErrorResumeNext { sourceSubscriptionListRepository.retrieveSubListFromDB() }
+                .doOnSuccess { sourceListData = it }
+                .toObservable()
+                .flatMap { populateSubSourceDataSet(it) }
+                .doAfterNext { sourceListUiDataSet.postValue(sourceUiDataList) }
+                .subscribe()
     }
 
     private fun populateSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>) =
-        Observable.fromIterable(subscriptionEntities).doOnNext {
-            sourceUiDataList.add(
-                Pair(
-                    first = it.title,
-                    second = URL(TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl)
+            Observable.fromIterable(subscriptionEntities).doOnNext {
+                sourceUiDataList.add(
+                        Pair(
+                                first = it.title,
+                                second = URL(TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl)
+                        )
                 )
-            )
-        }
+            }
 }

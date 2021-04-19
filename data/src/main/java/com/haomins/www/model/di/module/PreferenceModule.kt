@@ -17,8 +17,8 @@ object PreferenceModule {
     @Provides
     fun provideSharedPreference(application: Application): SharedPreferences {
         return application.getSharedPreferences(
-            SHARED_PREFERENCE_NAME,
-            Context.MODE_PRIVATE
+                SHARED_PREFERENCE_NAME,
+                Context.MODE_PRIVATE
         )
     }
 
