@@ -2,7 +2,7 @@ package com.haomins.www.model.service
 
 import com.haomins.www.model.model.responses.article.ArticleResponseModel
 import com.haomins.www.model.model.responses.article.ItemRefListResponseModel
-import com.haomins.www.model.model.responses.subscription.AddSubscriptionResponseModel
+import com.haomins.www.model.model.responses.subscription.AddSourceResponseModel
 import com.haomins.www.model.model.responses.subscription.SubscriptionSourceListResponseModel
 import com.haomins.www.model.model.responses.user.UserAuthResponseModel
 import io.reactivex.Single
@@ -143,5 +143,5 @@ interface TheOldReaderService {
         @Header("Authorization") headerAuthValue: String,
         @Query("quickadd") quickAddSubscription: String,
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
-    ): Single<AddSubscriptionResponseModel>
+    ): Single<AddSourceResponseModel>
 }

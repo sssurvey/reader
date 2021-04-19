@@ -2,20 +2,20 @@ package com.haomins.www.model.di
 
 import android.app.Application
 import android.content.SharedPreferences
-import com.haomins.www.model.di.module.DataModule
-import com.haomins.www.model.di.module.PreferenceModule
-import com.haomins.www.model.di.module.RxModule
-import com.haomins.www.model.strategies.RxSchedulingStrategy
+import com.haomins.www.model.di.module.*
 import com.haomins.www.model.service.TheOldReaderService
+import com.haomins.www.model.strategies.RxSchedulingStrategy
 import dagger.BindsInstance
 import dagger.Component
 
 @Component(modules = [
     DataModule::class,
     PreferenceModule::class,
-    RxModule::class
+    RepositoryModule::class,
+    RxModule::class,
+    SchedulerModule::class
 ])
-interface CoreComponent {
+interface DataComponent {
 
     fun provideSharedPreferences() : SharedPreferences
 
@@ -31,7 +31,7 @@ interface CoreComponent {
         @BindsInstance
         fun application(application: Application): Builder
 
-        fun build(): CoreComponent
+        fun build(): DataComponent
 
     }
 

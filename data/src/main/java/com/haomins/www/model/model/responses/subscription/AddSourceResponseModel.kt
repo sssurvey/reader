@@ -2,7 +2,7 @@ package com.haomins.www.model.model.responses.subscription
 
 import com.google.gson.annotations.SerializedName
 
-data class AddSubscriptionResponseModel(
+data class AddSourceResponseModel(
 
     @SerializedName("query")
     val query: String,

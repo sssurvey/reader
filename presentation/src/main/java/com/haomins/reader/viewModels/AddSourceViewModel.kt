@@ -4,14 +4,14 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.haomins.domain.model.AddSourceResponseModel
+import com.haomins.domain.usecase.addsource.AddNewRssSource
 import com.haomins.reader.R
-import com.haomins.www.model.model.responses.subscription.AddSubscriptionResponseModel
-import com.haomins.www.model.repositories.AddSourceRepository
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
 class AddSourceViewModel @Inject constructor(
-    private val addSourceRepository: AddSourceRepository,
+    private val addNewRssSource: AddNewRssSource,
     private val application: Application
 ) : ViewModel() {
 
@@ -30,36 +30,58 @@ class AddSourceViewModel @Inject constructor(
         MutableLiveData(Pair(AddSourceStatus.DEFAULT, ""))
     }
 
-    private val compositeDisposable = CompositeDisposable()
-
     fun addSource(source: String) {
-        compositeDisposable.add(
-            addSourceRepository.addSource(source = source)
-                .doOnSuccess(::checkIfSuccess)
-                .subscribe({}, { printError(it) })
+        addNewRssSource.execute(
+            params = AddNewRssSource.forAddNewRssSource(source = source),
+            observer = object: DisposableSingleObserver<AddSourceResponseModel>() {
+                override fun onSuccess(t: AddSourceResponseModel) {
+                    checkIfSuccess(t)
+                }
+
+                override fun onError(e: Throwable) {
+                    printError(e)
+                }
+            }
         )
+//        compositeDisposable.add(
+//            addSourceRepository.addSource(source = source)
+//                .doOnSuccess(::checkIfSuccess)
+//                .subscribe({}, { printError(it) })
+//        )
     }
 
     fun addMediumSource(source: String) {
-        compositeDisposable.add(
-            addSourceRepository.addSource(source = MEDIUM_RSS_FEED_BASE + source)
-                .doOnSuccess(::checkIfSuccess)
-                .subscribe({}, { printError(it) })
+        addNewRssSource.execute(
+            params = AddNewRssSource.forAddNewRssSource(source = MEDIUM_RSS_FEED_BASE + source),
+            observer = object: DisposableSingleObserver<AddSourceResponseModel>() {
+                override fun onSuccess(t: AddSourceResponseModel) {
+                    checkIfSuccess(t)
+                }
+
+                override fun onError(e: Throwable) {
+                    printError(e)
+                }
+            }
         )
+//        compositeDisposable.add(
+//            addSourceRepository.addSource(source = MEDIUM_RSS_FEED_BASE + source)
+//                .doOnSuccess(::checkIfSuccess)
+//                .subscribe({}, { printError(it) })
+//        )
     }
 
     override fun onCleared() {
         super.onCleared()
         isSourceAdded.postValue(Pair(AddSourceStatus.DEFAULT, ""))
-        compositeDisposable.clear()
+        addNewRssSource.dispose()
     }
 
     private fun printError(t: Throwable) {
         Log.d(TAG, "${t.printStackTrace()}")
     }
 
-    private fun checkIfSuccess(addSubscriptionResponseModel: AddSubscriptionResponseModel) {
-        when (addSubscriptionResponseModel.numResults) {
+    private fun checkIfSuccess(addSourceResponseModel: AddSourceResponseModel) {
+        when (addSourceResponseModel.result) {
             1 -> isSourceAdded.postValue(
                 Pair(
                     AddSourceStatus.SUCCESS,
@@ -69,7 +91,7 @@ class AddSourceViewModel @Inject constructor(
             0 -> isSourceAdded.postValue(
                 Pair(
                     AddSourceStatus.FAIL,
-                    addSubscriptionResponseModel.error ?: "Error"
+                    addSourceResponseModel.error ?: "Error"
                 )
             )
         }

@@ -1,7 +1,7 @@
 package com.haomins.www.model
 
 import com.haomins.www.model.model.responses.article.*
-import com.haomins.www.model.model.responses.subscription.AddSubscriptionResponseModel
+import com.haomins.www.model.model.responses.subscription.AddSourceResponseModel
 import com.haomins.www.model.model.responses.subscription.SubscriptionSourceListResponseModel
 import com.haomins.www.model.model.responses.user.UserAuthResponseModel
 import com.haomins.www.model.service.TheOldReaderService
@@ -133,7 +133,7 @@ class MockTheOldReaderService(
         headerAuthValue: String,
         quickAddSubscription: String,
         output: String
-    ): Single<AddSubscriptionResponseModel> {
+    ): Single<AddSourceResponseModel> {
         TODO("Not yet implemented")
     }
 
