@@ -7,6 +7,9 @@ ext {
     def room_version = "2.2.3"
     def glide_version = "4.11.0"
     def rx_java_version = "2.2.6"
+    def mockito_kotlin2_version = "2.2.0"
+    def junit_version = "4.12"
+    def mockito_version = "2.13.0"
 
     appDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
@@ -65,7 +68,13 @@ ext {
     ]
 
     appTestImplementation = [
-            'junit:junit:4.12'
+            "junit:junit:$junit_version"
+    ]
+
+    domainTestImplementation = [
+            "junit:junit:$junit_version",
+            "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin2_version",
+            "org.mockito:mockito-inline:$mockito_version"
     ]
 
     appAndroidTestImplementation = [
@@ -74,9 +83,9 @@ ext {
     ]
 
     dataTestImplementation = [
-            'junit:junit:4.12',
-            'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0',
-            'org.mockito:mockito-inline:2.13.0'
+            "junit:junit:$junit_version",
+            "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin2_version",
+            "org.mockito:mockito-inline:$mockito_version"
     ]
 
     dataAndroidTestImplementation = [
