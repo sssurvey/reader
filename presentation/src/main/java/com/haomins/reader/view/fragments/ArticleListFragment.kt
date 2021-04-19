@@ -92,7 +92,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         currentMode = arguments?.get(MODE) as Mode
-        loadArticleList(arguments)
+        loadArticleList()
         registerLiveDataObservers()
         article_title_recycler_view.apply {
             setHasFixedSize(true)
@@ -146,7 +146,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         articleListViewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
     }
 
-    private fun loadArticleList(bundle: Bundle?) {
+    private fun loadArticleList() {
         when (currentMode) {
             Mode.LOAD_ALL -> articleListViewModel.loadAllArticles()
             Mode.LOAD_BY_FEED_ID -> {
