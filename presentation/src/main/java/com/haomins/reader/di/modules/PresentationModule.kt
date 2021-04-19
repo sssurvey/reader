@@ -4,4 +4,4 @@ import com.haomins.reader.viewModels.di.ViewModelComponent
 import dagger.Module
 
 @Module(subcomponents = [ViewModelComponent::class])
-object SubcomponentModule
+object PresentationModule

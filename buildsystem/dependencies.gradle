@@ -10,6 +10,7 @@ ext {
 
     appDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
+            'com.squareup.okhttp3:logging-interceptor:3.8.0',
             'androidx.appcompat:appcompat:1.1.0',
             'androidx.core:core-ktx:1.2.0',
             'androidx.constraintlayout:constraintlayout:1.1.3',
@@ -58,6 +59,7 @@ ext {
 
     dataKaptDependencies = [
             "com.google.dagger:dagger-compiler:$dagger_version",
+
             "androidx.room:room-compiler:$room_version",
             "com.github.bumptech.glide:compiler:$glide_version"
     ]
