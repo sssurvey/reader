@@ -18,6 +18,18 @@ class AddNewRssSource @Inject constructor(
         postExecutionScheduler
 ) {
 
+    /**
+     * Send a add new rss source to the sever, up on successful response, it will return the status
+     * and the error? message of the response, indicating if the source has been successfully added
+     * or not.
+     *
+     * @param params takes a rss feed url in string format -> rss.example.com
+     * @return a {@code Single<AddSourceResponseModel>} contains {@code result} with 1 as success,
+     * 0 as fail. And a nullable {@code error String} that is null if success, else it will the error
+     * message string.
+     *
+     * @throws ParamsShouldNotBeNullException param must be non-null in this use case
+     */
     override fun buildUseCaseSingle(params: Param?): Single<AddSourceResponseModel> {
         if (params == null) throw ParamsShouldNotBeNullException()
         else {
