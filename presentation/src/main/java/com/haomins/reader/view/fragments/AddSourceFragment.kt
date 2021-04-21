@@ -51,9 +51,9 @@ class AddSourceFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_add_source, container, false)
     }
@@ -99,7 +99,7 @@ class AddSourceFragment : Fragment() {
         medium_feed_input_box.doOnTextChanged { text, _, _, after ->
             when (after > 0) {
                 true -> medium_feed_desc.text =
-                    getString(R.string.medium_feed_sample_desc_template, text)
+                        getString(R.string.medium_feed_sample_desc_template, text)
                 false -> medium_feed_desc.text = getString(R.string.medium_feed_sample_desc)
             }
         }

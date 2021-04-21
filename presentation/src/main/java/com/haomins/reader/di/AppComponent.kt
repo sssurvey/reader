@@ -1,16 +1,20 @@
 package com.haomins.reader.di
 
+import android.app.Application
 import com.haomins.reader.ReaderApplication
-import com.haomins.reader.di.modules.SubcomponentModule
+import com.haomins.reader.di.modules.PresentationModule
 import com.haomins.reader.viewModels.di.ViewModelComponent
-import com.haomins.www.model.di.CoreComponent
+import com.haomins.www.model.di.DataModule
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(
-    dependencies = [CoreComponent::class],
-    modules = [SubcomponentModule::class]
+        modules = [
+            PresentationModule::class,
+            DataModule::class
+        ]
 )
 interface AppComponent {
 
@@ -21,7 +25,8 @@ interface AppComponent {
     @Component.Builder
     interface Builder {
 
-        fun setCoreComponent(coreComponent: CoreComponent): Builder
+        @BindsInstance
+        fun application(application: Application): Builder
 
         fun build(): AppComponent
 

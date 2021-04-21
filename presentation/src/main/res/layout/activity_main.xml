@@ -35,8 +35,8 @@
         android:layout_width="@dimen/default_navigation_view_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
         android:background="@color/default_background"
+        android:fitsSystemWindows="true"
         app:itemTextAppearance="@style/ReaderTextViewStyle"
         app:menu="@menu/menu_main_drawer">
 

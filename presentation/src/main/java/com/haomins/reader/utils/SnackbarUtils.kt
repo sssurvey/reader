@@ -8,10 +8,10 @@ import com.haomins.reader.R
 
 fun Fragment.showSnackbar(string: String) {
     Snackbar.make(this.requireView(), string, LENGTH_SHORT)
-        .setBackgroundTint(requireContext().getColor(R.color.default_text))
-        .setAnimationMode(ANIMATION_MODE_SLIDE)
-        .apply {
-            setAction(R.string.dismiss) { this.dismiss() }
-        }
-        .show()
+            .setBackgroundTint(requireContext().getColor(R.color.default_text))
+            .setAnimationMode(ANIMATION_MODE_SLIDE)
+            .apply {
+                setAction(R.string.dismiss) { this.dismiss() }
+            }
+            .show()
 }

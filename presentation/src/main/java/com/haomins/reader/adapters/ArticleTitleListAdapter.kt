@@ -9,10 +9,10 @@ import com.haomins.reader.view.fragments.ArticleListFragment
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 
 class ArticleTitleListAdapter(
-    private val articleTitleListUiItems: List<ArticleListFragment.ArticleTitleListUiItem>,
-    private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
+        private val articleTitleListUiItems: List<ArticleListFragment.ArticleTitleListUiItem>,
+        private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
 ) :
-    RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
+        RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
 
     interface ArticleTitleListOnClickListener {
 
@@ -25,11 +25,11 @@ class ArticleTitleListAdapter(
     inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+            parent: ViewGroup,
+            viewType: Int
     ): ArticleTitleListAdapter.CustomViewHolder {
         val articleListItemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.article_title_recycler_view_item, parent, false)
+                .inflate(R.layout.article_title_recycler_view_item, parent, false)
         return CustomViewHolder(articleListItemView)
     }
 
@@ -40,7 +40,7 @@ class ArticleTitleListAdapter(
     override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
         holder.viewHolder.article_title_text_view.text = articleTitleListUiItems[position].title
         holder.viewHolder.article_publish_time_text_view.text =
-            articleTitleListUiItems[position].postTime
+                articleTitleListUiItems[position].postTime
         setOnClick(holder, position)
         articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }

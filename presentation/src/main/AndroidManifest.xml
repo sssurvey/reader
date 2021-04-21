@@ -27,10 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.haomins.reader.view.activities.ArticleListActivity"/>
-        <activity android:name="com.haomins.reader.view.activities.ArticleDetailActivity"/>
-        <activity android:name="com.haomins.reader.view.activities.SettingsActivity"/>
-        <activity android:name="com.haomins.reader.view.activities.AddSourceActivity"/>
+        <activity android:name="com.haomins.reader.view.activities.ArticleListActivity" />
+        <activity android:name="com.haomins.reader.view.activities.ArticleDetailActivity" />
+        <activity android:name="com.haomins.reader.view.activities.SettingsActivity" />
+        <activity android:name="com.haomins.reader.view.activities.AddSourceActivity" />
     </application>
 
 </manifest>

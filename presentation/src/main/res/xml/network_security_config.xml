@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- currently not being used, in favor of clear text -->
+<?xml version="1.0" encoding="utf-8"?><!-- currently not being used, in favor of clear text -->
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">theoldreader.com</domain>

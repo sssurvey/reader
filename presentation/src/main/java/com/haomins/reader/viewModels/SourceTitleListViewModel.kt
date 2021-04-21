@@ -3,7 +3,7 @@ package com.haomins.reader.viewModels
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.www.model.data.entities.SubscriptionEntity
+import com.haomins.www.model.model.entities.SubscriptionEntity
 import com.haomins.www.model.repositories.SourceSubscriptionListRepository
 import com.haomins.www.model.service.TheOldReaderService
 import io.reactivex.Observable
@@ -11,7 +11,7 @@ import java.net.URL
 import javax.inject.Inject
 
 class SourceTitleListViewModel @Inject constructor(
-    private val sourceSubscriptionListRepository: SourceSubscriptionListRepository
+        private val sourceSubscriptionListRepository: SourceSubscriptionListRepository
 ) : ViewModel() {
 
     val sourceListUiDataSet by lazy {
@@ -32,27 +32,27 @@ class SourceTitleListViewModel @Inject constructor(
 
     fun loadSourceSubscriptionList() {
         sourceSubscriptionListRepository
-            .loadSubList()
-            .flatMap {
-                sourceUiDataList.clear()
-                sourceSubscriptionListRepository.saveSubListToDB(it)
-            }
-            .flatMap { sourceSubscriptionListRepository.retrieveSubListFromDB() }
-            .onErrorResumeNext { sourceSubscriptionListRepository.retrieveSubListFromDB() }
-            .doOnSuccess { sourceListData = it }
-            .toObservable()
-            .flatMap { populateSubSourceDataSet(it) }
-            .doAfterNext { sourceListUiDataSet.postValue(sourceUiDataList) }
-            .subscribe()
+                .loadSubList()
+                .flatMap {
+                    sourceUiDataList.clear()
+                    sourceSubscriptionListRepository.saveSubListToDB(it)
+                }
+                .flatMap { sourceSubscriptionListRepository.retrieveSubListFromDB() }
+                .onErrorResumeNext { sourceSubscriptionListRepository.retrieveSubListFromDB() }
+                .doOnSuccess { sourceListData = it }
+                .toObservable()
+                .flatMap { populateSubSourceDataSet(it) }
+                .doAfterNext { sourceListUiDataSet.postValue(sourceUiDataList) }
+                .subscribe()
     }
 
     private fun populateSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>) =
-        Observable.fromIterable(subscriptionEntities).doOnNext {
-            sourceUiDataList.add(
-                Pair(
-                    first = it.title,
-                    second = URL(TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl)
+            Observable.fromIterable(subscriptionEntities).doOnNext {
+                sourceUiDataList.add(
+                        Pair(
+                                first = it.title,
+                                second = URL(TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl)
+                        )
                 )
-            )
-        }
+            }
 }
