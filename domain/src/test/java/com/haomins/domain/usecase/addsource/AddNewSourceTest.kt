@@ -4,6 +4,7 @@ import com.haomins.domain.TestSchedulers
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
 import com.haomins.domain.model.AddSourceResponseModel
 import com.haomins.domain.repositories.AddSourceRepositoryContract
+import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
 import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -18,7 +19,7 @@ import org.mockito.internal.verification.Times
 import java.util.concurrent.TimeUnit
 
 
-class AddNewRssSourceTest {
+class AddNewSourceTest {
 
     @Mock
     lateinit var mockAddSourceRepositoryContract: AddSourceRepositoryContract
@@ -26,12 +27,12 @@ class AddNewRssSourceTest {
     private val testExecutionScheduler = TestSchedulers.executionScheduler()
     private val testPostExecutionScheduler = TestSchedulers.postExecutionScheduler()
 
-    private lateinit var addNewRssSource: AddNewRssSource
+    private lateinit var addNewSource: AddNewSource
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        addNewRssSource = AddNewRssSource(
+        addNewSource = AddNewSource(
             addSourceRepositoryContract = mockAddSourceRepositoryContract,
             executionScheduler = testExecutionScheduler,
             postExecutionScheduler = testPostExecutionScheduler
@@ -44,7 +45,7 @@ class AddNewRssSourceTest {
         var isErrorThrown = false
 
         try {
-            addNewRssSource
+            addNewSource
                 .buildUseCaseSingle(null)
                 .subscribe(testObserver)
         } catch (e: IllegalArgumentException) {
@@ -56,7 +57,7 @@ class AddNewRssSourceTest {
     }
 
     @Test
-    fun `test buildUseCaseSingle$domain add source success`() {
+    fun `test buildUseCaseSingle$domain add rss source success`() {
 
         val testObserver = TestObserver<AddSourceResponseModel>()
         val testSourceString = "123"
@@ -70,8 +71,8 @@ class AddNewRssSourceTest {
         `when`(mockAddSourceRepositoryContract.addSource(testSourceString))
             .thenReturn(testAddSourceReturn)
 
-        addNewRssSource
-            .buildUseCaseSingle(AddNewRssSource.forAddNewRssSource(testSourceString))
+        addNewSource
+            .buildUseCaseSingle(AddNewSource.forAddNewRssSource(testSourceString))
             .subscribeWith(testObserver)
 
         testObserver.assertSubscribed()
@@ -80,6 +81,40 @@ class AddNewRssSourceTest {
         (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
 
         verify(mockAddSourceRepositoryContract, Times(1)).addSource(testSourceString)
+
+        testObserver.assertComplete()
+        assertTrue(
+            testObserver.values().first() == testAddSourceReturn.blockingGet()
+        )
+    }
+
+
+    @Test
+    fun `test buildUseCaseSingle$domain add medium source success`() {
+
+        val testObserver = TestObserver<AddSourceResponseModel>()
+        val testSourceString = "123"
+        val mediumSourceValidator = MEDIUM_RSS_FEED_BASE + testSourceString
+        val testAddSourceReturn = Single.just(
+            AddSourceResponseModel(
+                result = 1,
+                error = "test error"
+            )
+        )
+
+        `when`(mockAddSourceRepositoryContract.addSource(mediumSourceValidator))
+            .thenReturn(testAddSourceReturn)
+
+        addNewSource
+            .buildUseCaseSingle(AddNewSource.forAddingNewMediumSource(testSourceString))
+            .subscribeWith(testObserver)
+
+        testObserver.assertSubscribed()
+
+        (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
+        (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
+
+        verify(mockAddSourceRepositoryContract, Times(1)).addSource(mediumSourceValidator)
 
         testObserver.assertComplete()
         assertTrue(
