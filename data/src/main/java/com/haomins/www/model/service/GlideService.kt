@@ -1,6 +1,7 @@
 package com.haomins.www.model.service
 
 import android.app.Application
+import android.net.Uri
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.haomins.www.model.R
@@ -21,7 +22,7 @@ class GlideService @Inject constructor(
         glide
                 .asDrawable()
                 .centerCrop()
-                .load(url)
+                .load(Uri.parse(url.toURI().toString()))
                 .error(R.drawable.ic_broken_image)
                 .into(imageView)
     }
