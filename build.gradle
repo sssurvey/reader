@@ -24,6 +24,6 @@ allprojects {
     }
 }
 
-task clean(type: Delete, group: 'build', description: 'clear the build dir') {
+task clean(type: Delete, group: 'build', description: 'clear the build dir for entire Reader project.') {
     delete rootProject.buildDir
 }
