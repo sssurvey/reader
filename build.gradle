@@ -9,7 +9,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_build_tool_version"
@@ -24,6 +23,8 @@ allprojects {
     }
 }
 
-task clean(type: Delete, group: 'build', description: 'clear the build dir for entire Reader project.') {
+tasks.register("clean", Delete) {
+    group = 'build'
+    description = "clear the build dir for entire Reader project."
     delete rootProject.buildDir
 }
