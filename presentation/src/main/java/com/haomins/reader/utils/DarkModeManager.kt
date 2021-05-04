@@ -2,9 +2,9 @@ package com.haomins.reader.utils
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import com.haomins.www.model.model.SharedPreferenceKey
-import com.haomins.www.model.util.getBoolean
-import com.haomins.www.model.util.putValue
+import com.haomins.www.data.model.SharedPreferenceKey
+import com.haomins.www.data.util.getBoolean
+import com.haomins.www.data.util.putValue
 import javax.inject.Inject
 import javax.inject.Singleton
 

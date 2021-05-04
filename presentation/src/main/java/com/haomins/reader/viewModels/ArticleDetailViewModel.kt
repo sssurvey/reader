@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.haomins.reader.utils.DarkModeManager
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleDetailFragment
-import com.haomins.www.model.model.entities.ArticleEntity
-import com.haomins.www.model.repositories.ArticleDetailRepository
+import com.haomins.www.data.model.entities.ArticleEntity
+import com.haomins.www.data.repositories.ArticleDetailRepository
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject

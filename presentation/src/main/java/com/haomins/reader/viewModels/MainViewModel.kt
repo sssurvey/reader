@@ -2,8 +2,8 @@ package com.haomins.reader.viewModels
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
-import com.haomins.www.model.model.SharedPreferenceKey
-import com.haomins.www.model.util.getString
+import com.haomins.www.data.model.SharedPreferenceKey
+import com.haomins.www.data.util.getString
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
