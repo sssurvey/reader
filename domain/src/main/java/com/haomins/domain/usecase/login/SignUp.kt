@@ -7,7 +7,7 @@ import com.haomins.domain.usecase.SingleUseCase
 import io.reactivex.Single
 import javax.inject.Inject
 
-class UserSignUp @Inject constructor(
+class SignUp @Inject constructor(
         private val loginRepositoryContract: LoginRepositoryContract,
         postExecutionScheduler: PostExecutionScheduler,
         executionScheduler: ExecutionScheduler

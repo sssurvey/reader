@@ -97,20 +97,15 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginSignUpDescriptionOnClick() {
-        startActivity(
-                Intent(
-                        Intent.ACTION_VIEW,
-                        loginViewModel.getGenerateAccountForGoogleOrFacebookUrl()
-                )
-        )
+        loginViewModel.getGenerateAccountForGoogleOrFacebookUrl {
+            startActivity(Intent(Intent.ACTION_VIEW, it))
+        }
     }
 
     private fun loginButtonOnClick() {
         loginViewModel.authorize(
-                user = Pair(
-                        login_username_edit_text.text.toString(),
-                        login_password_edit_text.text.toString()
-                )
+                userName = login_username_edit_text.text.toString(),
+                userPassword = login_password_edit_text.text.toString()
         )
     }
 

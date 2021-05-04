@@ -9,11 +9,11 @@ import com.haomins.domain.usecase.SingleUseCase
 import io.reactivex.Single
 import javax.inject.Inject
 
-class UserLogin @Inject constructor(
+class Login @Inject constructor(
         private val loginRepositoryContract: LoginRepositoryContract,
         executionScheduler: ExecutionScheduler,
         postExecutionScheduler: PostExecutionScheduler
-) : SingleUseCase<UserLogin.Companion.Param, UserAuthResponseModel>(
+) : SingleUseCase<Login.Companion.Param, UserAuthResponseModel>(
         executionScheduler = executionScheduler,
         postExecutionScheduler = postExecutionScheduler
 ) {
