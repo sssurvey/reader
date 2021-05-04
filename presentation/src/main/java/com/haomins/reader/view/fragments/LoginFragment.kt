@@ -91,7 +91,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun signUpButtonOnClick() {
-        startActivity(Intent(Intent.ACTION_VIEW, loginViewModel.getSignUpUrl()))
+        loginViewModel.onSignUp {
+            startActivity(Intent(Intent.ACTION_VIEW, it))
+        }
     }
 
     private fun loginSignUpDescriptionOnClick() {

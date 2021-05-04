@@ -5,7 +5,7 @@ import io.reactivex.Single
 
 interface LoginRepositoryContract {
 
-    fun login(user: Pair<String, String>): Single<UserAuthResponseModel>
+    fun login(userName: String, userPassword: String): Single<UserAuthResponseModel>
 
     fun getSignUpUrlString(): String
 
