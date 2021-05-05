@@ -1,8 +1,13 @@
 package com.haomins.www.data.repositories
 
-import com.haomins.www.data.TestSchedulingStrategy
+import android.content.SharedPreferences
+import com.haomins.www.data.mapper.UserAuthResponseModelMapper
+import com.haomins.www.data.model.SharedPreferenceKey
 import com.haomins.www.data.model.responses.user.UserAuthResponseModel
 import com.haomins.www.data.service.TheOldReaderService
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -21,19 +26,24 @@ class LoginRepositoryTest {
     @Mock
     lateinit var mockTheOldReaderService: TheOldReaderService
 
-    private val testScheduler = TestScheduler()
-    private val testSchedulingStrategy =
-            TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
+    @Mock
+    lateinit var mockSharedPreferences: SharedPreferences
+
+    @Mock
+    lateinit var mockSharedPreferencesEditor: SharedPreferences.Editor
+
     private lateinit var loginRepository: LoginRepository
+    private val testScheduler = TestScheduler()
+    private val testException = Exception("test exception")
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         loginRepository = LoginRepository(
                 theOldReaderService = mockTheOldReaderService,
-                defaultSchedulingStrategy = testSchedulingStrategy
+                sharedPreferences = mockSharedPreferences,
+                userAuthResponseModelMapper = UserAuthResponseModelMapper()
         )
-        mockHelper()
     }
 
     @After
@@ -41,18 +51,54 @@ class LoginRepositoryTest {
     }
 
     @Test
-    fun `test start() login call`() {
-        val observer = TestObserver<UserAuthResponseModel>()
+    fun `test start() login call success`() {
+
+        fun mockBehavior() {
+            `when`(mockSharedPreferences.edit()).thenReturn(mockSharedPreferencesEditor)
+            `when`(mockSharedPreferencesEditor.putString(
+                    any(),
+                    any()
+            )).thenReturn(mockSharedPreferencesEditor)
+        }
+
+        mockOldReaderServiceBehavior(throwException = false)
+        mockBehavior()
+
+        val observer = TestObserver<com.haomins.domain.model.UserAuthResponseModel>()
         loginRepository
-                .start(Pair("testId", "testPassword"))
+                .login("testId", "testPassword")
+                .observeOn(testScheduler)
                 .subscribe(observer)
         observer.assertSubscribed()
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         observer.assertComplete()
+        verify(mockSharedPreferencesEditor, times(1)).putString(SharedPreferenceKey.AUTH_CODE_KEY.string, "testAuth")
         assertEquals(1, observer.valueCount())
-        assertEquals("testSid", observer.values().first().sid)
-        assertEquals("testLsid", observer.values().first().lsid)
         assertEquals("testAuth", observer.values().first().auth)
+    }
+
+    @Test
+    fun `test start() login call fail`() {
+
+        fun mockBehavior() {
+            `when`(mockSharedPreferences.edit()).thenReturn(mockSharedPreferencesEditor)
+            `when`(mockSharedPreferencesEditor.remove(
+                    any()
+            )).thenReturn(mockSharedPreferencesEditor)
+        }
+
+        mockOldReaderServiceBehavior(throwException = true)
+        mockBehavior()
+
+        val observer = TestObserver<com.haomins.domain.model.UserAuthResponseModel>()
+        loginRepository
+                .login("testId", "testPassword")
+                .observeOn(testScheduler)
+                .subscribe(observer)
+        observer.assertSubscribed()
+        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
+        observer.assertError(testException)
+        verify(mockSharedPreferencesEditor, times(1)).remove(SharedPreferenceKey.AUTH_CODE_KEY.string)
     }
 
     @Test
@@ -71,7 +117,7 @@ class LoginRepositoryTest {
         )
     }
 
-    private fun mockHelper() {
+    private fun mockOldReaderServiceBehavior(throwException: Boolean) {
         `when`(
                 mockTheOldReaderService
                         .loginUser(
@@ -84,14 +130,18 @@ class LoginRepositoryTest {
                         )
         )
                 .thenReturn(
-                        Single.timer(100, TimeUnit.MILLISECONDS, testScheduler).flatMap {
-                            Single.just(
-                                    UserAuthResponseModel(
-                                            sid = "testSid",
-                                            lsid = "testLsid",
-                                            auth = "testAuth"
-                                    )
-                            )
+                        if (!throwException) {
+                            Single.timer(100, TimeUnit.MILLISECONDS, testScheduler).flatMap {
+                                Single.just(
+                                        UserAuthResponseModel(
+                                                sid = "testSid",
+                                                lsid = "testLsid",
+                                                auth = "testAuth"
+                                        )
+                                )
+                            }
+                        } else {
+                            Single.error(testException)
                         }
                 )
     }
