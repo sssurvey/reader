@@ -5,18 +5,18 @@ import com.haomins.domain.model.AddSourceResponseModel
 import com.haomins.domain.repositories.AddSourceRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
-import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
 import com.haomins.domain.usecase.SingleUseCase
+import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
 import io.reactivex.Single
 import javax.inject.Inject
 
 class AddNewSource @Inject constructor(
-    private val addSourceRepositoryContract: AddSourceRepositoryContract,
-    executionScheduler: ExecutionScheduler,
-    postExecutionScheduler: PostExecutionScheduler
+        private val addSourceRepositoryContract: AddSourceRepositoryContract,
+        executionScheduler: ExecutionScheduler,
+        postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<AddNewSource.Companion.Param, AddSourceResponseModel>(
-    executionScheduler,
-    postExecutionScheduler
+        executionScheduler,
+        postExecutionScheduler
 ) {
 
     /**
@@ -35,18 +35,19 @@ class AddNewSource @Inject constructor(
         if (params == null) throw ParamsShouldNotBeNullException()
         else {
             return addSourceRepositoryContract
-                .addSource(params.source)
+                    .addSource(params.source)
         }
     }
 
     companion object {
 
         data class Param(
-            val source: String
+                val source: String
         )
 
         /**
-         *  Create {code String} source in the typical rss format in String: {@code "rss.example.com"}
+         *  Create {@code Param} with {@code source} in the typical rss format in String:
+         *  {@code "rss.example.com"}.
          *
          *  @param source String rss url
          *  @return {$code AddNewRssSource.Param}
@@ -56,7 +57,8 @@ class AddNewSource @Inject constructor(
         }
 
         /**
-         *  Create {code String} source in the Medium source format in String: {@code "medium.com/feed/${your_source}"}
+         *  Create {code Param} with {@code source} in the Medium source format in String:
+         *  {@code "medium.com/feed/${your_source}"}.
          *
          *  @param source String Medium url
          *  @return {$code AddNewRssSource.Param}
