@@ -1,58 +1,78 @@
 package com.haomins.reader.viewModels
 
-import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.www.model.model.SharedPreferenceKey
-import com.haomins.www.model.repositories.LoginRepository
-import com.haomins.www.model.util.putValue
-import com.haomins.www.model.util.removeValue
-import io.reactivex.disposables.Disposable
+import com.haomins.domain.model.UserAuthResponseModel
+import com.haomins.domain.usecase.login.GenerateAccount
+import com.haomins.domain.usecase.login.Login
+import com.haomins.domain.usecase.login.SignUp
+import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
-        private val loginRepository: LoginRepository,
-        private val sharedPreferences: SharedPreferences
+        private val signUp: SignUp,
+        private val login: Login,
+        private val generateAccount: GenerateAccount
 ) : ViewModel() {
 
     companion object {
         const val TAG = "LoginViewModel"
     }
 
-    val isUserLoggedIn by lazy { MutableLiveData(false) }
-    private lateinit var disposable: Disposable
+    private val _isUserLoggedIn by lazy { MutableLiveData(false) }
+    val isUserLoggedIn: LiveData<Boolean> = _isUserLoggedIn
 
-    fun authorize(user: Pair<String, String>) {
-        disposable = loginRepository
-                .start(user)
-                .doOnSuccess { isUserLoggedIn.postValue(true) }
-                .doOnError { isUserLoggedIn.postValue(false) }
-                .subscribe({
-                    saveAuthCode(it.auth)
-                }, {
-                    clearAuthCode()
-                })
+    fun authorize(userName: String, userPassword: String) {
+        login.execute(
+                observer = object : DisposableSingleObserver<UserAuthResponseModel>() {
+                    override fun onSuccess(t: UserAuthResponseModel) {
+                        _isUserLoggedIn.postValue(true)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        _isUserLoggedIn.postValue(false)
+                        Log.e(TAG, "userLogin :: onError -> ${e.printStackTrace()}")
+                    }
+                },
+                params = Login.forUserLogin(userName = userName, userPassword = userPassword)
+        )
     }
 
-    fun getSignUpUrl(): Uri {
-        return Uri.parse(loginRepository.getSignUpUrlString())
+    fun onSignUp(action: (Uri) -> Unit) {
+        signUp.execute(
+                observer = object : DisposableSingleObserver<String>() {
+                    override fun onSuccess(t: String) {
+                        action.invoke(Uri.parse(t))
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.e(TAG, "userSignUp :: onError -> ${e.printStackTrace()}")
+                    }
+                }
+        )
     }
 
-    fun getGenerateAccountForGoogleOrFacebookUrl(): Uri {
-        return Uri.parse(loginRepository.getGenerateAccountUrlString())
-    }
+    fun getGenerateAccountForGoogleOrFacebookUrl(action: (Uri) -> Unit) {
+        generateAccount.execute(
+                observer = object : DisposableSingleObserver<String>() {
+                    override fun onSuccess(t: String) {
+                        action.invoke(Uri.parse(t))
+                    }
 
-    private fun saveAuthCode(auth: String) {
-        sharedPreferences.putValue(SharedPreferenceKey.AUTH_CODE_KEY, auth)
-    }
-
-    private fun clearAuthCode() {
-        sharedPreferences.removeValue(SharedPreferenceKey.AUTH_CODE_KEY)
+                    override fun onError(e: Throwable) {
+                        Log.e(TAG, "userGenerateAccount :: onError -> ${e.printStackTrace()}")
+                    }
+                }
+        )
     }
 
     override fun onCleared() {
         super.onCleared()
-        disposable.dispose()
+        login.dispose()
+        signUp.dispose()
+        generateAccount.dispose()
     }
 }
