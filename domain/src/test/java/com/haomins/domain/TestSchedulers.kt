@@ -9,15 +9,27 @@ object TestSchedulers {
 
     private val executionScheduler by lazy {
         object : ExecutionScheduler {
+
+            private val testScheduler by lazy {
+                TestScheduler()
+            }
+
             override val scheduler: Scheduler
-                get() = TestScheduler()
+                get() = testScheduler
+
         }
     }
 
     private val postExecutionScheduler by lazy {
         object : PostExecutionScheduler {
+
+            private val testScheduler by lazy {
+                TestScheduler()
+            }
+
             override val scheduler: Scheduler
-                get() = TestScheduler()
+                get() = testScheduler
+
         }
     }
 
