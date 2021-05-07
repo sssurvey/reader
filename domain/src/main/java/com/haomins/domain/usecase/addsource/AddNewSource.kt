@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.addsource
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.model.AddSourceResponseModel
+import com.haomins.domain.model.responses.AddSourceResponseModel
 import com.haomins.domain.repositories.AddSourceRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
@@ -50,7 +50,7 @@ class AddNewSource @Inject constructor(
          *  {@code "rss.example.com"}.
          *
          *  @param source String rss url
-         *  @return {$code AddNewRssSource.Param}
+         *  @return {@code AddNewRssSource.Param}
          */
         fun forAddNewRssSource(source: String): Param {
             return Param(source)
@@ -61,7 +61,7 @@ class AddNewSource @Inject constructor(
          *  {@code "medium.com/feed/${your_source}"}.
          *
          *  @param source String Medium url
-         *  @return {$code AddNewRssSource.Param}
+         *  @return {@code AddNewRssSource.Param}
          */
         fun forAddingNewMediumSource(source: String): Param {
             return Param(MEDIUM_RSS_FEED_BASE + source)

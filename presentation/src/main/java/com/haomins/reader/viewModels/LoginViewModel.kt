@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.model.UserAuthResponseModel
+import com.haomins.domain.model.responses.UserAuthResponseModel
 import com.haomins.domain.usecase.login.GenerateAccount
 import com.haomins.domain.usecase.login.Login
 import com.haomins.domain.usecase.login.SignUp

@@ -1,7 +1,7 @@
 package com.haomins.www.data.repositories
 
 import android.content.SharedPreferences
-import com.haomins.domain.model.UserAuthResponseModel
+import com.haomins.domain.model.responses.UserAuthResponseModel
 import com.haomins.domain.repositories.LoginRepositoryContract
 import com.haomins.www.data.mapper.UserAuthResponseModelMapper
 import com.haomins.www.data.model.SharedPreferenceKey
