@@ -50,7 +50,7 @@ class AddNewSource @Inject constructor(
          *  {@code "rss.example.com"}.
          *
          *  @param source String rss url
-         *  @return {$code AddNewRssSource.Param}
+         *  @return {@code AddNewRssSource.Param}
          */
         fun forAddNewRssSource(source: String): Param {
             return Param(source)
@@ -61,7 +61,7 @@ class AddNewSource @Inject constructor(
          *  {@code "medium.com/feed/${your_source}"}.
          *
          *  @param source String Medium url
-         *  @return {$code AddNewRssSource.Param}
+         *  @return {@code AddNewRssSource.Param}
          */
         fun forAddingNewMediumSource(source: String): Param {
             return Param(MEDIUM_RSS_FEED_BASE + source)
