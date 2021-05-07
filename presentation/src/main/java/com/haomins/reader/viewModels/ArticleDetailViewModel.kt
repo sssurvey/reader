@@ -1,19 +1,19 @@
 package com.haomins.reader.viewModels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.domain.usecase.articledetails.LoadArticleData
 import com.haomins.reader.utils.DarkModeManager
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleDetailFragment
-import com.haomins.www.data.model.entities.ArticleEntity
-import com.haomins.www.data.repositories.ArticleDetailRepository
-import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
 class ArticleDetailViewModel @Inject constructor(
-        private val articleDetailRepository: ArticleDetailRepository,
+        private val loadArticleData: LoadArticleData,
         private val dateUtils: DateUtils,
         private val darkModeManager: DarkModeManager
 ) : ViewModel() {
@@ -22,21 +22,24 @@ class ArticleDetailViewModel @Inject constructor(
         const val TAG = "ArticleDetailViewModel"
     }
 
-    private val disposables = CompositeDisposable()
-
-    val contentDataForDisplay by lazy {
+    private val _contentDataForDisplay by lazy {
         MutableLiveData<ArticleDetailFragment.ArticleDetailUiItem>()
     }
+    val contentDataForDisplay: LiveData<ArticleDetailFragment.ArticleDetailUiItem> = _contentDataForDisplay
 
     fun loadArticleDetail(itemId: String) {
-        disposables.add(
-                articleDetailRepository
-                        .loadArticleDetail(itemId)
-                        .flatMap { mapArticleEntityToUiItem(it) }
-                        .subscribe(
-                                { contentDataForDisplay.postValue(it) },
-                                { Log.d(TAG, "onError :: ${it.printStackTrace()}") }
-                        )
+        loadArticleData.execute(
+                object : DisposableSingleObserver<ArticleEntity>() {
+                    override fun onSuccess(t: ArticleEntity) {
+                        _contentDataForDisplay.postValue(mapArticleEntityToUiItem(t))
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.e(TAG, "loadArticleData :: onError${e.printStackTrace()}")
+                    }
+
+                },
+                params = LoadArticleData.forLoadArticleContent(articleId = itemId)
         )
     }
 
@@ -46,18 +49,16 @@ class ArticleDetailViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        disposables.dispose()
+        loadArticleData.dispose()
     }
 
-    private fun mapArticleEntityToUiItem(articleEntity: ArticleEntity): Single<ArticleDetailFragment.ArticleDetailUiItem> {
-        return Single.fromCallable {
-            ArticleDetailFragment.ArticleDetailUiItem(
-                    title = articleEntity.itemTitle,
-                    updateTime = dateUtils.to24HrString(articleEntity.itemUpdatedMillisecond),
-                    author = articleEntity.author,
-                    contentHtmlData = articleEntity.content
-            )
-        }
+    private fun mapArticleEntityToUiItem(articleEntity: ArticleEntity): ArticleDetailFragment.ArticleDetailUiItem {
+        return ArticleDetailFragment.ArticleDetailUiItem(
+                title = articleEntity.itemTitle,
+                updateTime = dateUtils.to24HrString(articleEntity.itemUpdatedMillisecond),
+                author = articleEntity.author,
+                contentHtmlData = articleEntity.content
+        )
     }
 
 }
