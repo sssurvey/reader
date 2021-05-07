@@ -23,7 +23,6 @@ class ArticleDetailRepository @Inject constructor(
         return roomService
                 .articleDao()
                 .selectArticleByItemId(itemId)
-                .doOnError { Log.d(TAG, "onError :: ${it.printStackTrace()}") }
                 .map {
                     articleEntityMapper.dataModelToDomainModel(it)
                 }
