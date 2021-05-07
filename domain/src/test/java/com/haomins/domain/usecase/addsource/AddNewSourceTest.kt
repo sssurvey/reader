@@ -2,7 +2,7 @@ package com.haomins.domain.usecase.addsource
 
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.model.AddSourceResponseModel
+import com.haomins.domain.model.responses.AddSourceResponseModel
 import com.haomins.domain.repositories.AddSourceRepositoryContract
 import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
 import com.nhaarman.mockitokotlin2.verify

@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.login
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.model.UserAuthResponseModel
+import com.haomins.domain.model.responses.UserAuthResponseModel
 import com.haomins.domain.repositories.LoginRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler

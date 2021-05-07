@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.model.AddSourceResponseModel
+import com.haomins.domain.model.responses.AddSourceResponseModel
 import com.haomins.domain.usecase.addsource.AddNewSource
 import com.haomins.reader.R
 import io.reactivex.observers.DisposableSingleObserver
