@@ -19,7 +19,7 @@ import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.activities.ArticleListActivity.Mode
 import com.haomins.reader.viewModels.ArticleListViewModel
-import com.haomins.www.data.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
+import com.haomins.data.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
 

@@ -4,7 +4,7 @@ import android.app.Application
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.di.modules.PresentationModule
 import com.haomins.reader.viewModels.di.ViewModelComponent
-import com.haomins.www.data.di.DataModule
+import com.haomins.data.di.DataModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
