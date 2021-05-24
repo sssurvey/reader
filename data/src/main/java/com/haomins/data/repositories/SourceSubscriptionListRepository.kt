@@ -1,18 +1,15 @@
 package com.haomins.data.repositories
 
 import android.content.SharedPreferences
-import android.widget.ImageView
-import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.SubscriptionEntity
 import com.haomins.data.model.responses.subscription.SubscriptionItemModel
 import com.haomins.data.model.responses.subscription.SubscriptionSourceListResponseModel
-import com.haomins.data.service.GlideService
 import com.haomins.data.service.RoomService
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
 import io.reactivex.Single
-import java.net.URL
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,9 +18,8 @@ class SourceSubscriptionListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val subscriptionEntityMapper: SubscriptionEntityMapper,
     private val roomService: RoomService,
-    private val glideService: GlideService,
     private val sharedPreferences: SharedPreferences
-): SourceSubscriptionListRepositoryContract {
+) : SourceSubscriptionListRepositoryContract {
 
     override fun loadSubscriptionList(): Single<List<com.haomins.domain.model.entities.SubscriptionEntity>> {
         return theOldReaderService
@@ -36,10 +32,6 @@ class SourceSubscriptionListRepository @Inject constructor(
                     subscriptionEntityMapper.dataModelToDomainModel(it)
                 }
             }
-    }
-
-    fun loadIconImage(imageView: ImageView, url: URL) {
-        glideService.loadIconImage(imageView, url)
     }
 
     private fun retrieveSubListFromDB(): Single<List<SubscriptionEntity>> {

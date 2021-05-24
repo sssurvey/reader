@@ -6,16 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.data.model.entities.SubscriptionEntity
-import com.haomins.data.repositories.SourceSubscriptionListRepository
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.usecase.source.LoadSubscriptionList
+import com.haomins.reader.utils.GlideUtils
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URL
 import javax.inject.Inject
 
 class SourceTitleListViewModel @Inject constructor(
-    private val sourceSubscriptionListRepository: SourceSubscriptionListRepository,
-    private val loadSubscriptionList: LoadSubscriptionList
+    private val loadSubscriptionList: LoadSubscriptionList,
+    private val glideUtils: GlideUtils
 ) : ViewModel() {
 
     companion object {
@@ -35,7 +35,7 @@ class SourceTitleListViewModel @Inject constructor(
     }
 
     fun loadImageIcon(imageView: ImageView, url: URL) {
-        sourceSubscriptionListRepository.loadIconImage(imageView, url)
+        glideUtils.loadIconImage(imageView, url)
     }
 
     fun loadSourceSubscriptionList() {
