@@ -7,7 +7,7 @@ ext {
     def room_version = "2.2.3"
     def glide_version = "4.11.0"
     def rx_java_version = "2.2.6"
-    def mockito_kotlin2_version = "2.2.0"
+    def mockito_kotlin2_version = "3.2.0"
     def junit_version = "4.12"
     def mockito_version = "2.13.0"
 
@@ -72,7 +72,7 @@ ext {
 
     domainTestImplementation = [
             "junit:junit:$junit_version",
-            "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin2_version",
+            "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin2_version",
             "org.mockito:mockito-inline:$mockito_version"
     ]
 
@@ -83,7 +83,7 @@ ext {
 
     dataTestImplementation = [
             "junit:junit:$junit_version",
-            "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin2_version",
+            "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin2_version",
             "org.mockito:mockito-inline:$mockito_version"
     ]
 

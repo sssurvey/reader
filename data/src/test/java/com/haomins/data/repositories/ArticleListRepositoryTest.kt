@@ -7,8 +7,6 @@ import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.ArticleEntity
 import com.haomins.data.service.RoomService
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -20,6 +18,8 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.times
 import org.mockito.MockitoAnnotations
 import org.mockito.Spy
+import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import java.util.concurrent.TimeUnit
 
 class ArticleListRepositoryTest {

@@ -5,7 +5,6 @@ import com.haomins.domain.model.responses.AddSourceResponseModel
 import com.haomins.data.mapper.responsemapper.AddSourceResponseModelMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.service.TheOldReaderService
-import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import junit.framework.Assert.assertTrue
@@ -15,6 +14,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.times
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.verify
 
 class AddSourceRepositoryTest {
 

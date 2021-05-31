@@ -1,10 +1,9 @@
 package com.haomins.data.repositories
 
-import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.service.RoomService
-import com.nhaarman.mockitokotlin2.any
+import com.haomins.domain.model.entities.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -14,6 +13,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
 import java.util.concurrent.TimeUnit
 
 class ArticleDetailRepositoryTest {

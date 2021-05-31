@@ -5,9 +5,6 @@ import com.haomins.data.mapper.responsemapper.UserAuthResponseModelMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.responses.user.UserAuthResponseModel
 import com.haomins.data.service.TheOldReaderService
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -19,6 +16,9 @@ import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 import java.util.concurrent.TimeUnit
 
 class LoginRepositoryTest {
