@@ -10,7 +10,8 @@ class SubscriptionEntityMapper @Inject constructor() :
     override fun dataModelToDomainModel(dataModel: SubscriptionEntity): com.haomins.domain.model.entities.SubscriptionEntity {
         return com.haomins.domain.model.entities.SubscriptionEntity(
             title = dataModel.title,
-            iconUrl = dataModel.iconUrl
+            iconUrl = dataModel.iconUrl,
+            id = dataModel.id
         )
     }
 

@@ -5,8 +5,8 @@ import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.data.model.entities.SubscriptionEntity
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.domain.model.entities.SubscriptionEntity
 import com.haomins.domain.usecase.source.LoadSubscriptionList
 import com.haomins.reader.utils.GlideUtils
 import io.reactivex.observers.DisposableSingleObserver
@@ -41,8 +41,9 @@ class SourceTitleListViewModel @Inject constructor(
     fun loadSourceSubscriptionList() {
         loadSubscriptionList.execute(
             object :
-                DisposableSingleObserver<List<com.haomins.domain.model.entities.SubscriptionEntity>>() {
-                override fun onSuccess(t: List<com.haomins.domain.model.entities.SubscriptionEntity>) {
+                DisposableSingleObserver<List<SubscriptionEntity>>() {
+                override fun onSuccess(t: List<SubscriptionEntity>) {
+                    sourceListData = t
                     _sourceListUiDataSet.postValue(populateSubSourceDataSet(t))
                     Log.d(TAG, "loadSubscriptionList :: onSuccess")
                 }
@@ -55,7 +56,7 @@ class SourceTitleListViewModel @Inject constructor(
         )
     }
 
-    private fun populateSubSourceDataSet(subscriptionEntities: List<com.haomins.domain.model.entities.SubscriptionEntity>): MutableList<Pair<String, URL>> {
+    private fun populateSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>): MutableList<Pair<String, URL>> {
         return mutableListOf<Pair<String, URL>>().apply {
             subscriptionEntities.forEach {
                 add(it.title to URL(TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl))
