@@ -5,7 +5,6 @@ import com.haomins.domain.exception.ParamsShouldNotBeNullException
 import com.haomins.domain.model.responses.AddSourceResponseModel
 import com.haomins.domain.repositories.AddSourceRepositoryContract
 import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
-import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -16,6 +15,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.internal.verification.Times
+import org.mockito.kotlin.verify
 import java.util.concurrent.TimeUnit
 
 

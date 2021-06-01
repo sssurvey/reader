@@ -7,7 +7,7 @@ ext {
     def room_version = "2.2.3"
     def glide_version = "4.11.0"
     def rx_java_version = "2.2.6"
-    def mockito_kotlin2_version = "2.2.0"
+    def mockito_kotlin2_version = "3.2.0"
     def junit_version = "4.12"
     def mockito_version = "2.13.0"
 
@@ -29,12 +29,15 @@ ext {
             "androidx.cardview:cardview:1.0.0",
             "androidx.cardview:cardview:1.0.0",
             "androidx.viewpager2:viewpager2:1.0.0",
-            'com.google.android.material:material:1.1.0'
+            'com.google.android.material:material:1.1.0',
+            "com.github.bumptech.glide:glide:$glide_version",
+            "com.github.bumptech.glide:annotations:$glide_version"
     ]
 
     appKaptDependencies = [
             "android.arch.lifecycle:compiler:$android_arch_lifecycle_version",
             "com.google.dagger:dagger-compiler:$dagger_version",
+            "com.github.bumptech.glide:compiler:$glide_version"
     ]
 
     domainDependencies = [
@@ -52,8 +55,6 @@ ext {
             "io.reactivex.rxjava2:rxjava:$rx_java_version",
             'io.reactivex.rxjava2:rxandroid:2.1.1',
             'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0',
-            "com.github.bumptech.glide:glide:$glide_version",
-            "com.github.bumptech.glide:annotations:$glide_version",
             'com.squareup.okhttp3:logging-interceptor:3.8.0',
             "com.google.dagger:dagger:$dagger_version",
             "androidx.room:room-runtime:$room_version",
@@ -62,9 +63,7 @@ ext {
 
     dataKaptDependencies = [
             "com.google.dagger:dagger-compiler:$dagger_version",
-
-            "androidx.room:room-compiler:$room_version",
-            "com.github.bumptech.glide:compiler:$glide_version"
+            "androidx.room:room-compiler:$room_version"
     ]
 
     appTestImplementation = [
@@ -73,7 +72,7 @@ ext {
 
     domainTestImplementation = [
             "junit:junit:$junit_version",
-            "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin2_version",
+            "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin2_version",
             "org.mockito:mockito-inline:$mockito_version"
     ]
 
@@ -84,7 +83,7 @@ ext {
 
     dataTestImplementation = [
             "junit:junit:$junit_version",
-            "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin2_version",
+            "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin2_version",
             "org.mockito:mockito-inline:$mockito_version"
     ]
 
