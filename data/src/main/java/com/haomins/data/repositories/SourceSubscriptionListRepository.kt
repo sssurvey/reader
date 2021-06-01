@@ -1,6 +1,7 @@
 package com.haomins.data.repositories
 
 import android.content.SharedPreferences
+import androidx.annotation.VisibleForTesting
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.SubscriptionEntity
@@ -68,5 +69,11 @@ class SourceSubscriptionListRepository @Inject constructor(
                 iconUrl = it.iconUrl
             )
         }
+    }
+
+    @VisibleForTesting
+    fun convertSubscriptionItemModelToEntityForTesting(subscriptions: ArrayList<SubscriptionItemModel>)
+            : List<SubscriptionEntity> {
+        return convertSubscriptionItemModelToEntity(subscriptions)
     }
 }

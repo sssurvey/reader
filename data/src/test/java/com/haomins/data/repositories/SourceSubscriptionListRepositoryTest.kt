@@ -11,11 +11,15 @@ import com.haomins.domain.model.entities.SubscriptionEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import org.junit.After
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,7 +48,6 @@ class SourceSubscriptionListRepositoryTest {
             sharedPreferences = mockSharedPreference,
             subscriptionEntityMapper = SubscriptionEntityMapper()
         )
-        mockHelper()
     }
 
     @After
@@ -52,100 +55,109 @@ class SourceSubscriptionListRepositoryTest {
     }
 
     @Test
-    fun `test loadSubscriptionList()`() {
+    fun `test loadSubscriptionList() success`() {
+
+        fun mockHelper() {
+
+            `when`(mockSharedPreference.getString(SharedPreferenceKey.AUTH_CODE_KEY.string, ""))
+                .thenReturn("test_key")
+
+            `when`(
+                mockTheOldReaderService.loadSubscriptionSourceList(
+                    headerAuthValue = TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
+                            + mockSharedPreference.getString(
+                        SharedPreferenceKey.AUTH_CODE_KEY.string,
+                        ""
+                    )
+                )
+            ).thenReturn(
+                Single.fromCallable(::generateSourceListResponse)
+            )
+
+            `when`(mockRoomService.subscriptionDao()).thenReturn(mockSubscriptionDao)
+
+            `when`(mockSubscriptionDao.getAll()).thenReturn(
+                Single.fromCallable(::generateSubscriptionListEntity)
+            )
+
+        }
+
+        mockHelper()
 
         val testObserver = TestObserver<List<SubscriptionEntity>>()
+        sourceSubscriptionListRepository
+            .loadSubscriptionList()
+            .subscribeWith(testObserver)
 
+        testObserver.assertSubscribed()
+        testObserver.assertComplete()
 
-
-//        sourceSubscriptionListRepository
-//            .loadSubscriptionList()
-//            .subscribeWith(testObserver)
-//
-//        testObserver.assertComplete()
-
-//        sourceSubscriptionListRepository.loadSubList().subscribe(observer)
-//        observer.assertSubscribed()
-//        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
-//        observer.assertComplete()
+        verify(mockSubscriptionDao, times(1)).insertAll(any())
+        verify(mockSubscriptionDao, times(1)).getAll()
+        assertTrue(testObserver.values().first().size == 100)
     }
 
-//    @Test
-//    fun `test loadIconImage() success`() {
-//        val imageView = Mockito.mock(ImageView::class.java)
-//        val url = Mockito.mock(URL::class.java)
-//        sourceSubscriptionListRepository.loadIconImage(
-//                imageView,
-//                url
-//        )
-//        verify(mockGlideService).loadIconImage(
-//                imageView,
-//                url
-//        )
-//    }
-//
-//    @Test
-//    fun `test retrieveSubListFromDB() success`() {
-//        val observer = TestObserver<List<SubscriptionEntity>>()
-//        sourceSubscriptionListRepository.retrieveSubListFromDB().subscribe(observer)
-//        observer.assertSubscribed()
-//        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
-//        observer.assertComplete()
-//        assertEquals(100, observer.values().first().size)
-//        assertEquals("2103123", observer.values().first().first().firstItemMilSec)
-//    }
-//
-//    @Test
-//    fun `test saveSubListToDB() success with clear table == true`() {
-//        val observer = TestObserver<Unit>()
-//        sourceSubscriptionListRepository.saveSubListToDB(
-//                subscriptionSourceListResponseModel = generateSourceListResponse(),
-//                clearOldTable = true
-//        ).subscribe(observer)
-//        observer.assertSubscribed()
-//        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
-//        verify(mockSubscriptionDao).clearTable()
-//        verify(mockSubscriptionDao).insertAll(com.nhaarman.mockitokotlin2.any())
-//        observer.assertComplete()
-//    }
-//
-//    @Test
-//    fun `test saveSubListToDB() success with clear table == false`() {
-//        val observer = TestObserver<Unit>()
-//        sourceSubscriptionListRepository.saveSubListToDB(
-//                subscriptionSourceListResponseModel = generateSourceListResponse(),
-//                clearOldTable = false
-//        ).subscribe(observer)
-//        observer.assertSubscribed()
-//        testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
-//        verify(mockSubscriptionDao, times(0)).clearTable()
-//        verify(mockSubscriptionDao).insertAll(com.nhaarman.mockitokotlin2.any())
-//        observer.assertComplete()
-//    }
+    @Test
+    fun `test loadSubscriptionList() failed`() {
 
-    private fun mockHelper() {
+        val testException = Exception()
+        val testObserver = TestObserver<List<SubscriptionEntity>>()
 
-        `when`(mockSharedPreference.getString(SharedPreferenceKey.AUTH_CODE_KEY.string, ""))
-            .thenReturn("test_key")
+        fun mockHelper() {
 
-        `when`(
-            mockTheOldReaderService.loadSubscriptionSourceList(
-                headerAuthValue = TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                        + mockSharedPreference.getString(
-                    SharedPreferenceKey.AUTH_CODE_KEY.string,
-                    ""
+            `when`(mockSharedPreference.getString(SharedPreferenceKey.AUTH_CODE_KEY.string, ""))
+                .thenReturn("test_key")
+
+            `when`(
+                mockTheOldReaderService.loadSubscriptionSourceList(
+                    headerAuthValue = TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
+                            + mockSharedPreference.getString(
+                        SharedPreferenceKey.AUTH_CODE_KEY.string,
+                        ""
+                    )
                 )
+            ).thenReturn(
+                Single.error(testException)
             )
-        ).thenReturn(
-            Single.fromCallable(::generateSourceListResponse)
-        )
 
-        `when`(mockRoomService.subscriptionDao()).thenReturn(mockSubscriptionDao)
+            `when`(mockRoomService.subscriptionDao()).thenReturn(mockSubscriptionDao)
 
-        `when`(mockSubscriptionDao.getAll()).thenReturn(
-            Single.fromCallable(::generateSubscriptionListEntity)
-        )
+            `when`(mockSubscriptionDao.getAll()).thenReturn(
+                Single.fromCallable(::generateSubscriptionListEntity)
+            )
 
+        }
+
+        mockHelper()
+
+        sourceSubscriptionListRepository
+            .loadSubscriptionList()
+            .subscribeWith(testObserver)
+
+        testObserver.assertSubscribed()
+        testObserver.assertComplete()
+
+        verify(mockSubscriptionDao, times(0)).insertAll(any())
+        verify(mockSubscriptionDao, times(1)).getAll()
+        assertTrue(testObserver.values().first().size == 100)
+    }
+
+    @Test
+    fun `test convertSubscriptionItemModelToEntity`() {
+        val models = generateSourceListResponse().subscriptions
+        val entities = sourceSubscriptionListRepository.convertSubscriptionItemModelToEntityForTesting(models)
+
+        assertTrue(models.size == entities.size)
+
+        for (index in 0 until models.size) {
+            val entity = entities[index]
+            val model = models[index]
+            assertTrue(entity.id == model.id)
+            assertTrue(entity.firstItemMilSec == model.firstItemMilSec)
+            assertTrue(entity.htmlUrl == model.htmlUrl)
+            assertTrue(entity.iconUrl == model.iconUrl)
+            assertTrue(entity.firstItemMilSec == model.firstItemMilSec)
+        }
     }
 
     private fun generateSubscriptionListEntity(): List<com.haomins.data.model.entities.SubscriptionEntity> {
