@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.data.model.entities.ArticleEntity
 import com.haomins.data.repositories.ArticleListRepository
+import com.haomins.domain.model.entities.ArticleEntity
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
