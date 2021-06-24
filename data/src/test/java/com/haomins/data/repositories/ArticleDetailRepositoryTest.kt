@@ -3,6 +3,7 @@ package com.haomins.data.repositories
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.service.RoomService
+import com.haomins.data.util.DateUtils
 import com.haomins.domain.model.entities.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -24,6 +25,9 @@ class ArticleDetailRepositoryTest {
     @Mock
     lateinit var mockArticleDao: ArticleDao
 
+    @Mock
+    lateinit var mockDateUtils: DateUtils
+
     private val testScheduler = TestScheduler()
     private val testException = Exception("test exception")
 
@@ -31,10 +35,14 @@ class ArticleDetailRepositoryTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
+
+        `when`(mockDateUtils.howLongAgo(any())).thenReturn("1")
+        `when`(mockDateUtils.to24HrString(any())).thenReturn("1")
+
         articleDetailRepository = ArticleDetailRepository(
                 roomService = mockRoomService,
-                articleEntityMapper = ArticleEntityMapper()
+                articleEntityMapper = ArticleEntityMapper(dateUtils = mockDateUtils)
         )
     }
 

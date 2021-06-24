@@ -4,10 +4,12 @@ import android.content.SharedPreferences
 import com.haomins.data.MockTheOldReaderService
 import com.haomins.data.TestSchedulingStrategy
 import com.haomins.data.db.dao.ArticleDao
+import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.ArticleEntity
 import com.haomins.data.service.RoomService
-import io.reactivex.Observable
+import com.haomins.data.util.DateUtils
+import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
@@ -39,16 +41,23 @@ class ArticleListRepositoryTest {
     lateinit var mockArticleDao: ArticleDao
 
     @Mock
+    lateinit var mockDateUtils: DateUtils
+
+    @Mock
     lateinit var mockSharedPreferences: SharedPreferences
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
+
+        `when`(mockDateUtils.howLongAgo(any())).thenReturn("1")
+        `when`(mockDateUtils.to24HrString(any())).thenReturn("1")
+
         articleListRepository = ArticleListRepository(
                 mockTheOldReaderService,
                 mockRoomService,
                 mockSharedPreferences,
-                testSchedulingStrategy
+                ArticleEntityMapper(mockDateUtils)
         )
         mockHelper()
     }
@@ -59,19 +68,21 @@ class ArticleListRepositoryTest {
 
     @Test
     fun `test loadAllArticleItemRefs() order verification`() {
-        val testObserver = TestObserver<List<ArticleEntity>>()
-        articleListRepository.loadAllArticleItemRefs().subscribe(testObserver)
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        articleListRepository.loadAllArticleItemRefs().subscribeWith(testObserver)
         testObserver.assertSubscribed()
         testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockTheOldReaderService, times(1))
+            .loadAllArticles(any(), any(), any(), any(), any())
         verify(mockRoomService, times(20)).articleDao()
         verify(mockArticleDao, times(10)).insert(any())
-        testObserver.assertValueCount(1)
+        testObserver.assertValueCount(10)
         testObserver.assertComplete()
     }
 
     @Test
     fun `test loadArticleItemRefs() order verification`() {
-        val testObserver = TestObserver<List<ArticleEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
         articleListRepository.loadArticleItemRefs("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
@@ -123,7 +134,7 @@ class ArticleListRepositoryTest {
                 .thenReturn(mockArticleDao)
         `when`(mockArticleDao.getAll())
                 .thenReturn(
-                        Observable.just(
+                        Single.just(
                                 mutableListOf(
                                         ArticleEntity(
                                                 "1",
