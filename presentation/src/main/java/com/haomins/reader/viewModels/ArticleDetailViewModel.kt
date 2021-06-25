@@ -7,15 +7,13 @@ import androidx.lifecycle.ViewModel
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.domain.usecase.articledetails.LoadArticleData
 import com.haomins.reader.utils.DarkModeManager
-import com.haomins.reader.utils.DateUtils
 import com.haomins.reader.view.fragments.ArticleDetailFragment
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
 class ArticleDetailViewModel @Inject constructor(
-        private val loadArticleData: LoadArticleData,
-        private val dateUtils: DateUtils,
-        private val darkModeManager: DarkModeManager
+    private val loadArticleData: LoadArticleData,
+    private val darkModeManager: DarkModeManager
 ) : ViewModel() {
 
     companion object {
@@ -55,7 +53,7 @@ class ArticleDetailViewModel @Inject constructor(
     private fun mapArticleEntityToUiItem(articleEntity: ArticleEntity): ArticleDetailFragment.ArticleDetailUiItem {
         return ArticleDetailFragment.ArticleDetailUiItem(
                 title = articleEntity.itemTitle,
-                updateTime = dateUtils.to24HrString(articleEntity.itemUpdatedMillisecond),
+                updateTime = articleEntity.updatedTime,
                 author = articleEntity.author,
                 contentHtmlData = articleEntity.content
         )

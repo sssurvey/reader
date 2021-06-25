@@ -6,11 +6,8 @@ import com.haomins.data.model.responses.subscription.SubscriptionSourceListRespo
 import com.haomins.data.model.responses.user.UserAuthResponseModel
 import com.haomins.data.service.TheOldReaderService
 import io.reactivex.Single
-import java.util.concurrent.TimeUnit
 
-class MockTheOldReaderService(
-        private val testSchedulingStrategy: TestSchedulingStrategy
-) : TheOldReaderService {
+class MockTheOldReaderService: TheOldReaderService {
 
     override fun loginUser(
             userEmail: String,
@@ -55,9 +52,7 @@ class MockTheOldReaderService(
             )
         }
 
-        return Single
-                .timer(1000, TimeUnit.MILLISECONDS, testSchedulingStrategy.subscribeOnScheduler)
-                .flatMap { Single.fromCallable(::mockReturn) }
+        return Single.fromCallable(::mockReturn)
     }
 
     override fun loadAllArticles(
@@ -85,9 +80,7 @@ class MockTheOldReaderService(
             )
         }
 
-        return Single
-                .timer(1000, TimeUnit.MILLISECONDS, testSchedulingStrategy.subscribeOnScheduler)
-                .flatMap { Single.fromCallable(::mockReturn) }
+        return Single.fromCallable(::mockReturn)
     }
 
     override fun loadArticleDetailsByRefId(
@@ -124,9 +117,7 @@ class MockTheOldReaderService(
             )
         }
 
-        return Single
-                .timer(1000, TimeUnit.MILLISECONDS, testSchedulingStrategy.subscribeOnScheduler)
-                .flatMap { Single.fromCallable(::mockReturn) }
+        return Single.fromCallable(::mockReturn)
     }
 
     override fun addSubscription(

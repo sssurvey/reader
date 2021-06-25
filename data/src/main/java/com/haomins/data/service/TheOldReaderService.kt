@@ -20,7 +20,7 @@ interface TheOldReaderService {
         const val DEFAULT_PROTOCOL = "https:"
         const val SIGN_UP_PAGE_URL = "https://theoldreader.com/users/sign_up"
         const val GENERATE_ACCOUNT_PAGE_URL = "https://theoldreader.com/users/edit"
-        const val DEFAULT_ARTICLE_AMOUNT = 35
+        const val DEFAULT_ARTICLE_AMOUNT = 10
 
         private const val DEFAULT_OUTPUT_FORMAT = "json"
         private const val DEFAULT_SERVICE_NAME = "reader"

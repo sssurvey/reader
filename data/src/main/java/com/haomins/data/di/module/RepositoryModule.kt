@@ -1,13 +1,7 @@
 package com.haomins.data.di.module
 
-import com.haomins.domain.repositories.AddSourceRepositoryContract
-import com.haomins.domain.repositories.ArticleDetailRepositoryContract
-import com.haomins.domain.repositories.LoginRepositoryContract
-import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
-import com.haomins.data.repositories.AddSourceRepository
-import com.haomins.data.repositories.ArticleDetailRepository
-import com.haomins.data.repositories.LoginRepository
-import com.haomins.data.repositories.SourceSubscriptionListRepository
+import com.haomins.data.repositories.*
+import com.haomins.domain.repositories.*
 import dagger.Binds
 import dagger.Module
 
@@ -30,4 +24,7 @@ interface RepositoryModule {
     fun bindsSourceSubscriptionListRepository(sourceSubscriptionListRepository: SourceSubscriptionListRepository):
             SourceSubscriptionListRepositoryContract
 
+    @Binds
+    fun bindsArticleListRepository(articleListRepository: ArticleListRepository):
+            ArticleListRepositoryContract
 }

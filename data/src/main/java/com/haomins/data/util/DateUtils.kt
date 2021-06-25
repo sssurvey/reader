@@ -1,4 +1,4 @@
-package com.haomins.reader.utils
+package com.haomins.data.util
 
 import android.app.Application
 import android.text.format.DateUtils

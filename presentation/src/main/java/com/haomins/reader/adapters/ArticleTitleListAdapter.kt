@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.reader.R
-import com.haomins.reader.view.fragments.ArticleListFragment
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 
 class ArticleTitleListAdapter(
-        private val articleTitleListUiItems: List<ArticleListFragment.ArticleTitleListUiItem>,
+        private val articleTitleListUiItems: List<ArticleEntity>,
         private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
 ) :
         RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
@@ -38,9 +38,9 @@ class ArticleTitleListAdapter(
     }
 
     override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
-        holder.viewHolder.article_title_text_view.text = articleTitleListUiItems[position].title
+        holder.viewHolder.article_title_text_view.text = articleTitleListUiItems[position].itemTitle
         holder.viewHolder.article_publish_time_text_view.text =
-                articleTitleListUiItems[position].postTime
+                articleTitleListUiItems[position].howLongAgo
         setOnClick(holder, position)
         articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }

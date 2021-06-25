@@ -25,11 +25,11 @@ class LoadArticleDataTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         loadArticleData = LoadArticleData(
-                articleDetailRepositoryContract = mockArticleDetailRepositoryContract,
-                postExecutionScheduler = postExecutionScheduler,
-                executionScheduler = executionScheduler
+            articleDetailRepositoryContract = mockArticleDetailRepositoryContract,
+            postExecutionScheduler = postExecutionScheduler,
+            executionScheduler = executionScheduler
         )
     }
 
@@ -40,31 +40,33 @@ class LoadArticleDataTest {
         val testExecutionScheduler = executionScheduler.scheduler as TestScheduler
         val testId = "test id"
         val testArticleEntity = ArticleEntity(
-                itemTitle = "test title",
-                itemId = testId,
-                author = "test author",
-                content = "test content",
-                itemPublishedMillisecond = 1,
-                itemUpdatedMillisecond = 1
+            itemTitle = "test title",
+            itemId = testId,
+            author = "test author",
+            content = "test content",
+            howLongAgo = "1",
+            updatedTime = "1",
+            itemPublishedMillisecond = 1,
+            itemUpdatedMillisecond = 1
         )
 
         fun mockBehavior() {
             `when`(mockArticleDetailRepositoryContract.loadArticleDetail(testId))
-                    .thenReturn(
-                            Single
-                                    .timer(1, TimeUnit.SECONDS, testExecutionScheduler)
-                                    .flatMap {
-                                        Single.just(testArticleEntity)
-                                    }
-                    )
+                .thenReturn(
+                    Single
+                        .timer(1, TimeUnit.SECONDS, testExecutionScheduler)
+                        .flatMap {
+                            Single.just(testArticleEntity)
+                        }
+                )
         }
 
         mockBehavior()
 
         loadArticleData
-                .buildUseCaseSingle(LoadArticleData.forLoadArticleContent(testId))
-                .subscribeOn(testExecutionScheduler)
-                .subscribeWith(testObserver)
+            .buildUseCaseSingle(LoadArticleData.forLoadArticleContent(testId))
+            .subscribeOn(testExecutionScheduler)
+            .subscribeWith(testObserver)
 
         testExecutionScheduler.advanceTimeBy(2, TimeUnit.SECONDS)
         (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(2, TimeUnit.SECONDS)
@@ -85,21 +87,21 @@ class LoadArticleDataTest {
 
         fun mockBehavior() {
             `when`(mockArticleDetailRepositoryContract.loadArticleDetail(testId))
-                    .thenReturn(
-                            Single
-                                    .timer(1, TimeUnit.SECONDS, testExecutionScheduler)
-                                    .flatMap {
-                                        Single.error(testException)
-                                    }
-                    )
+                .thenReturn(
+                    Single
+                        .timer(1, TimeUnit.SECONDS, testExecutionScheduler)
+                        .flatMap {
+                            Single.error(testException)
+                        }
+                )
         }
 
         mockBehavior()
 
         loadArticleData
-                .buildUseCaseSingle(LoadArticleData.forLoadArticleContent(testId))
-                .subscribeOn(testExecutionScheduler)
-                .subscribeWith(testObserver)
+            .buildUseCaseSingle(LoadArticleData.forLoadArticleContent(testId))
+            .subscribeOn(testExecutionScheduler)
+            .subscribeWith(testObserver)
 
         testExecutionScheduler.advanceTimeBy(2, TimeUnit.SECONDS)
         (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(2, TimeUnit.SECONDS)

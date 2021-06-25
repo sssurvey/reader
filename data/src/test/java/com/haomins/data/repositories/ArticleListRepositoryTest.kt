@@ -2,14 +2,14 @@ package com.haomins.data.repositories
 
 import android.content.SharedPreferences
 import com.haomins.data.MockTheOldReaderService
-import com.haomins.data.TestSchedulingStrategy
 import com.haomins.data.db.dao.ArticleDao
+import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.ArticleEntity
 import com.haomins.data.service.RoomService
-import io.reactivex.Observable
+import com.haomins.data.util.DateUtils
+import io.reactivex.Single
 import io.reactivex.observers.TestObserver
-import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -20,17 +20,13 @@ import org.mockito.MockitoAnnotations
 import org.mockito.Spy
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
-import java.util.concurrent.TimeUnit
 
 class ArticleListRepositoryTest {
 
-    private val testScheduler = TestScheduler()
-    private val testSchedulingStrategy =
-            TestSchedulingStrategy(subscribeOnScheduler = testScheduler)
     private lateinit var articleListRepository: ArticleListRepository
 
     @Spy
-    val mockTheOldReaderService = MockTheOldReaderService(testSchedulingStrategy)
+    val mockTheOldReaderService = MockTheOldReaderService()
 
     @Mock
     lateinit var mockRoomService: RoomService
@@ -39,16 +35,23 @@ class ArticleListRepositoryTest {
     lateinit var mockArticleDao: ArticleDao
 
     @Mock
+    lateinit var mockDateUtils: DateUtils
+
+    @Mock
     lateinit var mockSharedPreferences: SharedPreferences
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
+
+        `when`(mockDateUtils.howLongAgo(any())).thenReturn("1")
+        `when`(mockDateUtils.to24HrString(any())).thenReturn("1")
+
         articleListRepository = ArticleListRepository(
                 mockTheOldReaderService,
                 mockRoomService,
                 mockSharedPreferences,
-                testSchedulingStrategy
+                ArticleEntityMapper(mockDateUtils)
         )
         mockHelper()
     }
@@ -59,27 +62,26 @@ class ArticleListRepositoryTest {
 
     @Test
     fun `test loadAllArticleItemRefs() order verification`() {
-        val testObserver = TestObserver<List<ArticleEntity>>()
-        articleListRepository.loadAllArticleItemRefs().subscribe(testObserver)
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        articleListRepository.loadAllArticleItemRefs().subscribeWith(testObserver)
         testObserver.assertSubscribed()
-        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
+        verify(mockTheOldReaderService, times(1))
+            .loadAllArticles(any(), any(), any(), any(), any())
         verify(mockRoomService, times(20)).articleDao()
         verify(mockArticleDao, times(10)).insert(any())
-        testObserver.assertValueCount(1)
+        testObserver.assertValueCount(10)
         testObserver.assertComplete()
     }
 
     @Test
     fun `test loadArticleItemRefs() order verification`() {
-        val testObserver = TestObserver<List<ArticleEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
         articleListRepository.loadArticleItemRefs("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
                 .loadArticleListByFeed(any(), any(), any(), any(), any())
-        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
-        verify(mockTheOldReaderService, times(10))
+        verify(mockTheOldReaderService, times(1))
                 .loadArticleDetailsByRefId(any(), any(), any())
-        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockRoomService, times(2)).articleDao()
     }
 
@@ -88,13 +90,10 @@ class ArticleListRepositoryTest {
         val testObserver = TestObserver<Unit>()
         articleListRepository.continueLoadAllArticleItemRefs().subscribe(testObserver)
         testObserver.assertSubscribed()
-        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockTheOldReaderService)
                 .loadAllArticles(any(), any(), any(), any(), any())
-        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockTheOldReaderService, times(10))
                 .loadArticleDetailsByRefId(any(), any(), any())
-        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockRoomService, times(10)).articleDao()
     }
 
@@ -103,13 +102,10 @@ class ArticleListRepositoryTest {
         val testObserver = TestObserver<Unit>()
         articleListRepository.continueLoadArticleItemRefs("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
-        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockTheOldReaderService)
                 .loadArticleListByFeed(any(), any(), any(), any(), any())
-        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockTheOldReaderService, times(10))
                 .loadArticleDetailsByRefId(any(), any(), any())
-        testScheduler.advanceTimeBy(2000, TimeUnit.MILLISECONDS)
         verify(mockRoomService, times(10)).articleDao()
     }
 
@@ -123,7 +119,7 @@ class ArticleListRepositoryTest {
                 .thenReturn(mockArticleDao)
         `when`(mockArticleDao.getAll())
                 .thenReturn(
-                        Observable.just(
+                        Single.just(
                                 mutableListOf(
                                         ArticleEntity(
                                                 "1",

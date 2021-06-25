@@ -5,6 +5,8 @@ data class ArticleEntity(
         val itemId: String,
         val author: String,
         val content: String,
+        val howLongAgo: String,
+        val updatedTime: String,
         val itemUpdatedMillisecond: Long,
         val itemPublishedMillisecond: Long
 )
