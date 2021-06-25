@@ -40,6 +40,7 @@ class ArticleListRepository @Inject constructor(
             .doOnError(::onLoadError)
             .flatMapObservable { loadIndividualArticleInformation(it) }
             .onErrorReturn { roomService.articleDao().getAll() }
+//            .doOnNext { Log.d(TAG, "roomService.articleDao().getAll().toObservable() invoked") }
             .flatMap { roomService.articleDao().getAll().toObservable() }
             .flatMap {
                 Observable.just(
