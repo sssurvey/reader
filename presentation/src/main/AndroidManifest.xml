@@ -32,6 +32,7 @@
         <activity android:name="com.haomins.reader.view.activities.SettingsActivity" />
         <activity android:name="com.haomins.reader.view.activities.AddSourceActivity" />
 
+        <!-- Providers -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.haomins.fileprovider"
