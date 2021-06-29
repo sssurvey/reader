@@ -31,6 +31,17 @@
         <activity android:name="com.haomins.reader.view.activities.ArticleDetailActivity" />
         <activity android:name="com.haomins.reader.view.activities.SettingsActivity" />
         <activity android:name="com.haomins.reader.view.activities.AddSourceActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.haomins.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+
     </application>
 
 </manifest>

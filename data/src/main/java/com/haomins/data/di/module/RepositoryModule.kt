@@ -27,4 +27,8 @@ interface RepositoryModule {
     @Binds
     fun bindsArticleListRepository(articleListRepository: ArticleListRepository):
             ArticleListRepositoryContract
+
+    @Binds
+    fun bindsLoggingRepository(loggingRepository: LoggingRepository):
+            LoggingRepositoryContract
 }
