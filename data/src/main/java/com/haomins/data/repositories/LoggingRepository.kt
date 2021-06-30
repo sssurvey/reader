@@ -36,7 +36,6 @@ class LoggingRepository @Inject constructor(
             try {
                 Runtime.getRuntime().exec(CLEAN_UP_LOG_COMMAND)
             } catch (e: Exception) {
-                //TODO: Handle exception
                 Log.e(TAG, "${e.printStackTrace()}")
             }
         }
