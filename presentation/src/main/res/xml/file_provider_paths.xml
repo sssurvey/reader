@@ -2,5 +2,5 @@
 <paths>
     <files-path
         name="logs"
-        path="." />
+        path="./" />
 </paths>
