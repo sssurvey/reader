@@ -48,7 +48,7 @@ class ArticleDaoTest {
     @Test
     fun testGetAll() {
         var counter = 0
-        articleDao.getAll().blockingFirst().forEach {
+        articleDao.getAll().blockingGet().forEach {
             assertTrue(it.itemId == counter.toString())
             counter++
         }
@@ -61,7 +61,7 @@ class ArticleDaoTest {
 
     @Test
     fun testInsert() {
-        val originalSize = articleDao.getAll().blockingFirst().size
+        val originalSize = articleDao.getAll().blockingGet().size
         articleDao.insert(
                 ArticleEntity(
                         itemId = "$100",
@@ -73,7 +73,7 @@ class ArticleDaoTest {
                         content = "This is a test article, haha."
                 )
         )
-        assertTrue(articleDao.getAll().blockingFirst().size > originalSize)
+        assertTrue(articleDao.getAll().blockingGet().size > originalSize)
     }
 
     @Test
@@ -83,8 +83,8 @@ class ArticleDaoTest {
 
     @Test
     fun testClearTable() {
-        assertTrue(articleDao.getAll().blockingFirst().isNotEmpty())
+        assertTrue(articleDao.getAll().blockingGet().isNotEmpty())
         articleDao.clearTable()
-        assertTrue(articleDao.getAll().blockingFirst().isEmpty())
+        assertTrue(articleDao.getAll().blockingGet().isEmpty())
     }
 }
