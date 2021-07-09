@@ -21,8 +21,6 @@ class ReaderApplication : Application() {
     }
 
     private fun initAppComponent(): AppComponent {
-//        val dataComponent = DaggerDataComponent.builder().application(this).build()
-//        appComponent = DaggerAppComponent.builder().setDataComponent(dataComponent).build()
         appComponent = DaggerAppComponent.builder().application(this).build()
         appComponent.inject(this)
         return appComponent
