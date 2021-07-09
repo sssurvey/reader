@@ -1,6 +1,5 @@
 package com.haomins.data.repositories
 
-import android.app.Application
 import com.haomins.data.service.AndroidService
 import com.haomins.data.util.DateUtils
 import org.junit.Before
@@ -19,9 +18,6 @@ class LoggingRepositoryTest {
 
     @Mock
     lateinit var mockDateUtils: DateUtils
-
-    @Mock
-    lateinit var mockApplication: Application
 
     @Mock
     lateinit var mockAndroidService: AndroidService
