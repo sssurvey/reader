@@ -12,6 +12,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
+import java.io.ByteArrayInputStream
 import java.io.File
 
 class LoggingRepositoryTest {
@@ -32,34 +33,34 @@ class LoggingRepositoryTest {
         MockitoAnnotations.openMocks(this)
         loggingRepository = LoggingRepository(
             mockDateUtils,
-            mockAndroidService,
-            mockApplication
+            mockAndroidService
         )
     }
 
     @Test
     fun getLogFile() {
 
-        val mockFile = mock<File>()
-        val mockFile2 = mock<File>()
+        val tempFile = File.createTempFile("log", "")
+        val mockFileDir = mock<File>()
         val mockPid = 123
         val mockRuntime = mock<Runtime>()
         val mockProcess = mock<Process>()
+        val mockInputStream = ByteArrayInputStream("test data".toByteArray())
 
         fun mock() {
             `when`(mockDateUtils.getCurrentDate()).thenReturn("1984-1-1")
-            `when`(mockApplication.getExternalFilesDir(null)).thenReturn(mockFile2)
-            `when`(mockAndroidService.createFile(any(), any())).thenReturn(mockFile)
+            `when`(mockAndroidService.getInternalFileDir()).thenReturn(mockFileDir)
+            `when`(mockAndroidService.createFile(any(), any())).thenReturn(tempFile)
             `when`(mockAndroidService.getProcessId()).thenReturn(mockPid)
             `when`(mockAndroidService.getSystemRuntime()).thenReturn(mockRuntime)
             `when`(mockRuntime.exec(any<String>())).thenReturn(mockProcess)
+            `when`(mockProcess.inputStream).thenReturn(mockInputStream)
         }
 
         mock()
 
         loggingRepository.getLogFile()
 
-        verify(mockFile, times(1)).deleteOnExit()
         verify(mockRuntime, times(1)).exec(String.format("logcat -d -v threadtime *:*"))
         verify(mockRuntime, times(1)).exec("logcat -c")
     }

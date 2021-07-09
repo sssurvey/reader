@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class LoggingRepository @Inject constructor(
     private val dateUtils: DateUtils,
-    private val androidService: AndroidService,
+    private val androidService: AndroidService
 ): LoggingRepositoryContract {
 
     companion object {
