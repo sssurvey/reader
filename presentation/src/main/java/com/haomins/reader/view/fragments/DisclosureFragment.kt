@@ -49,6 +49,7 @@ class DisclosureFragment : Fragment() {
             news_disclosure_content.text = loadDisclosurePolicyContent()
             news_disclosure_contact_email.text = loadDisclosureEmail()
             news_disclosure_contact_phone.text = loadDisclosurePhone()
+            news_disclosure_contact_website.text = loadDisclosureWebsite()
         }
     }
 

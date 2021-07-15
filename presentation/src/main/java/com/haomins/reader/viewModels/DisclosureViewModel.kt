@@ -24,4 +24,8 @@ class DisclosureViewModel @Inject constructor(
     fun loadDisclosurePhone(): String {
         return application.resources.getString(R.string.placeholder_phone_number)
     }
+
+    fun loadDisclosureWebsite(): String {
+        return application.resources.getString(R.string.placeholder_website)
+    }
 }
