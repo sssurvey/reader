@@ -10,4 +10,8 @@
         <item name="android:background">@color/default_background</item>
     </style>
 
+    <style name="ReaderTextContent" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/lightGray</item>
+    </style>
+
 </resources>

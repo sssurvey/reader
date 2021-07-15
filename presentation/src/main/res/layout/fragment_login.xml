@@ -84,6 +84,7 @@
     </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
+        style="@style/ReaderTextContent"
         android:id="@+id/login_sign_up_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,7 +93,6 @@
         android:clickable="true"
         android:justificationMode="inter_word"
         android:text="@string/desc_sign_up"
-        android:textColor="@color/lightGray"
         android:textSize="@dimen/textSizeTiny" />
 
 </RelativeLayout>

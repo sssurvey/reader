@@ -32,4 +32,7 @@
     <string name="email_client_choose">Send Feedback</string>
     <string name="settings_option_send_feedback_summary">Report technical issues or suggest new features</string>
     <string name="settings_option_about_summary">See application version, build info, etc</string>
+    <string name="settings_news_disclosures">Disclosures</string>
+    <string name="settings_news_disclosures_summary">News app category disclosures</string>
+    <string name="disclosure_title">Disclosures</string>
 </resources>
