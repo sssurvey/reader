@@ -85,11 +85,11 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/login_sign_up_text_view"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/large_layout_margin"
+        android:clickable="true"
         android:justificationMode="inter_word"
         android:text="@string/desc_sign_up"
         android:textColor="@color/lightGray"

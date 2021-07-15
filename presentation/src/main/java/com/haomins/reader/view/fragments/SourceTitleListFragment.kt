@@ -32,9 +32,9 @@ class SourceTitleListFragment : Fragment() {
 
     private val sourceTitleListAdapter by lazy {
         SourceTitleListAdapter(
-            subSourceDisplayItems = sourceListDisplayDataList,
-            sourceTitleListViewModel = sourceTitleListViewModel,
-            onRowItemClicked = ::sourceListRecyclerViewItemClickedAt
+                subSourceDisplayItems = sourceListDisplayDataList,
+                sourceTitleListViewModel = sourceTitleListViewModel,
+                onRowItemClicked = ::sourceListRecyclerViewItemClickedAt
         )
     }
 
@@ -52,15 +52,15 @@ class SourceTitleListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-            .build()
-            .inject(this)
+                .build()
+                .inject(this)
         super.onAttach(context)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_source_list_title, container, false)
     }
@@ -83,8 +83,8 @@ class SourceTitleListFragment : Fragment() {
     private fun registerLiveDataObserver() {
         sourceTitleListViewModel.apply {
             sourceListUiDataSet.observe(
-                viewLifecycleOwner,
-                sourceListDataSetObserver
+                    viewLifecycleOwner,
+                    sourceListDataSetObserver
             )
         }
     }
@@ -92,7 +92,7 @@ class SourceTitleListFragment : Fragment() {
     private fun sourceListRecyclerViewItemClickedAt(position: Int) {
         activity?.let {
             (it as MainActivity)
-                .startArticleListActivity(sourceTitleListViewModel.getSubSourceId(position))
+                    .startArticleListActivity(sourceTitleListViewModel.getSubSourceId(position))
         }
     }
 }

@@ -44,9 +44,9 @@ class LoginFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
@@ -83,7 +83,7 @@ class LoginFragment : Fragment() {
 
     private fun initiateUI() {
         login_app_version_text_view.text =
-            getString(R.string.version_description, BuildConfig.VERSION_NAME)
+                getString(R.string.version_description, BuildConfig.VERSION_NAME)
     }
 
     private fun registerLiveDataObserver() {
@@ -91,24 +91,21 @@ class LoginFragment : Fragment() {
     }
 
     private fun signUpButtonOnClick() {
-        startActivity(Intent(Intent.ACTION_VIEW, loginViewModel.getSignUpUrl()))
+        loginViewModel.onSignUp {
+            startActivity(Intent(Intent.ACTION_VIEW, it))
+        }
     }
 
     private fun loginSignUpDescriptionOnClick() {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                loginViewModel.getGenerateAccountForGoogleOrFacebookUrl()
-            )
-        )
+        loginViewModel.getGenerateAccountForGoogleOrFacebookUrl {
+            startActivity(Intent(Intent.ACTION_VIEW, it))
+        }
     }
 
     private fun loginButtonOnClick() {
         loginViewModel.authorize(
-            user = Pair(
-                login_username_edit_text.text.toString(),
-                login_password_edit_text.text.toString()
-            )
+                userName = login_username_edit_text.text.toString(),
+                userPassword = login_password_edit_text.text.toString()
         )
     }
 

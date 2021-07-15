@@ -10,16 +10,16 @@ import kotlinx.android.synthetic.main.source_title_recycler_view_item.view.*
 import java.net.URL
 
 class SourceTitleListAdapter(
-    private val subSourceDisplayItems: List<Pair<String, URL>>,
-    private val sourceTitleListViewModel: SourceTitleListViewModel,
-    private val onRowItemClicked: (pos: Int) -> Unit
+        private val subSourceDisplayItems: List<Pair<String, URL>>,
+        private val sourceTitleListViewModel: SourceTitleListViewModel,
+        private val onRowItemClicked: (pos: Int) -> Unit
 ) : RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
     inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val sourceListItemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.source_title_recycler_view_item, parent, false)
+                .inflate(R.layout.source_title_recycler_view_item, parent, false)
         return CustomViewHolder(sourceListItemView)
     }
 
@@ -41,8 +41,8 @@ class SourceTitleListAdapter(
 
     private fun loadIconImage(holder: CustomViewHolder, url: URL) {
         sourceTitleListViewModel.loadImageIcon(
-            imageView = holder.viewHolder.source_icon_image_view,
-            url = url
+                imageView = holder.viewHolder.source_icon_image_view,
+                url = url
         )
     }
 

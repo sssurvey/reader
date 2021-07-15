@@ -3,95 +3,128 @@ package com.haomins.reader.viewModels
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.reader.utils.DateUtils
-import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.www.model.data.entities.ArticleEntity
-import com.haomins.www.model.repositories.ArticleListRepository
-import io.reactivex.disposables.CompositeDisposable
+import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.domain.usecase.article.ContinueLoadAllArticles
+import com.haomins.domain.usecase.article.ContinueLoadArticlesByFeed
+import com.haomins.domain.usecase.article.LoadAllArticles
+import com.haomins.domain.usecase.article.LoadArticlesByFeed
+import io.reactivex.observers.DisposableObserver
 import javax.inject.Inject
 
 class ArticleListViewModel @Inject constructor(
-    private val articleListRepository: ArticleListRepository,
-    private val dateUtils: DateUtils
+    private val loadAllArticles: LoadAllArticles,
+    private val loadArticlesByFeed: LoadArticlesByFeed,
+    private val continueLoadAllArticles: ContinueLoadAllArticles,
+    private val continueLoadArticlesByFeed: ContinueLoadArticlesByFeed
 ) : ViewModel() {
 
     companion object {
         const val TAG = "ArticleListViewModel"
     }
 
-    val articleTitleUiItemsList by lazy { MutableLiveData<List<ArticleListFragment.ArticleTitleListUiItem>>() }
+    val articleTitleUiItemsList by lazy { MutableLiveData<List<ArticleEntity>>() }
     val isLoading by lazy { MutableLiveData(false) }
-    private val disposables = CompositeDisposable()
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
-        disposables.add(
-            articleListRepository
-                .loadArticleItemRefs(feedId)
-                .map(::mapEntitiesToUiItems)
-                .subscribe(
-                    { onArticleLoaded(it) },
-                    { Log.d(TAG, "onError: ${it.printStackTrace()}") },
-                    { Log.d(TAG, "onComplete: called") })
+        loadArticlesByFeed.execute(
+            observer = object : DisposableObserver<List<ArticleEntity>>() {
+                override fun onNext(t: List<ArticleEntity>) {
+                    onArticleLoaded(t)
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.e(TAG, "onError: ${e.printStackTrace()}")
+                }
+
+                override fun onComplete() {
+                    Log.d(TAG, "onComplete: called")
+                }
+            },
+            params = LoadArticlesByFeed.forLoadArticlesByFeed(feedId)
         )
     }
 
     fun loadAllArticles() {
         isLoading.postValue(true)
-        disposables.add(
-            articleListRepository
-                .loadAllArticleItemRefs()
-                .map(::mapEntitiesToUiItems)
-                .subscribe(
-                    { onArticleLoaded(it) },
-                    { Log.d(TAG, "onError: ${it.printStackTrace()}") },
-                    { Log.d(TAG, "onComplete: called") })
+        loadAllArticles.execute(
+            observer = object : DisposableObserver<List<ArticleEntity>>() {
+                override fun onNext(t: List<ArticleEntity>) {
+                    onArticleLoaded(t)
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.e(TAG, "onError: ${e.printStackTrace()}")
+                }
+
+                override fun onComplete() {
+                    Log.d(TAG, "onComplete: called")
+                }
+            }
         )
     }
 
     fun continueLoadAllArticles() {
-        disposables.add(
-            articleListRepository
-                .continueLoadAllArticleItemRefs()
-                .doOnSubscribe { isLoading.postValue(true) }
-                .subscribe(
-                    { isLoading.postValue(false) },
-                    { Log.d(TAG, "onError: ${it.printStackTrace()}") }
-                )
+        continueLoadAllArticles.execute(
+            observer = object : DisposableObserver<Unit>() {
+
+                override fun onStart() {
+                    super.onStart()
+                    isLoading.postValue(true)
+                }
+
+                override fun onNext(t: Unit) {
+                    isLoading.postValue(false)
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.e(TAG, "onError: ${e.printStackTrace()}")
+                }
+
+                override fun onComplete() {
+                    Log.d(TAG, "onComplete: called")
+                }
+
+            }
         )
     }
 
     fun continueLoadArticles(feedId: String) {
-        disposables.add(
-            articleListRepository
-                .continueLoadArticleItemRefs(feedId)
-                .doOnSubscribe { isLoading.postValue(true) }
-                .subscribe(
-                    { isLoading.postValue(false) },
-                    { Log.d(TAG, "onError: ${it.printStackTrace()}") }
-                )
+        continueLoadArticlesByFeed.execute(
+            observer = object : DisposableObserver<Unit>() {
+                override fun onStart() {
+                    super.onStart()
+                    isLoading.postValue(true)
+                }
+
+                override fun onNext(t: Unit) {
+                    isLoading.postValue(false)
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.e(TAG, "onError: ${e.printStackTrace()}")
+                }
+
+                override fun onComplete() {
+                    Log.d(TAG, "onComplete: called")
+                }
+            },
+            params = ContinueLoadArticlesByFeed.forContinueLoadArticlesByFeed(feedId)
         )
     }
 
     override fun onCleared() {
         super.onCleared()
-        disposables.clear()
+        loadArticlesByFeed.dispose()
+        loadAllArticles.dispose()
+        continueLoadAllArticles.dispose()
+        continueLoadArticlesByFeed.dispose()
     }
 
-    private fun onArticleLoaded(articleTitleListUiItems: List<ArticleListFragment.ArticleTitleListUiItem>) {
+    private fun onArticleLoaded(articleTitleListUiItems: List<ArticleEntity>) {
         Log.d(TAG, "onNext: articles loaded -> size: ${articleTitleListUiItems.size}")
         articleTitleUiItemsList.postValue(articleTitleListUiItems.toList())
         isLoading.postValue(false)
     }
 
-    private fun mapEntitiesToUiItems(articleEntities: List<ArticleEntity>): List<ArticleListFragment.ArticleTitleListUiItem> {
-        return articleEntities.map {
-            ArticleListFragment.ArticleTitleListUiItem(
-                title = it.itemTitle,
-                postTime = dateUtils.howLongAgo(it.itemPublishedMillisecond),
-                _postTimeMillisecond = it.itemPublishedMillisecond,
-                _itemId = it.itemId
-            )
-        }
-    }
 }

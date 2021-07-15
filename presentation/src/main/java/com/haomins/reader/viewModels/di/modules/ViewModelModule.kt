@@ -2,9 +2,9 @@ package com.haomins.reader.viewModels.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.haomins.reader.viewModels.di.ViewModelKey
 import com.haomins.reader.viewModels.*
 import com.haomins.reader.viewModels.di.CustomViewModelFactory
+import com.haomins.reader.viewModels.di.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

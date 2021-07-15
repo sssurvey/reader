@@ -2,8 +2,8 @@ package com.haomins.reader.view.fragments
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
@@ -22,7 +22,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         private const val DARK_MODE_OPTION = "dark_mode"
         private const val PREFERENCE_ABOUT = "about"
         private const val PREFERENCE_FEEDBACK = "feedback"
-        private const val FEED_BACK_EMAIL = "mailto:youngmobileachiever@gmail.com"
+        private const val FEED_BACK_EMAIL = "youngmobileachiever@gmail.com"
+        private const val INTENT_EMAIL_TYPE = "message/rfc822"
     }
 
     @Inject
@@ -34,7 +35,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
+            .build().inject(this)
         super.onAttach(context)
     }
 
@@ -54,12 +56,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun showEmailApp() {
-        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse(FEED_BACK_EMAIL)
-            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_feed_back_greet_subject))
-            putExtra(Intent.EXTRA_TEXT, getString(R.string.email_feed_back_greet_body))
+        settingsViewModel.getLogFileThenDo {
+            val emailIntent = Intent(Intent.ACTION_SEND).apply {
+                type = INTENT_EMAIL_TYPE
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(FEED_BACK_EMAIL))
+                putExtra(Intent.EXTRA_STREAM, it)
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_feed_back_greet_subject))
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.email_feed_back_greet_body))
+            }
+            startActivity(
+                Intent.createChooser(
+                    emailIntent,
+                    getString(R.string.email_client_choose)
+                )
+            )
         }
-        startActivity(Intent.createChooser(emailIntent, getString(R.string.email_client_choose)))
     }
 
     private fun configPreference() {
