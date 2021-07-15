@@ -7,10 +7,21 @@ import javax.inject.Inject
 
 class DisclosureViewModel @Inject constructor(
     private val application: Application
-): ViewModel() {
+) : ViewModel() {
 
     fun loadDisclosureTitle(): String {
         return application.resources.getString(R.string.disclosure_title)
     }
 
+    fun loadDisclosurePolicyContent(): String {
+        return application.resources.getString(R.string.placeholder_text)
+    }
+
+    fun loadDisclosureEmail(): String {
+        return application.resources.getString(R.string.placeholder_email)
+    }
+
+    fun loadDisclosurePhone(): String {
+        return application.resources.getString(R.string.placeholder_phone_number)
+    }
 }
