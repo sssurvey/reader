@@ -8,10 +8,10 @@
 
     <com.google.android.material.textview.MaterialTextView
         style="@style/ReaderTextContent"
+        android:id="@+id/new_disclosure_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/large_layout_margin"
-        android:text="@string/disclosure_title"
         android:textAlignment="center"
         android:textSize="@dimen/textSizeGiant"
         tools:text="Disclosures" />
