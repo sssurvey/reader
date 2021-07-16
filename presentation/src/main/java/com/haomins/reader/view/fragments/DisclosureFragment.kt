@@ -46,10 +46,11 @@ class DisclosureFragment : Fragment() {
     private fun loadDisclosureContents() {
         with(disclosureViewModel) {
             news_disclosure_title.text = loadDisclosureTitle()
-            news_disclosure_content.text = loadDisclosurePolicyContent()
-            news_disclosure_contact_email.text = loadDisclosureEmail()
-            news_disclosure_contact_phone.text = loadDisclosurePhone()
-            news_disclosure_contact_website.text = loadDisclosureWebsite()
+            loadDisclosure { disclosureData ->
+                news_disclosure_content.text = disclosureData.disclosureContent
+                news_disclosure_contact_email.text = disclosureData.contactEmail
+                news_disclosure_contact_website.text = disclosureData.website
+            }
         }
     }
 

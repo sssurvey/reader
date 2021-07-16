@@ -22,7 +22,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         private const val PREFERENCE_ABOUT = "about"
         private const val PREFERENCE_FEEDBACK = "feedback"
         private const val PREFERENCE_DISCLOSURES = "disclosures"
-        private const val FEED_BACK_EMAIL = "youngmobileachiever@gmail.com"
         private const val INTENT_EMAIL_TYPE = "message/rfc822"
     }
 
@@ -68,7 +67,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         settingsViewModel.getLogFileThenDo {
             val emailIntent = Intent(Intent.ACTION_SEND).apply {
                 type = INTENT_EMAIL_TYPE
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(FEED_BACK_EMAIL))
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(settingsViewModel.getFeedbackEmail()))
                 putExtra(Intent.EXTRA_STREAM, it)
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_feed_back_greet_subject))
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.email_feed_back_greet_body))

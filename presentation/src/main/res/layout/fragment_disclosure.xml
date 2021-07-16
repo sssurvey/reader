@@ -24,7 +24,7 @@
         android:layout_marginStart="@dimen/medium_layout_margin"
         android:layout_marginEnd="@dimen/medium_layout_margin"
         android:justificationMode="inter_word"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="@dimen/textSizeSmall"
         tools:text="@string/placeholder_text" />
 
@@ -42,18 +42,6 @@
         tools:text="@string/placeholder_email" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/news_disclosure_contact_phone"
-        style="@style/ReaderTextContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/large_layout_margin"
-        android:layout_marginEnd="@dimen/large_layout_margin"
-        android:justificationMode="inter_word"
-        android:textAlignment="center"
-        android:textSize="@dimen/textSizeTiny"
-        tools:text="@string/placeholder_phone_number" />
-
-    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/news_disclosure_contact_website"
         style="@style/ReaderTextContent"
         android:layout_width="match_parent"
@@ -65,6 +53,5 @@
         android:textAlignment="center"
         android:textSize="@dimen/textSizeTiny"
         tools:text="@string/placeholder_website" />
-
 
 </LinearLayout>

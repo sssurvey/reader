@@ -19,11 +19,16 @@ class SettingsViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "SettingsViewModel"
+        private const val FEEDBACK_EMAIL = "youngmobileachiever@gmail.com"
         private const val FILE_PROVIDER_AUTH = "com.haomins.fileprovider"
     }
 
     fun enableDarkMode() {
         darkModeManager.enableDarkMode()
+    }
+
+    fun getFeedbackEmail(): String {
+        return FEEDBACK_EMAIL
     }
 
     fun disableDarkMode() {

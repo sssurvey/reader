@@ -31,4 +31,12 @@ interface RepositoryModule {
     @Binds
     fun bindsLoggingRepository(loggingRepository: LoggingRepository):
             LoggingRepositoryContract
+
+    @Binds
+    fun bindsContactInfoRepository(contactInfoRepository: ContactInfoRepository):
+            ContactInfoRepositoryContract
+
+    @Binds
+    fun bindsDisclosureRepository(disclosureRepository: DisclosureRepository):
+            DisclosureRepositoryContract
 }
