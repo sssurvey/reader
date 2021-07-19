@@ -3,3 +3,18 @@ Reader app is a 3rd party client application for The Old Reader. The Old Reader 
  Old Reader is the sole decider of which news they see. Users decide which RSS source to subscribe to.
  Reader app does not promote or recommend any news. Reader app is not the publisher of any news, Reader
  app simply reroute the RSS sources user subscribed on The Old Reader website to their mobile devices.
+
+ Reader app is released by Haomin S. This page informs you of the policies regarding the collection, use
+ and disclosure of Personal information we receive from users of the application.
+
+ Reader app currently do not collect, or use any user information. If you have any questions related to
+ this you can visit the GitHub repository of the Reader app and create an issue under the issue page.
+
+ Reader app also do not send any log data to the app developer unless you click the send feedback button
+ and sent a email to the youngmobileachiever@gmail.com.
+
+ Reader app do not collect or use the user name and user password of your www.theoldreader.com account, the
+ Reader app simply save it at the shared preference (locally on your Android device, this is required
+ for app to function).
+
+ updated on 2021.07.19
