@@ -3,6 +3,7 @@ package com.haomins.data.service
 import android.app.Application
 import android.os.Process
 import java.io.File
+import java.io.InputStream
 import javax.inject.Inject
 
 class AndroidService @Inject constructor(
@@ -24,5 +25,9 @@ class AndroidService @Inject constructor(
     internal fun createFile(file: File?, name: String): File {
         if (file == null) throw NullPointerException()
         return File(file, name)
+    }
+
+    internal fun loadAsset(fileName: String): InputStream {
+        return application.assets.open(fileName)
     }
 }

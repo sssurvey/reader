@@ -85,14 +85,28 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/login_sign_up_text_view"
+        style="@style/ReaderTextContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/news_app_disclosure"
+        android:layout_margin="@dimen/large_layout_margin"
+        android:clickable="true"
+        android:justificationMode="inter_word"
+        android:text="@string/desc_sign_up"
+        android:textSize="@dimen/textSizeTiny" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/news_app_disclosure"
+        style="@style/ReaderTextContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/large_layout_margin"
         android:clickable="true"
         android:justificationMode="inter_word"
-        android:text="@string/desc_sign_up"
-        android:textColor="@color/lightGray"
-        android:textSize="@dimen/textSizeTiny" />
+        android:text="@string/settings_news_disclosures"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/textSizeSmall" />
 
 </RelativeLayout>

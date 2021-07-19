@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/news_disclosure_title"
+        style="@style/ReaderTextContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_layout_margin"
+        android:textAlignment="center"
+        android:textSize="@dimen/textSizeGiant"
+        tools:text="Disclosures" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/news_disclosure_content"
+        style="@style/ReaderTextContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/medium_layout_margin"
+        android:layout_marginEnd="@dimen/medium_layout_margin"
+        android:justificationMode="inter_word"
+        android:textAlignment="textStart"
+        android:textSize="@dimen/textSizeSmall"
+        tools:text="@string/placeholder_text" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/news_disclosure_contact_email"
+        style="@style/ReaderTextContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_layout_margin"
+        android:layout_marginTop="@dimen/large_layout_margin"
+        android:layout_marginEnd="@dimen/large_layout_margin"
+        android:justificationMode="inter_word"
+        android:textAlignment="center"
+        android:textSize="@dimen/textSizeTiny"
+        tools:text="@string/placeholder_email" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/news_disclosure_contact_website"
+        style="@style/ReaderTextContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_layout_margin"
+        android:layout_marginEnd="@dimen/large_layout_margin"
+        android:layout_marginBottom="@dimen/large_layout_margin"
+        android:justificationMode="inter_word"
+        android:textAlignment="center"
+        android:textSize="@dimen/textSizeTiny"
+        tools:text="@string/placeholder_website" />
+
+</LinearLayout>

@@ -21,6 +21,8 @@ interface ViewModelComponent {
 
     fun inject(sourceTitleListFragment: SourceTitleListFragment)
 
+    fun inject(disclosureFragment: DisclosureFragment)
+
     // activities
     fun inject(mainActivity: MainActivity)
 

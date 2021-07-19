@@ -74,7 +74,7 @@ class LoggingRepository @Inject constructor(
             }
 
         } catch (e: Exception) {
-            Log.e(TAG, "${e.printStackTrace()}")
+            Log.e(TAG, "extractLogFile :: ${e.printStackTrace()}")
         } finally {
             Log.d(TAG, "extractLogFile :: clean up log")
             cleanUpLog()
