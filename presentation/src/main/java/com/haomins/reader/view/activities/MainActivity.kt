@@ -68,9 +68,9 @@ class MainActivity : AppCompatActivity() {
     fun showSourceTitleListFragment() {
         initDrawer()
         supportFragmentManager.beginTransaction().replace(
-            R.id.main_activity_frame_layout,
-            SourceTitleListFragment(),
-            SourceTitleListFragment.TAG
+                R.id.main_activity_frame_layout,
+                SourceTitleListFragment(),
+                SourceTitleListFragment.TAG
         ).commit()
     }
 
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
         navigation_view.itemIconTintList = null
         navigation_view.drawer_login_app_version_text_view.text =
-            getString(R.string.version_description, BuildConfig.VERSION_NAME)
+                getString(R.string.version_description, BuildConfig.VERSION_NAME)
         unlockDrawer()
     }
 
@@ -157,9 +157,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showUserLoginFragment() {
         supportFragmentManager.beginTransaction().replace(
-            R.id.main_activity_frame_layout,
-            LoginFragment(),
-            LoginFragment.TAG
+                R.id.main_activity_frame_layout,
+                LoginFragment(),
+                LoginFragment.TAG
         ).commit()
     }
 }
