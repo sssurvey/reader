@@ -1,7 +1,7 @@
 package com.haomins.data.repositories
 
-import android.app.Application
 import android.util.Log
+import com.haomins.data.service.AndroidService
 import com.haomins.domain.repositories.DisclosureRepositoryContract
 import io.reactivex.Single
 import java.io.BufferedReader
@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 import javax.inject.Inject
 
 class DisclosureRepository @Inject constructor(
-    private val application: Application
+    private val androidService: AndroidService
 ) : DisclosureRepositoryContract {
 
     companion object {
@@ -32,7 +32,7 @@ class DisclosureRepository @Inject constructor(
             Log.d(TAG, "loadAsset :: try loading asset -> $DISCLOSURE_FILENAME")
 
             bufferedReader =
-                BufferedReader(InputStreamReader(application.assets.open(DISCLOSURE_FILENAME)))
+                BufferedReader(InputStreamReader(androidService.loadAsset(DISCLOSURE_FILENAME)))
 
             var currentLine: String? = bufferedReader.readLine()
             val stringBuilder = StringBuilder()
