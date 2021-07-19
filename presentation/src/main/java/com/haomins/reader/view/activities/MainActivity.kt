@@ -7,12 +7,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
+import com.haomins.reader.view.fragments.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainViewModel
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         when (mainViewModel.hasAuthToken()) {
             true -> super.onBackPressed()
-            false -> finish()
+            false -> this.onBackpressed()
         }
     }
 
@@ -51,6 +53,18 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun showDisclosureFragment() {
+        supportFragmentManager.beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .replace(
+                R.id.main_activity_frame_layout,
+                DisclosureFragment(),
+                DisclosureFragment.TAG
+            )
+            .addToBackStack(null)
+            .commit()
+    }
+
     fun showSourceTitleListFragment() {
         initDrawer()
         supportFragmentManager.beginTransaction().replace(
@@ -58,6 +72,14 @@ class MainActivity : AppCompatActivity() {
                 SourceTitleListFragment(),
                 SourceTitleListFragment.TAG
         ).commit()
+    }
+
+    private fun onBackpressed() {
+        if (supportFragmentManager.backStackEntryCount >= 1) {
+            supportFragmentManager.popBackStack()
+        } else {
+            finish()
+        }
     }
 
     private fun setOnClickListeners() {

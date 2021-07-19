@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
 import com.haomins.reader.view.fragments.AboutFragment
+import com.haomins.reader.view.fragments.DisclosureFragment
 import com.haomins.reader.view.fragments.SettingsFragment
 
 class SettingsActivity : AppCompatActivity() {
@@ -25,6 +26,18 @@ class SettingsActivity : AppCompatActivity() {
                 )
                 .addToBackStack(null)
                 .commit()
+    }
+
+    fun showDisclosureFragment() {
+        supportFragmentManager.beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .replace(
+                R.id.settings_container,
+                DisclosureFragment(),
+                DisclosureFragment.TAG
+            )
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun showSettingsFragment() {

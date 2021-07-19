@@ -48,5 +48,10 @@ abstract class ViewModelModule {
     abstract fun bindAddSourceViewModel(addSourceViewModel: AddSourceViewModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(DisclosureViewModel::class)
+    abstract fun bindDisclosureViewModel(disclosureViewModel: DisclosureViewModel): ViewModel
+
+    @Binds
     abstract fun bindViewModelFactory(customViewModelFactory: CustomViewModelFactory): ViewModelProvider.Factory
 }

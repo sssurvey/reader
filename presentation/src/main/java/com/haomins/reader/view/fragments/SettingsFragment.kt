@@ -3,7 +3,6 @@ package com.haomins.reader.view.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
@@ -22,7 +21,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         private const val DARK_MODE_OPTION = "dark_mode"
         private const val PREFERENCE_ABOUT = "about"
         private const val PREFERENCE_FEEDBACK = "feedback"
-        private const val FEED_BACK_EMAIL = "youngmobileachiever@gmail.com"
+        private const val PREFERENCE_DISCLOSURES = "disclosures"
         private const val INTENT_EMAIL_TYPE = "message/rfc822"
     }
 
@@ -48,18 +47,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
-            PREFERENCE_ABOUT -> (activity as? SettingsActivity)?.showAboutFragment()
+            PREFERENCE_ABOUT -> showAboutFragment()
+            PREFERENCE_DISCLOSURES -> showDisclosuresFragment()
             PREFERENCE_FEEDBACK -> showEmailApp()
             else -> Unit
         }
         return super.onPreferenceTreeClick(preference)
     }
 
+    private fun showAboutFragment() {
+        (activity as? SettingsActivity)?.showAboutFragment()
+    }
+
+    private fun showDisclosuresFragment() {
+        (activity as? SettingsActivity)?.showDisclosureFragment()
+    }
+
     private fun showEmailApp() {
         settingsViewModel.getLogFileThenDo {
             val emailIntent = Intent(Intent.ACTION_SEND).apply {
                 type = INTENT_EMAIL_TYPE
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(FEED_BACK_EMAIL))
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(settingsViewModel.getFeedbackEmail()))
                 putExtra(Intent.EXTRA_STREAM, it)
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_feed_back_greet_subject))
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.email_feed_back_greet_body))

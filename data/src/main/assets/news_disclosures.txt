@@ -1,0 +1,5 @@
+Reader app is a 3rd party client application for The Old Reader. The Old Reader would be the provider of
+ the news source. However, due to The Old Reader provides a Google Reader like RSS service, the user of The
+ Old Reader is the sole decider of which news they see. Users decide which RSS source to subscribe to.
+ Reader app does not promote or recommend any news. Reader app is not the publisher of any news, Reader
+ app simply reroute the RSS sources user subscribed on The Old Reader website to their mobile devices.

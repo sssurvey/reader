@@ -19,6 +19,13 @@
     <Preference
         android:enabled="true"
         app:iconSpaceReserved="false"
+        app:key="disclosures"
+        app:summary="@string/settings_news_disclosures_summary"
+        app:title="@string/settings_news_disclosures" />
+
+    <Preference
+        android:enabled="true"
+        app:iconSpaceReserved="false"
         app:key="about"
         app:summary="@string/settings_option_about_summary"
         app:title="@string/settings_option_about" />

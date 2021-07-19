@@ -63,6 +63,11 @@ class LoginFragment : Fragment() {
         login_button.setOnClickListener { loginButtonOnClick() }
         sign_up_button.setOnClickListener { signUpButtonOnClick() }
         login_sign_up_text_view.setOnClickListener { loginSignUpDescriptionOnClick() }
+        news_app_disclosure.setOnClickListener { showDisclosureFragment() }
+    }
+
+    private fun showDisclosureFragment() {
+        (requireActivity() as? MainActivity)?.showDisclosureFragment()
     }
 
     private fun setOnTextChangedListener() {
