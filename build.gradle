@@ -3,7 +3,7 @@
 buildscript {
 
     ext.kotlin_version = '1.4.32'
-    ext.gradle_build_tool_version = '4.2.1'
+    ext.gradle_build_tool_version = '7.0.3'
     apply from: 'buildsystem/dependencies.gradle'
 
     repositories {
