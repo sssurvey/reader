@@ -41,4 +41,8 @@
         <item name="cardBackgroundColor">@color/default_background</item>
     </style>
 
+    <style name="ReaderSplashArtStroke" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
 </resources>
