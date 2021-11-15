@@ -30,6 +30,15 @@
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/splash_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/imageViewDefaultPadding"
+        android:background="@color/design_default_color_background"
+        android:src="@drawable/ic_the_old_reader_splash_art_logo"
+        android:visibility="visible" />
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="@dimen/default_navigation_view_width"
@@ -55,4 +64,5 @@
                 android:textSize="@dimen/textSizeSmall" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
+
 </androidx.drawerlayout.widget.DrawerLayout>

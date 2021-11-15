@@ -10,6 +10,7 @@
     <dimen name="textSizeGiant">24sp</dimen>
     <dimen name="imageIconViewPadding">12dp</dimen>
     <dimen name="imageIconViewHeight">40dp</dimen>
+    <dimen name="imageViewDefaultPadding">46dp</dimen>
     <dimen name="articleTextViewHeight">20dp</dimen>
     <dimen name="relativeLayoutPadding">10dp</dimen>
     <dimen name="edit_text_default_height">60dp</dimen>
