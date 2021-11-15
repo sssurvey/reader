@@ -1,2 +1,3 @@
 include ':presentation', ':data', ':domain'
 rootProject.name='Reader'
+include ':ui'
