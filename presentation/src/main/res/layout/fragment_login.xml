@@ -16,7 +16,8 @@
         android:textSize="@dimen/textSizeSmall"
         tools:text="v0.0.1" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login_inputs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
@@ -24,12 +25,24 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/the_old_reader_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_layout_margin"
+            android:foregroundGravity="center_horizontal"
+            android:src="@drawable/ic_the_old_reader_logo"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_username_input"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_layout_margin"
             android:hint="@string/hint_username"
-            app:boxStrokeColor="@color/colorPrimary">
+            app:boxStrokeColor="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/the_old_reader_logo">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_username_edit_text"
@@ -40,11 +53,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_password_input"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_passcode"
-            app:boxStrokeColor="@color/colorPrimary">
+            app:boxStrokeColor="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/login_username_input">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password_edit_text"
@@ -57,8 +72,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_layout_margin"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/login_password_input">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sign_up_button"
@@ -81,7 +98,7 @@
                 android:textSize="@dimen/textSizeSmall" />
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/login_sign_up_text_view"
