@@ -27,7 +27,7 @@ fun Activity.delayedUiOperation(
     executionScheduler: Scheduler = Schedulers.io(),
     observationScheduler: Scheduler = AndroidSchedulers.mainThread()
 ) {
-    return Single
+    Single
         .timer(seconds, TimeUnit.SECONDS, executionScheduler)
         .observeOn(observationScheduler)
         .subscribe(object : DisposableSingleObserver<Long>() {
