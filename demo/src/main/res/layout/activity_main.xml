@@ -1,27 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:paddingStart="10dp"
-    android:paddingTop="10dp"
     android:background="@android:color/white"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.haomins.ui.edittext.ReaderEditText
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="sample text"
-        android:textColor="@android:color/darker_gray" />
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-    <com.haomins.ui.edittext.ReaderPasswordEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="sample password"
-        android:textColor="@android:color/darker_gray" />
+        <!-- Reader edit text try out -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Reader Edit Text"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <com.haomins.ui.edittext.ReaderEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="sample text"
+            android:textColor="@android:color/darker_gray" />
+
+        <com.haomins.ui.edittext.ReaderPasswordEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="sample password"
+            android:textColor="@android:color/darker_gray" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="10dp"
+            android:background="@color/black" />
+
+        <!-- Reader buttons -->
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Reader Buttons"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="10dp"
+            android:background="@color/black" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</ScrollView>
