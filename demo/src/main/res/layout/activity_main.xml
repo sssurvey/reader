@@ -55,6 +55,15 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
+        <com.haomins.ui.button.ReaderSolidButton
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:height="60dp"
+            android:text="Test button"
+            android:textColor="@android:color/white" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"

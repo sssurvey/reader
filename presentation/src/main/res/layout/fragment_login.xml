@@ -50,45 +50,57 @@
             android:hint="@string/hint_passcode"
             app:layout_constraintTop_toBottomOf="@id/login_username_edit_text" />
 
-        <LinearLayout
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_layout_margin"
+            android:text="@string/forget_password"
+            android:textColor="@color/links"
+            android:textSize="@dimen/textSizeSmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_password_edit_text" />
+
+        <com.haomins.ui.button.ReaderSolidButton
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_layout_margin"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/login_password_edit_text">
+            android:height="@dimen/edit_text_default_height"
+            android:text="@string/button_text_login"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/forgot_password" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/sign_up_button"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/edit_text_default_height"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/button_text_sign_up"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/textSizeSmall" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/login_button"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/edit_text_default_height"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/button_text_login"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/textSizeSmall" />
-        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_marginTop="@dimen/medium_layout_margin"
+            android:background="@color/lightGray"
+            app:layout_constraintTop_toBottomOf="@id/login_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/login_sign_up_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/news_app_disclosure_details"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/default_layout_margin"
+        android:clickable="true"
+        android:text="@string/button_text_create_account"
+        android:textAlignment="center"
+        android:textColor="@color/links"
+        android:textSize="@dimen/textSizeMedium" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/news_app_disclosure_details"
         style="@style/ReaderTextContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/news_app_disclosure"
-        android:layout_margin="@dimen/large_layout_margin"
-        android:clickable="true"
+        android:layout_above="@id/news_app_disclosure"
+        android:layout_marginStart="@dimen/large_layout_margin"
+        android:layout_marginEnd="@dimen/large_layout_margin"
         android:justificationMode="inter_word"
         android:text="@string/desc_sign_up"
         android:textSize="@dimen/textSizeTiny" />
@@ -99,11 +111,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/large_layout_margin"
+        android:layout_marginStart="@dimen/large_layout_margin"
+        android:layout_marginEnd="@dimen/large_layout_margin"
+        android:layout_marginBottom="@dimen/medium_layout_margin"
         android:clickable="true"
         android:justificationMode="inter_word"
         android:text="@string/settings_news_disclosures"
-        android:textAlignment="textEnd"
+        android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/textSizeSmall" />
 

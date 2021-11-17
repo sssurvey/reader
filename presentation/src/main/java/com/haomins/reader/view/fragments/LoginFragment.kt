@@ -39,14 +39,15 @@ class LoginFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
+            .build().inject(this)
         super.onAttach(context)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
@@ -61,8 +62,7 @@ class LoginFragment : Fragment() {
 
     private fun setOnClickListener() {
         login_button.setOnClickListener { loginButtonOnClick() }
-        sign_up_button.setOnClickListener { signUpButtonOnClick() }
-        login_sign_up_text_view.setOnClickListener { loginSignUpDescriptionOnClick() }
+//        news_app_disclosure_details.setOnClickListener { loginDisclosureDescriptionOnClick() }
         news_app_disclosure.setOnClickListener { showDisclosureFragment() }
     }
 
@@ -74,34 +74,33 @@ class LoginFragment : Fragment() {
         setLoginPasswordEditTextOnChangeListener()
     }
 
+    //TODO: disable or enable button based on if username and password is empty
     private fun setLoginPasswordEditTextOnChangeListener() {
         login_password_edit_text.addTextChangedListener {
             it?.let {
-                sign_up_button.apply {
-                    isEnabled = it.isEmpty()
-                    if (it.isEmpty()) setTextColor(requireContext().getColor(R.color.colorPrimary))
-                    else setTextColor(requireContext().getColor(R.color.lightGray))
-                }
+                login_button.isEnabled = it.isNotEmpty()
             }
         }
     }
 
     private fun initiateUI() {
         login_app_version_text_view.text =
-                getString(R.string.version_description, BuildConfig.VERSION_NAME)
+            getString(R.string.version_description, BuildConfig.VERSION_NAME)
     }
 
     private fun registerLiveDataObserver() {
         loginViewModel.isUserLoggedIn.observe(viewLifecycleOwner, isUserLoggedInObserver)
     }
 
+    //TODO: change it to forget password
     private fun signUpButtonOnClick() {
         loginViewModel.onSignUp {
             startActivity(Intent(Intent.ACTION_VIEW, it))
         }
     }
 
-    private fun loginSignUpDescriptionOnClick() {
+    //TODO: link to website to create account
+    private fun loginDisclosureDescriptionOnClick() {
         loginViewModel.getGenerateAccountForGoogleOrFacebookUrl {
             startActivity(Intent(Intent.ACTION_VIEW, it))
         }
@@ -109,8 +108,8 @@ class LoginFragment : Fragment() {
 
     private fun loginButtonOnClick() {
         loginViewModel.authorize(
-                userName = login_username_edit_text.text.toString(),
-                userPassword = login_password_edit_text.text.toString()
+            userName = login_username_edit_text.text.toString(),
+            userPassword = login_password_edit_text.text.toString()
         )
     }
 
