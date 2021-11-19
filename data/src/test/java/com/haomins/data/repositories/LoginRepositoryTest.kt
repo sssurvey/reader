@@ -110,10 +110,10 @@ class LoginRepositoryTest {
     }
 
     @Test
-    fun `test getGenerateAccountUrlString()`() {
+    fun `test getForgetPasswordUrlString()`() {
         assertEquals(
-                TheOldReaderService.GENERATE_ACCOUNT_PAGE_URL,
-                loginRepository.getGenerateAccountUrlString()
+                TheOldReaderService.FORGET_PASSWORD_PAGE_URL,
+                loginRepository.getForgetPasswordUrlString()
         )
     }
 

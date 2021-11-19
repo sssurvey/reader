@@ -59,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_layout_margin"
             android:text="@string/forget_password"
+            android:clickable="true"
             android:textColor="@color/links"
             android:textSize="@dimen/textSizeSmall"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +79,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sign_up_button"
         style="@style/ReaderTextViewStyle"
         android:layout_width="wrap_content"
@@ -93,7 +94,7 @@
         android:textColor="@color/links"
         android:textSize="@dimen/textSizeMedium" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/news_app_disclosure_details"
         style="@style/ReaderTextViewStyle"
         android:layout_width="match_parent"
@@ -105,7 +106,7 @@
         android:text="@string/desc_sign_up"
         android:textSize="@dimen/textSizeTiny" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/news_app_disclosure"
         style="@style/ReaderTextViewStyle"
         android:layout_width="match_parent"

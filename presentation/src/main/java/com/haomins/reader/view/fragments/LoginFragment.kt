@@ -59,6 +59,7 @@ class LoginFragment : Fragment() {
     private fun setOnClickListener() {
         login_button.setOnClickListener { loginButtonOnClick() }
         sign_up_button.setOnClickListener { signUpButtonOnClick() }
+        forgot_password.setOnClickListener { forgetPasswordButtonOnClick() }
         news_app_disclosure.setOnClickListener { showDisclosureFragment() }
     }
 
@@ -87,6 +88,12 @@ class LoginFragment : Fragment() {
 
     private fun signUpButtonOnClick() {
         loginViewModel.onSignUp {
+            startActivity(Intent(Intent.ACTION_VIEW, it))
+        }
+    }
+
+    private fun forgetPasswordButtonOnClick() {
+        loginViewModel.onForgetPassword {
             startActivity(Intent(Intent.ACTION_VIEW, it))
         }
     }

@@ -10,7 +10,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
-class GenerateAccountTest {
+class ForgetPasswordTest {
 
     @Mock
     lateinit var mockLoginRepositoryContract: LoginRepositoryContract
@@ -18,12 +18,12 @@ class GenerateAccountTest {
     private val postExecutionScheduler = TestSchedulers.postExecutionScheduler()
     private val executionScheduler = TestSchedulers.executionScheduler()
 
-    private lateinit var generateAccount: GenerateAccount
+    private lateinit var forgetPassword: ForgetPassword
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        generateAccount = GenerateAccount(
+        forgetPassword = ForgetPassword(
             loginRepositoryContract = mockLoginRepositoryContract,
             postExecutionScheduler = postExecutionScheduler,
             executionScheduler = executionScheduler
@@ -34,14 +34,14 @@ class GenerateAccountTest {
     fun `test buildUseCaseSingle$Reader_domain success`() {
 
         fun mockBehavior() {
-            `when`(mockLoginRepositoryContract.getGenerateAccountUrlString()).thenReturn("test")
+            `when`(mockLoginRepositoryContract.getForgetPasswordUrlString()).thenReturn("test")
         }
 
         val testObserver = TestObserver<String>()
 
         mockBehavior()
 
-        generateAccount
+        forgetPassword
             .buildUseCaseSingle(Unit)
             .subscribeWith(testObserver)
 
