@@ -21,16 +21,12 @@ import javax.inject.Inject
 
 class LoginFragment : Fragment() {
 
-    companion object {
-        const val TAG = "LoginFragment"
-    }
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val loginViewModel by viewModels<LoginViewModel> { viewModelFactory }
 
     private val isUserLoggedInObserver by lazy {
-        Observer<Boolean>() {
+        Observer<Boolean> {
             if (it) {
                 popItself()
                 showSourceTitleListFragment()
@@ -62,7 +58,7 @@ class LoginFragment : Fragment() {
 
     private fun setOnClickListener() {
         login_button.setOnClickListener { loginButtonOnClick() }
-//        news_app_disclosure_details.setOnClickListener { loginDisclosureDescriptionOnClick() }
+        sign_up_button.setOnClickListener { signUpButtonOnClick() }
         news_app_disclosure.setOnClickListener { showDisclosureFragment() }
     }
 
@@ -74,12 +70,9 @@ class LoginFragment : Fragment() {
         setLoginPasswordEditTextOnChangeListener()
     }
 
-    //TODO: disable or enable button based on if username and password is empty
     private fun setLoginPasswordEditTextOnChangeListener() {
         login_password_edit_text.addTextChangedListener {
-            it?.let {
-                login_button.isEnabled = it.isNotEmpty()
-            }
+            login_button.isEnabled = !it.isNullOrEmpty()
         }
     }
 
@@ -92,16 +85,8 @@ class LoginFragment : Fragment() {
         loginViewModel.isUserLoggedIn.observe(viewLifecycleOwner, isUserLoggedInObserver)
     }
 
-    //TODO: change it to forget password
     private fun signUpButtonOnClick() {
         loginViewModel.onSignUp {
-            startActivity(Intent(Intent.ACTION_VIEW, it))
-        }
-    }
-
-    //TODO: link to website to create account
-    private fun loginDisclosureDescriptionOnClick() {
-        loginViewModel.getGenerateAccountForGoogleOrFacebookUrl {
             startActivity(Intent(Intent.ACTION_VIEW, it))
         }
     }
@@ -121,5 +106,9 @@ class LoginFragment : Fragment() {
         activity?.let {
             (it as MainActivity).showSourceTitleListFragment()
         }
+    }
+
+    companion object {
+        const val TAG = "LoginFragment"
     }
 }

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Reader</string>
-    <string name="button_text_login">Login</string>
+    <string name="button_text_login">Log In</string>
     <string name="button_text_create_account">Create Account</string>
     <string name="version_description">version %s</string>
     <string name="menu_see_all_friends">Friends List</string>
