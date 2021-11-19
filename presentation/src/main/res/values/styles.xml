@@ -23,8 +23,16 @@
         <item name="android:textViewStyle">@style/ReaderTextViewStyle</item>
     </style>
 
-    <style name="ReaderTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/font_manrope_bold</item>
+    <style name="ReaderEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/font_avenir</item>
+    </style>
+
+    <style name="ReaderTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/font_avenir</item>
+    </style>
+
+    <style name="ReaderButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:fontFamily">@font/font_avenir</item>
     </style>
 
     <style name="ToolBarStyle" parent="Widget.MaterialComponents.Toolbar">

@@ -36,6 +36,7 @@
 
         <com.haomins.ui.edittext.ReaderEditText
             android:id="@+id/login_username_edit_text"
+            style="@style/ReaderEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_layout_margin"
@@ -44,14 +45,16 @@
 
         <com.haomins.ui.edittext.ReaderPasswordEditText
             android:id="@+id/login_password_edit_text"
+            style="@style/ReaderEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_layout_margin"
             android:hint="@string/hint_passcode"
             app:layout_constraintTop_toBottomOf="@id/login_username_edit_text" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/forgot_password"
+            style="@style/ReaderTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_layout_margin"
@@ -63,19 +66,21 @@
 
         <com.haomins.ui.button.ReaderSolidButton
             android:id="@+id/login_button"
+            style="@style/ReaderButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_layout_margin"
             android:height="@dimen/edit_text_default_height"
+            android:enabled="false"
             android:text="@string/button_text_login"
             android:textColor="@android:color/white"
-            android:enabled="false"
             app:layout_constraintTop_toBottomOf="@id/forgot_password" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/sign_up_button"
+        style="@style/ReaderTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/news_app_disclosure_details"
@@ -90,7 +95,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/news_app_disclosure_details"
-        style="@style/ReaderTextContent"
+        style="@style/ReaderTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/news_app_disclosure"
@@ -102,7 +107,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/news_app_disclosure"
-        style="@style/ReaderTextContent"
+        style="@style/ReaderTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
