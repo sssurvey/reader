@@ -63,7 +63,7 @@ class LoginViewModel @Inject constructor(
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e(TAG, "forgetpassword :: onError -> ${e.printStackTrace()}")
+                    Log.e(TAG, "forgetPassword :: onError -> ${e.printStackTrace()}")
                 }
             }
         )
