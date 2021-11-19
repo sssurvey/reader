@@ -35,6 +35,13 @@ class ReaderPasswordEditText : ReaderEditText, View.OnTouchListener {
         defStyleAttr
     )
 
+    override fun configUiForDarkMode() {
+        super.configUiForDarkMode()
+        showPasswordIconPair.second.setTint(
+            currentTextColor
+        )
+    }
+
     override fun onTextChanged(
         text: CharSequence?,
         start: Int,

@@ -11,6 +11,10 @@ fun SharedPreferences.getBoolean(key: SharedPreferenceKey): Boolean {
     return this.getBoolean(key.string, false)
 }
 
+fun SharedPreferences.contains(key: SharedPreferenceKey): Boolean {
+    return this.contains(key.string)
+}
+
 fun SharedPreferences.putValue(key: SharedPreferenceKey, value: String) {
     this.edit().putString(key.string, value).apply()
 }
