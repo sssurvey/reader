@@ -21,6 +21,8 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:overScrollMode">never</item>
         <item name="android:textViewStyle">@style/ReaderTextViewStyle</item>
+        <!-- Disable the yellow auto fill highlights-->
+        <item name="android:autofilledHighlight">@android:color/transparent</item>
     </style>
 
     <style name="ReaderEditTextStyle" parent="Widget.AppCompat.EditText">
