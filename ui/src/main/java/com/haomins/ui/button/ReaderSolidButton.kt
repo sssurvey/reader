@@ -11,6 +11,8 @@ class ReaderSolidButton : AppCompatButton {
 
     init {
         isAllCaps = false
+        background =
+            AppCompatResources.getDrawable(context, R.drawable.reader_solid_button_background)!!
         if (isEnabled) setClickableBackground()
         else setClickedBackground()
     }
@@ -33,7 +35,11 @@ class ReaderSolidButton : AppCompatButton {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         super.onTouchEvent(event)
-        return if (isEnabled && event != null && (event.actionMasked == MotionEvent.ACTION_DOWN)) {
+        return if (isEnabled && event != null && (
+                    event.actionMasked == MotionEvent.ACTION_DOWN
+                            || event.actionMasked == MotionEvent.ACTION_MOVE
+                    )
+        ) {
             setClickedBackground()
             true
         } else if (isEnabled && event != null && event.actionMasked == MotionEvent.ACTION_UP) {
@@ -49,20 +55,16 @@ class ReaderSolidButton : AppCompatButton {
     }
 
     private fun setClickableBackground() {
-        background =
-            AppCompatResources.getDrawable(context, R.drawable.reader_solid_button_background)!!
+        background.alpha = OPAQUE_LEVEL_ENABLED
     }
 
     private fun setClickedBackground() {
-        background =
-            AppCompatResources.getDrawable(context, R.drawable.reader_solid_button_background)!!
-                .apply {
-                    alpha = OPAQUE_LEVEL
-                }
+        background.alpha = OPAQUE_LEVEL_DISABLED
     }
 
     companion object {
-        private const val OPAQUE_LEVEL: Int = 255 / 2
+        private const val OPAQUE_LEVEL_DISABLED: Int = 255 / 2
+        private const val OPAQUE_LEVEL_ENABLED: Int = 255
     }
 
 }
