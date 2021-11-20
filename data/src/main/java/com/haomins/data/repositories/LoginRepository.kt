@@ -35,8 +35,8 @@ class LoginRepository @Inject constructor(
         return TheOldReaderService.SIGN_UP_PAGE_URL
     }
 
-    override fun getGenerateAccountUrlString(): String {
-        return TheOldReaderService.GENERATE_ACCOUNT_PAGE_URL
+    override fun getForgetPasswordUrlString(): String {
+        return TheOldReaderService.FORGET_PASSWORD_PAGE_URL
     }
 
 }

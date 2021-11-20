@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
+import com.haomins.reader.utils.delayedUiOperation
 import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.fragments.DisclosureFragment
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         (application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        delayedUiOperation(seconds = SPLASH_ART_COUNTDOWN_TIMER_SECONDS, doAfterDelay = ::showingSplashArt)
         handleLoginFragment()
         setOnClickListeners()
     }
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         when (mainViewModel.hasAuthToken()) {
             true -> super.onBackPressed()
-            false -> this.onBackpressed()
+            false -> this.handleOnBackPressed()
         }
     }
 
@@ -68,13 +70,13 @@ class MainActivity : AppCompatActivity() {
     fun showSourceTitleListFragment() {
         initDrawer()
         supportFragmentManager.beginTransaction().replace(
-                R.id.main_activity_frame_layout,
-                SourceTitleListFragment(),
-                SourceTitleListFragment.TAG
+            R.id.main_activity_frame_layout,
+            SourceTitleListFragment(),
+            SourceTitleListFragment.TAG
         ).commit()
     }
 
-    private fun onBackpressed() {
+    private fun handleOnBackPressed() {
         if (supportFragmentManager.backStackEntryCount >= 1) {
             supportFragmentManager.popBackStack()
         } else {
@@ -99,6 +101,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showingSplashArt() {
+        splash_screen.visibility = View.GONE
+    }
+
     private fun startArticleListActivityForAllItems() {
         val intent = Intent(this, ArticleListActivity::class.java).apply {
             putExtra(MODE, ArticleListActivity.Mode.LOAD_ALL)
@@ -118,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
         navigation_view.itemIconTintList = null
         navigation_view.drawer_login_app_version_text_view.text =
-                getString(R.string.version_description, BuildConfig.VERSION_NAME)
+            getString(R.string.version_description, BuildConfig.VERSION_NAME)
         unlockDrawer()
     }
 
@@ -157,9 +163,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun showUserLoginFragment() {
         supportFragmentManager.beginTransaction().replace(
-                R.id.main_activity_frame_layout,
-                LoginFragment(),
-                LoginFragment.TAG
+            R.id.main_activity_frame_layout,
+            LoginFragment(),
+            LoginFragment.TAG
         ).commit()
+    }
+
+    companion object {
+        private const val SPLASH_ART_COUNTDOWN_TIMER_SECONDS = 2L
     }
 }

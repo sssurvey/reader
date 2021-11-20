@@ -27,7 +27,6 @@ class ReaderApplication : Application() {
     }
 
     private fun initDarkMode() {
-        if (darkModeManager.checkIsCurrentDarkModeEnabled()) darkModeManager.enableDarkMode()
-        else darkModeManager.disableDarkMode()
+        darkModeManager.initialize()
     }
 }

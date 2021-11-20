@@ -9,6 +9,6 @@ interface LoginRepositoryContract {
 
     fun getSignUpUrlString(): String
 
-    fun getGenerateAccountUrlString(): String
+    fun getForgetPasswordUrlString(): String
 
 }

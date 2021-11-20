@@ -16,7 +16,8 @@
         android:textSize="@dimen/textSizeSmall"
         tools:text="v0.0.1" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login_inputs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
@@ -24,88 +25,101 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/the_old_reader_logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_layout_margin"
+            android:foregroundGravity="center_horizontal"
+            android:src="@drawable/ic_the_old_reader_logo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.haomins.ui.edittext.ReaderEditText
+            android:id="@+id/login_username_edit_text"
+            style="@style/ReaderEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_layout_margin"
             android:hint="@string/hint_username"
-            app:boxStrokeColor="@color/colorPrimary">
+            app:layout_constraintTop_toBottomOf="@id/the_old_reader_logo" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_username_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textSize="@dimen/textSizeSmall" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.haomins.ui.edittext.ReaderPasswordEditText
+            android:id="@+id/login_password_edit_text"
+            style="@style/ReaderEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_layout_margin"
             android:hint="@string/hint_passcode"
-            app:boxStrokeColor="@color/colorPrimary">
+            app:layout_constraintTop_toBottomOf="@id/login_username_edit_text" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_password_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textWebPassword"
-                android:textSize="@dimen/textSizeSmall" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/forgot_password"
+            style="@style/ReaderTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_layout_margin"
+            android:text="@string/forget_password"
+            android:clickable="true"
+            android:textColor="@color/links"
+            android:textSize="@dimen/textSizeSmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_password_edit_text" />
 
-        <LinearLayout
+        <com.haomins.ui.button.ReaderSolidButton
+            android:id="@+id/login_button"
+            style="@style/ReaderButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/medium_layout_margin"
+            android:height="@dimen/edit_text_default_height"
+            android:enabled="false"
+            android:text="@string/button_text_login"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/forgot_password" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/sign_up_button"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/edit_text_default_height"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/button_text_sign_up"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/textSizeSmall" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/login_button"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/edit_text_default_height"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/button_text_login"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/textSizeSmall" />
-        </LinearLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/sign_up_button"
+        style="@style/ReaderTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/news_app_disclosure_details"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/default_layout_margin"
+        android:clickable="true"
+        android:text="@string/button_text_create_account"
+        android:textAlignment="center"
+        android:textColor="@color/links"
+        android:textSize="@dimen/textSizeMedium" />
 
-    </LinearLayout>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/login_sign_up_text_view"
-        style="@style/ReaderTextContent"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/news_app_disclosure_details"
+        style="@style/ReaderTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/news_app_disclosure"
-        android:layout_margin="@dimen/large_layout_margin"
-        android:clickable="true"
+        android:layout_above="@id/news_app_disclosure"
+        android:layout_marginStart="@dimen/large_layout_margin"
+        android:layout_marginEnd="@dimen/large_layout_margin"
         android:justificationMode="inter_word"
         android:text="@string/desc_sign_up"
         android:textSize="@dimen/textSizeTiny" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/news_app_disclosure"
-        style="@style/ReaderTextContent"
+        style="@style/ReaderTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/large_layout_margin"
+        android:layout_marginStart="@dimen/large_layout_margin"
+        android:layout_marginTop="@dimen/default_layout_margin"
+        android:layout_marginEnd="@dimen/large_layout_margin"
+        android:layout_marginBottom="@dimen/medium_layout_margin"
         android:clickable="true"
         android:justificationMode="inter_word"
         android:text="@string/settings_news_disclosures"
-        android:textAlignment="textEnd"
+        android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/textSizeSmall" />
 
