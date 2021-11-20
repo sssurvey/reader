@@ -1,5 +1,9 @@
 ext {
 
+    project.ext.compiledSdkVersion = 31
+    project.ext.kotlin_version = "1.5.31"
+    project.ext.gradle_build_tool_version = '7.0.3'
+
     def androidx_lifecycle = "2.2.0"
     def dagger_version = "2.36"
     def android_arch_lifecycle_version = "1.1.1"
@@ -11,8 +15,8 @@ ext {
     def junit_version = "4.12"
     def mockito_version = "2.13.0"
     def material_version = "1.1.0"
-    def ktx_version = "1.2.0"
-    def app_compat_version = "1.1.0"
+    def ktx_version = "1.7.0"
+    def app_compat_version = "1.4.0"
 
     appDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
