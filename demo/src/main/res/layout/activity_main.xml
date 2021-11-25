@@ -70,6 +70,25 @@
             android:layout_margin="10dp"
             android:background="@color/black" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Reader Navigation"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <com.haomins.ui.navigationbar.ReaderNavigationBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="10dp"
+            android:background="@color/black" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>
