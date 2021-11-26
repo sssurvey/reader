@@ -28,17 +28,26 @@
                 android:layout_height="match_parent" />
 
         </androidx.core.widget.NestedScrollView>
+
+        <com.haomins.ui.navigationbar.ReaderNavigationBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="@dimen/relativeLayoutPadding"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/splash_screen"
+        style="@style/ReaderSplashArtStroke"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/imageViewDefaultPadding"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_the_old_reader_splash_art_logo"
-        style="@style/ReaderSplashArtStroke"
-        android:visibility="visible" />
+        android:visibility="visible"
+        tools:visibility="gone" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
