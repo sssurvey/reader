@@ -4,11 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.haomins.ui.R
+import kotlinx.android.synthetic.main.reader_navigation_bar.view.*
 
 class ReaderNavigationBar : ConstraintLayout {
 
     init {
-        init()
+        inflate(context, R.layout.reader_navigation_bar, this)
     }
 
     constructor(context: Context) : super(context)
@@ -21,8 +22,20 @@ class ReaderNavigationBar : ConstraintLayout {
         defStyleAttr
     )
 
-    private fun init() {
-        inflate(context, R.layout.reader_navigation_bar, this)
+    fun setAddSourceOnClick(onClickListener: OnClickListener) {
+        add_source.setOnClickListener(onClickListener)
+    }
+
+    fun setAllSourceOnClick(onClickListener: OnClickListener) {
+        all_source.setOnClickListener(onClickListener)
+    }
+
+    fun setSearchSourceOnClick(onClickListener: OnClickListener) {
+        search_source.setOnClickListener(onClickListener)
+    }
+
+    fun setSavedSourceOnClick(onClickListener: OnClickListener) {
+        saved_source.setOnClickListener(onClickListener)
     }
 
 }
