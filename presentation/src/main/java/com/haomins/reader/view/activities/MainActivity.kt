@@ -35,7 +35,10 @@ class MainActivity : AppCompatActivity() {
         (application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        delayedUiOperation(seconds = SPLASH_ART_COUNTDOWN_TIMER_SECONDS, doAfterDelay = ::showingSplashArt)
+        delayedUiOperation(
+            seconds = SPLASH_ART_COUNTDOWN_TIMER_SECONDS,
+            doAfterDelay = ::showingSplashArt
+        )
         handleLoginFragment()
         setOnClickListeners()
     }
@@ -123,7 +126,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavigationBar() {
         with(reader_navigation_bar) {
-            setOnClicks()
+            setOnClicks(
+                addSourceOnClick = this@MainActivity::startAddSourceActivity,
+                allSourceOnClick = this@MainActivity::startArticleListActivityForAllItems,
+                searchSourceOnClick = {
+                    this@MainActivity.showToast("TODO: searchSourceOnClick")
+                },
+                savedSourceOnClick = {
+                    this@MainActivity.showToast("TODO: savedSourceOnClick")
+                })
             visibility = View.VISIBLE
         }
     }

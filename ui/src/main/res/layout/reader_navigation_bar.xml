@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:padding="5dp">
+    android:padding="20dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
@@ -29,6 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
             android:src="@drawable/ic_add_source_nav" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -37,6 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
             android:src="@drawable/ic_all_source_nav" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -45,6 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
             android:src="@drawable/ic_search_source_nav" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -53,6 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
             android:src="@drawable/ic_saved_source_nav" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

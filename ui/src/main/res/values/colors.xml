@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="reader_edit_text_background_tint_dark_mode">#1F1F1F</color>
+    <color name="navigation_button_on_click_background">#FFFFFF</color>
 </resources>
