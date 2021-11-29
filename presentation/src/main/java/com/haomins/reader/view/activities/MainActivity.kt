@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                     setCurrentlySelected(0)
                 },
                 allSourceOnClick = {
-                    startArticleListActivityForAllItems()
+                    this@MainActivity.showToast("TODO: allSourceOnClick")
                     setCurrentlySelected(1)
                 },
                 searchSourceOnClick = {

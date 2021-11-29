@@ -16,7 +16,7 @@ class ReaderNavigationBar : ConstraintLayout {
 
     init {
         inflate(context, R.layout.reader_navigation_bar, this)
-        setCurrentlySelected()
+        setCurrentlySelected(1) // Default to 1 which is home screen icon
     }
 
     constructor(context: Context) : super(context)
@@ -29,7 +29,7 @@ class ReaderNavigationBar : ConstraintLayout {
         defStyleAttr
     )
 
-    fun setCurrentlySelected(selection: Int = 0) {
+    fun setCurrentlySelected(selection: Int) {
         when (selection) {
             0 -> {
                 add_source.drawable.setTint(Color.WHITE)
