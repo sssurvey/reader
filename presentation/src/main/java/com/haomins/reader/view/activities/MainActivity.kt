@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showSourceTitleListFragment() {
         initDrawer()
+        initNavigationBar()
         supportFragmentManager.beginTransaction().replace(
             R.id.main_activity_frame_layout,
             SourceTitleListFragment(),
@@ -118,6 +119,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun startAddSourceActivity() {
         startActivity(Intent(this, AddSourceActivity::class.java))
+    }
+
+    private fun initNavigationBar() {
+        with(reader_navigation_bar) {
+            setOnClicks()
+            visibility = View.VISIBLE
+        }
     }
 
     private fun initDrawer() {

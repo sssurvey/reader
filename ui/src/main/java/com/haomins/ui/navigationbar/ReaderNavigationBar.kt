@@ -2,6 +2,7 @@ package com.haomins.ui.navigationbar
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.haomins.ui.R
 import kotlinx.android.synthetic.main.reader_navigation_bar.view.*
@@ -22,20 +23,35 @@ class ReaderNavigationBar : ConstraintLayout {
         defStyleAttr
     )
 
-    fun setAddSourceOnClick(onClickListener: OnClickListener) {
+    fun setOnClicks(
+        addSourceOnClick: () -> Unit = { Log.d(TAG, "addSourceOnClick :: called") },
+        allSourceOnClick: () -> Unit = { Log.d(TAG, "allSourceOnClick :: called") },
+        searchSourceOnClick: () -> Unit = { Log.d(TAG, "searchSourceOnClick :: called") },
+        savedSourceOnClick: () -> Unit = { Log.d(TAG, "savedSourceOnClick :: called") }
+    ) {
+        setAddSourceOnClick { addSourceOnClick.invoke() }
+        setAllSourceOnClick { allSourceOnClick.invoke() }
+        setSearchSourceOnClick { searchSourceOnClick.invoke() }
+        setSavedSourceOnClick { savedSourceOnClick.invoke() }
+    }
+
+    private fun setAddSourceOnClick(onClickListener: OnClickListener) {
         add_source.setOnClickListener(onClickListener)
     }
 
-    fun setAllSourceOnClick(onClickListener: OnClickListener) {
+    private fun setAllSourceOnClick(onClickListener: OnClickListener) {
         all_source.setOnClickListener(onClickListener)
     }
 
-    fun setSearchSourceOnClick(onClickListener: OnClickListener) {
+    private fun setSearchSourceOnClick(onClickListener: OnClickListener) {
         search_source.setOnClickListener(onClickListener)
     }
 
-    fun setSavedSourceOnClick(onClickListener: OnClickListener) {
+    private fun setSavedSourceOnClick(onClickListener: OnClickListener) {
         saved_source.setOnClickListener(onClickListener)
     }
 
+    companion object {
+        private const val TAG = "ReaderNavigationBar"
+    }
 }
