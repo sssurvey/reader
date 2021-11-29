@@ -2,6 +2,7 @@ package com.haomins.ui.navigationbar
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -15,6 +16,7 @@ class ReaderNavigationBar : ConstraintLayout {
 
     init {
         inflate(context, R.layout.reader_navigation_bar, this)
+        setCurrentlySelected()
     }
 
     constructor(context: Context) : super(context)
@@ -26,6 +28,42 @@ class ReaderNavigationBar : ConstraintLayout {
         attrs,
         defStyleAttr
     )
+
+    fun setCurrentlySelected(selection: Int = 0) {
+        when (selection) {
+            0 -> {
+                add_source.drawable.setTint(Color.WHITE)
+                all_source.drawable.setTintList(null)
+                search_source.drawable.setTintList(null)
+                saved_source.drawable.setTintList(null)
+            }
+            1 -> {
+                add_source.drawable.setTintList(null)
+                all_source.drawable.setTint(Color.WHITE)
+                search_source.drawable.setTintList(null)
+                saved_source.drawable.setTintList(null)
+            }
+            2 -> {
+                add_source.drawable.setTintList(null)
+                all_source.drawable.setTintList(null)
+                search_source.drawable.setTint(Color.WHITE)
+                saved_source.drawable.setTintList(null)
+            }
+            3 -> {
+                add_source.drawable.setTintList(null)
+                all_source.drawable.setTintList(null)
+                search_source.drawable.setTintList(null)
+                saved_source.drawable.setTint(Color.WHITE)
+            }
+            else -> {
+                add_source.drawable.setTintList(null)
+                all_source.drawable.setTintList(null)
+                search_source.drawable.setTintList(null)
+                saved_source.drawable.setTintList(null)
+                Log.d(TAG, "Navigation Selection Out of Range")
+            }
+        }
+    }
 
     fun setOnClicks(
         addSourceOnClick: () -> Unit = { Log.d(TAG, "addSourceOnClick :: called") },

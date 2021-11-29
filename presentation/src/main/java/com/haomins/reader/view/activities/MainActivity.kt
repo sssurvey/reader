@@ -127,13 +127,21 @@ class MainActivity : AppCompatActivity() {
     private fun initNavigationBar() {
         with(reader_navigation_bar) {
             setOnClicks(
-                addSourceOnClick = this@MainActivity::startAddSourceActivity,
-                allSourceOnClick = this@MainActivity::startArticleListActivityForAllItems,
+                addSourceOnClick = {
+                    startAddSourceActivity()
+                    setCurrentlySelected(0)
+                },
+                allSourceOnClick = {
+                    startArticleListActivityForAllItems()
+                    setCurrentlySelected(1)
+                },
                 searchSourceOnClick = {
                     this@MainActivity.showToast("TODO: searchSourceOnClick")
+                    setCurrentlySelected(2)
                 },
                 savedSourceOnClick = {
                     this@MainActivity.showToast("TODO: savedSourceOnClick")
+                    setCurrentlySelected(3)
                 })
             visibility = View.VISIBLE
         }
