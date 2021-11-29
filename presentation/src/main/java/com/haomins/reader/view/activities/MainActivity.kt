@@ -173,11 +173,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openDrawer() {
-        drawer_layout.openDrawer(GravityCompat.START)
+        drawer_layout.openDrawer(GravityCompat.END)
     }
 
     private fun closeDrawer() {
-        drawer_layout.closeDrawer(GravityCompat.START)
+        drawer_layout.closeDrawer(GravityCompat.END)
     }
 
     private fun handleLoginFragment() {
