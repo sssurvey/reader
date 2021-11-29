@@ -158,6 +158,7 @@ class MainActivity : AppCompatActivity() {
     private fun initToolbar() {
         appbar_layout.visibility = View.VISIBLE
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         appbar_layout.toolbar.apply {
             setNavigationOnClickListener { openDrawer() }
             setNavigationIcon(R.drawable.ic_menu)
