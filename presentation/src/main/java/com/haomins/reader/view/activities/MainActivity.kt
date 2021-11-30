@@ -157,7 +157,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initToolbar() {
         appbar_layout.visibility = View.VISIBLE
-        setSupportActionBar(toolbar)
+        with(toolbar) {
+            setSupportActionBar(this)
+            initializeButton1(resources.getString(R.string.toolbar_my_feed_button_text))
+            initializeButton2(resources.getString(R.string.toolbar_explore_feed_button_text))
+        }
         supportActionBar?.setDisplayShowTitleEnabled(false)
         appbar_layout.toolbar.apply {
             setNavigationOnClickListener { openDrawer() }

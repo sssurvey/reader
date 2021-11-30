@@ -3,52 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/default_background"
     android:layoutDirection="rtl"
     app:elevation="@dimen/no_elevation">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <com.haomins.ui.toolbar.ReaderToolbar
         android:id="@+id/toolbar"
-        style="@style/ToolBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|enterAlways|snap">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/my_feed_button"
-                style="@style/ReaderToolbarTitleTextViewStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layoutDirection="ltr"
-                android:layout_marginEnd="@dimen/tool_bar_title_margin_offset"
-                android:text="@string/toolbar_my_feed_button_text"
-                android:textAlignment="viewEnd"
-                app:layout_constraintEnd_toStartOf="@id/guideline"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/explore_feed_button"
-                style="@style/ReaderToolbarTitleTextViewStyle"
-                android:layoutDirection="ltr"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="@string/toolbar_explore_feed_button_text"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.appbar.MaterialToolbar>
+        app:layout_scrollFlags="scroll|enterAlways|snap" />
 
 </com.google.android.material.appbar.AppBarLayout>

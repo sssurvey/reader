@@ -2,4 +2,5 @@
 <resources>
     <color name="reader_edit_text_background_tint_dark_mode">#1F1F1F</color>
     <color name="navigation_button_on_click_background">#FFFFFF</color>
+    <color name="reader_toolbar_title_color">#FF2600</color>
 </resources>
