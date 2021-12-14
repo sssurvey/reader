@@ -1,9 +1,11 @@
 package com.haomins.ui.toolbar
 
 import android.content.Context
+import android.content.res.Configuration
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.haomins.ui.R
 import kotlinx.android.synthetic.main.reader_toolbar.view.*
@@ -50,6 +52,27 @@ class ReaderToolbar : MaterialToolbar {
             setOnClickListener {
                 onClick.invoke()
                 highlightSelectedButtons(false)
+            }
+        }
+    }
+
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+        configUiForDarkMode()
+    }
+
+    private fun configUiForDarkMode() {
+        when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                toolbar_layout.background.setTint(
+                        ResourcesCompat.getColor(
+                            resources,
+                            R.color.reader_toolbar_background_tint_dark_mode,
+                            null
+                        )
+                    )
+            }
+            else -> {
             }
         }
     }
