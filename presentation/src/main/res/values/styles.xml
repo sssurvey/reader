@@ -33,6 +33,13 @@
         <item name="android:fontFamily">@font/font_avenir</item>
     </style>
 
+    <style name="ReaderToolbarTitleTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/font_avenir_heavy</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+    </style>
+
     <style name="ReaderButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:fontFamily">@font/font_avenir</item>
     </style>

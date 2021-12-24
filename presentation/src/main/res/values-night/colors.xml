@@ -6,6 +6,7 @@
 
     <color name="default_background">#000000</color>
     <color name="default_icon_color">#D81B60</color>
+    <color name="toolbar_navigation_icon_color">#FFFFFF</color>
     <color name="default_text">#FFFFFF</color>
     <color name="lightGray">#a9a9a9</color>
     <color name="transparent">#80000000</color>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="reader_edit_text_background_tint_dark_mode">#1F1F1F</color>
+    <color name="reader_toolbar_background_tint_dark_mode">#000000</color>
     <color name="navigation_button_on_click_background">#FFFFFF</color>
+    <color name="reader_toolbar_title_color">#FF2600</color>
 </resources>

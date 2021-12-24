@@ -56,7 +56,7 @@
         android:id="@+id/navigation_view"
         android:layout_width="@dimen/default_navigation_view_width"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="end"
         android:background="@color/default_background"
         android:fitsSystemWindows="true"
         app:itemTextAppearance="@style/ReaderTextViewStyle"

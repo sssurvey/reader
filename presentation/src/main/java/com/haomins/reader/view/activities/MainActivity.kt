@@ -157,7 +157,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initToolbar() {
         appbar_layout.visibility = View.VISIBLE
-        setSupportActionBar(toolbar)
+        with(toolbar) {
+            setSupportActionBar(this)
+            initializeButton1(resources.getString(R.string.toolbar_my_feed_button_text))
+            initializeButton2(resources.getString(R.string.toolbar_explore_feed_button_text))
+        }
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         appbar_layout.toolbar.apply {
             setNavigationOnClickListener { openDrawer() }
             setNavigationIcon(R.drawable.ic_menu)
@@ -173,11 +178,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openDrawer() {
-        drawer_layout.openDrawer(GravityCompat.START)
+        drawer_layout.openDrawer(GravityCompat.END)
     }
 
     private fun closeDrawer() {
-        drawer_layout.closeDrawer(GravityCompat.START)
+        drawer_layout.closeDrawer(GravityCompat.END)
     }
 
     private fun handleLoginFragment() {

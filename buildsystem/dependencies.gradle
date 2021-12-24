@@ -2,7 +2,7 @@ ext {
 
     project.ext.compiledSdkVersion = 31
     project.ext.kotlin_version = "1.5.31"
-    project.ext.gradle_build_tool_version = '7.0.3'
+    project.ext.gradle_build_tool_version = '7.0.4'
 
     def androidx_lifecycle = "2.2.0"
     def dagger_version = "2.36"

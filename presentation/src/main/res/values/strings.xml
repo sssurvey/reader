@@ -37,4 +37,6 @@
     <string name="placeholder_phone_number">(123)–456–7890</string>
     <string name="placeholder_website">www.site.com</string>
     <string name="forget_password">Forgot Password?</string>
+    <string name="toolbar_my_feed_button_text">me</string>
+    <string name="toolbar_explore_feed_button_text">explore</string>
 </resources>
