@@ -4,4 +4,6 @@
     <color name="reader_toolbar_background_tint_dark_mode">#000000</color>
     <color name="navigation_button_on_click_background">#FFFFFF</color>
     <color name="reader_toolbar_title_color">#FF2600</color>
+    <color name="reader_article_item_foot_note">#747474</color>
+    <color name="reader_article_item_title">#000000</color>
 </resources>
