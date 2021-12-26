@@ -48,7 +48,9 @@ class LoadArticlesByFeedTest {
                 "123",
                 "123",
                 123,
-                123
+                123,
+                "",
+                ""
             ),
             ArticleEntity(
                 "123",
@@ -58,7 +60,9 @@ class LoadArticlesByFeedTest {
                 "123",
                 "123",
                 123,
-                123
+                123,
+                "",
+                ""
             )
         )
 

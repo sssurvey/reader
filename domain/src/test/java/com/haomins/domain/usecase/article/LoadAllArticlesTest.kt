@@ -49,7 +49,9 @@ class LoadAllArticlesTest {
                 "123",
                 "123",
                 123,
-                123
+                123,
+                "",
+                ""
             ),
             ArticleEntity(
                 "123",
@@ -59,7 +61,9 @@ class LoadAllArticlesTest {
                 "123",
                 "123",
                 123,
-                123
+                123,
+                "",
+                ""
             )
         )
 

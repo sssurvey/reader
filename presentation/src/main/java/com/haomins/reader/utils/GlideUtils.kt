@@ -39,6 +39,20 @@ class GlideUtils @Inject constructor(
             .into(imageView)
     }
 
+    fun loadPreviewImage(imageView: ImageView, urlString: String) {
+        glide
+            .asDrawable()
+            .let {
+                if (urlString.isNotEmpty()) {
+                    it.centerCrop().load(Uri.parse(URL(urlString).toURI().toString()))
+                } else {
+                    it.centerInside().load(R.drawable.ic_broken_image)
+                }
+            }
+            .error(R.drawable.ic_broken_image)
+            .into(imageView)
+    }
+
     @Deprecated(
         message = "Out of date, creating URL in method now.",
         replaceWith = ReplaceWith("loadIconImage")

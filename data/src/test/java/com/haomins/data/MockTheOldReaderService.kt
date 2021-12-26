@@ -108,12 +108,13 @@ class MockTheOldReaderService: TheOldReaderService {
                                             summary = Summary("test_direct", "test_content"),
                                             publishedMillisecond = 1,
                                             updatedMillisecond = 1,
-                                            author = "Tester Test"
+                                            author = "Tester Test",
                                     )
                             )
                         }
                     },
-                    likingUsersCount = 1
+                    likingUsersCount = 1,
+                alternate = Alternate("www.test.com", "www.test.com/test.jpeg")
             )
         }
 

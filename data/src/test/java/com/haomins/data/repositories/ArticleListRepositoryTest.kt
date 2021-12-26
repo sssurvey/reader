@@ -48,10 +48,10 @@ class ArticleListRepositoryTest {
         `when`(mockDateUtils.to24HrString(any())).thenReturn("1")
 
         articleListRepository = ArticleListRepository(
-                mockTheOldReaderService,
-                mockRoomService,
-                mockSharedPreferences,
-                ArticleEntityMapper(mockDateUtils)
+            mockTheOldReaderService,
+            mockRoomService,
+            mockSharedPreferences,
+            ArticleEntityMapper(mockDateUtils)
         )
         mockHelper()
     }
@@ -79,9 +79,9 @@ class ArticleListRepositoryTest {
         articleListRepository.loadArticleItemRefs("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
-                .loadArticleListByFeed(any(), any(), any(), any(), any())
+            .loadArticleListByFeed(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(1))
-                .loadArticleDetailsByRefId(any(), any(), any())
+            .loadArticleDetailsByRefId(any(), any(), any())
         verify(mockRoomService, times(2)).articleDao()
     }
 
@@ -91,9 +91,9 @@ class ArticleListRepositoryTest {
         articleListRepository.continueLoadAllArticleItemRefs().subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
-                .loadAllArticles(any(), any(), any(), any(), any())
+            .loadAllArticles(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
-                .loadArticleDetailsByRefId(any(), any(), any())
+            .loadArticleDetailsByRefId(any(), any(), any())
         verify(mockRoomService, times(10)).articleDao()
     }
 
@@ -103,53 +103,59 @@ class ArticleListRepositoryTest {
         articleListRepository.continueLoadArticleItemRefs("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
-                .loadArticleListByFeed(any(), any(), any(), any(), any())
+            .loadArticleListByFeed(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
-                .loadArticleDetailsByRefId(any(), any(), any())
+            .loadArticleDetailsByRefId(any(), any(), any())
         verify(mockRoomService, times(10)).articleDao()
     }
 
     private fun mockHelper() {
         `when`(
-                mockSharedPreferences
-                        .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, "")
+            mockSharedPreferences
+                .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, "")
         )
-                .thenReturn("test_auth_code")
+            .thenReturn("test_auth_code")
         `when`(mockRoomService.articleDao())
-                .thenReturn(mockArticleDao)
+            .thenReturn(mockArticleDao)
         `when`(mockArticleDao.getAll())
-                .thenReturn(
-                        Single.just(
-                                mutableListOf(
-                                        ArticleEntity(
-                                                "1",
-                                                "2",
-                                                "test_title",
-                                                1,
-                                                1,
-                                                "test_author",
-                                                "test_content"
-                                        ),
-                                        ArticleEntity(
-                                                "2",
-                                                "2",
-                                                "test_title",
-                                                1,
-                                                1,
-                                                "test_author",
-                                                "test_content"
-                                        ),
-                                        ArticleEntity(
-                                                "3",
-                                                "2",
-                                                "test_title",
-                                                1,
-                                                1,
-                                                "test_author",
-                                                "test_content"
-                                        )
-                                )
+            .thenReturn(
+                Single.just(
+                    mutableListOf(
+                        ArticleEntity(
+                            "1",
+                            "2",
+                            "test_title",
+                            1,
+                            1,
+                            "test_author",
+                            "test_content",
+                            "www.test.com",
+                            "www.test.com/test.jpeg",
+                        ),
+                        ArticleEntity(
+                            "2",
+                            "2",
+                            "test_title",
+                            1,
+                            1,
+                            "test_author",
+                            "test_content",
+                            "www.test.com",
+                            "www.test.com/test.jpeg"
+                        ),
+                        ArticleEntity(
+                            "3",
+                            "2",
+                            "test_title",
+                            1,
+                            1,
+                            "test_author",
+                            "test_content",
+                            "www.test.com",
+                            "www.test.com/test.jpeg"
                         )
+                    )
                 )
+            )
     }
 }

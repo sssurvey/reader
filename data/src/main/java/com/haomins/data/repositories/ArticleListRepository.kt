@@ -8,6 +8,7 @@ import com.haomins.data.model.responses.article.ArticleResponseModel
 import com.haomins.data.model.responses.article.ItemRefListResponseModel
 import com.haomins.data.service.RoomService
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.data.util.extractImageFromImgTags
 import com.haomins.data.util.getString
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
@@ -112,7 +113,8 @@ class ArticleListRepository @Inject constructor(
                     author = articleResponseModel.items.first().author,
                     content = articleResponseModel.items.first().summary.content,
                     feedId = articleResponseModel.id,
-                    href = articleResponseModel.alternate.herf
+                    href = articleResponseModel.alternate.herf,
+                    previewImageUrl = extractImageFromImgTags(rawHtmlString = articleResponseModel.items.first().summary.content)
                 )
             )
         }

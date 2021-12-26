@@ -20,7 +20,8 @@ class ArticleEntityMapper @Inject constructor(
             updatedTime = dateUtils.to24HrString(dataModel.itemUpdatedMillisecond),
             itemPublishedMillisecond = dataModel.itemPublishedMillisecond,
             itemUpdatedMillisecond = dataModel.itemUpdatedMillisecond,
-            href = dataModel.href
+            href = dataModel.href,
+            previewImageUrl = dataModel.previewImageUrl
         )
     }
 

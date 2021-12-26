@@ -48,6 +48,10 @@ class ArticleTitleListAdapter(
                 articleTitleListUiItems[position].href
             )
             setOnClick(this, position)
+            glideUtils.loadPreviewImage(
+                imageView = article_preview_image,
+                articleTitleListUiItems[position].previewImageUrl
+            )
         }
         articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }

@@ -47,7 +47,9 @@ class LoadArticleDataTest {
             howLongAgo = "1",
             updatedTime = "1",
             itemPublishedMillisecond = 1,
-            itemUpdatedMillisecond = 1
+            itemUpdatedMillisecond = 1,
+            href = "www.test.com",
+            previewImageUrl = "www.test.com/test.png"
         )
 
         fun mockBehavior() {

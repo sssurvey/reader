@@ -30,5 +30,8 @@ data class ArticleEntity(
         val content: String,
 
         @ColumnInfo(name = "href")
-        val href: String
+        val href: String,
+
+        @ColumnInfo(name = "preview_image_url")
+        val previewImageUrl: String
 )

@@ -9,5 +9,6 @@ data class ArticleEntity(
         val updatedTime: String,
         val itemUpdatedMillisecond: Long,
         val itemPublishedMillisecond: Long,
-        val href: String
+        val href: String,
+        val previewImageUrl: String
 )
