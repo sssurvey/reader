@@ -6,13 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.reader.R
+import com.haomins.reader.utils.GlideUtils
 import kotlinx.android.synthetic.main.article_title_recycler_view_item.view.*
 
 class ArticleTitleListAdapter(
-        private val articleTitleListUiItems: List<ArticleEntity>,
-        private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
+    private val articleTitleListUiItems: List<ArticleEntity>,
+    private val glideUtils: GlideUtils,
+    private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
 ) :
-        RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
+    RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
 
     interface ArticleTitleListOnClickListener {
 
@@ -25,12 +27,12 @@ class ArticleTitleListAdapter(
     inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
 
     override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+        parent: ViewGroup,
+        viewType: Int
     ): ArticleTitleListAdapter.CustomViewHolder {
-        val articleListItemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.article_title_recycler_view_item, parent, false)
-        return CustomViewHolder(articleListItemView)
+        val readerArticleItemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.article_title_recycler_view_item, parent, false)
+        return CustomViewHolder(readerArticleItemView)
     }
 
     override fun getItemCount(): Int {
@@ -38,15 +40,20 @@ class ArticleTitleListAdapter(
     }
 
     override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
-        holder.viewHolder.article_title_text_view.text = articleTitleListUiItems[position].itemTitle
-        holder.viewHolder.article_publish_time_text_view.text =
-                articleTitleListUiItems[position].howLongAgo
-        setOnClick(holder, position)
+        with(holder.viewHolder) {
+            article_title.text = articleTitleListUiItems[position].itemTitle
+            article_posted_time.text = articleTitleListUiItems[position].howLongAgo
+            glideUtils.loadIconImage(
+                imageView = article_source_icon,
+                articleTitleListUiItems[position].href
+            )
+            setOnClick(this, position)
+        }
         articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }
 
-    private fun setOnClick(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
-        holder.viewHolder.setOnClickListener {
+    private fun setOnClick(view: View, position: Int) {
+        view.setOnClickListener {
             articleTitleListOnClickListener.onArticleAtPositionClicked(position)
         }
     }

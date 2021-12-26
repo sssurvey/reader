@@ -17,6 +17,7 @@ import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.adapters.ArticleTitleListAdapter
+import com.haomins.reader.utils.GlideUtils
 import com.haomins.reader.view.activities.ArticleListActivity
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
 import com.haomins.reader.view.activities.ArticleListActivity.Mode
@@ -34,6 +35,8 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var glideUtils: GlideUtils
     private val articleListViewModel by viewModels<ArticleListViewModel> { viewModelFactory }
     private lateinit var currentMode: Mode
     private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
@@ -91,8 +94,9 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         article_title_recycler_view.apply {
             setHasFixedSize(true)
             adapter = ArticleTitleListAdapter(
-                    articleTitleUiItems,
-                    this@ArticleListFragment
+                articleTitleUiItems,
+                glideUtils,
+                this@ArticleListFragment
             )
             layoutManager = recyclerLayoutManager
             addOnScrollListener(recyclerViewOnScrollListener)

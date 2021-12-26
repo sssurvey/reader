@@ -30,6 +30,19 @@ class GlideUtils @Inject constructor(
         Glide.with(application)
     }
 
+    fun loadIconImage(imageView: ImageView, href: String) {
+        glide
+            .asDrawable()
+            .centerCrop()
+            .load(Uri.parse(URL("$ICON_LOADING_URL$href").toURI().toString()))
+            .error(R.drawable.ic_broken_image)
+            .into(imageView)
+    }
+
+    @Deprecated(
+        message = "Out of date, creating URL in method now.",
+        replaceWith = ReplaceWith("loadIconImage")
+    )
     fun loadIconImage(imageView: ImageView, url: URL) {
         glide
             .asDrawable()
@@ -37,6 +50,10 @@ class GlideUtils @Inject constructor(
             .load(Uri.parse(url.toURI().toString()))
             .error(R.drawable.ic_broken_image)
             .into(imageView)
+    }
+
+    companion object {
+        private const val ICON_LOADING_URL = "https://www.google.com/s2/favicons?sz=64&domain_url="
     }
 
 }

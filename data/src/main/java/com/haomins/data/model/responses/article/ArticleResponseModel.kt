@@ -24,7 +24,10 @@ data class ArticleResponseModel(
 
 
         @SerializedName("likingUsersCount")
-        val likingUsersCount: Long
+        val likingUsersCount: Long,
+
+        @SerializedName("alternate")
+        val alternate: Alternate
 
         /**
          * @SerializedName("annotations")
@@ -75,5 +78,15 @@ data class Summary(
 
         @SerializedName("content")
         val content: String
+
+)
+
+data class Alternate(
+
+        @SerializedName("href")
+        val herf: String,
+
+        @SerializedName("type")
+        val type: String
 
 )

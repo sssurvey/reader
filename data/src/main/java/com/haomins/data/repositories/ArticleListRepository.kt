@@ -111,7 +111,8 @@ class ArticleListRepository @Inject constructor(
                     itemPublishedMillisecond = articleResponseModel.items.first().publishedMillisecond,
                     author = articleResponseModel.items.first().author,
                     content = articleResponseModel.items.first().summary.content,
-                    feedId = articleResponseModel.id
+                    feedId = articleResponseModel.id,
+                    href = articleResponseModel.alternate.herf
                 )
             )
         }

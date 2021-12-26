@@ -33,6 +33,18 @@
         <item name="android:fontFamily">@font/font_avenir</item>
     </style>
 
+    <style name="ReaderArticleTitleTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/font_avenir_heavy</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textColor">@color/default_text</item>
+    </style>
+
+    <style name="ReaderArticlePostTimeTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/font_avenir_heavy</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/default_text_light</item>
+    </style>
+
     <style name="ReaderToolbarTitleTextViewStyle" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/font_avenir_heavy</item>
         <item name="textAllCaps">true</item>

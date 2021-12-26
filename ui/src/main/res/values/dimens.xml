@@ -4,8 +4,4 @@
     <dimen name="medium_padding">10dp</dimen>
     <dimen name="medium_margin">10dp</dimen>
     <dimen name="toolbar_title_font_size">18sp</dimen>
-    <dimen name="reader_article_item_title_font_size">19sp</dimen>
-    <dimen name="reader_article_item_image_layout_size">100dp</dimen>
-    <dimen name="reader_article_item_source_icon_layout_size">30dp</dimen>
-    <dimen name="default_image_view_corner_radius">100dp</dimen>
 </resources>
