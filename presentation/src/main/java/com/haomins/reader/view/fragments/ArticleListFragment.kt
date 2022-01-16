@@ -18,9 +18,7 @@ import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.adapters.ArticleTitleListAdapter
 import com.haomins.reader.utils.GlideUtils
-import com.haomins.reader.view.activities.ArticleListActivity
-import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
-import com.haomins.reader.view.activities.ArticleListActivity.Mode
+import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.ArticleListViewModel
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
@@ -29,20 +27,30 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     companion object {
         const val TAG = "ArticleListFragment"
+        const val LOAD_MODE_KEY = "ArticleListFragment_LOAD_MODE"
         private const val PROGRESS_BAR_DELAY = 1500L
         private const val LOAD_MORE_OFFSET_SCALE = 0.7
     }
 
+    enum class ArticleListViewMode(val key: String) {
+        LOAD_BY_FEED_ID("LOAD_BY_FEED_ID"),
+        LOAD_ALL("LOAD_ALL")
+    }
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     lateinit var glideUtils: GlideUtils
-    private val articleListViewModel by viewModels<ArticleListViewModel> { viewModelFactory }
-    private lateinit var currentMode: Mode
+
+    private lateinit var currentArticleListViewMode: ArticleListViewMode
+
     private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
+
+    private val articleListViewModel by viewModels<ArticleListViewModel> { viewModelFactory }
     private val articleTitleUiItems: MutableList<ArticleEntity> = ArrayList()
 
-    private val feedId by lazy { arguments?.getString(currentMode.key).toString() }
+    private val feedId by lazy { arguments?.getString(currentArticleListViewMode.key).toString() }
     private val handler by lazy { Handler() }
     private val recyclerLayoutManager by lazy { LinearLayoutManager(context) }
     private val isLoadingObserver by lazy {
@@ -74,21 +82,21 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     override fun onAttach(context: Context) {
         (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-                .build().inject(this)
+            .build().inject(this)
         super.onAttach(context)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_article_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        currentMode = arguments?.get(MODE) as Mode
+        currentArticleListViewMode = arguments?.get(LOAD_MODE_KEY) as ArticleListViewMode
         loadArticleList()
         registerLiveDataObservers()
         article_title_recycler_view.apply {
@@ -106,18 +114,20 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     override fun onArticleAtPositionClicked(position: Int) {
         val itemIdList: List<String> = articleTitleUiItems.map { it.itemId }
         activity?.let {
-            (it as ArticleListActivity).startArticleDetailActivity(
-                    position,
-                    itemIdList.toTypedArray()
+            (it as MainActivity).startArticleDetailActivity(
+                position,
+                itemIdList.toTypedArray()
             )
         }
     }
 
     override fun onLoadMoreArticlesBasedOnPosition(position: Int) {
         if (position >= loadMoreArticleThreshold) {
-            when (currentMode) {
-                Mode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(feedId)
-                Mode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
+            when (currentArticleListViewMode) {
+                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
+                    feedId
+                )
+                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
             }
             loadMoreArticleThreshold += loadMoreArticleThreshold
         }
@@ -138,25 +148,27 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     private fun registerLiveDataObservers() {
         articleListViewModel.articleTitleUiItemsList.observe(
-                viewLifecycleOwner,
-                articleTitleListUiItemObserver
+            viewLifecycleOwner,
+            articleTitleListUiItemObserver
         )
         articleListViewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
     }
 
     private fun loadArticleList() {
-        when (currentMode) {
-            Mode.LOAD_ALL -> articleListViewModel.loadAllArticles()
-            Mode.LOAD_BY_FEED_ID -> {
+        when (currentArticleListViewMode) {
+            ArticleListViewMode.LOAD_ALL -> articleListViewModel.loadAllArticles()
+            ArticleListViewMode.LOAD_BY_FEED_ID -> {
                 articleListViewModel.loadArticles(feedId)
             }
         }
     }
 
     private fun loadMoreArticleRightNow() {
-        when (currentMode) {
-            Mode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(feedId)
-            Mode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
+        when (currentArticleListViewMode) {
+            ArticleListViewMode.LOAD_BY_FEED_ID ->
+                articleListViewModel.continueLoadArticles(feedId)
+            ArticleListViewMode.LOAD_ALL ->
+                articleListViewModel.continueLoadAllArticles()
         }
     }
 

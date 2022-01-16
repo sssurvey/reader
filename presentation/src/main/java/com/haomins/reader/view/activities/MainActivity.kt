@@ -14,10 +14,10 @@ import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.utils.delayedUiOperation
 import com.haomins.reader.utils.showToast
-import com.haomins.reader.view.activities.ArticleListActivity.Companion.MODE
+import com.haomins.reader.view.fragments.ArticleListFragment
+import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
 import com.haomins.reader.view.fragments.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
-import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
@@ -35,10 +35,7 @@ class MainActivity : AppCompatActivity() {
         (application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        delayedUiOperation(
-            seconds = SPLASH_ART_COUNTDOWN_TIMER_SECONDS,
-            doAfterDelay = ::showingSplashArt
-        )
+        showSplashArt()
         handleLoginFragment()
         setOnClickListeners()
     }
@@ -52,8 +49,8 @@ class MainActivity : AppCompatActivity() {
 
     fun startArticleListActivity(feedId: String) {
         val intent = Intent(this, ArticleListActivity::class.java).apply {
-            putExtra(MODE, ArticleListActivity.Mode.LOAD_BY_FEED_ID)
-            putExtra(ArticleListActivity.Mode.LOAD_BY_FEED_ID.key, feedId)
+            putExtra(LOAD_MODE_KEY, ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID)
+            putExtra(ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID.key, feedId)
         }
         startActivity(intent)
     }
@@ -70,28 +67,60 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun showSourceTitleListFragment() {
+    fun showAfterUserLoggedInFragment() {
+
+        fun showArticleListFragmentForAllItems() {
+            val articleListFragment = ArticleListFragment().let {
+                it.arguments = Bundle().apply {
+                    putSerializable(LOAD_MODE_KEY, ArticleListFragment.ArticleListViewMode.LOAD_ALL)
+                    putBoolean(
+                        ArticleListFragment.ArticleListViewMode.LOAD_ALL.key,
+                        intent.getBooleanExtra(
+                            ArticleListFragment.ArticleListViewMode.LOAD_ALL.key,
+                            true
+                        )
+                    )
+                }
+                it
+            }
+            supportFragmentManager.beginTransaction().replace(
+                R.id.main_activity_frame_layout,
+                articleListFragment,
+                ArticleListFragment.TAG
+            ).commit()
+        }
+
         initDrawer()
         initNavigationBar()
-        supportFragmentManager.beginTransaction().replace(
-            R.id.main_activity_frame_layout,
-            SourceTitleListFragment(),
-            SourceTitleListFragment.TAG
-        ).commit()
+        mainViewModel.loadSubscriptionList {
+            showArticleListFragmentForAllItems()
+        }
+    }
+
+    fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
+        val intent = Intent(this, ArticleDetailActivity::class.java)
+        intent.putExtra(ArticleListActivity.ARTICLE_ITEM_POSITION, position)
+        intent.putExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY, articleIdArray)
+        startActivity(intent)
+    }
+
+    private fun showSplashArt() {
+        delayedUiOperation(
+            seconds = SPLASH_ART_COUNTDOWN_TIMER_SECONDS,
+            doAfterDelay = { splash_screen.visibility = View.GONE }
+        )
     }
 
     private fun handleOnBackPressed() {
-        if (supportFragmentManager.backStackEntryCount >= 1) {
-            supportFragmentManager.popBackStack()
-        } else {
-            finish()
-        }
+        if (supportFragmentManager.backStackEntryCount >= 1) supportFragmentManager.popBackStack()
+        else finish()
     }
 
     private fun setOnClickListeners() {
         setNavigationViewOnItemClickListener()
     }
 
+    //TODO: rework drawer, to have source list displayed in drawer
     private fun setNavigationViewOnItemClickListener() {
         navigation_view.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -105,13 +134,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showingSplashArt() {
-        splash_screen.visibility = View.GONE
-    }
-
     private fun startArticleListActivityForAllItems() {
         val intent = Intent(this, ArticleListActivity::class.java).apply {
-            putExtra(MODE, ArticleListActivity.Mode.LOAD_ALL)
+            putExtra(LOAD_MODE_KEY, ArticleListFragment.ArticleListViewMode.LOAD_ALL)
         }
         startActivity(intent)
     }
@@ -188,7 +213,7 @@ class MainActivity : AppCompatActivity() {
     private fun handleLoginFragment() {
         lockDrawer()
         when (mainViewModel.hasAuthToken()) {
-            true -> showSourceTitleListFragment()
+            true -> showAfterUserLoggedInFragment()
             false -> showUserLoginFragment()
         }
     }
@@ -203,5 +228,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val SPLASH_ART_COUNTDOWN_TIMER_SECONDS = 2L
+//        private const val TAG = "MainActivity"
     }
 }

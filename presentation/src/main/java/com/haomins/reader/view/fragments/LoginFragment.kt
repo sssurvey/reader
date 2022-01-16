@@ -111,7 +111,7 @@ class LoginFragment : Fragment() {
 
     private fun showSourceTitleListFragment() {
         activity?.let {
-            (it as MainActivity).showSourceTitleListFragment()
+            (it as MainActivity).showAfterUserLoggedInFragment()
         }
     }
 
