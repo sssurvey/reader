@@ -18,7 +18,6 @@ import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.adapters.ArticleTitleListAdapter
 import com.haomins.reader.utils.GlideUtils
-import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.ArticleListViewModel
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject

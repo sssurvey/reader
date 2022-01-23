@@ -39,9 +39,7 @@ class MainActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticl
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
     private val sourceTitleListViewModel by viewModels<SourceTitleListViewModel> { viewModelFactory }
-
     private val sourceListDisplayDataList: MutableList<Pair<String, URL>> = mutableListOf()
-
     private val sourceTitleListAdapter by lazy {
         SourceTitleListAdapter(
             subSourceDisplayItems = sourceListDisplayDataList,
@@ -49,7 +47,6 @@ class MainActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticl
             onRowItemClicked = ::sourceListRecyclerViewItemClickedAt
         )
     }
-
     private val sourceListDataSetObserver by lazy {
         Observer<List<Pair<String, URL>>> {
             sourceListDisplayDataList.clear()
@@ -57,7 +54,6 @@ class MainActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticl
             sourceTitleListAdapter.notifyDataSetChanged()
         }
     }
-
     private val recyclerLayoutManager by lazy {
         LinearLayoutManager(this)
     }
@@ -72,6 +68,13 @@ class MainActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticl
         registerLiveDataObserver()
     }
 
+    override fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
+        val intent = Intent(this, ArticleDetailActivity::class.java)
+        intent.putExtra(ArticleListActivity.ARTICLE_ITEM_POSITION, position)
+        intent.putExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY, articleIdArray)
+        startActivity(intent)
+    }
+
     override fun onBackPressed() {
         when (mainViewModel.hasAuthToken()) {
             true -> super.onBackPressed()
@@ -80,11 +83,12 @@ class MainActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticl
     }
 
     fun startArticleListActivity(feedId: String) {
-        val intent = Intent(this, ArticleListActivity::class.java).apply {
+        Intent(this, ArticleListActivity::class.java).apply {
             putExtra(LOAD_MODE_KEY, ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID)
             putExtra(ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID.key, feedId)
+        }.let {
+            startActivity(it)
         }
-        startActivity(intent)
     }
 
     fun showDisclosureFragment() {
@@ -122,18 +126,42 @@ class MainActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticl
             ).commit()
         }
 
-        initDrawer()
-        initNavigationBar()
+        fun initDrawer() {
+
+            // initialize tool bar
+            appbar_layout.visibility = View.VISIBLE
+            with(toolbar) {
+                setSupportActionBar(this)
+                initializeButton1(resources.getString(R.string.toolbar_my_feed_button_text))
+                initializeButton2(resources.getString(R.string.toolbar_explore_feed_button_text))
+            }
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+            appbar_layout.toolbar.apply {
+                setNavigationOnClickListener { openDrawer() }
+                setNavigationIcon(R.drawable.ic_menu)
+            }
+
+            // set up drawer
+            navigation_view.itemIconTintList = null
+            navigation_view.drawer_login_app_version_text_view.text =
+                getString(R.string.version_description, BuildConfig.VERSION_NAME)
+
+            // load source list
+            sourceTitleListViewModel.loadSourceSubscriptionList()
+            source_list.apply {
+                setHasFixedSize(true)
+                layoutManager = recyclerLayoutManager
+                adapter = sourceTitleListAdapter
+            }
+
+            unlockDrawer()
+        }
+
         mainViewModel.loadSubscriptionList {
             showArticleListFragmentForAllItems()
         }
-    }
-
-    override fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
-        val intent = Intent(this, ArticleDetailActivity::class.java)
-        intent.putExtra(ArticleListActivity.ARTICLE_ITEM_POSITION, position)
-        intent.putExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY, articleIdArray)
-        startActivity(intent)
+        initDrawer()
+        initNavigationBar()
     }
 
     private fun registerLiveDataObserver() {
@@ -142,15 +170,6 @@ class MainActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticl
                 this@MainActivity,
                 sourceListDataSetObserver
             )
-        }
-    }
-
-    private fun initializeSourceList() {
-        sourceTitleListViewModel.loadSourceSubscriptionList()
-        source_list.apply {
-            setHasFixedSize(true)
-            layoutManager = recyclerLayoutManager
-            adapter = sourceTitleListAdapter
         }
     }
 
@@ -224,29 +243,6 @@ class MainActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticl
 
     private fun sourceListRecyclerViewItemClickedAt(position: Int) {
         this.startArticleListActivity(sourceTitleListViewModel.getSubSourceId(position))
-    }
-
-    private fun initDrawer() {
-        initToolbar()
-        navigation_view.itemIconTintList = null
-        navigation_view.drawer_login_app_version_text_view.text =
-            getString(R.string.version_description, BuildConfig.VERSION_NAME)
-        initializeSourceList()
-        unlockDrawer()
-    }
-
-    private fun initToolbar() {
-        appbar_layout.visibility = View.VISIBLE
-        with(toolbar) {
-            setSupportActionBar(this)
-            initializeButton1(resources.getString(R.string.toolbar_my_feed_button_text))
-            initializeButton2(resources.getString(R.string.toolbar_explore_feed_button_text))
-        }
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        appbar_layout.toolbar.apply {
-            setNavigationOnClickListener { openDrawer() }
-            setNavigationIcon(R.drawable.ic_menu)
-        }
     }
 
     private fun lockDrawer() {
