@@ -36,8 +36,8 @@
             android:layout_gravity="bottom"
             android:padding="@dimen/relativeLayoutPadding"
             android:visibility="gone"
-            tools:visibility="visible"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            tools:visibility="visible" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -52,30 +52,6 @@
         android:visibility="visible"
         tools:visibility="gone" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="@dimen/default_navigation_view_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:background="@color/default_background"
-        android:fitsSystemWindows="true"
-        app:itemTextAppearance="@style/ReaderTextViewStyle"
-        app:menu="@menu/menu_main_drawer">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/drawer_login_app_version_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/textViewMargin"
-                android:paddingStart="@dimen/drawer_text_margin_start"
-                android:textSize="@dimen/textSizeSmall" />
-        </LinearLayout>
-    </com.google.android.material.navigation.NavigationView>
+    <include layout="@layout/layout_drawer"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

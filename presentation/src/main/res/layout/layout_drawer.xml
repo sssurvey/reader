@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.navigation.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_view"
+    android:layout_width="@dimen/default_navigation_view_width"
+    android:layout_height="match_parent"
+    android:layout_gravity="end"
+    android:background="@color/default_background"
+    android:fitsSystemWindows="true"
+    app:itemTextAppearance="@style/ReaderTextViewStyle"
+    app:menu="@menu/menu_main_drawer">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/spacer"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/source_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/drawer_login_app_version_text_view"
+            app:layout_constraintTop_toBottomOf="@id/spacer"
+            tools:itemCount="15"
+            tools:listitem="@layout/source_title_recycler_view_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/drawer_login_app_version_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/textViewMargin"
+            android:paddingStart="@dimen/drawer_text_margin_start"
+            android:textSize="@dimen/textSizeSmall"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="RtlSymmetry" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.navigation.NavigationView>

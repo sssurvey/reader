@@ -37,6 +37,12 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         LOAD_ALL("LOAD_ALL")
     }
 
+    interface HasClickableArticleList {
+
+        fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>)
+
+    }
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -114,7 +120,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     override fun onArticleAtPositionClicked(position: Int) {
         val itemIdList: List<String> = articleTitleUiItems.map { it.itemId }
         activity?.let {
-            (it as MainActivity).startArticleDetailActivity(
+            (it as HasClickableArticleList).startArticleDetailActivity(
                 position,
                 itemIdList.toTypedArray()
             )

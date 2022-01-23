@@ -8,10 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
+import com.haomins.reader.adapters.SourceTitleListAdapter
 import com.haomins.reader.utils.delayedUiOperation
 import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.fragments.ArticleListFragment
@@ -19,17 +22,45 @@ import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE
 import com.haomins.reader.view.fragments.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.viewModels.MainViewModel
+import com.haomins.reader.viewModels.SourceTitleListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.app_bar.view.*
+import kotlinx.android.synthetic.main.fragment_source_list_title.*
+import kotlinx.android.synthetic.main.layout_drawer.*
+import kotlinx.android.synthetic.main.layout_drawer.view.*
+import java.net.URL
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticleList {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
+    private val sourceTitleListViewModel by viewModels<SourceTitleListViewModel> { viewModelFactory }
+
+    private val sourceListDisplayDataList: MutableList<Pair<String, URL>> = mutableListOf()
+
+    private val sourceTitleListAdapter by lazy {
+        SourceTitleListAdapter(
+            subSourceDisplayItems = sourceListDisplayDataList,
+            sourceTitleListViewModel = sourceTitleListViewModel,
+            onRowItemClicked = ::sourceListRecyclerViewItemClickedAt
+        )
+    }
+
+    private val sourceListDataSetObserver by lazy {
+        Observer<List<Pair<String, URL>>> {
+            sourceListDisplayDataList.clear()
+            sourceListDisplayDataList.addAll(it)
+            sourceTitleListAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private val recyclerLayoutManager by lazy {
+        LinearLayoutManager(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
@@ -38,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         showSplashArt()
         handleLoginFragment()
         setOnClickListeners()
+        registerLiveDataObserver()
     }
 
     override fun onBackPressed() {
@@ -97,11 +129,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
+    override fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
         val intent = Intent(this, ArticleDetailActivity::class.java)
         intent.putExtra(ArticleListActivity.ARTICLE_ITEM_POSITION, position)
         intent.putExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY, articleIdArray)
         startActivity(intent)
+    }
+
+    private fun registerLiveDataObserver() {
+        sourceTitleListViewModel.apply {
+            sourceListUiDataSet.observe(
+                this@MainActivity,
+                sourceListDataSetObserver
+            )
+        }
+    }
+
+    private fun initializeSourceList() {
+        sourceTitleListViewModel.loadSourceSubscriptionList()
+        source_list.apply {
+            setHasFixedSize(true)
+            layoutManager = recyclerLayoutManager
+            adapter = sourceTitleListAdapter
+        }
     }
 
     private fun showSplashArt() {
@@ -172,11 +222,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun sourceListRecyclerViewItemClickedAt(position: Int) {
+        this.startArticleListActivity(sourceTitleListViewModel.getSubSourceId(position))
+    }
+
     private fun initDrawer() {
         initToolbar()
         navigation_view.itemIconTintList = null
         navigation_view.drawer_login_app_version_text_view.text =
             getString(R.string.version_description, BuildConfig.VERSION_NAME)
+        initializeSourceList()
         unlockDrawer()
     }
 

@@ -1,23 +1,27 @@
 package com.haomins.reader.view.activities
 
 import android.content.Intent
-import android.media.MediaCodec.MetricsConstants.MODE
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.haomins.reader.R
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.ArticleListFragment
+import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
 
-class ArticleListActivity : AppCompatActivity() {
+class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticleList {
 
     companion object {
         const val ARTICLE_ITEM_POSITION = "ARTICLE_ITEM_POSITION"
         const val ARTICLE_ITEM_ID_ARRAY = "ARTICLE_ITEM_ID_ARRAY"
+
+        private const val TAG = "ArticleListActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "::onCreate")
         slideInAnimation()
         setContentView(R.layout.activity_article_list)
         checkIntent()
@@ -28,24 +32,25 @@ class ArticleListActivity : AppCompatActivity() {
         slideOutAnimation()
     }
 
-//    fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
-//        val intent = Intent(this, ArticleDetailActivity::class.java)
-//        intent.putExtra(ARTICLE_ITEM_POSITION, position)
-//        intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleIdArray)
-//        startActivity(intent)
-//    }
+    override fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
+        val intent = Intent(this, ArticleDetailActivity::class.java)
+        intent.putExtra(ARTICLE_ITEM_POSITION, position)
+        intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleIdArray)
+        startActivity(intent)
+    }
 
     private fun checkIntent() {
-        when (intent.getSerializableExtra(MODE)) {
+        when (intent.getSerializableExtra(LOAD_MODE_KEY)) {
             ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID -> showArticleListFragment()
             ArticleListFragment.ArticleListViewMode.LOAD_ALL -> showArticleListFragmentForAllItems()
         }
     }
 
     private fun showArticleListFragmentForAllItems() {
+        Log.d(TAG, "::showArticleListFragmentForAllItems")
         val bundle = Bundle()
         val articleListFragment = ArticleListFragment()
-        bundle.putSerializable(MODE, intent.getSerializableExtra(MODE))
+        bundle.putSerializable(LOAD_MODE_KEY, intent.getSerializableExtra(LOAD_MODE_KEY))
         bundle.putBoolean(
             ArticleListFragment.ArticleListViewMode.LOAD_ALL.key,
             intent.getBooleanExtra(ArticleListFragment.ArticleListViewMode.LOAD_ALL.key, true)
@@ -58,9 +63,10 @@ class ArticleListActivity : AppCompatActivity() {
     }
 
     private fun showArticleListFragment() {
+        Log.d(TAG, "::showArticleListFragment")
         val bundle = Bundle()
         val articleListFragment = ArticleListFragment()
-        bundle.putSerializable(MODE, intent.getSerializableExtra(MODE))
+        bundle.putSerializable(LOAD_MODE_KEY, intent.getSerializableExtra(LOAD_MODE_KEY))
         bundle.putString(
             ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID.key,
             intent.getStringExtra(ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID.key)
@@ -71,4 +77,6 @@ class ArticleListActivity : AppCompatActivity() {
             articleListFragment, ArticleListFragment.TAG
         ).commit()
     }
+
+
 }
