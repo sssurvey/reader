@@ -39,19 +39,20 @@ class ArticleTitleListAdapter(
         return articleTitleListUiItems.size
     }
 
+    //TODO: review this and look into why the glide is lagging so much.
     override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
         with(holder.viewHolder) {
             article_title.text = articleTitleListUiItems[position].itemTitle
             article_posted_time.text = articleTitleListUiItems[position].howLongAgo
-            glideUtils.loadIconImage(
-                imageView = article_source_icon,
-                articleTitleListUiItems[position].href
-            )
+//            glideUtils.loadIconImage(
+//                imageView = article_source_icon,
+//                articleTitleListUiItems[position].href
+//            )
             setOnClick(this, position)
-            glideUtils.loadPreviewImage(
-                imageView = article_preview_image,
-                articleTitleListUiItems[position].previewImageUrl
-            )
+//            glideUtils.loadPreviewImage(
+//                imageView = article_preview_image,
+//                articleTitleListUiItems[position].previewImageUrl
+//            )
         }
         articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }
