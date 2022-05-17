@@ -7,8 +7,6 @@ plugins {
 
 android {
     compileSdkVersion compiledSdkVersion
-    buildToolsVersion "29.0.2"
-
     defaultConfig {
         minSdkVersion 26
         targetSdkVersion project.compiledSdkVersion

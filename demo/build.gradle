@@ -5,7 +5,6 @@ plugins {
 
 android {
     compileSdkVersion compiledSdkVersion
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.haomins.demo"
         minSdkVersion 26
