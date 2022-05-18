@@ -120,7 +120,7 @@ class ArticleListViewModel @Inject constructor(
 
     private fun onArticleLoaded(newlyLoadedArticles: List<ArticleEntity>) {
         Log.d(TAG, "onNext: articles loaded -> size: ${newlyLoadedArticles.size}")
-        articleTitleUiItemsList.addAll(newlyLoadedArticles)
+        articleTitleUiItemsList.addAll(newlyLoadedArticles.sortedBy { it.itemPublishedMillisecond })
         articleTitleUiItemsListLiveData.postValue(articleTitleUiItemsList)
     }
 

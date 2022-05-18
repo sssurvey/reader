@@ -53,7 +53,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
 
     private val articleListViewModel by viewModels<ArticleListViewModel> { viewModelFactory }
-    private val articleTitleUiItems: MutableList<ArticleEntity> = ArrayList()
+    private val articleTitleUiItems = mutableListOf<ArticleEntity>()
 
     private val feedId by lazy { arguments?.getString(currentArticleListViewMode.key).toString() }
     private val handler by lazy { Handler() }
@@ -67,11 +67,8 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     private val articleTitleListUiItemObserver by lazy {
         Observer<List<ArticleEntity>> { list ->
-            articleTitleUiItems.apply {
-                clear()
-                addAll(list)
-                sortByDescending { it.itemPublishedMillisecond }
-            }
+            articleTitleUiItems.clear()
+            articleTitleUiItems.addAll(list)
             article_title_recycler_view.adapter?.notifyDataSetChanged()
         }
     }
