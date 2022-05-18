@@ -152,7 +152,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     }
 
     private fun registerLiveDataObservers() {
-        articleListViewModel.articleTitleUiItemsList.observe(
+        articleListViewModel.articleTitleUiItemsListLiveData.observe(
             viewLifecycleOwner,
             articleTitleListUiItemObserver
         )

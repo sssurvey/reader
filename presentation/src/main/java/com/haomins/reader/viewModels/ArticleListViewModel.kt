@@ -9,21 +9,23 @@ import com.haomins.domain.usecase.article.ContinueLoadArticlesByFeed
 import com.haomins.domain.usecase.article.LoadAllArticles
 import com.haomins.domain.usecase.article.LoadArticlesByFeed
 import io.reactivex.observers.DisposableObserver
+import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
 class ArticleListViewModel @Inject constructor(
-    private val loadAllArticles: LoadAllArticles,
     private val loadArticlesByFeed: LoadArticlesByFeed,
+    private val continueLoadArticlesByFeed: ContinueLoadArticlesByFeed,
     private val continueLoadAllArticles: ContinueLoadAllArticles,
-    private val continueLoadArticlesByFeed: ContinueLoadArticlesByFeed
+    private val loadAllArticles: LoadAllArticles,
 ) : ViewModel() {
 
     companion object {
         const val TAG = "ArticleListViewModel"
     }
 
-    val articleTitleUiItemsList by lazy { MutableLiveData<List<ArticleEntity>>() }
+    val articleTitleUiItemsListLiveData by lazy { MutableLiveData(articleTitleUiItemsList) }
     val isLoading by lazy { MutableLiveData(false) }
+    private val articleTitleUiItemsList = mutableListOf<ArticleEntity>()
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
@@ -48,17 +50,15 @@ class ArticleListViewModel @Inject constructor(
     fun loadAllArticles() {
         isLoading.postValue(true)
         loadAllArticles.execute(
-            observer = object : DisposableObserver<List<ArticleEntity>>() {
-                override fun onNext(t: List<ArticleEntity>) {
+            observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
+                override fun onSuccess(t: List<ArticleEntity>) {
                     onArticleLoaded(t)
+                    isLoading.postValue(false)
+                    Log.d(TAG, "onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
                     Log.e(TAG, "onError: ${e.printStackTrace()}")
-                }
-
-                override fun onComplete() {
-                    Log.d(TAG, "onComplete: called")
                 }
             }
         )
@@ -66,25 +66,22 @@ class ArticleListViewModel @Inject constructor(
 
     fun continueLoadAllArticles() {
         continueLoadAllArticles.execute(
-            observer = object : DisposableObserver<Unit>() {
+            observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
 
                 override fun onStart() {
                     super.onStart()
                     isLoading.postValue(true)
                 }
 
-                override fun onNext(t: Unit) {
+                override fun onSuccess(t: List<ArticleEntity>) {
+                    onArticleLoaded(t)
                     isLoading.postValue(false)
+                    Log.d(TAG, "onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
                     Log.e(TAG, "onError: ${e.printStackTrace()}")
                 }
-
-                override fun onComplete() {
-                    Log.d(TAG, "onComplete: called")
-                }
-
             }
         )
     }
@@ -116,15 +113,15 @@ class ArticleListViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         loadArticlesByFeed.dispose()
+        continueLoadArticlesByFeed.dispose()
         loadAllArticles.dispose()
         continueLoadAllArticles.dispose()
-        continueLoadArticlesByFeed.dispose()
     }
 
-    private fun onArticleLoaded(articleTitleListUiItems: List<ArticleEntity>) {
-        Log.d(TAG, "onNext: articles loaded -> size: ${articleTitleListUiItems.size}")
-        articleTitleUiItemsList.postValue(articleTitleListUiItems.toList())
-        isLoading.postValue(false)
+    private fun onArticleLoaded(newlyLoadedArticles: List<ArticleEntity>) {
+        Log.d(TAG, "onNext: articles loaded -> size: ${newlyLoadedArticles.size}")
+        articleTitleUiItemsList.addAll(newlyLoadedArticles)
+        articleTitleUiItemsListLiveData.postValue(articleTitleUiItemsList)
     }
 
 }

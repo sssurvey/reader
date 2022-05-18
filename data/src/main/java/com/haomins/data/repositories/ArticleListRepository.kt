@@ -35,21 +35,12 @@ class ArticleListRepository @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
-    override fun loadAllArticleItemRefs(): Observable<List<ArticleEntity>> {
-        return theOldReaderService
-            .loadAllArticles(headerAuthValue = headerAuthValue)
-            .doOnError(::onLoadError)
-            .flatMapObservable { loadIndividualArticleInformation(it) }
-            .onErrorReturn { roomService.articleDao().getAll() }
-//            .doOnNext { Log.d(TAG, "roomService.articleDao().getAll().toObservable() invoked") }
-            .flatMap { roomService.articleDao().getAll().toObservable() }
-            .flatMap {
-                Observable.just(
-                    it.map {
-                        articleEntityMapper.dataModelToDomainModel(it)
-                    }
-                )
-            }
+    override fun loadAllArticleItems(): Single<List<ArticleEntity>> {
+        return loadAllArticleItemsFromRemote()
+    }
+
+    override fun continueLoadAllArticleItems(): Single<List<ArticleEntity>> {
+        return loadAllArticleItemsFromRemote(true)
     }
 
     override fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
@@ -66,14 +57,6 @@ class ArticleListRepository @Inject constructor(
                     }
                 )
             }
-    }
-
-    override fun continueLoadAllArticleItemRefs(): Observable<Unit> {
-        return theOldReaderService
-            .loadAllArticles(headerAuthValue = headerAuthValue, continueLoad = continueId)
-            .doOnError(::onLoadError)
-            .doOnSuccess { continueId = it.continuation }
-            .flatMapObservable { loadIndividualArticleInformation(it) }
     }
 
     override fun continueLoadArticleItemRefs(feedId: String): Observable<Unit> {
@@ -101,23 +84,60 @@ class ArticleListRepository @Inject constructor(
             .flatMapSingle { saveIndividualArticleToDatabase(it) }
     }
 
+    private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<ArticleEntity>> {
+        return if (continueLoad) {
+            theOldReaderService.loadAllArticles(
+                headerAuthValue = headerAuthValue,
+                continueLoad = continueId
+            ).doOnSuccess {
+                continueId = it.continuation
+            }
+        } else {
+            theOldReaderService.loadAllArticles(headerAuthValue = headerAuthValue)
+        }
+            .doOnError(::onLoadError)
+            .flatMapObservable {
+                Observable
+                    .fromIterable(it.itemRefs)
+                    .flatMapSingle { itemRef ->
+                        theOldReaderService.loadArticleDetailsByRefId(
+                            headerAuthValue = headerAuthValue,
+                            refItemId = itemRef.id
+                        )
+                    }
+            }
+            .toList()
+            .map {
+                val articleEntities =
+                    it.map { articleResponseModel -> articleResponseModel.toArticleEntity() }
+                roomService.articleDao().insert(*articleEntities.toTypedArray())
+                articleEntities
+            }.map {
+                it.map { articleEntity -> articleEntityMapper.dataModelToDomainModel(articleEntity) }
+            }
+    }
+
     private fun saveIndividualArticleToDatabase(articleResponseModel: ArticleResponseModel)
             : Single<Unit> {
         return Single.fromCallable {
             roomService.articleDao().insert(
-                com.haomins.data.model.entities.ArticleEntity(
-                    itemId = articleResponseModel.items.first().id,
-                    itemTitle = articleResponseModel.items.first().title,
-                    itemUpdatedMillisecond = articleResponseModel.items.first().updatedMillisecond,
-                    itemPublishedMillisecond = articleResponseModel.items.first().publishedMillisecond,
-                    author = articleResponseModel.items.first().author,
-                    content = articleResponseModel.items.first().summary.content,
-                    feedId = articleResponseModel.id,
-                    href = articleResponseModel.alternate.herf,
-                    previewImageUrl = extractImageFromImgTags(rawHtmlString = articleResponseModel.items.first().summary.content)
-                )
+                articleResponseModel.toArticleEntity()
             )
         }
+    }
+
+    private fun ArticleResponseModel.toArticleEntity(): com.haomins.data.model.entities.ArticleEntity {
+        return com.haomins.data.model.entities.ArticleEntity(
+            itemId = items.first().id,
+            itemTitle = items.first().title,
+            itemUpdatedMillisecond = items.first().updatedMillisecond,
+            itemPublishedMillisecond = items.first().publishedMillisecond,
+            author = items.first().author,
+            content = items.first().summary.content,
+            feedId = id,
+            href = alternate.herf,
+            previewImageUrl = extractImageFromImgTags(rawHtmlString = items.first().summary.content)
+        )
     }
 
     private fun onLoadError(e: Throwable) {
