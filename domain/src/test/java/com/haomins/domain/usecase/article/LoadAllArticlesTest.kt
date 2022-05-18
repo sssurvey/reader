@@ -3,7 +3,7 @@ package com.haomins.domain.usecase.article
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Assert.assertTrue
@@ -68,9 +68,9 @@ class LoadAllArticlesTest {
         )
 
         fun mock() {
-            `when`(mockArticleListRepositoryContract.loadAllArticleItemRefs())
+            `when`(mockArticleListRepositoryContract.loadAllArticleItems())
                 .thenReturn(
-                    Observable.just(
+                    Single.just(
                         testArticleEntityList
                     )
                 )
@@ -83,8 +83,8 @@ class LoadAllArticlesTest {
         val testPostExecutionScheduler = postExecutionScheduler.scheduler as TestScheduler
 
         loadAllArticles
-            .buildUseCaseObservable(Unit)
-            .subscribeWith(testObserver)
+            .buildUseCaseSingle(Unit)
+            .subscribe(testObserver)
 
         testObserver.assertSubscribed()
 
@@ -92,7 +92,7 @@ class LoadAllArticlesTest {
         testPostExecutionScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
 
         verify(mockArticleListRepositoryContract, times(1))
-            .loadAllArticleItemRefs()
+            .loadAllArticleItems()
 
         assertTrue((testObserver.events[0][0] as List<ArticleEntity>)[0].itemId == "123")
 

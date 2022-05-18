@@ -61,15 +61,17 @@ class ArticleListRepositoryTest {
     }
 
     @Test
-    fun `test loadAllArticleItemRefs() order verification`() {
+    fun `test loadAllArticleItems() order verification`() {
         val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
-        articleListRepository.loadAllArticleItemRefs().subscribeWith(testObserver)
+        articleListRepository.loadAllArticleItems().subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService, times(1))
             .loadAllArticles(any(), any(), any(), any(), any())
-        verify(mockRoomService, times(20)).articleDao()
-        verify(mockArticleDao, times(10)).insert(any())
-        testObserver.assertValueCount(10)
+        verify(mockTheOldReaderService, times(10))
+            .loadArticleDetailsByRefId(any(), any(), any())
+        verify(mockRoomService, times(1)).articleDao()
+        verify(mockArticleDao, times(1)).insert(any())
+        testObserver.assertValueCount(1)
         testObserver.assertComplete()
     }
 
@@ -86,15 +88,15 @@ class ArticleListRepositoryTest {
     }
 
     @Test
-    fun continueLoadAllArticleItemRefs() {
-        val testObserver = TestObserver<Unit>()
-        articleListRepository.continueLoadAllArticleItemRefs().subscribe(testObserver)
+    fun `test continueLoadAllArticleItems()`() {
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        articleListRepository.continueLoadAllArticleItems().subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
             .loadAllArticles(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
             .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(10)).articleDao()
+        verify(mockRoomService, times(1)).articleDao()
     }
 
     @Test
