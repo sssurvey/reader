@@ -1,6 +1,7 @@
 package com.haomins.reader.viewModels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.domain.model.entities.ArticleEntity
@@ -23,9 +24,10 @@ class ArticleListViewModel @Inject constructor(
         const val TAG = "ArticleListViewModel"
     }
 
-    val articleTitleUiItemsListLiveData by lazy { MutableLiveData(articleTitleUiItemsList) }
-    val isLoading by lazy { MutableLiveData(false) }
     private val articleTitleUiItemsList = mutableListOf<ArticleEntity>()
+    private val _articleTitleUiItemsListLiveData = MutableLiveData<List<ArticleEntity>>(articleTitleUiItemsList)
+    val articleTitleUiItemsListLiveData: LiveData<List<ArticleEntity>> = _articleTitleUiItemsListLiveData
+    val isLoading by lazy { MutableLiveData(false) }
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
@@ -120,8 +122,10 @@ class ArticleListViewModel @Inject constructor(
 
     private fun onArticleLoaded(newlyLoadedArticles: List<ArticleEntity>) {
         Log.d(TAG, "onNext: articles loaded -> size: ${newlyLoadedArticles.size}")
-        articleTitleUiItemsList.addAll(newlyLoadedArticles.sortedBy { it.itemPublishedMillisecond })
-        articleTitleUiItemsListLiveData.postValue(articleTitleUiItemsList)
+        articleTitleUiItemsList.addAll(newlyLoadedArticles)
+        _articleTitleUiItemsListLiveData.postValue(
+            articleTitleUiItemsList.sortedByDescending { it.itemPublishedMillisecond }
+        )
     }
 
 }
