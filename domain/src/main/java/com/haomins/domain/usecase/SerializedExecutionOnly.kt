@@ -11,8 +11,8 @@ interface SerializedExecutionOnly<T> {
         return if (isExecuting) {
             Single.error(DuplicateRequestException())
         } else {
-            this.doOnSubscribe { isExecuting = true }
-                .doAfterTerminate { isExecuting = false }
+            isExecuting = true
+            this.doAfterTerminate { isExecuting = false }
         }
     }
 }

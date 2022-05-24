@@ -67,9 +67,9 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         article_title_recycler_view.adapter
     }
     private val articleTitleListUiItemObserver by lazy {
-        Observer<List<ArticleEntity>> { list ->
+        Observer<Set<ArticleEntity>> { set ->
             articleTitleUiItems.clear()
-            articleTitleUiItems.addAll(list)
+            articleTitleUiItems.addAll(set)
             adapter?.notifyItemInserted(
                 (adapter?.itemCount ?: 0) + 1
             )

@@ -23,11 +23,11 @@ class ArticleListViewModel @Inject constructor(
         const val TAG = "ArticleListViewModel"
     }
 
-    private val articleTitleUiItemsList = mutableListOf<ArticleEntity>()
-    private val _articleTitleUiItemsListLiveData =
-        MutableLiveData<List<ArticleEntity>>(articleTitleUiItemsList)
-    val articleTitleUiItemsListLiveData: LiveData<List<ArticleEntity>> =
-        _articleTitleUiItemsListLiveData
+    private val articleTitleUiItems = mutableSetOf<ArticleEntity>()
+    private val _articleTitleUiItemsLiveData =
+        MutableLiveData<Set<ArticleEntity>>(articleTitleUiItems)
+    val articleTitleUiItemsListLiveData: LiveData<Set<ArticleEntity>> =
+        _articleTitleUiItemsLiveData
     val isLoading by lazy { MutableLiveData(false) }
 
     fun loadArticles(feedId: String) {
@@ -122,9 +122,11 @@ class ArticleListViewModel @Inject constructor(
 
     private fun onArticleLoaded(newlyLoadedArticles: List<ArticleEntity>) {
         Log.d(TAG, "onArticleLoaded: articles loaded -> size: ${newlyLoadedArticles.size}")
-        articleTitleUiItemsList.addAll(newlyLoadedArticles)
-        _articleTitleUiItemsListLiveData.postValue(
-            articleTitleUiItemsList.sortedByDescending { it.itemPublishedMillisecond }
+        articleTitleUiItems.addAll(newlyLoadedArticles)
+        _articleTitleUiItemsLiveData.postValue(
+            articleTitleUiItems.sortedByDescending {
+                it.itemPublishedMillisecond
+            }.toSet()
         )
     }
 
