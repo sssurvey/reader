@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.haomins.data.service.TheOldReaderService.Companion.DEFAULT_ARTICLE_AMOUNT
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
@@ -64,12 +63,16 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
             else hideProgressBar()
         }
     }
-
+    private val adapter by lazy {
+        article_title_recycler_view.adapter
+    }
     private val articleTitleListUiItemObserver by lazy {
         Observer<List<ArticleEntity>> { list ->
             articleTitleUiItems.clear()
             articleTitleUiItems.addAll(list)
-            article_title_recycler_view.adapter?.notifyDataSetChanged()
+            adapter?.notifyItemInserted(
+                (adapter?.itemCount ?: 0) + 1
+            )
         }
     }
 

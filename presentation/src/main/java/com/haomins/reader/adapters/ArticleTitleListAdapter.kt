@@ -54,7 +54,7 @@ class ArticleTitleListAdapter(
 //                articleTitleListUiItems[position].previewImageUrl
 //            )
         }
-//        articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
+        articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }
 
     private fun setOnClick(view: View, position: Int) {

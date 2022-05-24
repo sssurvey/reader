@@ -24,10 +24,8 @@ import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.viewModels.MainViewModel
 import com.haomins.reader.viewModels.SourceTitleListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.app_bar.view.*
-import kotlinx.android.synthetic.main.fragment_source_list_title.*
 import kotlinx.android.synthetic.main.layout_drawer.*
 import kotlinx.android.synthetic.main.layout_drawer.view.*
 import java.net.URL
