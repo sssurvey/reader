@@ -78,7 +78,7 @@ class ArticleListRepositoryTest {
     @Test
     fun `test loadArticleItemRefs() order verification`() {
         val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
-        articleListRepository.loadArticleItemRefs("test_feed_id").subscribe(testObserver)
+        articleListRepository.loadArticleItems("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
             .loadArticleListByFeed(any(), any(), any(), any(), any())
@@ -102,7 +102,7 @@ class ArticleListRepositoryTest {
     @Test
     fun continueLoadArticleItemRefs() {
         val testObserver = TestObserver<Unit>()
-        articleListRepository.continueLoadArticleItemRefs("test_feed_id").subscribe(testObserver)
+        articleListRepository.continueLoadArticleItems("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
             .loadArticleListByFeed(any(), any(), any(), any(), any())

@@ -50,7 +50,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     private lateinit var currentArticleListViewMode: ArticleListViewMode
 
-    private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
+//    private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
 
     private val articleListViewModel by viewModels<ArticleListViewModel> { viewModelFactory }
     private val articleTitleUiItems = mutableListOf<ArticleEntity>()
@@ -124,15 +124,21 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     }
 
     override fun onLoadMoreArticlesBasedOnPosition(position: Int) {
-        if (position >= loadMoreArticleThreshold) {
-            when (currentArticleListViewMode) {
-                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
-                    feedId
-                )
-                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
-            }
-            loadMoreArticleThreshold += loadMoreArticleThreshold
-        }
+//        if (position >= loadMoreArticleThreshold) {
+//        if (position == article_title_recycler_view.adapter?.itemCount) {
+//            Log.d(
+//                "xxxxxx",
+//                "xxxx " +
+//                        "onLoadMoreArticlesBasedOnPosition :: called current position: $position, current threshold: ${article_title_recycler_view.adapter?.itemCount}"
+//            )
+//            when (currentArticleListViewMode) {
+//                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
+//                    feedId
+//                )
+//                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
+//            }
+//            loadMoreArticleThreshold += loadMoreArticleThreshold
+//        }
     }
 
     override fun onDestroyView() {

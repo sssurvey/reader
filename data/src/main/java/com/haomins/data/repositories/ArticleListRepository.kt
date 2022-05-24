@@ -5,7 +5,6 @@ import android.util.Log
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.responses.article.ArticleResponseModel
-import com.haomins.data.model.responses.article.ItemRefListResponseModel
 import com.haomins.data.service.RoomService
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.extractImageFromImgTags
@@ -43,45 +42,52 @@ class ArticleListRepository @Inject constructor(
         return loadAllArticleItemsFromRemote(true)
     }
 
-    override fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>> {
-        return theOldReaderService
-            .loadArticleListByFeed(headerAuthValue = headerAuthValue, feedId = feedId)
-            .doOnError(::onLoadError)
-            .flatMapObservable { loadIndividualArticleInformation(it) }
-            .onErrorReturn { roomService.articleDao().selectAllArticleByFeedId(feedId) }
-            .flatMap { roomService.articleDao().selectAllArticleByFeedId(feedId) }
-            .flatMap {
-                Observable.just(
-                    it.map {
-                        articleEntityMapper.dataModelToDomainModel(it)
-                    }
-                )
-            }
+    override fun loadArticleItems(feedId: String): Single<List<ArticleEntity>> {
+        return loadAllArticleItemsFromRemoteByFeedId(feedId)
     }
 
-    override fun continueLoadArticleItemRefs(feedId: String): Observable<Unit> {
-        return theOldReaderService
-            .loadArticleListByFeed(
+    override fun continueLoadArticleItems(feedId: String): Single<List<ArticleEntity>> {
+        return loadAllArticleItemsFromRemoteByFeedId(feedId, true)
+    }
+
+    private fun loadAllArticleItemsFromRemoteByFeedId(
+        feedId: String,
+        continueLoad: Boolean = false
+    ): Single<List<ArticleEntity>> {
+        return if (continueLoad) {
+            theOldReaderService.loadArticleListByFeed(
                 headerAuthValue = headerAuthValue,
                 feedId = feedId,
                 continueLoad = continueId
-            )
-            .doOnError(::onLoadError)
-            .doOnSuccess { continueId = it.continuation }
-            .flatMapObservable { loadIndividualArticleInformation(it) }
-    }
-
-    private fun loadIndividualArticleInformation(itemRefListResponseModel: ItemRefListResponseModel)
-            : Observable<Unit> {
-        return Observable
-            .fromIterable(itemRefListResponseModel.itemRefs)
-            .flatMapSingle {
-                theOldReaderService.loadArticleDetailsByRefId(
-                    headerAuthValue = headerAuthValue,
-                    refItemId = it.id
-                )
+            ).doOnSuccess {
+                continueId = it.continuation
             }
-            .flatMapSingle { saveIndividualArticleToDatabase(it) }
+        } else {
+            theOldReaderService.loadArticleListByFeed(
+                headerAuthValue = headerAuthValue,
+                feedId = feedId
+            )
+        }
+            .doOnError(::onLoadError)
+            .flatMapObservable {
+                Observable
+                    .fromIterable(it.itemRefs)
+                    .flatMapSingle { itemRef ->
+                        theOldReaderService.loadArticleDetailsByRefId(
+                            headerAuthValue = headerAuthValue,
+                            refItemId = itemRef.id
+                        )
+                    }
+            }
+            .toList()
+            .map {
+                val articleEntities =
+                    it.map { articleResponseModel -> articleResponseModel.toArticleEntity() }
+                roomService.articleDao().insert(*articleEntities.toTypedArray())
+                articleEntities
+            }.map {
+                it.map { articleEntity -> articleEntityMapper.dataModelToDomainModel(articleEntity) }
+            }
     }
 
     private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<ArticleEntity>> {

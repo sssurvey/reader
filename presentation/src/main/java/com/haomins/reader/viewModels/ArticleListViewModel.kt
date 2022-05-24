@@ -9,7 +9,6 @@ import com.haomins.domain.usecase.article.ContinueLoadAllArticles
 import com.haomins.domain.usecase.article.ContinueLoadArticlesByFeed
 import com.haomins.domain.usecase.article.LoadAllArticles
 import com.haomins.domain.usecase.article.LoadArticlesByFeed
-import io.reactivex.observers.DisposableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
@@ -25,24 +24,24 @@ class ArticleListViewModel @Inject constructor(
     }
 
     private val articleTitleUiItemsList = mutableListOf<ArticleEntity>()
-    private val _articleTitleUiItemsListLiveData = MutableLiveData<List<ArticleEntity>>(articleTitleUiItemsList)
-    val articleTitleUiItemsListLiveData: LiveData<List<ArticleEntity>> = _articleTitleUiItemsListLiveData
+    private val _articleTitleUiItemsListLiveData =
+        MutableLiveData<List<ArticleEntity>>(articleTitleUiItemsList)
+    val articleTitleUiItemsListLiveData: LiveData<List<ArticleEntity>> =
+        _articleTitleUiItemsListLiveData
     val isLoading by lazy { MutableLiveData(false) }
 
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
+        Log.d(TAG, "loadArticles called")
         loadArticlesByFeed.execute(
-            observer = object : DisposableObserver<List<ArticleEntity>>() {
-                override fun onNext(t: List<ArticleEntity>) {
+            observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
+                override fun onSuccess(t: List<ArticleEntity>) {
                     onArticleLoaded(t)
+                    Log.d(TAG, "loadArticlesByFeed :: onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
                     Log.e(TAG, "onError: ${e.printStackTrace()}")
-                }
-
-                override fun onComplete() {
-                    Log.d(TAG, "onComplete: called")
                 }
             },
             params = LoadArticlesByFeed.forLoadArticlesByFeed(feedId)
@@ -51,22 +50,24 @@ class ArticleListViewModel @Inject constructor(
 
     fun loadAllArticles() {
         isLoading.postValue(true)
+        Log.d(TAG, "loadAllArticles called")
         loadAllArticles.execute(
             observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
                 override fun onSuccess(t: List<ArticleEntity>) {
                     onArticleLoaded(t)
                     isLoading.postValue(false)
-                    Log.d(TAG, "onSuccess: called")
+                    Log.d(TAG, "loadAllArticles :: onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e(TAG, "onError: ${e.printStackTrace()}")
+                    Log.e(TAG, "loadAllArticles :: onError: ${e.printStackTrace()}")
                 }
             }
         )
     }
 
     fun continueLoadAllArticles() {
+        Log.d(TAG, "continueLoadAllArticles called")
         continueLoadAllArticles.execute(
             observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
 
@@ -78,34 +79,33 @@ class ArticleListViewModel @Inject constructor(
                 override fun onSuccess(t: List<ArticleEntity>) {
                     onArticleLoaded(t)
                     isLoading.postValue(false)
-                    Log.d(TAG, "onSuccess: called")
+                    Log.d(TAG, "continueLoadAllArticles :: onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e(TAG, "onError: ${e.printStackTrace()}")
+                    Log.e(TAG, "continueLoadAllArticles :: onError: ${e.printStackTrace()}")
                 }
             }
         )
     }
 
     fun continueLoadArticles(feedId: String) {
+        Log.d(TAG, "continueLoadArticles called")
         continueLoadArticlesByFeed.execute(
-            observer = object : DisposableObserver<Unit>() {
+            observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
                 override fun onStart() {
                     super.onStart()
                     isLoading.postValue(true)
                 }
 
-                override fun onNext(t: Unit) {
+                override fun onSuccess(t: List<ArticleEntity>) {
+                    onArticleLoaded(t)
                     isLoading.postValue(false)
+                    Log.d(TAG, "continueLoadArticles :: onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e(TAG, "onError: ${e.printStackTrace()}")
-                }
-
-                override fun onComplete() {
-                    Log.d(TAG, "onComplete: called")
+                    Log.e(TAG, "continueLoadArticles :: onError: ${e.printStackTrace()}")
                 }
             },
             params = ContinueLoadArticlesByFeed.forContinueLoadArticlesByFeed(feedId)
@@ -121,7 +121,7 @@ class ArticleListViewModel @Inject constructor(
     }
 
     private fun onArticleLoaded(newlyLoadedArticles: List<ArticleEntity>) {
-        Log.d(TAG, "onNext: articles loaded -> size: ${newlyLoadedArticles.size}")
+        Log.d(TAG, "onArticleLoaded: articles loaded -> size: ${newlyLoadedArticles.size}")
         articleTitleUiItemsList.addAll(newlyLoadedArticles)
         _articleTitleUiItemsListLiveData.postValue(
             articleTitleUiItemsList.sortedByDescending { it.itemPublishedMillisecond }

@@ -67,7 +67,7 @@ class LoadArticlesByFeedTest {
         )
 
         fun mock() {
-            Mockito.`when`(mockArticleListRepositoryContract.loadArticleItemRefs("123"))
+            Mockito.`when`(mockArticleListRepositoryContract.loadArticleItems("123"))
                 .thenReturn(
                     Observable.just(
                         testArticleEntityList
@@ -91,7 +91,7 @@ class LoadArticlesByFeedTest {
         testPostExecutionScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
 
         verify(mockArticleListRepositoryContract, times(1))
-            .loadArticleItemRefs("123")
+            .loadArticleItems("123")
 
         Assert.assertTrue((testObserver.events[0][0] as List<ArticleEntity>)[0].itemId == "123")
 

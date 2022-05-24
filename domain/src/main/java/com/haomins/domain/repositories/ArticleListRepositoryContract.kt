@@ -6,9 +6,9 @@ import io.reactivex.Single
 
 interface ArticleListRepositoryContract {
 
-    fun loadArticleItemRefs(feedId: String): Observable<List<ArticleEntity>>
+    fun loadArticleItems(feedId: String): Single<List<ArticleEntity>>
 
-    fun continueLoadArticleItemRefs(feedId: String): Observable<Unit>
+    fun continueLoadArticleItems(feedId: String): Single<List<ArticleEntity>>
 
     fun continueLoadAllArticleItems(): Single<List<ArticleEntity>>
 

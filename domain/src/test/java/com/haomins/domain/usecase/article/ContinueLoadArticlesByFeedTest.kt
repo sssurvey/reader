@@ -39,7 +39,7 @@ class ContinueLoadArticlesByFeedTest {
     fun `test continueLoadArticlesByFeed success`() {
 
         fun mock() {
-            Mockito.`when`(mockArticleListRepositoryContract.continueLoadArticleItemRefs(any())).thenReturn(
+            Mockito.`when`(mockArticleListRepositoryContract.continueLoadArticleItems(any())).thenReturn(
                 Observable.just(Unit)
             )
         }
@@ -64,7 +64,7 @@ class ContinueLoadArticlesByFeedTest {
         testPostExecutionScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
 
         verify(mockArticleListRepositoryContract, times(1))
-            .continueLoadArticleItemRefs("123")
+            .continueLoadArticleItems("123")
 
         testObserver.assertComplete()
 
