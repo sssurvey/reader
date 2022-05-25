@@ -30,7 +30,8 @@
     </style>
 
     <style name="ReaderTextViewStyle" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/font_regular</item>
+        <item name="android:fontFamily">@font/font_bold</item>
+        <item name="android:textColor">@color/default_text</item>
     </style>
 
     <style name="ReaderArticleTitleTextViewStyle" parent="Widget.AppCompat.TextView">

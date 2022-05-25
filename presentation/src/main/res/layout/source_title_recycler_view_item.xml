@@ -45,7 +45,9 @@
                 android:paddingEnd="@dimen/textViewPadding"
                 android:textAlignment="gravity"
                 android:textColor="@color/default_text"
-                tools:text="The Old Reader is a reader for the old people, that ..." />
+                app:fontFamily="@font/font_bold"
+                tools:maxLines="1"
+                tools:text="The Old Reader is a reader for the old people" />
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>

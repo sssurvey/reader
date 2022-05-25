@@ -29,16 +29,6 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.haomins.ui.navigationbar.ReaderNavigationBar
-            android:id="@+id/reader_navigation_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:padding="@dimen/relativeLayoutPadding"
-            android:visibility="gone"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
-            tools:visibility="visible" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -52,6 +42,6 @@
         android:visibility="visible"
         tools:visibility="gone" />
 
-    <include layout="@layout/layout_drawer"/>
+    <include layout="@layout/layout_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
