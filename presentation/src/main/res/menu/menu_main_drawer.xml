@@ -7,7 +7,7 @@
     <item
         android:id="@+id/option_add_source"
         android:icon="@drawable/ic_add_source"
-        android:title="@string/menu_add_source" />
+        android:title="@string/menu_add_sources" />
     <item
         android:id="@+id/option_settings"
         android:icon="@drawable/ic_settings"

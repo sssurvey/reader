@@ -16,7 +16,6 @@ import com.haomins.reader.adapters.SourceTitleListAdapter
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.SourceTitleListViewModel
 import kotlinx.android.synthetic.main.fragment_source_list_title.*
-import java.net.URL
 import javax.inject.Inject
 
 class SourceTitleListFragment : Fragment() {
@@ -28,18 +27,19 @@ class SourceTitleListFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val sourceTitleListViewModel by viewModels<SourceTitleListViewModel> { viewModelFactory }
-    private val sourceListDisplayDataList: MutableList<Pair<String, URL>> = mutableListOf()
+    private val sourceListDisplayDataList: MutableList<SourceTitleListViewModel.SourceListUi> = mutableListOf()
 
     private val sourceTitleListAdapter by lazy {
         SourceTitleListAdapter(
             subSourceDisplayItems = sourceListDisplayDataList,
             sourceTitleListViewModel = sourceTitleListViewModel,
-            onRowItemClicked = ::sourceListRecyclerViewItemClickedAt
+            onRowItemClicked = ::sourceListRecyclerViewItemClickedAt,
+            application = activity?.application!!
         )
     }
 
     private val sourceListDataSetObserver by lazy {
-        Observer<List<Pair<String, URL>>> {
+        Observer<List<SourceTitleListViewModel.SourceListUi>> {
             sourceListDisplayDataList.clear()
             sourceListDisplayDataList.addAll(it)
             sourceTitleListAdapter.notifyDataSetChanged()
@@ -89,10 +89,34 @@ class SourceTitleListFragment : Fragment() {
         }
     }
 
-    private fun sourceListRecyclerViewItemClickedAt(position: Int) {
-        activity?.let {
-            (it as MainActivity)
-                .startArticleListActivity(sourceTitleListViewModel.getSubSourceId(position))
+    private fun sourceListRecyclerViewItemClickedAt(itemType: SourceTitleListViewModel.TYPE, id: String) {
+        when(itemType) {
+            SourceTitleListViewModel.TYPE.RSS_SOURCE -> {
+                activity?.let {
+                    (it as MainActivity)
+                        .startArticleListActivity(id)
+                }
+            }
+            SourceTitleListViewModel.TYPE.ALL_ITEMS_OPTION -> {
+                activity?.let {
+                    (it as MainActivity)
+                        .startArticleListActivityForAllItems()
+                }
+            }
+            SourceTitleListViewModel.TYPE.ADD_SOURCE_OPTION -> {
+                activity?.let {
+                    (it as MainActivity)
+                        .startAddSourceActivity()
+                }
+            }
+            SourceTitleListViewModel.TYPE.SETTINGS_OPTION -> {
+                activity?.let {
+                    (it as MainActivity)
+                        .startSettingsActivity()
+                }
+            }
+            SourceTitleListViewModel.TYPE.SUMMARY_OPTION -> {}
         }
+
     }
 }

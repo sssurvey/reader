@@ -14,7 +14,7 @@
     <dimen name="drawer_text_margin_start">16dp</dimen>
     <dimen name="small_padding">5dp</dimen>
     <dimen name="medium_padding">10dp</dimen>
-    <dimen name="toolbar_title_font_size">18sp</dimen>
+    <dimen name="toolbar_title_font_size">30sp</dimen>
     <dimen name="reader_article_item_title_font_size">14sp</dimen>
     <dimen name="footnote_font_size">10sp</dimen>
     <dimen name="reader_article_item_image_layout_size">50dp</dimen>

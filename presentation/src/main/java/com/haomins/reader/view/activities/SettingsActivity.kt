@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
+import com.haomins.reader.utils.slideAnimation
+import com.haomins.reader.utils.slideInAnimation
+import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.AboutFragment
 import com.haomins.reader.view.fragments.DisclosureFragment
 import com.haomins.reader.view.fragments.SettingsFragment
@@ -12,13 +15,20 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        slideInAnimation()
         setContentView(R.layout.activity_settings)
         showSettingsFragment()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        slideOutAnimation()
     }
 
     fun showAboutFragment() {
         supportFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .slideAnimation()
                 .replace(
                         R.id.settings_container,
                         AboutFragment(),
@@ -31,6 +41,7 @@ class SettingsActivity : AppCompatActivity() {
     fun showDisclosureFragment() {
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .slideAnimation()
             .replace(
                 R.id.settings_container,
                 DisclosureFragment(),

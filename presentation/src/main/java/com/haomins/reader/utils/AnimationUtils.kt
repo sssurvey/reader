@@ -2,6 +2,8 @@ package com.haomins.reader.utils
 
 import android.app.Activity
 import android.util.Log
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -39,4 +41,14 @@ fun Activity.delayedUiOperation(
                 doOnError.invoke(e)
             }
         })
+}
+
+fun FragmentTransaction.slideAnimation(): FragmentTransaction {
+    this.setCustomAnimations(
+        R.anim.start_slide_in_left,
+        R.anim.start_slide_out_left,
+        R.anim.start_slide_in_right,
+        R.anim.start_slide_out_right,
+    )
+    return this
 }
