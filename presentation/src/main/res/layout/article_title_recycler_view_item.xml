@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/default_image_view_corner_radius"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/article_preview_image"
@@ -36,31 +36,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_layout_margin"
         android:textSize="@dimen/reader_article_item_title_font_size"
+        app:layout_constraintBottom_toTopOf="@id/article_posted_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/article_image_mask"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Sample Article Headline for The Sample Image Right Here, I Don't Know What I am Talking About." />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/article_source_icon_mask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_layout_margin"
-        app:cardCornerRadius="@dimen/default_image_view_corner_radius"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/article_image_mask">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/article_source_icon"
-            android:layout_width="@dimen/reader_article_item_source_icon_layout_size"
-            android:layout_height="@dimen/reader_article_item_source_icon_layout_size"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/placeholder_icon"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-    </com.google.android.material.card.MaterialCardView>
-
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/article_posted_time"
@@ -68,9 +48,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_layout_margin"
+        android:textSize="@dimen/footnote_font_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/article_source_icon_mask"
-        app:layout_constraintTop_toTopOf="@+id/article_source_icon_mask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/article_title"
         tools:text="2 hours" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

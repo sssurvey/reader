@@ -43,10 +43,6 @@ class ArticleTitleListAdapter(
         with(holder.viewHolder) {
             article_title.text = articleTitleListUiItems[position].itemTitle
             article_posted_time.text = articleTitleListUiItems[position].howLongAgo
-            glideUtils.loadIconImage(
-                imageView = article_source_icon,
-                articleTitleListUiItems[position].href
-            )
             setOnClick(this, position)
             glideUtils.loadPreviewImage(
                 imageView = article_preview_image,

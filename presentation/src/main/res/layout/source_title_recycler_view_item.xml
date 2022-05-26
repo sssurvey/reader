@@ -39,6 +39,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/source_icon_image_view"
                 android:height="@dimen/imageIconViewHeight"
+                android:textSize="@dimen/reader_article_item_title_font_size"
                 android:gravity="center_vertical"
                 android:maxLines="@integer/textViewDefaultLineRestriction"
                 android:paddingStart="@dimen/textViewPadding"
