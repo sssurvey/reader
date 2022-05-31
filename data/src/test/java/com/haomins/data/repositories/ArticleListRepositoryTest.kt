@@ -82,9 +82,9 @@ class ArticleListRepositoryTest {
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
             .loadArticleListByFeed(any(), any(), any(), any(), any())
-        verify(mockTheOldReaderService, times(1))
+        verify(mockTheOldReaderService, times(10))
             .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(2)).articleDao()
+        verify(mockRoomService, times(1)).articleDao()
     }
 
     @Test
@@ -101,14 +101,14 @@ class ArticleListRepositoryTest {
 
     @Test
     fun continueLoadArticleItemRefs() {
-        val testObserver = TestObserver<Unit>()
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
         articleListRepository.continueLoadArticleItems("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
             .loadArticleListByFeed(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
             .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(10)).articleDao()
+        verify(mockRoomService, times(1)).articleDao()
     }
 
     private fun mockHelper() {

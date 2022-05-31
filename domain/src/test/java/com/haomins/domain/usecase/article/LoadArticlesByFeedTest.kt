@@ -4,6 +4,7 @@ import com.haomins.domain.TestSchedulers
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Assert
@@ -69,7 +70,7 @@ class LoadArticlesByFeedTest {
         fun mock() {
             Mockito.`when`(mockArticleListRepositoryContract.loadArticleItems("123"))
                 .thenReturn(
-                    Observable.just(
+                    Single.just(
                         testArticleEntityList
                     )
                 )
@@ -82,8 +83,8 @@ class LoadArticlesByFeedTest {
         val testPostExecutionScheduler = postExecutionScheduler.scheduler as TestScheduler
 
         loadAllArticlesByFeed
-            .buildUseCaseObservable(LoadArticlesByFeed.forLoadArticlesByFeed("123"))
-            .subscribeWith(testObserver)
+            .buildUseCaseSingle(LoadArticlesByFeed.forLoadArticlesByFeed("123"))
+            .subscribe(testObserver)
 
         testObserver.assertSubscribed()
 

@@ -1,8 +1,10 @@
 package com.haomins.domain.usecase.article
 
 import com.haomins.domain.TestSchedulers
+import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
@@ -38,25 +40,54 @@ class ContinueLoadArticlesByFeedTest {
     @Test
     fun `test continueLoadArticlesByFeed success`() {
 
+        val testArticleEntityList = listOf(
+            ArticleEntity(
+                "123",
+                "123",
+                "123",
+                "123",
+                "123",
+                "123",
+                123,
+                123,
+                "",
+                ""
+            ),
+            ArticleEntity(
+                "123",
+                "1234",
+                "123",
+                "123",
+                "123",
+                "123",
+                123,
+                123,
+                "",
+                ""
+            )
+        )
+
         fun mock() {
             Mockito.`when`(mockArticleListRepositoryContract.continueLoadArticleItems(any())).thenReturn(
-                Observable.just(Unit)
+                Single.just(
+                    testArticleEntityList
+                )
             )
         }
 
         mock()
 
-        val testObserver = TestObserver<Unit>()
+        val testObserver = TestObserver<List<ArticleEntity>>()
         val testExecutionScheduler = executionScheduler.scheduler as TestScheduler
         val testPostExecutionScheduler = postExecutionScheduler.scheduler as TestScheduler
 
         continueLoadArticlesByFeed
-            .buildUseCaseObservable(
+            .buildUseCaseSingle(
                 ContinueLoadArticlesByFeed.forContinueLoadArticlesByFeed(
                     "123"
                 )
             )
-            .subscribeWith(testObserver)
+            .subscribe(testObserver)
 
         testObserver.assertSubscribed()
 
