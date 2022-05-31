@@ -67,6 +67,7 @@ ext {
             "com.google.dagger:dagger:$dagger_version",
             "androidx.room:room-runtime:$room_version",
             "androidx.room:room-rxjava2:$room_version",
+            'org.jsoup:jsoup:1.14.3'
     ]
 
     dataKaptDependencies = [

@@ -113,6 +113,17 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="10dp"
+            android:background="@color/black" />
+
+        <!-- Added as padding for scrolling purpose -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>

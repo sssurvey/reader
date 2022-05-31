@@ -41,8 +41,8 @@ class ArticleDetailRepositoryTest {
         `when`(mockDateUtils.to24HrString(any())).thenReturn("1")
 
         articleDetailRepository = ArticleDetailRepository(
-                roomService = mockRoomService,
-                articleEntityMapper = ArticleEntityMapper(dateUtils = mockDateUtils)
+            roomService = mockRoomService,
+            articleEntityMapper = ArticleEntityMapper(dateUtils = mockDateUtils)
         )
     }
 
@@ -51,35 +51,37 @@ class ArticleDetailRepositoryTest {
 
         val testId = "test id"
         val testArticleEntity = com.haomins.data.model.entities.ArticleEntity(
-                itemId = testId,
-                feedId = "test feed id",
-                itemTitle = "test title",
-                itemUpdatedMillisecond = 1,
-                itemPublishedMillisecond = 1,
-                author = "test author",
-                content = "test content"
+            itemId = testId,
+            feedId = "test feed id",
+            itemTitle = "test title",
+            itemUpdatedMillisecond = 1,
+            itemPublishedMillisecond = 1,
+            author = "test author",
+            content = "test content",
+            href = "www.test.com",
+            previewImageUrl = "www.test.com/test.jpeg"
         )
         val testObserver = TestObserver<ArticleEntity>()
 
         fun mockBehavior() {
             `when`(mockRoomService.articleDao())
-                    .thenReturn(mockArticleDao)
+                .thenReturn(mockArticleDao)
             `when`(mockArticleDao.selectArticleByItemId(any()))
-                    .thenReturn(
-                            Single
-                                    .timer(1, TimeUnit.SECONDS, testScheduler)
-                                    .flatMap {
-                                        Single.just(testArticleEntity)
-                                    }
-                    )
+                .thenReturn(
+                    Single
+                        .timer(1, TimeUnit.SECONDS, testScheduler)
+                        .flatMap {
+                            Single.just(testArticleEntity)
+                        }
+                )
         }
 
         mockBehavior()
 
         articleDetailRepository
-                .loadArticleDetail(testId)
-                .subscribeOn(testScheduler)
-                .subscribeWith(testObserver)
+            .loadArticleDetail(testId)
+            .subscribeOn(testScheduler)
+            .subscribeWith(testObserver)
 
         testScheduler.advanceTimeBy(2, TimeUnit.SECONDS)
 
@@ -97,23 +99,23 @@ class ArticleDetailRepositoryTest {
 
         fun mockBehavior() {
             `when`(mockRoomService.articleDao())
-                    .thenReturn(mockArticleDao)
+                .thenReturn(mockArticleDao)
             `when`(mockArticleDao.selectArticleByItemId(any()))
-                    .thenReturn(
-                            Single
-                                    .timer(1, TimeUnit.SECONDS, testScheduler)
-                                    .flatMap {
-                                        Single.error(testException)
-                                    }
-                    )
+                .thenReturn(
+                    Single
+                        .timer(1, TimeUnit.SECONDS, testScheduler)
+                        .flatMap {
+                            Single.error(testException)
+                        }
+                )
         }
 
         mockBehavior()
 
         articleDetailRepository
-                .loadArticleDetail(testId)
-                .subscribeOn(testScheduler)
-                .subscribeWith(testObserver)
+            .loadArticleDetail(testId)
+            .subscribeOn(testScheduler)
+            .subscribeWith(testObserver)
 
         testScheduler.advanceTimeBy(2, TimeUnit.SECONDS)
 

@@ -19,7 +19,9 @@ class ArticleEntityMapper @Inject constructor(
             howLongAgo = dateUtils.howLongAgo(dataModel.itemPublishedMillisecond),
             updatedTime = dateUtils.to24HrString(dataModel.itemUpdatedMillisecond),
             itemPublishedMillisecond = dataModel.itemPublishedMillisecond,
-            itemUpdatedMillisecond = dataModel.itemUpdatedMillisecond
+            itemUpdatedMillisecond = dataModel.itemUpdatedMillisecond,
+            href = dataModel.href,
+            previewImageUrl = dataModel.previewImageUrl
         )
     }
 

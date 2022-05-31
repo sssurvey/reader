@@ -1,4 +1,2 @@
-include ':presentation', ':data', ':domain'
+include ':presentation', ':data', ':domain', ':ui', ':demo'
 rootProject.name='Reader'
-include ':ui'
-include ':demo'

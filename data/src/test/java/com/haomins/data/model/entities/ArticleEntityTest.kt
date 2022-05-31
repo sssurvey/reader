@@ -8,13 +8,15 @@ class ArticleEntityTest {
     @Test
     fun testInit() {
         val articleEntity = ArticleEntity(
-                itemId = "1",
-                feedId = "f1",
-                itemTitle = "1 f1",
-                itemUpdatedMillisecond = System.currentTimeMillis(),
-                itemPublishedMillisecond = System.currentTimeMillis(),
-                author = "Test Tester",
-                content = "Unit test tester"
+            itemId = "1",
+            feedId = "f1",
+            itemTitle = "1 f1",
+            itemUpdatedMillisecond = System.currentTimeMillis(),
+            itemPublishedMillisecond = System.currentTimeMillis(),
+            author = "Test Tester",
+            content = "Unit test tester",
+            href = "www.test.com",
+            previewImageUrl = "www.test.com/test.jpeg"
         )
         assertTrue(articleEntity.itemId == "1")
         assertTrue(articleEntity.feedId == "f1")

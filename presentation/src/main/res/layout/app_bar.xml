@@ -7,7 +7,13 @@
     android:layoutDirection="rtl"
     app:elevation="@dimen/no_elevation">
 
-    <com.haomins.ui.toolbar.ReaderToolbar
+<!--    <com.haomins.ui.toolbar.ReaderToolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_scrollFlags="scroll|enterAlways|snap" />-->
+
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

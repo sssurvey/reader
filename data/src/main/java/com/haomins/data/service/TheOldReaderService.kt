@@ -20,7 +20,7 @@ interface TheOldReaderService {
         const val DEFAULT_PROTOCOL = "https:"
         const val SIGN_UP_PAGE_URL = "https://theoldreader.com/users/sign_up"
         const val FORGET_PASSWORD_PAGE_URL = "https://theoldreader.com/users/password/new"
-        const val DEFAULT_ARTICLE_AMOUNT = 10
+        const val DEFAULT_ARTICLE_AMOUNT = 20
 
         private const val DEFAULT_OUTPUT_FORMAT = "json"
         private const val DEFAULT_SERVICE_NAME = "reader"
