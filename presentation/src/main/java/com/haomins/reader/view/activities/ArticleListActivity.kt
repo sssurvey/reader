@@ -13,7 +13,7 @@ import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE
 class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticleList {
 
     companion object {
-        const val ARTICLE_ITEM_POSITION = "ARTICLE_ITEM_POSITION"
+        const val ARTICLE_ITEM_ID = "ARTICLE_ITEM_ID"
         const val ARTICLE_ITEM_ID_ARRAY = "ARTICLE_ITEM_ID_ARRAY"
 
         private const val TAG = "ArticleListActivity"
@@ -32,10 +32,10 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
         slideOutAnimation()
     }
 
-    override fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>) {
+    override fun startArticleDetailActivity(articleItemId: String, articleItemIdArray: Array<String>) {
         val intent = Intent(this, ArticleDetailActivity::class.java)
-        intent.putExtra(ARTICLE_ITEM_POSITION, position)
-        intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleIdArray)
+        intent.putExtra(ARTICLE_ITEM_ID, articleItemId)
+        intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleItemIdArray)
         startActivity(intent)
     }
 

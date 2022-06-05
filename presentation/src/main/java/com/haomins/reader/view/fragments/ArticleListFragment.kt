@@ -37,7 +37,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     interface HasClickableArticleList {
 
-        fun startArticleDetailActivity(position: Int, articleIdArray: Array<String>)
+        fun startArticleDetailActivity(articleItemId: String, articleItemIdArray: Array<String>)
 
     }
 
@@ -116,11 +116,11 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         }
     }
 
-    override fun onArticleAtPositionClicked(position: Int) {
+    override fun onArticleClicked(articleItemId: String) {
         val itemIdList: List<String> = articleTitleUiItems.map { it.itemId }
         activity?.let {
             (it as HasClickableArticleList).startArticleDetailActivity(
-                position,
+                articleItemId,
                 itemIdList.toTypedArray()
             )
         }

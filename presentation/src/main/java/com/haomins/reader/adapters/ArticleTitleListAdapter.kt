@@ -18,7 +18,7 @@ class ArticleTitleListAdapter(
 
     interface ArticleTitleListOnClickListener {
 
-        fun onArticleAtPositionClicked(position: Int)
+        fun onArticleClicked(articleItemId: String)
 
         fun onLoadMoreArticlesBasedOnPosition(position: Int)
 
@@ -41,20 +41,22 @@ class ArticleTitleListAdapter(
 
     override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
         with(holder.viewHolder) {
-            article_title.text = articleTitleListUiItems[position].itemTitle
-            article_posted_time.text = articleTitleListUiItems[position].howLongAgo
-            setOnClick(this, position)
-            glideUtils.loadPreviewImage(
-                imageView = article_preview_image,
-                articleTitleListUiItems[position].previewImageUrl
-            )
+            articleTitleListUiItems[position].let {
+                article_title.text = it.itemTitle
+                article_posted_time.text = it.howLongAgo
+                onArticleClicked(it.itemId)
+                glideUtils.loadPreviewImage(
+                    imageView = article_preview_image,
+                    it.previewImageUrl
+                )
+            }
         }
         articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }
 
-    private fun setOnClick(view: View, position: Int) {
-        view.setOnClickListener {
-            articleTitleListOnClickListener.onArticleAtPositionClicked(position)
+    private fun View.onArticleClicked(articleItemId: String) {
+        setOnClickListener {
+            articleTitleListOnClickListener.onArticleClicked(articleItemId)
         }
     }
 
