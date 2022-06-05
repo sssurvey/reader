@@ -37,7 +37,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     interface HasClickableArticleList {
 
-        fun startArticleDetailActivity(articleId: String, articleIdArray: Array<String>)
+        fun startArticleDetailActivity(articleItemId: String, articleItemIdArray: Array<String>)
 
     }
 

@@ -41,13 +41,15 @@ class ArticleTitleListAdapter(
 
     override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
         with(holder.viewHolder) {
-            article_title.text = articleTitleListUiItems[position].itemTitle
-            article_posted_time.text = articleTitleListUiItems[position].howLongAgo
-            onArticleClicked(articleTitleListUiItems[position].itemId)
-            glideUtils.loadPreviewImage(
-                imageView = article_preview_image,
-                articleTitleListUiItems[position].previewImageUrl
-            )
+            articleTitleListUiItems[position].let {
+                article_title.text = it.itemTitle
+                article_posted_time.text = it.howLongAgo
+                onArticleClicked(it.itemId)
+                glideUtils.loadPreviewImage(
+                    imageView = article_preview_image,
+                    it.previewImageUrl
+                )
+            }
         }
         articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }
