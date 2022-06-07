@@ -6,7 +6,6 @@ import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.SubscriptionEntity
 import com.haomins.data.model.responses.subscription.SubscriptionItemModel
-import com.haomins.data.model.responses.subscription.SubscriptionSourceListResponseModel
 import com.haomins.data.service.RoomService
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
@@ -25,12 +24,15 @@ class SourceSubscriptionListRepository @Inject constructor(
     override fun loadSubscriptionList(): Single<List<com.haomins.domain.model.entities.SubscriptionEntity>> {
         return theOldReaderService
             .loadSubscriptionSourceList(headerAuthValue = loadHeaderAuthValue())
-            .flatMap { saveSubListToDB(it) }
-            .flatMap { retrieveSubListFromDB() }
+            .map {
+                it.subscriptions.convertSubscriptionItemModelToEntity().apply {
+                    saveSubListToDatabase(this)
+                }
+            }
             .onErrorResumeNext { retrieveSubListFromDB() }
             .map {
-                it.map {
-                    subscriptionEntityMapper.dataModelToDomainModel(it)
+                it.map { subscriptionEntity ->
+                    subscriptionEntityMapper.dataModelToDomainModel(subscriptionEntity)
                 }
             }
     }
@@ -39,15 +41,12 @@ class SourceSubscriptionListRepository @Inject constructor(
         return roomService.subscriptionDao().getAll()
     }
 
-    private fun saveSubListToDB(
-        subscriptionSourceListResponseModel: SubscriptionSourceListResponseModel,
-        clearOldTable: Boolean = true
-    ): Single<Unit> {
-        return Single.fromCallable {
-            if (clearOldTable) roomService.subscriptionDao().clearTable()
-            val entityList =
-                convertSubscriptionItemModelToEntity(subscriptionSourceListResponseModel.subscriptions)
-            roomService.subscriptionDao().insertAll(*entityList.toTypedArray())
+    private fun saveSubListToDatabase(
+        entityList: List<SubscriptionEntity>,
+    ) {
+        with(roomService.subscriptionDao()) {
+            clearTable()
+            insertAll(*entityList.toTypedArray())
         }
     }
 
@@ -56,9 +55,9 @@ class SourceSubscriptionListRepository @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY.string, ""))
     }
 
-    private fun convertSubscriptionItemModelToEntity(subscriptions: ArrayList<SubscriptionItemModel>)
+    private fun ArrayList<SubscriptionItemModel>.convertSubscriptionItemModelToEntity()
             : List<SubscriptionEntity> {
-        return subscriptions.map {
+        return map {
             SubscriptionEntity(
                 id = it.id,
                 title = it.title,
@@ -74,6 +73,6 @@ class SourceSubscriptionListRepository @Inject constructor(
     @VisibleForTesting
     fun convertSubscriptionItemModelToEntityForTesting(subscriptions: ArrayList<SubscriptionItemModel>)
             : List<SubscriptionEntity> {
-        return convertSubscriptionItemModelToEntity(subscriptions)
+        return subscriptions.convertSubscriptionItemModelToEntity()
     }
 }
