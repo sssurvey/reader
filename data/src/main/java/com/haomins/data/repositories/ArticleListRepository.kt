@@ -85,8 +85,13 @@ class ArticleListRepository @Inject constructor(
                     it.map { articleResponseModel -> articleResponseModel.toArticleEntity() }
                 roomService.articleDao().insert(*articleEntities.toTypedArray())
                 articleEntities
-            }.map {
-                it.map { articleEntity -> articleEntityMapper.dataModelToDomainModel(articleEntity) }
+            }.onErrorResumeNext { roomService.articleDao().selectAllArticleByFeedId(feedId) }
+            .map {
+                it.map { articleEntity ->
+                    articleEntityMapper.dataModelToDomainModel(
+                        articleEntity
+                    )
+                }
             }
     }
 
@@ -118,18 +123,10 @@ class ArticleListRepository @Inject constructor(
                     it.map { articleResponseModel -> articleResponseModel.toArticleEntity() }
                 roomService.articleDao().insert(*articleEntities.toTypedArray())
                 articleEntities
-            }.map {
+            }.onErrorResumeNext { roomService.articleDao().getAll() }
+            .map {
                 it.map { articleEntity -> articleEntityMapper.dataModelToDomainModel(articleEntity) }
             }
-    }
-
-    private fun saveIndividualArticleToDatabase(articleResponseModel: ArticleResponseModel)
-            : Single<Unit> {
-        return Single.fromCallable {
-            roomService.articleDao().insert(
-                articleResponseModel.toArticleEntity()
-            )
-        }
     }
 
     private fun ArticleResponseModel.toArticleEntity(): com.haomins.data.model.entities.ArticleEntity {
