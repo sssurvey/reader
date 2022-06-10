@@ -7,6 +7,7 @@ import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.ArticleEntity
 import com.haomins.data.service.RoomService
+import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.DateUtils
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -14,8 +15,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.times
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.Spy
 import org.mockito.kotlin.any
@@ -85,6 +85,44 @@ class ArticleListRepositoryTest {
         verify(mockTheOldReaderService, times(10))
             .loadArticleDetailsByRefId(any(), any(), any())
         verify(mockRoomService, times(1)).articleDao()
+    }
+
+    @Test
+    fun `test should load articles from DB directly by feed if error was thrown during api access`() {
+        val noConnectionMockTheOldReaderService = mock(TheOldReaderService::class.java)
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val noConnectionArticleListRepository = ArticleListRepository(
+            noConnectionMockTheOldReaderService,
+            mockRoomService,
+            mockSharedPreferences,
+            ArticleEntityMapper(mockDateUtils)
+        )
+        `when`(noConnectionMockTheOldReaderService.loadArticleListByFeed(any(), any(), any(), any(), any())).thenReturn(
+            Single.error { Exception("test_exception") }
+        )
+        noConnectionArticleListRepository.loadArticleItems("test_feed_id").subscribe(testObserver)
+        testObserver.assertSubscribed()
+        verify(mockRoomService, times(1)).articleDao()
+        verify(mockArticleDao, times(1)).selectAllArticleByFeedId("test_feed_id")
+    }
+
+    @Test
+    fun `test should load all articles from DB directly if error was thrown during api access`() {
+        val noConnectionMockTheOldReaderService = mock(TheOldReaderService::class.java)
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val noConnectionArticleListRepository = ArticleListRepository(
+            noConnectionMockTheOldReaderService,
+            mockRoomService,
+            mockSharedPreferences,
+            ArticleEntityMapper(mockDateUtils)
+        )
+        `when`(noConnectionMockTheOldReaderService.loadAllArticles(any(), any(), any(), any(), any())).thenReturn(
+            Single.error { Exception("test_exception") }
+        )
+        noConnectionArticleListRepository.loadAllArticleItems().subscribe(testObserver)
+        testObserver.assertSubscribed()
+        verify(mockRoomService, times(1)).articleDao()
+        verify(mockArticleDao, times(1)).getAll()
     }
 
     @Test

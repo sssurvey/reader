@@ -27,7 +27,6 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         const val TAG = "ArticleListFragment"
         const val LOAD_MODE_KEY = "ArticleListFragment_LOAD_MODE"
         private const val PROGRESS_BAR_DELAY = 1500L
-        private const val LOAD_MORE_OFFSET_SCALE = 0.7
     }
 
     enum class ArticleListViewMode(val key: String) {
@@ -48,8 +47,6 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     lateinit var glideUtils: GlideUtils
 
     private lateinit var currentArticleListViewMode: ArticleListViewMode
-
-//    private var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
 
     private val articleListViewModel by viewModels<ArticleListViewModel> { viewModelFactory }
     private val articleTitleUiItems = mutableListOf<ArticleEntity>()
@@ -126,27 +123,24 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         }
     }
 
-    override fun onLoadMoreArticlesBasedOnPosition(position: Int) {
-//        if (position >= loadMoreArticleThreshold) {
-//        if (position == article_title_recycler_view.adapter?.itemCount) {
-//            Log.d(
-//                "xxxxxx",
-//                "xxxx " +
-//                        "onLoadMoreArticlesBasedOnPosition :: called current position: $position, current threshold: ${article_title_recycler_view.adapter?.itemCount}"
-//            )
-//            when (currentArticleListViewMode) {
-//                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
-//                    feedId
-//                )
-//                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
-//            }
-//            loadMoreArticleThreshold += loadMoreArticleThreshold
-//        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         handler.removeCallbacksAndMessages(null)
+    }
+
+    //TODO: infinite load feature
+    override fun onLoadMoreArticlesBasedOnPosition(position: Int) {
+    //        var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
+    //        if (position >= loadMoreArticleThreshold) {
+    //        if (position == article_title_recycler_view.adapter?.itemCount) {
+    //            when (currentArticleListViewMode) {
+    //                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
+    //                    feedId
+    //                )
+    //                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
+    //            }
+    //            loadMoreArticleThreshold += loadMoreArticleThreshold
+    //        }
     }
 
     private fun hideProgressBar() {
