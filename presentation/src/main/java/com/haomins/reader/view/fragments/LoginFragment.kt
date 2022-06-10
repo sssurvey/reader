@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
+import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -102,7 +103,9 @@ class LoginFragment : Fragment() {
         loginViewModel.authorize(
             userName = login_username_edit_text.text.toString(),
             userPassword = login_password_edit_text.text.toString()
-        )
+        ) {
+            showToast(it)
+        }
     }
 
     private fun popItself() {

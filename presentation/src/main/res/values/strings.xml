@@ -39,4 +39,6 @@
     <string name="forget_password">Forgot Password?</string>
     <string name="toolbar_my_feed_button_text">me</string>
     <string name="toolbar_explore_feed_button_text">explore</string>
+    <string name="warning_message_login_auth_failed">Incorrect login credentials</string>
+    <string name="warning_message_unknown_exception">Something went wrong</string>
 </resources>
