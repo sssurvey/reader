@@ -93,8 +93,8 @@ ext {
     ]
 
     appAndroidTestImplementation = [
-            'androidx.test.ext:junit:1.1.1',
-            'androidx.test.espresso:espresso-core:3.2.0'
+        //            'androidx.test.ext:junit:1.1.1',
+        //            'androidx.test.espresso:espresso-core:3.2.0'
     ]
 
     dataTestImplementation = [
@@ -104,7 +104,7 @@ ext {
     ]
 
     dataAndroidTestImplementation = [
-            'androidx.test.ext:junit:1.1.1',
-            'androidx.test.espresso:espresso-core:3.2.0'
+            //            'androidx.test.ext:junit:1.1.1',
+            //            'androidx.test.espresso:espresso-core:3.2.0'
     ]
 }
