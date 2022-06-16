@@ -11,8 +11,8 @@ android {
         applicationId "com.haomins.reader2"
         minSdkVersion 26
         targetSdkVersion compiledSdkVersion
-        versionCode 11
-        versionName "0.3.1"
+        versionCode 12
+        versionName "0.3.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -22,8 +22,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
