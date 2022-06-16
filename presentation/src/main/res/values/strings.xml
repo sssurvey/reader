@@ -1,18 +1,15 @@
 <resources>
     <string name="app_name">Reader</string>
-    <string name="button_text_login">Login</string>
-    <string name="button_text_sign_up">Sign up</string>
+    <string name="button_text_login">Log In</string>
+    <string name="button_text_create_account">Create Account</string>
     <string name="version_description">version %s</string>
     <string name="menu_see_all_friends">Friends List</string>
-    <string name="menu_add_source">Add sources</string>
-    <string name="menu_all_articles">All Articles</string>
-    <string name="menu_settings">Settings</string>
-    <string name="hint_username">username</string>
-    <string name="hint_passcode">passcode</string>
-    <string name="desc_sign_up">Please note that apps require you to have a username and password in
-        The Old Reader. If you currently only use Google or Facebook to sign in, you will need to
-        create a username and password in <a href="https://theoldreader.com/users/edit">settings</a>.
-    </string>
+    <string name="menu_add_sources">ADD SOURCES</string>
+    <string name="menu_all_articles">All ARTICLES</string>
+    <string name="menu_settings">SETTINGS</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_passcode">Password</string>
+    <string name="desc_sign_up">By registering or signing in, you are agreeing to our Terms Of Service and Privacy Policy.</string>
     <string name="settings_option_dark_mode">Dark mode</string>
     <string name="settings_option_send_feedback">Send feedback</string>
     <string name="settings_option_about">About</string>
@@ -32,11 +29,16 @@
     <string name="email_client_choose">Send Feedback</string>
     <string name="settings_option_send_feedback_summary">Report technical issues or suggest new features</string>
     <string name="settings_option_about_summary">See application version, build info, etc</string>
-    <string name="settings_news_disclosures">Disclosures</string>
+    <string name="settings_news_disclosures">DISCLOSURE</string>
     <string name="settings_news_disclosures_summary">News app category disclosures</string>
     <string name="disclosure_title">Disclosures</string>
     <string name="placeholder_text">The lorem ipsum is a placeholder text used in publishing and graphic design. This filler text is a short paragraph that contains all the letters of the alphabet. The characters are spread out evenly so that the reader\'s attention is focused on the layout of the text instead of its content.</string>
     <string name="placeholder_email">myemail@email.com</string>
     <string name="placeholder_phone_number">(123)–456–7890</string>
     <string name="placeholder_website">www.site.com</string>
+    <string name="forget_password">Forgot Password?</string>
+    <string name="toolbar_my_feed_button_text">me</string>
+    <string name="toolbar_explore_feed_button_text">explore</string>
+    <string name="warning_message_login_auth_failed">Incorrect login credentials</string>
+    <string name="warning_message_unknown_exception">Something went wrong</string>
 </resources>

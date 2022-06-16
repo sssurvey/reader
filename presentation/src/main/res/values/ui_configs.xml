@@ -5,11 +5,13 @@
     <dimen name="cardViewMargin">5dp</dimen>
     <dimen name="textViewPadding">8dp</dimen>
     <dimen name="textViewMargin">8dp</dimen>
+    <dimen name="textSizeMedium">15sp</dimen>
     <dimen name="textSizeSmall">12sp</dimen>
     <dimen name="textSizeTiny">10sp</dimen>
     <dimen name="textSizeGiant">24sp</dimen>
     <dimen name="imageIconViewPadding">12dp</dimen>
     <dimen name="imageIconViewHeight">40dp</dimen>
+    <dimen name="imageViewDefaultPadding">46dp</dimen>
     <dimen name="articleTextViewHeight">20dp</dimen>
     <dimen name="relativeLayoutPadding">10dp</dimen>
     <dimen name="edit_text_default_height">60dp</dimen>

@@ -7,6 +7,7 @@ import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.ArticleEntity
 import com.haomins.data.service.RoomService
+import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.DateUtils
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -14,8 +15,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.times
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.Spy
 import org.mockito.kotlin.any
@@ -48,10 +48,10 @@ class ArticleListRepositoryTest {
         `when`(mockDateUtils.to24HrString(any())).thenReturn("1")
 
         articleListRepository = ArticleListRepository(
-                mockTheOldReaderService,
-                mockRoomService,
-                mockSharedPreferences,
-                ArticleEntityMapper(mockDateUtils)
+            mockTheOldReaderService,
+            mockRoomService,
+            mockSharedPreferences,
+            ArticleEntityMapper(mockDateUtils)
         )
         mockHelper()
     }
@@ -61,95 +61,141 @@ class ArticleListRepositoryTest {
     }
 
     @Test
-    fun `test loadAllArticleItemRefs() order verification`() {
+    fun `test loadAllArticleItems() order verification`() {
         val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
-        articleListRepository.loadAllArticleItemRefs().subscribeWith(testObserver)
+        articleListRepository.loadAllArticleItems().subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService, times(1))
             .loadAllArticles(any(), any(), any(), any(), any())
-        verify(mockRoomService, times(20)).articleDao()
-        verify(mockArticleDao, times(10)).insert(any())
-        testObserver.assertValueCount(10)
+        verify(mockTheOldReaderService, times(10))
+            .loadArticleDetailsByRefId(any(), any(), any())
+        verify(mockRoomService, times(1)).articleDao()
+        verify(mockArticleDao, times(1)).insert(any())
+        testObserver.assertValueCount(1)
         testObserver.assertComplete()
     }
 
     @Test
     fun `test loadArticleItemRefs() order verification`() {
         val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
-        articleListRepository.loadArticleItemRefs("test_feed_id").subscribe(testObserver)
+        articleListRepository.loadArticleItems("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
-                .loadArticleListByFeed(any(), any(), any(), any(), any())
-        verify(mockTheOldReaderService, times(1))
-                .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(2)).articleDao()
+            .loadArticleListByFeed(any(), any(), any(), any(), any())
+        verify(mockTheOldReaderService, times(10))
+            .loadArticleDetailsByRefId(any(), any(), any())
+        verify(mockRoomService, times(1)).articleDao()
     }
 
     @Test
-    fun continueLoadAllArticleItemRefs() {
-        val testObserver = TestObserver<Unit>()
-        articleListRepository.continueLoadAllArticleItemRefs().subscribe(testObserver)
+    fun `test should load articles from DB directly by feed if error was thrown during api access`() {
+        val noConnectionMockTheOldReaderService = mock(TheOldReaderService::class.java)
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val noConnectionArticleListRepository = ArticleListRepository(
+            noConnectionMockTheOldReaderService,
+            mockRoomService,
+            mockSharedPreferences,
+            ArticleEntityMapper(mockDateUtils)
+        )
+        `when`(noConnectionMockTheOldReaderService.loadArticleListByFeed(any(), any(), any(), any(), any())).thenReturn(
+            Single.error { Exception("test_exception") }
+        )
+        noConnectionArticleListRepository.loadArticleItems("test_feed_id").subscribe(testObserver)
+        testObserver.assertSubscribed()
+        verify(mockRoomService, times(1)).articleDao()
+        verify(mockArticleDao, times(1)).selectAllArticleByFeedId("test_feed_id")
+    }
+
+    @Test
+    fun `test should load all articles from DB directly if error was thrown during api access`() {
+        val noConnectionMockTheOldReaderService = mock(TheOldReaderService::class.java)
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val noConnectionArticleListRepository = ArticleListRepository(
+            noConnectionMockTheOldReaderService,
+            mockRoomService,
+            mockSharedPreferences,
+            ArticleEntityMapper(mockDateUtils)
+        )
+        `when`(noConnectionMockTheOldReaderService.loadAllArticles(any(), any(), any(), any(), any())).thenReturn(
+            Single.error { Exception("test_exception") }
+        )
+        noConnectionArticleListRepository.loadAllArticleItems().subscribe(testObserver)
+        testObserver.assertSubscribed()
+        verify(mockRoomService, times(1)).articleDao()
+        verify(mockArticleDao, times(1)).getAll()
+    }
+
+    @Test
+    fun `test continueLoadAllArticleItems()`() {
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        articleListRepository.continueLoadAllArticleItems().subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
-                .loadAllArticles(any(), any(), any(), any(), any())
+            .loadAllArticles(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
-                .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(10)).articleDao()
+            .loadArticleDetailsByRefId(any(), any(), any())
+        verify(mockRoomService, times(1)).articleDao()
     }
 
     @Test
     fun continueLoadArticleItemRefs() {
-        val testObserver = TestObserver<Unit>()
-        articleListRepository.continueLoadArticleItemRefs("test_feed_id").subscribe(testObserver)
+        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        articleListRepository.continueLoadArticleItems("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
-                .loadArticleListByFeed(any(), any(), any(), any(), any())
+            .loadArticleListByFeed(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
-                .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(10)).articleDao()
+            .loadArticleDetailsByRefId(any(), any(), any())
+        verify(mockRoomService, times(1)).articleDao()
     }
 
     private fun mockHelper() {
         `when`(
-                mockSharedPreferences
-                        .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, "")
+            mockSharedPreferences
+                .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, "")
         )
-                .thenReturn("test_auth_code")
+            .thenReturn("test_auth_code")
         `when`(mockRoomService.articleDao())
-                .thenReturn(mockArticleDao)
+            .thenReturn(mockArticleDao)
         `when`(mockArticleDao.getAll())
-                .thenReturn(
-                        Single.just(
-                                mutableListOf(
-                                        ArticleEntity(
-                                                "1",
-                                                "2",
-                                                "test_title",
-                                                1,
-                                                1,
-                                                "test_author",
-                                                "test_content"
-                                        ),
-                                        ArticleEntity(
-                                                "2",
-                                                "2",
-                                                "test_title",
-                                                1,
-                                                1,
-                                                "test_author",
-                                                "test_content"
-                                        ),
-                                        ArticleEntity(
-                                                "3",
-                                                "2",
-                                                "test_title",
-                                                1,
-                                                1,
-                                                "test_author",
-                                                "test_content"
-                                        )
-                                )
+            .thenReturn(
+                Single.just(
+                    mutableListOf(
+                        ArticleEntity(
+                            "1",
+                            "2",
+                            "test_title",
+                            1,
+                            1,
+                            "test_author",
+                            "test_content",
+                            "www.test.com",
+                            "www.test.com/test.jpeg",
+                        ),
+                        ArticleEntity(
+                            "2",
+                            "2",
+                            "test_title",
+                            1,
+                            1,
+                            "test_author",
+                            "test_content",
+                            "www.test.com",
+                            "www.test.com/test.jpeg"
+                        ),
+                        ArticleEntity(
+                            "3",
+                            "2",
+                            "test_title",
+                            1,
+                            1,
+                            "test_author",
+                            "test_content",
+                            "www.test.com",
+                            "www.test.com/test.jpeg"
                         )
+                    )
                 )
+            )
     }
 }

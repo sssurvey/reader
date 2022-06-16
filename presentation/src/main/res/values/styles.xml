@@ -21,10 +21,40 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:overScrollMode">never</item>
         <item name="android:textViewStyle">@style/ReaderTextViewStyle</item>
+        <!-- Disable the yellow auto fill highlights-->
+        <item name="android:autofilledHighlight">@android:color/transparent</item>
     </style>
 
-    <style name="ReaderTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/font_manrope_bold</item>
+    <style name="ReaderEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/font_regular</item>
+    </style>
+
+    <style name="ReaderTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/font_bold</item>
+        <item name="android:textColor">@color/default_text</item>
+    </style>
+
+    <style name="ReaderArticleTitleTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/font_bold</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textColor">@color/default_text</item>
+    </style>
+
+    <style name="ReaderArticlePostTimeTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/font_bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/default_text_light</item>
+    </style>
+
+    <style name="ReaderToolbarTitleTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/font_bold</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+    </style>
+
+    <style name="ReaderButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:fontFamily">@font/font_regular</item>
     </style>
 
     <style name="ToolBarStyle" parent="Widget.MaterialComponents.Toolbar">
@@ -39,6 +69,10 @@
 
     <style name="ReaderCardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/default_background</item>
+    </style>
+
+    <style name="ReaderSplashArtStroke" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@android:color/white</item>
     </style>
 
 </resources>

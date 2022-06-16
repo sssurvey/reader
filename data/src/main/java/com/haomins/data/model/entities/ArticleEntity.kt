@@ -27,6 +27,11 @@ data class ArticleEntity(
         val author: String,
 
         @ColumnInfo(name = "content")
-        val content: String
+        val content: String,
 
+        @ColumnInfo(name = "href")
+        val href: String,
+
+        @ColumnInfo(name = "preview_image_url")
+        val previewImageUrl: String
 )

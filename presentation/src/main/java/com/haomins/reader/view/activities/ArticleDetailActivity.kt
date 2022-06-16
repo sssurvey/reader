@@ -29,12 +29,13 @@ class ArticleDetailActivity : AppCompatActivity() {
     }
 
     private fun initViewPager() {
-        val currentPosition = intent.getIntExtra(ArticleListActivity.ARTICLE_ITEM_POSITION, -1)
+        val articleId = intent.getStringExtra(ArticleListActivity.ARTICLE_ITEM_ID)
         val articleIdArray = intent.getStringArrayExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
         articleIdArray?.let {
+            val currentPosition = articleIdArray.indexOf(articleId)
             val adapter = ArticleDetailFragmentAdapter(
-                    this,
-                    it
+                this,
+                it
             )
             article_detail_view_pager.adapter = adapter
             article_detail_view_pager.setCurrentItem(currentPosition, false)
@@ -42,10 +43,10 @@ class ArticleDetailActivity : AppCompatActivity() {
     }
 
     private inner class ArticleDetailFragmentAdapter(
-            articleDetailActivity: ArticleDetailActivity,
-            private val articleIdArray: Array<String>
+        articleDetailActivity: ArticleDetailActivity,
+        private val articleIdArray: Array<String>
     ) :
-            FragmentStateAdapter(articleDetailActivity) {
+        FragmentStateAdapter(articleDetailActivity) {
         override fun getItemCount(): Int {
             return articleIdArray.size
         }

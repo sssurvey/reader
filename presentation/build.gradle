@@ -6,12 +6,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "29.0.2"
+    compileSdkVersion compiledSdkVersion
     defaultConfig {
         applicationId "com.haomins.reader2"
         minSdkVersion 26
-        targetSdkVersion 30
+        targetSdkVersion compiledSdkVersion
         versionCode 11
         versionName "0.3.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -39,6 +38,7 @@ dependencies {
 
     implementation project(':data')
     implementation project(':domain')
+    implementation project(':ui')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation appDependencies
     kapt appKaptDependencies

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
+import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -21,16 +22,12 @@ import javax.inject.Inject
 
 class LoginFragment : Fragment() {
 
-    companion object {
-        const val TAG = "LoginFragment"
-    }
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val loginViewModel by viewModels<LoginViewModel> { viewModelFactory }
 
     private val isUserLoggedInObserver by lazy {
-        Observer<Boolean>() {
+        Observer<Boolean> {
             if (it) {
                 popItself()
                 showSourceTitleListFragment()
@@ -39,14 +36,15 @@ class LoginFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
+        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
+            .build().inject(this)
         super.onAttach(context)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
@@ -62,7 +60,7 @@ class LoginFragment : Fragment() {
     private fun setOnClickListener() {
         login_button.setOnClickListener { loginButtonOnClick() }
         sign_up_button.setOnClickListener { signUpButtonOnClick() }
-        login_sign_up_text_view.setOnClickListener { loginSignUpDescriptionOnClick() }
+        forgot_password.setOnClickListener { forgetPasswordButtonOnClick() }
         news_app_disclosure.setOnClickListener { showDisclosureFragment() }
     }
 
@@ -76,19 +74,13 @@ class LoginFragment : Fragment() {
 
     private fun setLoginPasswordEditTextOnChangeListener() {
         login_password_edit_text.addTextChangedListener {
-            it?.let {
-                sign_up_button.apply {
-                    isEnabled = it.isEmpty()
-                    if (it.isEmpty()) setTextColor(requireContext().getColor(R.color.colorPrimary))
-                    else setTextColor(requireContext().getColor(R.color.lightGray))
-                }
-            }
+            login_button.isEnabled = !it.isNullOrEmpty()
         }
     }
 
     private fun initiateUI() {
         login_app_version_text_view.text =
-                getString(R.string.version_description, BuildConfig.VERSION_NAME)
+            getString(R.string.version_description, BuildConfig.VERSION_NAME)
     }
 
     private fun registerLiveDataObserver() {
@@ -101,17 +93,19 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun loginSignUpDescriptionOnClick() {
-        loginViewModel.getGenerateAccountForGoogleOrFacebookUrl {
+    private fun forgetPasswordButtonOnClick() {
+        loginViewModel.onForgetPassword {
             startActivity(Intent(Intent.ACTION_VIEW, it))
         }
     }
 
     private fun loginButtonOnClick() {
         loginViewModel.authorize(
-                userName = login_username_edit_text.text.toString(),
-                userPassword = login_password_edit_text.text.toString()
-        )
+            userName = login_username_edit_text.text.toString(),
+            userPassword = login_password_edit_text.text.toString()
+        ) {
+            showToast(it)
+        }
     }
 
     private fun popItself() {
@@ -120,7 +114,11 @@ class LoginFragment : Fragment() {
 
     private fun showSourceTitleListFragment() {
         activity?.let {
-            (it as MainActivity).showSourceTitleListFragment()
+            (it as MainActivity).showAfterUserLoggedInFragment()
         }
+    }
+
+    companion object {
+        const val TAG = "LoginFragment"
     }
 }

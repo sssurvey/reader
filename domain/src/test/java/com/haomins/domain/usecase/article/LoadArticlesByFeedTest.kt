@@ -4,6 +4,7 @@ import com.haomins.domain.TestSchedulers
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Assert
@@ -48,7 +49,9 @@ class LoadArticlesByFeedTest {
                 "123",
                 "123",
                 123,
-                123
+                123,
+                "",
+                ""
             ),
             ArticleEntity(
                 "123",
@@ -58,14 +61,16 @@ class LoadArticlesByFeedTest {
                 "123",
                 "123",
                 123,
-                123
+                123,
+                "",
+                ""
             )
         )
 
         fun mock() {
-            Mockito.`when`(mockArticleListRepositoryContract.loadArticleItemRefs("123"))
+            Mockito.`when`(mockArticleListRepositoryContract.loadArticleItems("123"))
                 .thenReturn(
-                    Observable.just(
+                    Single.just(
                         testArticleEntityList
                     )
                 )
@@ -78,8 +83,8 @@ class LoadArticlesByFeedTest {
         val testPostExecutionScheduler = postExecutionScheduler.scheduler as TestScheduler
 
         loadAllArticlesByFeed
-            .buildUseCaseObservable(LoadArticlesByFeed.forLoadArticlesByFeed("123"))
-            .subscribeWith(testObserver)
+            .buildUseCaseSingle(LoadArticlesByFeed.forLoadArticlesByFeed("123"))
+            .subscribe(testObserver)
 
         testObserver.assertSubscribed()
 
@@ -87,7 +92,7 @@ class LoadArticlesByFeedTest {
         testPostExecutionScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
 
         verify(mockArticleListRepositoryContract, times(1))
-            .loadArticleItemRefs("123")
+            .loadArticleItems("123")
 
         Assert.assertTrue((testObserver.events[0][0] as List<ArticleEntity>)[0].itemId == "123")
 

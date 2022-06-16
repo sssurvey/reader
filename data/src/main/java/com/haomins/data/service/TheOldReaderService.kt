@@ -19,8 +19,9 @@ interface TheOldReaderService {
         const val AUTH_HEADER_VALUE_PREFIX = "GoogleLogin auth="
         const val DEFAULT_PROTOCOL = "https:"
         const val SIGN_UP_PAGE_URL = "https://theoldreader.com/users/sign_up"
-        const val GENERATE_ACCOUNT_PAGE_URL = "https://theoldreader.com/users/edit"
-        const val DEFAULT_ARTICLE_AMOUNT = 10
+        const val FORGET_PASSWORD_PAGE_URL = "https://theoldreader.com/users/password/new"
+        const val DEFAULT_LOAD_SOURCE_ARTICLE_COUNT = 20
+        const val DEFAULT_LOAD_ALL_ARTICLE_COUNT = 150
 
         private const val DEFAULT_OUTPUT_FORMAT = "json"
         private const val DEFAULT_SERVICE_NAME = "reader"
@@ -80,11 +81,11 @@ interface TheOldReaderService {
      */
     @GET(BASE_API + "stream/items/ids")
     fun loadArticleListByFeed(
-            @Header("Authorization") headerAuthValue: String,
-            @Query("s") feedId: String,
-            @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT.toString(),
-            @Query("c") continueLoad: String = EMPTY,
-            @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
+        @Header("Authorization") headerAuthValue: String,
+        @Query("s") feedId: String,
+        @Query("n") articleAmount: String = DEFAULT_LOAD_SOURCE_ARTICLE_COUNT.toString(),
+        @Query("c") continueLoad: String = EMPTY,
+        @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ItemRefListResponseModel>
 
     /**
@@ -100,14 +101,14 @@ interface TheOldReaderService {
      */
     @GET(BASE_API + "stream/items/ids")
     fun loadAllArticles(
-            @Header("Authorization") headerAuthValue: String,
-            @Query("n") articleAmount: String = DEFAULT_ARTICLE_AMOUNT.toString(),
-            @Query("c") continueLoad: String = EMPTY,
-            @Query(
+        @Header("Authorization") headerAuthValue: String,
+        @Query("n") articleAmount: String = DEFAULT_LOAD_ALL_ARTICLE_COUNT.toString(),
+        @Query("c") continueLoad: String = EMPTY,
+        @Query(
                     encoded = true,
                     value = "s"
             ) allItemQuery: String = "user/-/state/com.google/reading-list",
-            @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
+        @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ItemRefListResponseModel>
 
     /**

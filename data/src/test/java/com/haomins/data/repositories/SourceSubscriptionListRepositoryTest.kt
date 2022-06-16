@@ -76,10 +76,6 @@ class SourceSubscriptionListRepositoryTest {
 
             `when`(mockRoomService.subscriptionDao()).thenReturn(mockSubscriptionDao)
 
-            `when`(mockSubscriptionDao.getAll()).thenReturn(
-                Single.fromCallable(::generateSubscriptionListEntity)
-            )
-
         }
 
         mockHelper()
@@ -93,7 +89,6 @@ class SourceSubscriptionListRepositoryTest {
         testObserver.assertComplete()
 
         verify(mockSubscriptionDao, times(1)).insertAll(any())
-        verify(mockSubscriptionDao, times(1)).getAll()
         assertTrue(testObserver.values().first().size == 100)
     }
 

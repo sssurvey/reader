@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:clickable="true"
+    tools:navigationIcon="@drawable/ic_menu">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layoutDirection="ltr"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/button_1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="15dp"
+                android:clickable="true"
+                android:fontFamily="@font/font_bold"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textAllCaps="true"
+                android:textColor="@color/reader_toolbar_title_color"
+                android:textSize="@dimen/toolbar_title_font_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Button 1" />
+
+            <View
+                android:id="@+id/button_1_selected_effect"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:background="@color/reader_toolbar_title_color"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/button_1"
+                app:layout_constraintStart_toStartOf="@id/button_1"
+                app:layout_constraintTop_toBottomOf="@id/button_1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layoutDirection="ltr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/button_2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="15dp"
+                android:clickable="true"
+                android:fontFamily="@font/font_bold"
+                android:layoutDirection="ltr"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/reader_toolbar_title_color"
+                android:textSize="@dimen/toolbar_title_font_size"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Button 2" />
+
+            <View
+                android:id="@+id/button_2_selected_effect"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:background="@color/reader_toolbar_title_color"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/button_2"
+                app:layout_constraintStart_toStartOf="@id/button_2"
+                app:layout_constraintTop_toBottomOf="@id/button_2"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.appbar.MaterialToolbar>
