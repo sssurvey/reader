@@ -1,28 +1,32 @@
 package com.haomins.reader.view.activities
 
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+
 internal class SettingsActivityTest {
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     fun setUp() {
     }
 
-    @org.junit.jupiter.api.AfterEach
+    @AfterEach
     fun tearDown() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun onCreate() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun onBackPressed() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun showAboutFragment() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun showDisclosureFragment() {
     }
 }
