@@ -27,5 +27,6 @@ internal class SettingsActivityTest {
     }
 
     @Test
-    fun showDisclosureFragment() {}
+    fun showDisclosureFragment() {
+    }
 }
