@@ -1,32 +1,27 @@
 package com.haomins.reader.view.activities
 
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
+import com.haomins.reader.R
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 
-internal class SettingsActivityTest {
+@RunWith(AndroidJUnit4::class)
+@LargeTest
+class SettingsActivityTest {
 
-    @BeforeEach
-    fun setUp() {
-    }
-
-    @AfterEach
-    fun tearDown() {
-    }
-
-    @Test
-    fun onCreate() {
-    }
-
-    @Test
-    fun onBackPressed() {
-    }
+    @get:Rule
+    val activityRule = ActivityScenarioRule(SettingsActivity::class.java)
 
     @Test
-    fun showAboutFragment() {
+    fun shouldDisplaySettingsFragmentContainer() {
+        onView(withId(R.id.settings_container)).check(matches(isDisplayed()))
     }
 
-    @Test
-    fun showDisclosureFragment() {
-    }
 }
