@@ -10,6 +10,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.haomins.reader.R
+import com.haomins.reader.testutil.waitFor
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,7 +37,6 @@ class SettingsActivityTest {
 
     @Test
     fun shouldShowDisclosureFragmentWhenClickDisclosureOption() {
-
         onView(withId(R.id.recycler_view)).perform(
             RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                 hasDescendant(withText(R.string.settings_news_disclosures)),
@@ -51,7 +51,9 @@ class SettingsActivityTest {
 
     @Test
     fun shouldShowAboutFragmentWhenClickAboutOption() {
-        //TODO:
+        onView(withText(R.string.settings_option_about)).perform(click())
+        waitFor(1000)
+        onView(withText(R.string.about_app_version_desc)).check(matches(isDisplayed()))
     }
 
 }
