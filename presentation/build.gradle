@@ -6,6 +6,12 @@ plugins {
 }
 
 android {
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
+    }
+
     compileSdkVersion compiledSdkVersion
     defaultConfig {
         applicationId "com.haomins.reader2"
