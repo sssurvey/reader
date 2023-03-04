@@ -100,6 +100,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         super.onViewCreated(view, savedInstanceState)
         currentArticleListViewMode = arguments?.get(LOAD_MODE_KEY) as ArticleListViewMode
         loadArticleList()
+        Log.d("TAG", "test 2")
         registerLiveDataObservers()
         article_title_recycler_view.apply {
             setHasFixedSize(true)

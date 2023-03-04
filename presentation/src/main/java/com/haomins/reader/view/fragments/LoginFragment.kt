@@ -58,6 +58,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun setOnClickListener() {
+        Log.d("TAG", "test 3")
         login_button.setOnClickListener { loginButtonOnClick() }
         sign_up_button.setOnClickListener { signUpButtonOnClick() }
         forgot_password.setOnClickListener { forgetPasswordButtonOnClick() }

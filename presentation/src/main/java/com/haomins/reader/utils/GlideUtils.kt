@@ -51,6 +51,7 @@ class GlideUtils @Inject constructor(
     }
 
     fun loadPreviewImage(imageView: ImageView, urlString: String) {
+        Log.d("TAG", "test 1")
         glide
             .asDrawable()
             .let {
