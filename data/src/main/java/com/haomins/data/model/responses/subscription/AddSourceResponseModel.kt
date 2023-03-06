@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName
 
 data class AddSourceResponseModel(
 
-        @SerializedName("query")
-        val query: String,
+    @SerializedName("query")
+    val query: String,
 
-        @SerializedName("numResults")
-        val numResults: Int,
+    @SerializedName("numResults")
+    val numResults: Int,
 
-        @SerializedName("streamId")
-        val streamId: String?,
+    @SerializedName("streamId")
+    val streamId: String?,
 
-        @SerializedName("error")
-        val error: String?
+    @SerializedName("error")
+    val error: String?
 )

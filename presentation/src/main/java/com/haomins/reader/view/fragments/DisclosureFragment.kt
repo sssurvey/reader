@@ -1,19 +1,15 @@
 package com.haomins.reader.view.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.viewModels.DisclosureViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_disclosure.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DisclosureFragment : Fragment() {

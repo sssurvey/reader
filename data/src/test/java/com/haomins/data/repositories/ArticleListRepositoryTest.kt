@@ -97,7 +97,15 @@ class ArticleListRepositoryTest {
             mockSharedPreferences,
             ArticleEntityMapper(mockDateUtils)
         )
-        `when`(noConnectionMockTheOldReaderService.loadArticleListByFeed(any(), any(), any(), any(), any())).thenReturn(
+        `when`(
+            noConnectionMockTheOldReaderService.loadArticleListByFeed(
+                any(),
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        ).thenReturn(
             Single.error { Exception("test_exception") }
         )
         noConnectionArticleListRepository.loadArticleItems("test_feed_id").subscribe(testObserver)
@@ -116,7 +124,15 @@ class ArticleListRepositoryTest {
             mockSharedPreferences,
             ArticleEntityMapper(mockDateUtils)
         )
-        `when`(noConnectionMockTheOldReaderService.loadAllArticles(any(), any(), any(), any(), any())).thenReturn(
+        `when`(
+            noConnectionMockTheOldReaderService.loadAllArticles(
+                any(),
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        ).thenReturn(
             Single.error { Exception("test_exception") }
         )
         noConnectionArticleListRepository.loadAllArticleItems().subscribe(testObserver)

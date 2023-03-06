@@ -9,7 +9,7 @@ class UserAuthResponseModelMapper @Inject constructor() :
 
     override fun dataModelToDomainModel(dataModel: UserAuthResponseModel): com.haomins.domain.model.responses.UserAuthResponseModel {
         return com.haomins.domain.model.responses.UserAuthResponseModel(
-                auth = dataModel.auth
+            auth = dataModel.auth
         )
     }
 

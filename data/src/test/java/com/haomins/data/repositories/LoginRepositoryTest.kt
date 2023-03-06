@@ -40,9 +40,9 @@ class LoginRepositoryTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         loginRepository = LoginRepository(
-                theOldReaderService = mockTheOldReaderService,
-                sharedPreferences = mockSharedPreferences,
-                userAuthResponseModelMapper = UserAuthResponseModelMapper()
+            theOldReaderService = mockTheOldReaderService,
+            sharedPreferences = mockSharedPreferences,
+            userAuthResponseModelMapper = UserAuthResponseModelMapper()
         )
     }
 
@@ -55,10 +55,12 @@ class LoginRepositoryTest {
 
         fun mockBehavior() {
             `when`(mockSharedPreferences.edit()).thenReturn(mockSharedPreferencesEditor)
-            `when`(mockSharedPreferencesEditor.putString(
+            `when`(
+                mockSharedPreferencesEditor.putString(
                     any(),
                     any()
-            )).thenReturn(mockSharedPreferencesEditor)
+                )
+            ).thenReturn(mockSharedPreferencesEditor)
         }
 
         mockOldReaderServiceBehavior(throwException = false)
@@ -66,13 +68,16 @@ class LoginRepositoryTest {
 
         val observer = TestObserver<com.haomins.domain.model.responses.UserAuthResponseModel>()
         loginRepository
-                .login("testId", "testPassword")
-                .observeOn(testScheduler)
-                .subscribe(observer)
+            .login("testId", "testPassword")
+            .observeOn(testScheduler)
+            .subscribe(observer)
         observer.assertSubscribed()
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         observer.assertComplete()
-        verify(mockSharedPreferencesEditor, times(1)).putString(SharedPreferenceKey.AUTH_CODE_KEY.string, "testAuth")
+        verify(
+            mockSharedPreferencesEditor,
+            times(1)
+        ).putString(SharedPreferenceKey.AUTH_CODE_KEY.string, "testAuth")
         assertEquals(1, observer.valueCount())
         assertEquals("testAuth", observer.values().first().auth)
     }
@@ -82,9 +87,11 @@ class LoginRepositoryTest {
 
         fun mockBehavior() {
             `when`(mockSharedPreferences.edit()).thenReturn(mockSharedPreferencesEditor)
-            `when`(mockSharedPreferencesEditor.remove(
+            `when`(
+                mockSharedPreferencesEditor.remove(
                     any()
-            )).thenReturn(mockSharedPreferencesEditor)
+                )
+            ).thenReturn(mockSharedPreferencesEditor)
         }
 
         mockOldReaderServiceBehavior(throwException = true)
@@ -92,57 +99,60 @@ class LoginRepositoryTest {
 
         val observer = TestObserver<com.haomins.domain.model.responses.UserAuthResponseModel>()
         loginRepository
-                .login("testId", "testPassword")
-                .observeOn(testScheduler)
-                .subscribe(observer)
+            .login("testId", "testPassword")
+            .observeOn(testScheduler)
+            .subscribe(observer)
         observer.assertSubscribed()
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         observer.assertError(testException)
-        verify(mockSharedPreferencesEditor, times(1)).remove(SharedPreferenceKey.AUTH_CODE_KEY.string)
+        verify(
+            mockSharedPreferencesEditor,
+            times(1)
+        ).remove(SharedPreferenceKey.AUTH_CODE_KEY.string)
     }
 
     @Test
     fun `test getSignUpUrlString()`() {
         assertEquals(
-                TheOldReaderService.SIGN_UP_PAGE_URL,
-                loginRepository.getSignUpUrlString()
+            TheOldReaderService.SIGN_UP_PAGE_URL,
+            loginRepository.getSignUpUrlString()
         )
     }
 
     @Test
     fun `test getForgetPasswordUrlString()`() {
         assertEquals(
-                TheOldReaderService.FORGET_PASSWORD_PAGE_URL,
-                loginRepository.getForgetPasswordUrlString()
+            TheOldReaderService.FORGET_PASSWORD_PAGE_URL,
+            loginRepository.getForgetPasswordUrlString()
         )
     }
 
     private fun mockOldReaderServiceBehavior(throwException: Boolean) {
         `when`(
-                mockTheOldReaderService
-                        .loginUser(
-                                userEmail = ArgumentMatchers.anyString(),
-                                userPassword = ArgumentMatchers.anyString(),
-                                output = ArgumentMatchers.anyString(),
-                                service = ArgumentMatchers.anyString(),
-                                accountType = ArgumentMatchers.anyString(),
-                                client = ArgumentMatchers.anyString()
-                        )
-        )
-                .thenReturn(
-                        if (!throwException) {
-                            Single.timer(100, TimeUnit.MILLISECONDS, testScheduler).flatMap {
-                                Single.just(
-                                        UserAuthResponseModel(
-                                                sid = "testSid",
-                                                lsid = "testLsid",
-                                                auth = "testAuth"
-                                        )
-                                )
-                            }
-                        } else {
-                            Single.error(testException)
-                        }
+            mockTheOldReaderService
+                .loginUser(
+                    userEmail = ArgumentMatchers.anyString(),
+                    userPassword = ArgumentMatchers.anyString(),
+                    output = ArgumentMatchers.anyString(),
+                    service = ArgumentMatchers.anyString(),
+                    accountType = ArgumentMatchers.anyString(),
+                    client = ArgumentMatchers.anyString()
                 )
+        )
+            .thenReturn(
+                if (!throwException) {
+                    Single.timer(100, TimeUnit.MILLISECONDS, testScheduler).flatMap {
+                        Single.just(
+                            UserAuthResponseModel(
+                                sid = "testSid",
+                                lsid = "testLsid",
+                                auth = "testAuth"
+                            )
+                        )
+                    }
+                } else {
+                    Single.error(testException)
+                }
+            )
     }
 }

@@ -1,6 +1,5 @@
 package com.haomins.reader.view.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -9,12 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.adapters.ArticleTitleListAdapter
 import com.haomins.reader.utils.GlideUtils
 import com.haomins.reader.viewModels.ArticleListViewModel
@@ -123,17 +120,17 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     //TODO: infinite load feature
     override fun onLoadMoreArticlesBasedOnPosition(position: Int) {
-    //        var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
-    //        if (position >= loadMoreArticleThreshold) {
-    //        if (position == article_title_recycler_view.adapter?.itemCount) {
-    //            when (currentArticleListViewMode) {
-    //                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
-    //                    feedId
-    //                )
-    //                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
-    //            }
-    //            loadMoreArticleThreshold += loadMoreArticleThreshold
-    //        }
+        //        var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
+        //        if (position >= loadMoreArticleThreshold) {
+        //        if (position == article_title_recycler_view.adapter?.itemCount) {
+        //            when (currentArticleListViewMode) {
+        //                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
+        //                    feedId
+        //                )
+        //                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
+        //            }
+        //            loadMoreArticleThreshold += loadMoreArticleThreshold
+        //        }
     }
 
     private fun hideProgressBar() {

@@ -25,9 +25,9 @@ class AddSourceActivity : AppCompatActivity() {
 
     private fun showAddSourceFragment() {
         supportFragmentManager.beginTransaction().replace(
-                R.id.add_source_activity_frame_layout,
-                AddSourceFragment(),
-                AddSourceFragment.TAG
+            R.id.add_source_activity_frame_layout,
+            AddSourceFragment(),
+            AddSourceFragment.TAG
         ).commit()
     }
 }

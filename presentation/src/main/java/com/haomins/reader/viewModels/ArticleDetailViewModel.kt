@@ -8,9 +8,9 @@ import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.domain.usecase.articledetails.LoadArticleData
 import com.haomins.reader.utils.DarkModeManager
 import com.haomins.reader.view.fragments.ArticleDetailFragment
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel
 class ArticleDetailViewModel @Inject constructor(
@@ -25,21 +25,22 @@ class ArticleDetailViewModel @Inject constructor(
     private val _contentDataForDisplay by lazy {
         MutableLiveData<ArticleDetailFragment.ArticleDetailUiItem>()
     }
-    val contentDataForDisplay: LiveData<ArticleDetailFragment.ArticleDetailUiItem> = _contentDataForDisplay
+    val contentDataForDisplay: LiveData<ArticleDetailFragment.ArticleDetailUiItem> =
+        _contentDataForDisplay
 
     fun loadArticleDetail(itemId: String) {
         loadArticleData.execute(
-                object : DisposableSingleObserver<ArticleEntity>() {
-                    override fun onSuccess(t: ArticleEntity) {
-                        _contentDataForDisplay.postValue(mapArticleEntityToUiItem(t))
-                    }
+            object : DisposableSingleObserver<ArticleEntity>() {
+                override fun onSuccess(t: ArticleEntity) {
+                    _contentDataForDisplay.postValue(mapArticleEntityToUiItem(t))
+                }
 
-                    override fun onError(e: Throwable) {
-                        Log.e(TAG, "loadArticleData :: onError${e.printStackTrace()}")
-                    }
+                override fun onError(e: Throwable) {
+                    Log.e(TAG, "loadArticleData :: onError${e.printStackTrace()}")
+                }
 
-                },
-                params = LoadArticleData.forLoadArticleContent(articleId = itemId)
+            },
+            params = LoadArticleData.forLoadArticleContent(articleId = itemId)
         )
     }
 
@@ -54,10 +55,10 @@ class ArticleDetailViewModel @Inject constructor(
 
     private fun mapArticleEntityToUiItem(articleEntity: ArticleEntity): ArticleDetailFragment.ArticleDetailUiItem {
         return ArticleDetailFragment.ArticleDetailUiItem(
-                title = articleEntity.itemTitle,
-                updateTime = articleEntity.updatedTime,
-                author = articleEntity.author,
-                contentHtmlData = articleEntity.content
+            title = articleEntity.itemTitle,
+            updateTime = articleEntity.updatedTime,
+            author = articleEntity.author,
+            contentHtmlData = articleEntity.content
         )
     }
 

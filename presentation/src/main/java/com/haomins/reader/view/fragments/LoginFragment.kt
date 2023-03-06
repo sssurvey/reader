@@ -1,6 +1,5 @@
 package com.haomins.reader.view.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,16 +9,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {

@@ -1,6 +1,5 @@
 package com.haomins.reader.view.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.utils.hideKeyboard
 import com.haomins.reader.utils.showSnackbar
 import com.haomins.reader.viewModels.AddSourceViewModel
@@ -44,9 +42,9 @@ class AddSourceFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_add_source, container, false)
     }
@@ -92,7 +90,7 @@ class AddSourceFragment : Fragment() {
         medium_feed_input_box.doOnTextChanged { text, _, _, after ->
             when (after > 0) {
                 true -> medium_feed_desc.text =
-                        getString(R.string.medium_feed_sample_desc_template, text)
+                    getString(R.string.medium_feed_sample_desc_template, text)
                 false -> medium_feed_desc.text = getString(R.string.medium_feed_sample_desc)
             }
         }

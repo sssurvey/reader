@@ -1,6 +1,5 @@
 package com.haomins.reader.view.fragments
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
@@ -13,16 +12,13 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.view.activities.ArticleDetailActivity.Companion.ARTICLE_ITEM_ID
 import com.haomins.reader.viewModels.ArticleDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_article_detail.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ArticleDetailFragment : Fragment() {
@@ -35,14 +31,14 @@ class ArticleDetailFragment : Fragment() {
         private const val MIME_TYPE = "text/html"
         private const val ENCODING = "UTF-8"
         private const val IMAGE_CSS_STYLE =
-                "<style> img { display: block; max-width: 100%; height: auto; } </style>"
+            "<style> img { display: block; max-width: 100%; height: auto; } </style>"
     }
 
     data class ArticleDetailUiItem(
-            val title: String,
-            val author: String,
-            val updateTime: String,
-            val contentHtmlData: String
+        val title: String,
+        val author: String,
+        val updateTime: String,
+        val contentHtmlData: String
     )
 
     private val articleDetailViewModel by viewModels<ArticleDetailViewModel>()
@@ -58,11 +54,11 @@ class ArticleDetailFragment : Fragment() {
             article_detail_author_text_view.text = it.author
             article_detail_update_time_text_view.text = it.updateTime
             article_detail_web_view.loadDataWithBaseURL(
-                    BASE_URL,
-                    (IMAGE_CSS_STYLE + it.contentHtmlData),
-                    MIME_TYPE,
-                    ENCODING,
-                    BASE_URL
+                BASE_URL,
+                (IMAGE_CSS_STYLE + it.contentHtmlData),
+                MIME_TYPE,
+                ENCODING,
+                BASE_URL
             )
         }
     }
@@ -83,9 +79,9 @@ class ArticleDetailFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_article_detail, container, false)
     }
@@ -116,22 +112,22 @@ class ArticleDetailFragment : Fragment() {
 
     private fun checkDarkModeSupport() {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)
-                && articleDetailViewModel.isDarkModeEnabled()
+            && articleDetailViewModel.isDarkModeEnabled()
         ) {
             context?.getColor(R.color.default_background)?.let {
                 article_detail_web_view.setBackgroundColor(it)
             }
             WebSettingsCompat.setForceDark(
-                    article_detail_web_view.settings,
-                    WebSettingsCompat.FORCE_DARK_ON
+                article_detail_web_view.settings,
+                WebSettingsCompat.FORCE_DARK_ON
             )
         }
     }
 
     private fun registerLiveDataObservers() {
         articleDetailViewModel.contentDataForDisplay.observe(
-                viewLifecycleOwner,
-                contentDataObserver
+            viewLifecycleOwner,
+            contentDataObserver
         )
     }
 
@@ -149,12 +145,12 @@ class ArticleDetailFragment : Fragment() {
 
     private fun hideProgressBar() {
         handler.postDelayed(
-                {
-                    top_progress_bar?.let {
-                        top_progress_bar.visibility = View.INVISIBLE
-                    }
-                },
-                PROGRESS_BAR_DELAY
+            {
+                top_progress_bar?.let {
+                    top_progress_bar.visibility = View.INVISIBLE
+                }
+            },
+            PROGRESS_BAR_DELAY
         )
     }
 

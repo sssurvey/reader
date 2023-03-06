@@ -31,28 +31,32 @@ class AddSourceResponseModelTest {
     @Test
     fun testParseToClassSuccess() {
         val addSubscriptionResponseModel =
-                gson.fromJson(testJsonSuccess, AddSourceResponseModel::class.java)
+            gson.fromJson(testJsonSuccess, AddSourceResponseModel::class.java)
         assertTrue("medium.com/feed/proandroiddev" == addSubscriptionResponseModel.query)
     }
 
     @Test
     fun testParseToClassFail() {
         val addSubscriptionResponseModel =
-                gson.fromJson(testJsonException, AddSourceResponseModel::class.java)
+            gson.fromJson(testJsonException, AddSourceResponseModel::class.java)
         assertTrue("No feeds found by that keyword or URL" == addSubscriptionResponseModel.error)
     }
 
     @Test
     fun testParseToJsonSuccess() {
-        val validation = "{\"query\":\"medium.com/feed/proandroiddev\",\"numResults\":1,\"streamId\":\"feed/5eaa0ceefea0e760d80006b9\"}"
-        val addSubscriptionResponseModel = gson.fromJson(testJsonSuccess, AddSourceResponseModel::class.java)
+        val validation =
+            "{\"query\":\"medium.com/feed/proandroiddev\",\"numResults\":1,\"streamId\":\"feed/5eaa0ceefea0e760d80006b9\"}"
+        val addSubscriptionResponseModel =
+            gson.fromJson(testJsonSuccess, AddSourceResponseModel::class.java)
         assertTrue(validation == gson.toJson(addSubscriptionResponseModel))
     }
 
     @Test
     fun testParseToJsonFail() {
-        val validation = "{\"query\":\"ff\",\"numResults\":0,\"error\":\"No feeds found by that keyword or URL\"}"
-        val addSubscriptionResponseModel = gson.fromJson(testJsonException, AddSourceResponseModel::class.java)
+        val validation =
+            "{\"query\":\"ff\",\"numResults\":0,\"error\":\"No feeds found by that keyword or URL\"}"
+        val addSubscriptionResponseModel =
+            gson.fromJson(testJsonException, AddSourceResponseModel::class.java)
         assertTrue(validation == gson.toJson(addSubscriptionResponseModel))
     }
 }

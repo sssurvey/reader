@@ -1,19 +1,15 @@
 package com.haomins.reader.view.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.view.activities.SettingsActivity
 import com.haomins.reader.viewModels.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {

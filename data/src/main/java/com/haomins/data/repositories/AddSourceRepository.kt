@@ -1,12 +1,12 @@
 package com.haomins.data.repositories
 
 import android.content.SharedPreferences
-import com.haomins.domain.model.responses.AddSourceResponseModel
-import com.haomins.domain.repositories.AddSourceRepositoryContract
 import com.haomins.data.mapper.responsemapper.AddSourceResponseModelMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.getString
+import com.haomins.domain.model.responses.AddSourceResponseModel
+import com.haomins.domain.repositories.AddSourceRepositoryContract
 import io.reactivex.Single
 import javax.inject.Inject
 

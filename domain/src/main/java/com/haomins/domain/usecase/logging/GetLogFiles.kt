@@ -12,7 +12,7 @@ class GetLogFiles @Inject constructor(
     private val loggingRepositoryContract: LoggingRepositoryContract,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
-): SingleUseCase<Unit, File>(
+) : SingleUseCase<Unit, File>(
     executionScheduler = executionScheduler,
     postExecutionScheduler = postExecutionScheduler
 ) {

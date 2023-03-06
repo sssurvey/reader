@@ -48,7 +48,8 @@ class SourceTitleListAdapter(
              */
             SourceTitleListViewModel.TYPE.ALL_ITEMS_OPTION -> {
                 holder.setIsRecyclable(false)
-                holder.viewHolder.source_title_text_view.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+                holder.viewHolder.source_title_text_view.textAlignment =
+                    View.TEXT_ALIGNMENT_TEXT_END
                 holder.viewHolder.source_icon_image_view.visibility = View.INVISIBLE
                 holder.viewHolder.source_title_text_view.text = name
                 holder.viewHolder.source_title_text_view.textSize = 30.0f
@@ -59,7 +60,8 @@ class SourceTitleListAdapter(
             }
             SourceTitleListViewModel.TYPE.ADD_SOURCE_OPTION -> {
                 holder.setIsRecyclable(false)
-                holder.viewHolder.source_title_text_view.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+                holder.viewHolder.source_title_text_view.textAlignment =
+                    View.TEXT_ALIGNMENT_TEXT_END
                 holder.viewHolder.source_icon_image_view.visibility = View.INVISIBLE
                 holder.viewHolder.source_title_text_view.text = name
                 holder.viewHolder.source_title_text_view.textSize = 30.0f
@@ -70,7 +72,8 @@ class SourceTitleListAdapter(
             }
             SourceTitleListViewModel.TYPE.SETTINGS_OPTION -> {
                 holder.setIsRecyclable(false)
-                holder.viewHolder.source_title_text_view.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+                holder.viewHolder.source_title_text_view.textAlignment =
+                    View.TEXT_ALIGNMENT_TEXT_END
                 holder.viewHolder.source_icon_image_view.visibility = View.INVISIBLE
                 holder.viewHolder.source_title_text_view.text = name
                 holder.viewHolder.source_title_text_view.textSize = 30.0f
@@ -78,7 +81,8 @@ class SourceTitleListAdapter(
             } //TODO: to be implemented
             SourceTitleListViewModel.TYPE.SUMMARY_OPTION -> {
                 holder.setIsRecyclable(false)
-                holder.viewHolder.source_title_text_view.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+                holder.viewHolder.source_title_text_view.textAlignment =
+                    View.TEXT_ALIGNMENT_TEXT_END
                 holder.viewHolder.source_icon_image_view.visibility = View.INVISIBLE
                 holder.viewHolder.source_title_text_view.text = name
                 holder.viewHolder.source_title_text_view.textSize = 20.0f

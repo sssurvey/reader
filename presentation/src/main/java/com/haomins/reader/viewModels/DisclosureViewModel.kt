@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.haomins.domain.model.DisclosureInfo
 import com.haomins.domain.usecase.disclosure.LoadDisclosureContent
 import com.haomins.reader.R
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel
 class DisclosureViewModel @Inject constructor(

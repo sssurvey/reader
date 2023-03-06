@@ -13,7 +13,7 @@ import javax.inject.Inject
 class LoggingRepository @Inject constructor(
     private val dateUtils: DateUtils,
     private val androidService: AndroidService
-): LoggingRepositoryContract {
+) : LoggingRepositoryContract {
 
     companion object {
         private const val TAG = "LoggingRepository"

@@ -34,7 +34,10 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
         slideOutAnimation()
     }
 
-    override fun startArticleDetailActivity(articleItemId: String, articleItemIdArray: Array<String>) {
+    override fun startArticleDetailActivity(
+        articleItemId: String,
+        articleItemIdArray: Array<String>
+    ) {
         val intent = Intent(this, ArticleDetailActivity::class.java)
         intent.putExtra(ARTICLE_ITEM_ID, articleItemId)
         intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleItemIdArray)

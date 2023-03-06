@@ -4,45 +4,45 @@ import com.google.gson.annotations.SerializedName
 
 data class SubscriptionSourceListResponseModel(
 
-        @SerializedName("subscriptions")
-        val subscriptions: ArrayList<SubscriptionItemModel>
+    @SerializedName("subscriptions")
+    val subscriptions: ArrayList<SubscriptionItemModel>
 
 )
 
 data class Category(
 
-        @SerializedName("id")
-        val id: String,
+    @SerializedName("id")
+    val id: String,
 
-        @SerializedName("label")
-        val label: String
+    @SerializedName("label")
+    val label: String
 )
 
 data class SubscriptionItemModel(
 
-        @SerializedName("id")
-        val id: String,
+    @SerializedName("id")
+    val id: String,
 
-        @SerializedName("title")
-        val title: String,
+    @SerializedName("title")
+    val title: String,
 
-        @SerializedName("categories")
-        val categories: Array<Category>,
+    @SerializedName("categories")
+    val categories: Array<Category>,
 
-        @SerializedName("sortid")
-        val sortId: String,
+    @SerializedName("sortid")
+    val sortId: String,
 
-        @SerializedName("firstitemmsec")
-        val firstItemMilSec: String,
+    @SerializedName("firstitemmsec")
+    val firstItemMilSec: String,
 
-        @SerializedName("url")
-        val url: String,
+    @SerializedName("url")
+    val url: String,
 
-        @SerializedName("htmlUrl")
-        val htmlUrl: String,
+    @SerializedName("htmlUrl")
+    val htmlUrl: String,
 
-        @SerializedName("iconUrl")
-        val iconUrl: String
+    @SerializedName("iconUrl")
+    val iconUrl: String
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

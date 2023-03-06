@@ -24,15 +24,15 @@ class SubscriptionDaoTest {
         // Create dummy source list
         for (counter in 0 until 100) {
             subscriptionList.add(
-                    SubscriptionEntity(
-                            id = counter.toString(),
-                            title = (counter * 2).toString(),
-                            sortId = "sortId: $counter",
-                            firstItemMilSec = System.currentTimeMillis().toString(),
-                            url = "rss.$counter.com",
-                            htmlUrl = "www.$counter.com",
-                            iconUrl = "www.$counter.com/pic"
-                    )
+                SubscriptionEntity(
+                    id = counter.toString(),
+                    title = (counter * 2).toString(),
+                    sortId = "sortId: $counter",
+                    firstItemMilSec = System.currentTimeMillis().toString(),
+                    url = "rss.$counter.com",
+                    htmlUrl = "www.$counter.com",
+                    iconUrl = "www.$counter.com/pic"
+                )
             )
         }
 
@@ -49,15 +49,15 @@ class SubscriptionDaoTest {
     fun testInsertAll() {
         val originalSize = subscriptionDao.getAll().blockingGet().size
         subscriptionDao.insertAll(
-                SubscriptionEntity(
-                        id = "100",
-                        title = (100 * 2).toString(),
-                        sortId = "sortId: 100",
-                        firstItemMilSec = System.currentTimeMillis().toString(),
-                        url = "rss.100.com",
-                        htmlUrl = "www.100.com",
-                        iconUrl = "www.100.com/pic"
-                )
+            SubscriptionEntity(
+                id = "100",
+                title = (100 * 2).toString(),
+                sortId = "sortId: 100",
+                firstItemMilSec = System.currentTimeMillis().toString(),
+                url = "rss.100.com",
+                htmlUrl = "www.100.com",
+                iconUrl = "www.100.com/pic"
+            )
         )
         assertTrue(subscriptionDao.getAll().blockingGet().size > originalSize)
     }
@@ -66,15 +66,15 @@ class SubscriptionDaoTest {
     fun testInsertAllReplace() {
         val originalSize = subscriptionDao.getAll().blockingGet().size
         subscriptionDao.insertAll(
-                SubscriptionEntity(
-                        id = "0",
-                        title = (99).toString(),
-                        sortId = "sortId: 99",
-                        firstItemMilSec = System.currentTimeMillis().toString(),
-                        url = "rss.99.com",
-                        htmlUrl = "www.99.com",
-                        iconUrl = "www.99.com/pic"
-                )
+            SubscriptionEntity(
+                id = "0",
+                title = (99).toString(),
+                sortId = "sortId: 99",
+                firstItemMilSec = System.currentTimeMillis().toString(),
+                url = "rss.99.com",
+                htmlUrl = "www.99.com",
+                iconUrl = "www.99.com/pic"
+            )
         )
 
         // If after insert, the size is still the same, means replaced

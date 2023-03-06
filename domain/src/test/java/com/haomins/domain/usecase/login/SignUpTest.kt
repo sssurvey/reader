@@ -24,9 +24,9 @@ class SignUpTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         signUp = SignUp(
-                loginRepositoryContract = mockLoginRepositoryContract,
-                postExecutionScheduler,
-                executionScheduler
+            loginRepositoryContract = mockLoginRepositoryContract,
+            postExecutionScheduler,
+            executionScheduler
         )
     }
 

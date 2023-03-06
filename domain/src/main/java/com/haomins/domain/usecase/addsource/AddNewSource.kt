@@ -11,12 +11,12 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class AddNewSource @Inject constructor(
-        private val addSourceRepositoryContract: AddSourceRepositoryContract,
-        executionScheduler: ExecutionScheduler,
-        postExecutionScheduler: PostExecutionScheduler
+    private val addSourceRepositoryContract: AddSourceRepositoryContract,
+    executionScheduler: ExecutionScheduler,
+    postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<AddNewSource.Companion.Param, AddSourceResponseModel>(
-        executionScheduler,
-        postExecutionScheduler
+    executionScheduler,
+    postExecutionScheduler
 ) {
 
     /**
@@ -35,14 +35,14 @@ class AddNewSource @Inject constructor(
         if (params == null) throw ParamsShouldNotBeNullException()
         else {
             return addSourceRepositoryContract
-                    .addSource(params.source)
+                .addSource(params.source)
         }
     }
 
     companion object {
 
         data class Param(
-                val source: String
+            val source: String
         )
 
         /**

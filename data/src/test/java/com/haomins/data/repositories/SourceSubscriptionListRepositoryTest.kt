@@ -21,7 +21,6 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SourceSubscriptionListRepositoryTest {
 
@@ -140,7 +139,8 @@ class SourceSubscriptionListRepositoryTest {
     @Test
     fun `test convertSubscriptionItemModelToEntity`() {
         val models = generateSourceListResponse().subscriptions
-        val entities = sourceSubscriptionListRepository.convertSubscriptionItemModelToEntityForTesting(models)
+        val entities =
+            sourceSubscriptionListRepository.convertSubscriptionItemModelToEntityForTesting(models)
 
         assertTrue(models.size == entities.size)
 
@@ -156,7 +156,8 @@ class SourceSubscriptionListRepositoryTest {
     }
 
     private fun generateSubscriptionListEntity(): List<com.haomins.data.model.entities.SubscriptionEntity> {
-        val subscriptionEntityList = mutableListOf<com.haomins.data.model.entities.SubscriptionEntity>()
+        val subscriptionEntityList =
+            mutableListOf<com.haomins.data.model.entities.SubscriptionEntity>()
         for (i in 0 until 100) {
             subscriptionEntityList.add(
                 com.haomins.data.model.entities.SubscriptionEntity(
