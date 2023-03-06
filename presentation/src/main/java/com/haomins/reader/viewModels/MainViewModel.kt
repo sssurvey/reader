@@ -7,9 +7,11 @@ import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.util.getString
 import com.haomins.domain.model.entities.SubscriptionEntity
 import com.haomins.domain.usecase.source.LoadSubscriptionList
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val loadSubscriptionList: LoadSubscriptionList

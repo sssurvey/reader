@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.haomins.domain.model.responses.AddSourceResponseModel
 import com.haomins.domain.usecase.addsource.AddNewSource
 import com.haomins.reader.R
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
+@HiltViewModel
 class AddSourceViewModel @Inject constructor(
     private val addNewSource: AddNewSource,
     private val application: Application

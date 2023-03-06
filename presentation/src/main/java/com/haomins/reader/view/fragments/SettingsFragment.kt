@@ -1,19 +1,17 @@
 package com.haomins.reader.view.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.view.activities.SettingsActivity
 import com.haomins.reader.viewModels.SettingsViewModel
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
@@ -25,18 +23,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         private const val INTENT_EMAIL_TYPE = "message/rfc822"
     }
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val settingsViewModel by viewModels<SettingsViewModel> { viewModelFactory }
+    private val settingsViewModel by viewModels<SettingsViewModel>()
 
     private val darkModeSwitchPreferenceCompat by lazy {
         findPreference<SwitchPreferenceCompat>(DARK_MODE_OPTION)
-    }
-
-    override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-            .build().inject(this)
-        super.onAttach(context)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

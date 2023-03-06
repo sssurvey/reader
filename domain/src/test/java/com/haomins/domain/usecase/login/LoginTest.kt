@@ -28,9 +28,9 @@ class LoginTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         login = Login(
-                loginRepositoryContract = mockLoginRepositoryContract,
-                executionScheduler = executionScheduler,
-                postExecutionScheduler = postExecutionScheduler
+            loginRepositoryContract = mockLoginRepositoryContract,
+            executionScheduler = executionScheduler,
+            postExecutionScheduler = postExecutionScheduler
         )
     }
 
@@ -43,16 +43,16 @@ class LoginTest {
 
         fun mockBehavior() {
             `when`(
-                    mockLoginRepositoryContract.login(
-                            testUserName,
-                            testUserPassword
-                    )
+                mockLoginRepositoryContract.login(
+                    testUserName,
+                    testUserPassword
+                )
             ).thenReturn(
-                    Single
-                            .timer(500, TimeUnit.MILLISECONDS, executionScheduler.scheduler)
-                            .flatMap {
-                                Single.just(UserAuthResponseModel(auth = testAuth))
-                            }
+                Single
+                    .timer(500, TimeUnit.MILLISECONDS, executionScheduler.scheduler)
+                    .flatMap {
+                        Single.just(UserAuthResponseModel(auth = testAuth))
+                    }
             )
         }
 
@@ -62,17 +62,20 @@ class LoginTest {
         mockBehavior()
 
         login
-                .buildUseCaseSingle(
-                        Login.forUserLogin(
-                                userName = testUserName,
-                                userPassword = testUserPassword
-                        )
+            .buildUseCaseSingle(
+                Login.forUserLogin(
+                    userName = testUserName,
+                    userPassword = testUserPassword
                 )
-                .subscribeWith(testObserver)
+            )
+            .subscribeWith(testObserver)
 
         testObserver.assertSubscribed()
 
-        (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1000, TimeUnit.MILLISECONDS)
+        (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(
+            1000,
+            TimeUnit.MILLISECONDS
+        )
         (executionScheduler.scheduler as TestScheduler).advanceTimeBy(1000, TimeUnit.MILLISECONDS)
 
         testObserver.assertComplete()
@@ -89,16 +92,16 @@ class LoginTest {
 
         fun mockBehavior() {
             `when`(
-                    mockLoginRepositoryContract.login(
-                            testUserName,
-                            testUserPassword
-                    )
+                mockLoginRepositoryContract.login(
+                    testUserName,
+                    testUserPassword
+                )
             ).thenReturn(
-                    Single
-                            .timer(500, TimeUnit.MILLISECONDS, executionScheduler.scheduler)
-                            .flatMap {
-                                Single.error(testException)
-                            }
+                Single
+                    .timer(500, TimeUnit.MILLISECONDS, executionScheduler.scheduler)
+                    .flatMap {
+                        Single.error(testException)
+                    }
             )
         }
 
@@ -108,17 +111,20 @@ class LoginTest {
         mockBehavior()
 
         login
-                .buildUseCaseSingle(
-                        Login.forUserLogin(
-                                userName = testUserName,
-                                userPassword = testUserPassword
-                        )
+            .buildUseCaseSingle(
+                Login.forUserLogin(
+                    userName = testUserName,
+                    userPassword = testUserPassword
                 )
-                .subscribeWith(testObserver)
+            )
+            .subscribeWith(testObserver)
 
         testObserver.assertSubscribed()
 
-        (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1000, TimeUnit.MILLISECONDS)
+        (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(
+            1000,
+            TimeUnit.MILLISECONDS
+        )
         (executionScheduler.scheduler as TestScheduler).advanceTimeBy(1000, TimeUnit.MILLISECONDS)
 
         testObserver.assertError(testException)

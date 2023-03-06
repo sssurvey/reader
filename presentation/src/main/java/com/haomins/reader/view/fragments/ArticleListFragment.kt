@@ -1,6 +1,5 @@
 package com.haomins.reader.view.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -9,18 +8,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.adapters.ArticleTitleListAdapter
 import com.haomins.reader.utils.GlideUtils
 import com.haomins.reader.viewModels.ArticleListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleListOnClickListener {
 
     companion object {
@@ -41,14 +40,11 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     }
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
     lateinit var glideUtils: GlideUtils
 
     private lateinit var currentArticleListViewMode: ArticleListViewMode
 
-    private val articleListViewModel by viewModels<ArticleListViewModel> { viewModelFactory }
+    private val articleListViewModel by viewModels<ArticleListViewModel>()
     private val articleTitleUiItems = mutableListOf<ArticleEntity>()
 
     private val feedId by lazy { arguments?.getString(currentArticleListViewMode.key).toString() }
@@ -80,12 +76,6 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
                 if (!recyclerView.canScrollVertically(1)) loadMoreArticleRightNow()
             }
         }
-    }
-
-    override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-            .build().inject(this)
-        super.onAttach(context)
     }
 
     override fun onCreateView(
@@ -130,17 +120,17 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
 
     //TODO: infinite load feature
     override fun onLoadMoreArticlesBasedOnPosition(position: Int) {
-    //        var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
-    //        if (position >= loadMoreArticleThreshold) {
-    //        if (position == article_title_recycler_view.adapter?.itemCount) {
-    //            when (currentArticleListViewMode) {
-    //                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
-    //                    feedId
-    //                )
-    //                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
-    //            }
-    //            loadMoreArticleThreshold += loadMoreArticleThreshold
-    //        }
+        //        var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
+        //        if (position >= loadMoreArticleThreshold) {
+        //        if (position == article_title_recycler_view.adapter?.itemCount) {
+        //            when (currentArticleListViewMode) {
+        //                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
+        //                    feedId
+        //                )
+        //                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
+        //            }
+        //            loadMoreArticleThreshold += loadMoreArticleThreshold
+        //        }
     }
 
     private fun hideProgressBar() {

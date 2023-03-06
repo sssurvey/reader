@@ -11,9 +11,11 @@ import com.haomins.domain.usecase.login.ForgetPassword
 import com.haomins.domain.usecase.login.Login
 import com.haomins.domain.usecase.login.SignUp
 import com.haomins.reader.R
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
+@HiltViewModel
 class LoginViewModel @Inject constructor(
     private val signUp: SignUp,
     private val login: Login,

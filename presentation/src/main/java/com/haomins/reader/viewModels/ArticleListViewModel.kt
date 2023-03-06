@@ -9,9 +9,11 @@ import com.haomins.domain.usecase.article.ContinueLoadAllArticles
 import com.haomins.domain.usecase.article.ContinueLoadArticlesByFeed
 import com.haomins.domain.usecase.article.LoadAllArticles
 import com.haomins.domain.usecase.article.LoadArticlesByFeed
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
+@HiltViewModel
 class ArticleListViewModel @Inject constructor(
     private val loadArticlesByFeed: LoadArticlesByFeed,
     private val continueLoadArticlesByFeed: ContinueLoadArticlesByFeed,

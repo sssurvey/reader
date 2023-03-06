@@ -1,6 +1,5 @@
 package com.haomins.reader.view.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,24 +8,21 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.utils.hideKeyboard
 import com.haomins.reader.utils.showSnackbar
 import com.haomins.reader.viewModels.AddSourceViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_source.*
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class AddSourceFragment : Fragment() {
 
     companion object {
         const val TAG = "AddSourceFragment"
     }
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val addSourceViewModel by viewModels<AddSourceViewModel> { viewModelFactory }
+    private val addSourceViewModel by viewModels<AddSourceViewModel>()
 
     private val isSourceAddedObserver by lazy {
         Observer<Pair<AddSourceViewModel.AddSourceStatus, String>> {
@@ -45,15 +41,10 @@ class AddSourceFragment : Fragment() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
-        super.onAttach(context)
-    }
-
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_add_source, container, false)
     }
@@ -99,7 +90,7 @@ class AddSourceFragment : Fragment() {
         medium_feed_input_box.doOnTextChanged { text, _, _, after ->
             when (after > 0) {
                 true -> medium_feed_desc.text =
-                        getString(R.string.medium_feed_sample_desc_template, text)
+                    getString(R.string.medium_feed_sample_desc_template, text)
                 false -> medium_feed_desc.text = getString(R.string.medium_feed_sample_desc)
             }
         }

@@ -3,7 +3,6 @@ package com.haomins.domain.usecase.article
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -68,11 +67,12 @@ class ContinueLoadArticlesByFeedTest {
         )
 
         fun mock() {
-            Mockito.`when`(mockArticleListRepositoryContract.continueLoadArticleItems(any())).thenReturn(
-                Single.just(
-                    testArticleEntityList
+            Mockito.`when`(mockArticleListRepositoryContract.continueLoadArticleItems(any()))
+                .thenReturn(
+                    Single.just(
+                        testArticleEntityList
+                    )
                 )
-            )
         }
 
         mock()

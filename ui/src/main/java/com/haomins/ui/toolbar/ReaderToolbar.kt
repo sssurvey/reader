@@ -65,12 +65,12 @@ class ReaderToolbar : MaterialToolbar {
         when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 toolbar_layout.background.setTint(
-                        ResourcesCompat.getColor(
-                            resources,
-                            R.color.reader_toolbar_background_tint_dark_mode,
-                            null
-                        )
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.reader_toolbar_background_tint_dark_mode,
+                        null
                     )
+                )
             }
             else -> {
             }

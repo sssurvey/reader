@@ -15,8 +15,8 @@ import io.reactivex.Single
  * @param observeOnScheduler default same scheduler as subscribeOnScheduler if no scheduler is provided
  */
 class TestSchedulingStrategy(
-        val subscribeOnScheduler: Scheduler,
-        val observeOnScheduler: Scheduler = subscribeOnScheduler
+    val subscribeOnScheduler: Scheduler,
+    val observeOnScheduler: Scheduler = subscribeOnScheduler
 ) : RxSchedulingStrategy {
 
     override fun <T> Observable<T>.useDefaultSchedulingPolicy(): Observable<T> {

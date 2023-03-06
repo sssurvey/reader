@@ -8,9 +8,9 @@ import com.haomins.data.model.entities.ArticleEntity
 import com.haomins.data.model.entities.SubscriptionEntity
 
 @Database(
-        entities = [SubscriptionEntity::class, ArticleEntity::class],
-        version = 1,
-        exportSchema = false
+    entities = [SubscriptionEntity::class, ArticleEntity::class],
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 

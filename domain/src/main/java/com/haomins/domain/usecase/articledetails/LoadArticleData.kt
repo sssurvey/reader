@@ -10,12 +10,12 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class LoadArticleData @Inject constructor(
-        private val articleDetailRepositoryContract: ArticleDetailRepositoryContract,
-        executionScheduler: ExecutionScheduler,
-        postExecutionScheduler: PostExecutionScheduler
+    private val articleDetailRepositoryContract: ArticleDetailRepositoryContract,
+    executionScheduler: ExecutionScheduler,
+    postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<LoadArticleData.Companion.Param, ArticleEntity>(
-        executionScheduler = executionScheduler,
-        postExecutionScheduler = postExecutionScheduler
+    executionScheduler = executionScheduler,
+    postExecutionScheduler = postExecutionScheduler
 ) {
 
     /**
@@ -29,13 +29,13 @@ class LoadArticleData @Inject constructor(
     override fun buildUseCaseSingle(params: Param?): Single<ArticleEntity> {
         if (params == null) throw ParamsShouldNotBeNullException()
         return articleDetailRepositoryContract
-                .loadArticleDetail(params.articleId)
+            .loadArticleDetail(params.articleId)
     }
 
     companion object {
 
         data class Param(
-                val articleId: String
+            val articleId: String
         )
 
         /**
@@ -46,7 +46,7 @@ class LoadArticleData @Inject constructor(
          */
         fun forLoadArticleContent(articleId: String): Param {
             return Param(
-                    articleId = articleId
+                articleId = articleId
             )
         }
 

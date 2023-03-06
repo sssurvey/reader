@@ -8,12 +8,12 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class SignUp @Inject constructor(
-        private val loginRepositoryContract: LoginRepositoryContract,
-        postExecutionScheduler: PostExecutionScheduler,
-        executionScheduler: ExecutionScheduler
+    private val loginRepositoryContract: LoginRepositoryContract,
+    postExecutionScheduler: PostExecutionScheduler,
+    executionScheduler: ExecutionScheduler
 ) : SingleUseCase<Unit, String>(
-        postExecutionScheduler = postExecutionScheduler,
-        executionScheduler = executionScheduler
+    postExecutionScheduler = postExecutionScheduler,
+    executionScheduler = executionScheduler
 ) {
 
     override fun buildUseCaseSingle(params: Unit?): Single<String> {

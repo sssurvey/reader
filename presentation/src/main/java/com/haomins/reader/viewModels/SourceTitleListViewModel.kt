@@ -11,10 +11,12 @@ import com.haomins.domain.model.entities.SubscriptionEntity
 import com.haomins.domain.usecase.source.LoadSubscriptionList
 import com.haomins.reader.R
 import com.haomins.reader.utils.GlideUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URL
 import javax.inject.Inject
 
+@HiltViewModel
 class SourceTitleListViewModel @Inject constructor(
     private val loadSubscriptionList: LoadSubscriptionList,
     private val glideUtils: GlideUtils,

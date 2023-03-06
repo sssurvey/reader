@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.haomins.data.model.entities.ArticleEntity
-import io.reactivex.Observable
 import io.reactivex.Single
 
 @Dao

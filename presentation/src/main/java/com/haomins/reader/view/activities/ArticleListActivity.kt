@@ -9,7 +9,9 @@ import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.ArticleListFragment
 import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticleList {
 
     companion object {
@@ -32,7 +34,10 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
         slideOutAnimation()
     }
 
-    override fun startArticleDetailActivity(articleItemId: String, articleItemIdArray: Array<String>) {
+    override fun startArticleDetailActivity(
+        articleItemId: String,
+        articleItemIdArray: Array<String>
+    ) {
         val intent = Intent(this, ArticleDetailActivity::class.java)
         intent.putExtra(ARTICLE_ITEM_ID, articleItemId)
         intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleItemIdArray)

@@ -6,9 +6,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
 import com.haomins.reader.utils.delayedUiOperation
 import com.haomins.reader.view.fragments.ArticleListFragment
 import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
@@ -16,17 +14,15 @@ import com.haomins.reader.view.fragments.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
+    private val mainViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         showSplashArt()

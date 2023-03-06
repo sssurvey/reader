@@ -24,15 +24,17 @@ class ArticleDaoTest {
         // Create dummy articles
         for (counter in 0 until 100) {
             articleList.add(
-                    ArticleEntity(
-                            itemId = "$counter",
-                            feedId = "${counter * 2}",
-                            itemTitle = "Test title",
-                            itemUpdatedMillisecond = System.currentTimeMillis(),
-                            itemPublishedMillisecond = System.currentTimeMillis(),
-                            author = "Dr.StrangeLove",
-                            content = "This is a test article, haha."
-                    )
+                ArticleEntity(
+                    itemId = "$counter",
+                    feedId = "${counter * 2}",
+                    itemTitle = "Test title",
+                    itemUpdatedMillisecond = System.currentTimeMillis(),
+                    itemPublishedMillisecond = System.currentTimeMillis(),
+                    author = "Dr.StrangeLove",
+                    content = "This is a test article, haha.",
+                    href = "",
+                    previewImageUrl = ""
+                )
             )
         }
 
@@ -63,15 +65,17 @@ class ArticleDaoTest {
     fun testInsert() {
         val originalSize = articleDao.getAll().blockingGet().size
         articleDao.insert(
-                ArticleEntity(
-                        itemId = "$100",
-                        feedId = "${100 * 2}",
-                        itemTitle = "Test title",
-                        itemUpdatedMillisecond = System.currentTimeMillis(),
-                        itemPublishedMillisecond = System.currentTimeMillis(),
-                        author = "Dr.StrangeLove",
-                        content = "This is a test article, haha."
-                )
+            ArticleEntity(
+                itemId = "$100",
+                feedId = "${100 * 2}",
+                itemTitle = "Test title",
+                itemUpdatedMillisecond = System.currentTimeMillis(),
+                itemPublishedMillisecond = System.currentTimeMillis(),
+                author = "Dr.StrangeLove",
+                content = "This is a test article, haha.",
+                href = "",
+                previewImageUrl = ""
+            )
         )
         assertTrue(articleDao.getAll().blockingGet().size > originalSize)
     }

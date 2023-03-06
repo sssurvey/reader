@@ -8,8 +8,10 @@ import com.haomins.reader.R
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.ArticleDetailFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_article_detail.*
 
+@AndroidEntryPoint
 class ArticleDetailActivity : AppCompatActivity() {
 
     companion object {

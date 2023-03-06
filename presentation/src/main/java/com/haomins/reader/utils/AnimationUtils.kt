@@ -2,7 +2,6 @@ package com.haomins.reader.utils
 
 import android.app.Activity
 import android.util.Log
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
 import io.reactivex.Scheduler

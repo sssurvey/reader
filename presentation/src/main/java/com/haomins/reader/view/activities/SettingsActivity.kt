@@ -10,7 +10,9 @@ import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.AboutFragment
 import com.haomins.reader.view.fragments.DisclosureFragment
 import com.haomins.reader.view.fragments.SettingsFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,15 +29,15 @@ class SettingsActivity : AppCompatActivity() {
 
     fun showAboutFragment() {
         supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .slideAnimation()
-                .replace(
-                        R.id.settings_container,
-                        AboutFragment(),
-                        AboutFragment.TAG
-                )
-                .addToBackStack(null)
-                .commit()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .slideAnimation()
+            .replace(
+                R.id.settings_container,
+                AboutFragment(),
+                AboutFragment.TAG
+            )
+            .addToBackStack(null)
+            .commit()
     }
 
     fun showDisclosureFragment() {
@@ -53,13 +55,13 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun showSettingsFragment() {
         supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(
-                        R.id.settings_container,
-                        SettingsFragment(),
-                        SettingsFragment.TAG
-                )
-                .commit()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .replace(
+                R.id.settings_container,
+                SettingsFragment(),
+                SettingsFragment.TAG
+            )
+            .commit()
     }
 
 }

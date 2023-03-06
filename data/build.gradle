@@ -3,13 +3,14 @@ plugins {
     id "kotlin-android"
     id "kotlin-android-extensions"
     id "kotlin-kapt"
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
-    compileSdkVersion compiledSdkVersion
+    compileSdkVersion 31
     defaultConfig {
         minSdkVersion 26
-        targetSdkVersion project.compiledSdkVersion
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
