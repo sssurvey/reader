@@ -10,7 +10,9 @@ import com.haomins.reader.utils.DarkModeManager
 import com.haomins.reader.view.fragments.ArticleDetailFragment
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@HiltViewModel
 class ArticleDetailViewModel @Inject constructor(
     private val loadArticleData: LoadArticleData,
     private val darkModeManager: DarkModeManager

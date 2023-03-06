@@ -10,7 +10,9 @@ import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.AboutFragment
 import com.haomins.reader.view.fragments.DisclosureFragment
 import com.haomins.reader.view.fragments.SettingsFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

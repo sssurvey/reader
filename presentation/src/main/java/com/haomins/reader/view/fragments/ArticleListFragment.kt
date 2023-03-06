@@ -18,9 +18,11 @@ import com.haomins.reader.ReaderApplication
 import com.haomins.reader.adapters.ArticleTitleListAdapter
 import com.haomins.reader.utils.GlideUtils
 import com.haomins.reader.viewModels.ArticleListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleListOnClickListener {
 
     companion object {
@@ -41,14 +43,11 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     }
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
     lateinit var glideUtils: GlideUtils
 
     private lateinit var currentArticleListViewMode: ArticleListViewMode
 
-    private val articleListViewModel by viewModels<ArticleListViewModel> { viewModelFactory }
+    private val articleListViewModel by viewModels<ArticleListViewModel>()
     private val articleTitleUiItems = mutableListOf<ArticleEntity>()
 
     private val feedId by lazy { arguments?.getString(currentArticleListViewMode.key).toString() }
@@ -80,12 +79,6 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
                 if (!recyclerView.canScrollVertically(1)) loadMoreArticleRightNow()
             }
         }
-    }
-
-    override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-            .build().inject(this)
-        super.onAttach(context)
     }
 
     override fun onCreateView(

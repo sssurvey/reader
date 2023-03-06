@@ -20,9 +20,11 @@ import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.view.activities.ArticleDetailActivity.Companion.ARTICLE_ITEM_ID
 import com.haomins.reader.viewModels.ArticleDetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_article_detail.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ArticleDetailFragment : Fragment() {
 
     companion object {
@@ -43,10 +45,7 @@ class ArticleDetailFragment : Fragment() {
             val contentHtmlData: String
     )
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val articleDetailViewModel by viewModels<ArticleDetailViewModel> { viewModelFactory }
+    private val articleDetailViewModel by viewModels<ArticleDetailViewModel>()
     private var articleId: String = ""
 
     private val handler by lazy {
@@ -81,12 +80,6 @@ class ArticleDetailFragment : Fragment() {
                 hideProgressBar()
             }
         }
-    }
-
-    override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-                .build().inject(this)
-        super.onAttach(context)
     }
 
     override fun onCreateView(

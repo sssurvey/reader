@@ -13,7 +13,9 @@ import com.haomins.domain.usecase.login.SignUp
 import com.haomins.reader.R
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@HiltViewModel
 class LoginViewModel @Inject constructor(
     private val signUp: SignUp,
     private val login: Login,

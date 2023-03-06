@@ -11,24 +11,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.R
 import com.haomins.reader.ReaderApplication
 import com.haomins.reader.viewModels.DisclosureViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_disclosure.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DisclosureFragment : Fragment() {
 
     companion object {
         const val TAG = "DisclosureFragment"
     }
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val disclosureViewModel by viewModels<DisclosureViewModel> { viewModelFactory }
-
-    override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-            .build().inject(this)
-        super.onAttach(context)
-    }
+    private val disclosureViewModel by viewModels<DisclosureViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

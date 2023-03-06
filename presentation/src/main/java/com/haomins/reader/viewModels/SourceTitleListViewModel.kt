@@ -14,7 +14,9 @@ import com.haomins.reader.utils.GlideUtils
 import io.reactivex.observers.DisposableSingleObserver
 import java.net.URL
 import javax.inject.Inject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@HiltViewModel
 class SourceTitleListViewModel @Inject constructor(
     private val loadSubscriptionList: LoadSubscriptionList,
     private val glideUtils: GlideUtils,

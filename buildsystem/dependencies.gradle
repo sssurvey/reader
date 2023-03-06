@@ -16,6 +16,7 @@ ext {
     def app_compat_version = "1.4.0"
     def constraint_layout_version = "2.1.2"
     def espresso_version = "3.4.0"
+    def hilt_version = "2.41"
 
     appDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
@@ -37,13 +38,15 @@ ext {
             "androidx.viewpager2:viewpager2:1.0.0",
             "com.google.android.material:material:$material_version",
             "com.github.bumptech.glide:glide:$glide_version",
-            "com.github.bumptech.glide:annotations:$glide_version"
+            "com.github.bumptech.glide:annotations:$glide_version",
+            "com.google.dagger:hilt-android:$hilt_version"
     ]
 
     appKaptDependencies = [
             "android.arch.lifecycle:compiler:$android_arch_lifecycle_version",
             "com.google.dagger:dagger-compiler:$dagger_version",
-            "com.github.bumptech.glide:compiler:$glide_version"
+            "com.github.bumptech.glide:compiler:$glide_version",
+            "com.google.dagger:hilt-compiler:$hilt_version"
     ]
 
     domainDependencies = [
@@ -65,12 +68,14 @@ ext {
             "com.google.dagger:dagger:$dagger_version",
             "androidx.room:room-runtime:$room_version",
             "androidx.room:room-rxjava2:$room_version",
-            'org.jsoup:jsoup:1.14.3'
+            'org.jsoup:jsoup:1.14.3',
+            "com.google.dagger:hilt-android:$hilt_version"
     ]
 
     dataKaptDependencies = [
             "com.google.dagger:dagger-compiler:$dagger_version",
-            "androidx.room:room-compiler:$room_version"
+            "androidx.room:room-compiler:$room_version",
+            "com.google.dagger:hilt-compiler:$hilt_version"
     ]
 
     uiDependencies = [

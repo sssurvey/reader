@@ -5,7 +5,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.haomins.reader.BuildConfig
 import com.haomins.reader.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AboutFragment : PreferenceFragmentCompat() {
 
     companion object {

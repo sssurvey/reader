@@ -15,18 +15,18 @@ import com.haomins.reader.ReaderApplication
 import com.haomins.reader.adapters.SourceTitleListAdapter
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.SourceTitleListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_source_list_title.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SourceTitleListFragment : Fragment() {
 
     companion object {
         const val TAG = "SourceTitleListFragment"
     }
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val sourceTitleListViewModel by viewModels<SourceTitleListViewModel> { viewModelFactory }
+    private val sourceTitleListViewModel by viewModels<SourceTitleListViewModel>()
     private val sourceListDisplayDataList: MutableList<SourceTitleListViewModel.SourceListUi> = mutableListOf()
 
     private val sourceTitleListAdapter by lazy {
@@ -48,13 +48,6 @@ class SourceTitleListFragment : Fragment() {
 
     private val recyclerLayoutManager by lazy {
         LinearLayoutManager(context)
-    }
-
-    override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-            .build()
-            .inject(this)
-        super.onAttach(context)
     }
 
     override fun onCreateView(

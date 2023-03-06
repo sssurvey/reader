@@ -6,7 +6,9 @@ import com.haomins.reader.R
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.AddSourceFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddSourceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

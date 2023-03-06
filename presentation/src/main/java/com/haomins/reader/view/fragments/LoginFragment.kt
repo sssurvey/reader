@@ -17,14 +17,14 @@ import com.haomins.reader.ReaderApplication
 import com.haomins.reader.utils.showToast
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val loginViewModel by viewModels<LoginViewModel> { viewModelFactory }
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     private val isUserLoggedInObserver by lazy {
         Observer<Boolean> {
@@ -33,12 +33,6 @@ class LoginFragment : Fragment() {
                 showSourceTitleListFragment()
             }
         }
-    }
-
-    override fun onAttach(context: Context) {
-        (requireActivity().application as ReaderApplication).appComponent.viewModelComponent()
-            .build().inject(this)
-        super.onAttach(context)
     }
 
     override fun onCreateView(

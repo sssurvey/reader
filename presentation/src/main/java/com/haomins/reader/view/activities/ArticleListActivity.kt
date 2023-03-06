@@ -9,7 +9,9 @@ import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.ArticleListFragment
 import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticleList {
 
     companion object {

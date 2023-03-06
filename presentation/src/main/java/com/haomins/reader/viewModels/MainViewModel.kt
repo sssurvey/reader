@@ -9,7 +9,9 @@ import com.haomins.domain.model.entities.SubscriptionEntity
 import com.haomins.domain.usecase.source.LoadSubscriptionList
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val loadSubscriptionList: LoadSubscriptionList

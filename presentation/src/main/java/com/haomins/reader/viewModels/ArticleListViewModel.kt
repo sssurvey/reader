@@ -11,7 +11,9 @@ import com.haomins.domain.usecase.article.LoadAllArticles
 import com.haomins.domain.usecase.article.LoadArticlesByFeed
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@HiltViewModel
 class ArticleListViewModel @Inject constructor(
     private val loadArticlesByFeed: LoadArticlesByFeed,
     private val continueLoadArticlesByFeed: ContinueLoadArticlesByFeed,

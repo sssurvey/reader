@@ -8,7 +8,9 @@ import com.haomins.domain.usecase.disclosure.LoadDisclosureContent
 import com.haomins.reader.R
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@HiltViewModel
 class DisclosureViewModel @Inject constructor(
     private val application: Application,
     private val loadDisclosureContent: LoadDisclosureContent
