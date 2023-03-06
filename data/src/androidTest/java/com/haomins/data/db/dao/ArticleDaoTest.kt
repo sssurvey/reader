@@ -31,7 +31,9 @@ class ArticleDaoTest {
                     itemUpdatedMillisecond = System.currentTimeMillis(),
                     itemPublishedMillisecond = System.currentTimeMillis(),
                     author = "Dr.StrangeLove",
-                    content = "This is a test article, haha."
+                    content = "This is a test article, haha.",
+                    href = "",
+                    previewImageUrl = ""
                 )
             )
         }
@@ -70,7 +72,9 @@ class ArticleDaoTest {
                 itemUpdatedMillisecond = System.currentTimeMillis(),
                 itemPublishedMillisecond = System.currentTimeMillis(),
                 author = "Dr.StrangeLove",
-                content = "This is a test article, haha."
+                content = "This is a test article, haha.",
+                href = "",
+                previewImageUrl = ""
             )
         )
         assertTrue(articleDao.getAll().blockingGet().size > originalSize)

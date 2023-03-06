@@ -91,10 +91,10 @@ ext {
     ]
 
     appAndroidTestImplementation = [
-                    'androidx.test.ext:junit:1.1.3',
-                    "androidx.test.espresso:espresso-core:$espresso_version",
-                    "androidx.test.espresso:espresso-contrib:$espresso_version",
-                    'org.junit.jupiter:junit-jupiter-api:5.8.2'
+            'androidx.test.ext:junit:1.1.3',
+            "androidx.test.espresso:espresso-core:$espresso_version",
+            "androidx.test.espresso:espresso-contrib:$espresso_version",
+            'org.junit.jupiter:junit-jupiter-api:5.8.2'
     ]
 
     dataTestImplementation = [
@@ -104,7 +104,8 @@ ext {
     ]
 
     dataAndroidTestImplementation = [
-            //            'androidx.test.ext:junit:1.1.1',
-            //            'androidx.test.espresso:espresso-core:3.2.0'
+            'androidx.test.ext:junit:1.1.1',
+            'androidx.test.espresso:espresso-core:3.2.0',
+            "junit:junit:$junit_version"
     ]
 }
