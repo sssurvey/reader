@@ -25,7 +25,7 @@ The application is written in 100% ```Kotlin``` and is utilizing the library:
 
 - Retrofit 2: For the communication with The Old Reader API
 - RxJava 2: For concurrency
-- Dagger 2: For dependency Injection
+- Hilt: For dependency Injection
 - Room database: For offline reading
 
 The Reader application will be made open source:
