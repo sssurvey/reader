@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.haomins.reader.databinding.ActivityArticleDetailBinding
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
-import com.haomins.reader.view.fragments.ArticleDetailFragment
+import com.haomins.reader.view.fragments.articles.ArticleDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

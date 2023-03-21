@@ -1,4 +1,4 @@
-package com.haomins.reader.view.fragments
+package com.haomins.reader.view.fragments.articles
 
 import android.graphics.Bitmap
 import android.os.Bundle

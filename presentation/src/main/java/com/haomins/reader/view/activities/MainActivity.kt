@@ -9,9 +9,9 @@ import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
 import com.haomins.reader.databinding.ActivityMainBinding
 import com.haomins.reader.utils.delayedUiOperation
-import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
-import com.haomins.reader.view.fragments.DisclosureFragment
+import com.haomins.reader.view.fragments.articles.ArticleListFragment
+import com.haomins.reader.view.fragments.articles.ArticleListFragment.Companion.LOAD_MODE_KEY
+import com.haomins.reader.view.fragments.settings.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainViewModel

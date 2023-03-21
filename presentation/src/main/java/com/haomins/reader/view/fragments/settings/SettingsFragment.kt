@@ -1,4 +1,4 @@
-package com.haomins.reader.view.fragments
+package com.haomins.reader.view.fragments.settings
 
 import android.content.Intent
 import android.os.Bundle

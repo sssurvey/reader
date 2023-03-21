@@ -8,9 +8,9 @@ import com.haomins.reader.databinding.ActivitySettingsBinding
 import com.haomins.reader.utils.slideAnimation
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
-import com.haomins.reader.view.fragments.AboutFragment
-import com.haomins.reader.view.fragments.DisclosureFragment
-import com.haomins.reader.view.fragments.SettingsFragment
+import com.haomins.reader.view.fragments.settings.AboutFragment
+import com.haomins.reader.view.fragments.settings.DisclosureFragment
+import com.haomins.reader.view.fragments.settings.SettingsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

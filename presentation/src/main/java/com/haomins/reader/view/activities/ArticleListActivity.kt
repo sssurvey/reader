@@ -8,8 +8,8 @@ import com.haomins.reader.R
 import com.haomins.reader.databinding.ActivityArticleListBinding
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
-import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
+import com.haomins.reader.view.fragments.articles.ArticleListFragment
+import com.haomins.reader.view.fragments.articles.ArticleListFragment.Companion.LOAD_MODE_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
