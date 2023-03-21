@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.haomins.reader.R
+import com.haomins.reader.databinding.ActivityArticleDetailBinding
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.ArticleDetailFragment
@@ -18,10 +18,12 @@ class ArticleDetailActivity : AppCompatActivity() {
         const val ARTICLE_ITEM_ID = "ARTICLE_ITEM_ID"
     }
 
+    private lateinit var binding: ActivityArticleDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        inflateView()
         slideInAnimation()
-        setContentView(R.layout.activity_article_detail)
         initViewPager()
     }
 
@@ -42,6 +44,11 @@ class ArticleDetailActivity : AppCompatActivity() {
             article_detail_view_pager.adapter = adapter
             article_detail_view_pager.setCurrentItem(currentPosition, false)
         }
+    }
+
+    private fun inflateView() {
+        binding = ActivityArticleDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     private inner class ArticleDetailFragmentAdapter(

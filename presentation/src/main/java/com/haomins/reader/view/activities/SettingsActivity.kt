@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
+import com.haomins.reader.databinding.ActivityAddSourceBinding
+import com.haomins.reader.databinding.ActivitySettingsBinding
 import com.haomins.reader.utils.slideAnimation
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
@@ -15,10 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivitySettingsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        inflateView()
         slideInAnimation()
-        setContentView(R.layout.activity_settings)
         showSettingsFragment()
     }
 
@@ -62,6 +66,11 @@ class SettingsActivity : AppCompatActivity() {
                 SettingsFragment.TAG
             )
             .commit()
+    }
+
+    private fun inflateView() {
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
 }
