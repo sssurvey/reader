@@ -3,7 +3,7 @@ package com.haomins.data.repositories
 import android.content.SharedPreferences
 import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
-import com.haomins.data.model.SharedPreferenceKey
+import com.haomins.data_model.SharedPreferenceKey
 import com.haomins.data_model.remote.subscription.SubscriptionItemModel
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.model.entities.SubscriptionEntity
@@ -147,12 +147,12 @@ class SourceSubscriptionListRepositoryTest {
         }
     }
 
-    private fun generateSubscriptionListEntity(): List<com.haomins.data.model.entities.SubscriptionEntity> {
+    private fun generateSubscriptionListEntity(): List<com.haomins.data_model.local.SubscriptionEntity> {
         val subscriptionEntityList =
-            mutableListOf<com.haomins.data.model.entities.SubscriptionEntity>()
+            mutableListOf<com.haomins.data_model.local.SubscriptionEntity>()
         for (i in 0 until 100) {
             subscriptionEntityList.add(
-                com.haomins.data.model.entities.SubscriptionEntity(
+                com.haomins.data_model.local.SubscriptionEntity(
                     id = i.toString(),
                     title = "test sub entity $i",
                     sortId = (i * i).toString(),

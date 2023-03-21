@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.haomins.data.model.entities.ArticleEntity
+import com.haomins.data_model.local.ArticleEntity
 import io.reactivex.Single
 
 @Dao

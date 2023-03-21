@@ -2,7 +2,6 @@ package com.haomins.reader.utils
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.util.contains
 import com.haomins.data.util.getBoolean
 import com.haomins.data.util.putValue
@@ -36,17 +35,17 @@ class DarkModeManager @Inject constructor(
     }
 
     fun checkIsCurrentDarkModeEnabled(): Boolean {
-        return sharedPreferences.getBoolean(SharedPreferenceKey.IS_DARK_MODE_ENABLED)
+        return sharedPreferences.getBoolean(com.haomins.data_model.SharedPreferenceKey.IS_DARK_MODE_ENABLED)
     }
 
     private fun followSystemDarkMode(): Boolean {
-        return !sharedPreferences.contains(SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS)
+        return !sharedPreferences.contains(com.haomins.data_model.SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS)
     }
 
     private fun saveDarkModeSettings(isEnabled: Boolean) {
         with(sharedPreferences) {
-            putValue(SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS, true)
-            putValue(SharedPreferenceKey.IS_DARK_MODE_ENABLED, isEnabled)
+            putValue(com.haomins.data_model.SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS, true)
+            putValue(com.haomins.data_model.SharedPreferenceKey.IS_DARK_MODE_ENABLED, isEnabled)
         }
     }
 }

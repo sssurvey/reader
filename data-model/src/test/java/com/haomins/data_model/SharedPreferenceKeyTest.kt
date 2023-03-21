@@ -1,5 +1,6 @@
-package com.haomins.data.model
+package com.haomins.data_model
 
+import com.haomins.data_model.SharedPreferenceKey
 import org.junit.Assert.assertTrue
 import org.junit.Test
 

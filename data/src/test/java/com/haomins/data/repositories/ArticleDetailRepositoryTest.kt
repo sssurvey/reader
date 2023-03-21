@@ -46,7 +46,7 @@ class ArticleDetailRepositoryTest {
     fun `test loadArticleDetail success`() {
 
         val testId = "test id"
-        val testArticleEntity = com.haomins.data.model.entities.ArticleEntity(
+        val testArticleEntity = com.haomins.data_model.local.ArticleEntity(
             itemId = testId,
             feedId = "test feed id",
             itemTitle = "test title",

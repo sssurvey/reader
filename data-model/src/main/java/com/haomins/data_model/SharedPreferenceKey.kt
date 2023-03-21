@@ -1,4 +1,4 @@
-package com.haomins.data.model
+package com.haomins.data_model
 
 enum class SharedPreferenceKey(val string: String) {
     AUTH_CODE_KEY("AUTH_CODE"),

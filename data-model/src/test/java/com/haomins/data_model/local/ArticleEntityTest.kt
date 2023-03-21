@@ -1,5 +1,6 @@
-package com.haomins.data.model.entities
+package com.haomins.data_model.local
 
+import com.haomins.data_model.local.ArticleEntity
 import org.junit.Assert.assertTrue
 import org.junit.Test
 

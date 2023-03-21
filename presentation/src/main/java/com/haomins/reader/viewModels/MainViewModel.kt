@@ -3,7 +3,7 @@ package com.haomins.reader.viewModels
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.haomins.data.model.SharedPreferenceKey
+import com.haomins.data_model.SharedPreferenceKey
 import com.haomins.data.util.getString
 import com.haomins.domain.model.entities.SubscriptionEntity
 import com.haomins.domain.usecase.source.LoadSubscriptionList
@@ -18,7 +18,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun hasAuthToken(): Boolean {
-        return sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY).isNotEmpty()
+        return sharedPreferences.getString(com.haomins.data_model.SharedPreferenceKey.AUTH_CODE_KEY).isNotEmpty()
     }
 
     fun loadSubscriptionList(doOnSuccess: () -> Unit = {}) {

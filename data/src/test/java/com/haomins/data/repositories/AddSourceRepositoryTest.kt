@@ -2,7 +2,7 @@ package com.haomins.data.repositories
 
 import android.content.SharedPreferences
 import com.haomins.data.mapper.responsemapper.AddSourceResponseModelMapper
-import com.haomins.data.model.SharedPreferenceKey
+import com.haomins.data_model.SharedPreferenceKey
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.model.responses.AddSourceResponseModel
 import io.reactivex.Single
