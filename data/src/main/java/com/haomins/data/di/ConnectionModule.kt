@@ -33,7 +33,7 @@ object ConnectionModule {
     fun provideOkHttpClient(): OkHttpClient {
         val httpLogInterceptor = HttpLoggingInterceptor()
         val httpClientBuilder = OkHttpClient.Builder()
-        httpLogInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        httpLogInterceptor.level = HttpLoggingInterceptor.Level.BASIC
         httpClientBuilder.addInterceptor(httpLogInterceptor)
         return httpClientBuilder.build()
     }
