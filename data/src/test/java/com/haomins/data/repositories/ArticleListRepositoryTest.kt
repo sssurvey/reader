@@ -6,7 +6,6 @@ import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.ArticleEntity
-import com.haomins.data.service.RoomService
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.DateUtils
 import io.reactivex.Single
@@ -29,9 +28,6 @@ class ArticleListRepositoryTest {
     val mockTheOldReaderService = MockTheOldReaderService()
 
     @Mock
-    lateinit var mockRoomService: RoomService
-
-    @Mock
     lateinit var mockArticleDao: ArticleDao
 
     @Mock
@@ -49,7 +45,7 @@ class ArticleListRepositoryTest {
 
         articleListRepository = ArticleListRepository(
             mockTheOldReaderService,
-            mockRoomService,
+            mockArticleDao,
             mockSharedPreferences,
             ArticleEntityMapper(mockDateUtils)
         )
@@ -69,7 +65,6 @@ class ArticleListRepositoryTest {
             .loadAllArticles(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
             .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(1)).articleDao()
         verify(mockArticleDao, times(1)).insert(any())
         testObserver.assertValueCount(1)
         testObserver.assertComplete()
@@ -84,7 +79,6 @@ class ArticleListRepositoryTest {
             .loadArticleListByFeed(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
             .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(1)).articleDao()
     }
 
     @Test
@@ -93,7 +87,7 @@ class ArticleListRepositoryTest {
         val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
         val noConnectionArticleListRepository = ArticleListRepository(
             noConnectionMockTheOldReaderService,
-            mockRoomService,
+            mockArticleDao,
             mockSharedPreferences,
             ArticleEntityMapper(mockDateUtils)
         )
@@ -110,7 +104,6 @@ class ArticleListRepositoryTest {
         )
         noConnectionArticleListRepository.loadArticleItems("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
-        verify(mockRoomService, times(1)).articleDao()
         verify(mockArticleDao, times(1)).selectAllArticleByFeedId("test_feed_id")
     }
 
@@ -120,7 +113,7 @@ class ArticleListRepositoryTest {
         val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
         val noConnectionArticleListRepository = ArticleListRepository(
             noConnectionMockTheOldReaderService,
-            mockRoomService,
+            mockArticleDao,
             mockSharedPreferences,
             ArticleEntityMapper(mockDateUtils)
         )
@@ -137,7 +130,6 @@ class ArticleListRepositoryTest {
         )
         noConnectionArticleListRepository.loadAllArticleItems().subscribe(testObserver)
         testObserver.assertSubscribed()
-        verify(mockRoomService, times(1)).articleDao()
         verify(mockArticleDao, times(1)).getAll()
     }
 
@@ -150,7 +142,6 @@ class ArticleListRepositoryTest {
             .loadAllArticles(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
             .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(1)).articleDao()
     }
 
     @Test
@@ -162,7 +153,6 @@ class ArticleListRepositoryTest {
             .loadArticleListByFeed(any(), any(), any(), any(), any())
         verify(mockTheOldReaderService, times(10))
             .loadArticleDetailsByRefId(any(), any(), any())
-        verify(mockRoomService, times(1)).articleDao()
     }
 
     private fun mockHelper() {
@@ -171,8 +161,6 @@ class ArticleListRepositoryTest {
                 .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, "")
         )
             .thenReturn("test_auth_code")
-        `when`(mockRoomService.articleDao())
-            .thenReturn(mockArticleDao)
         `when`(mockArticleDao.getAll())
             .thenReturn(
                 Single.just(

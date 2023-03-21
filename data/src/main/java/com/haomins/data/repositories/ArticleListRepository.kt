@@ -2,10 +2,10 @@ package com.haomins.data.repositories
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.responses.article.ArticleResponseModel
-import com.haomins.data.service.RoomService
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.extractImageFromImgTags
 import com.haomins.data.util.getString
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class ArticleListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
-    private val roomService: RoomService,
+    private val articleDao: ArticleDao,
     private val sharedPreferences: SharedPreferences,
     private val articleEntityMapper: ArticleEntityMapper
 ) : ArticleListRepositoryContract {
@@ -83,9 +83,9 @@ class ArticleListRepository @Inject constructor(
             .map {
                 val articleEntities =
                     it.map { articleResponseModel -> articleResponseModel.toArticleEntity() }
-                roomService.articleDao().insert(*articleEntities.toTypedArray())
+                articleDao.insert(*articleEntities.toTypedArray())
                 articleEntities
-            }.onErrorResumeNext { roomService.articleDao().selectAllArticleByFeedId(feedId) }
+            }.onErrorResumeNext { articleDao.selectAllArticleByFeedId(feedId) }
             .map {
                 it.map { articleEntity ->
                     articleEntityMapper.dataModelToDomainModel(
@@ -121,9 +121,9 @@ class ArticleListRepository @Inject constructor(
             .map {
                 val articleEntities =
                     it.map { articleResponseModel -> articleResponseModel.toArticleEntity() }
-                roomService.articleDao().insert(*articleEntities.toTypedArray())
+                articleDao.insert(*articleEntities.toTypedArray())
                 articleEntities
-            }.onErrorResumeNext { roomService.articleDao().getAll() }
+            }.onErrorResumeNext { articleDao.getAll() }
             .map {
                 it.map { articleEntity -> articleEntityMapper.dataModelToDomainModel(articleEntity) }
             }

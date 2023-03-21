@@ -2,11 +2,11 @@ package com.haomins.data.repositories
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
+import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.SubscriptionEntity
 import com.haomins.data.model.responses.subscription.SubscriptionItemModel
-import com.haomins.data.service.RoomService
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
 import io.reactivex.Single
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class SourceSubscriptionListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val subscriptionEntityMapper: SubscriptionEntityMapper,
-    private val roomService: RoomService,
+    private val subscriptionDao: SubscriptionDao,
     private val sharedPreferences: SharedPreferences
 ) : SourceSubscriptionListRepositoryContract {
 
@@ -38,13 +38,13 @@ class SourceSubscriptionListRepository @Inject constructor(
     }
 
     private fun retrieveSubListFromDB(): Single<List<SubscriptionEntity>> {
-        return roomService.subscriptionDao().getAll()
+        return subscriptionDao.getAll()
     }
 
     private fun saveSubListToDatabase(
         entityList: List<SubscriptionEntity>,
     ) {
-        with(roomService.subscriptionDao()) {
+        with(subscriptionDao) {
             clearTable()
             insertAll(*entityList.toTypedArray())
         }

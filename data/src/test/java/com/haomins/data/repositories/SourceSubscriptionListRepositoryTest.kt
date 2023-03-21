@@ -5,7 +5,6 @@ import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.responses.subscription.SubscriptionItemModel
-import com.haomins.data.service.RoomService
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.model.entities.SubscriptionEntity
 import io.reactivex.Single
@@ -33,9 +32,6 @@ class SourceSubscriptionListRepositoryTest {
     @Mock
     lateinit var mockSubscriptionDao: SubscriptionDao
 
-    @Mock
-    lateinit var mockRoomService: RoomService
-
     private lateinit var sourceSubscriptionListRepository: SourceSubscriptionListRepository
 
     @Before
@@ -43,7 +39,7 @@ class SourceSubscriptionListRepositoryTest {
         MockitoAnnotations.initMocks(this)
         sourceSubscriptionListRepository = SourceSubscriptionListRepository(
             theOldReaderService = mockTheOldReaderService,
-            roomService = mockRoomService,
+            subscriptionDao = mockSubscriptionDao,
             sharedPreferences = mockSharedPreference,
             subscriptionEntityMapper = SubscriptionEntityMapper()
         )
@@ -72,8 +68,6 @@ class SourceSubscriptionListRepositoryTest {
             ).thenReturn(
                 Single.fromCallable(::generateSourceListResponse)
             )
-
-            `when`(mockRoomService.subscriptionDao()).thenReturn(mockSubscriptionDao)
 
         }
 
@@ -113,8 +107,6 @@ class SourceSubscriptionListRepositoryTest {
             ).thenReturn(
                 Single.error(testException)
             )
-
-            `when`(mockRoomService.subscriptionDao()).thenReturn(mockSubscriptionDao)
 
             `when`(mockSubscriptionDao.getAll()).thenReturn(
                 Single.fromCallable(::generateSubscriptionListEntity)
