@@ -1,7 +1,7 @@
 ext {
 
-    def kotlin_version = "1.5.32"
-    def androidx_lifecycle = "2.2.0"
+    def kotlin_version = "1.8.10"
+    def androidx_lifecycle = "2.5.1"
     def android_arch_lifecycle_version = "1.1.1"
     def com_square_up_retrofit2_version = "2.4.0"
     def room_version = "2.2.3"
@@ -15,7 +15,7 @@ ext {
     def app_compat_version = "1.4.0"
     def constraint_layout_version = "2.1.2"
     def espresso_version = "3.4.0"
-    def hilt_version = "2.41"
+    def hilt_version = "2.45"
 
     appDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
@@ -25,6 +25,7 @@ ext {
             "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
             "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle",
             "androidx.lifecycle:lifecycle-livedata-ktx:$androidx_lifecycle",
+            "androidx.navigation:navigation-fragment-ktx:$androidx_lifecycle",
             "io.reactivex.rxjava2:rxjava:$rx_java_version",
             'io.reactivex.rxjava2:rxandroid:2.1.1',
             "android.arch.lifecycle:extensions:$android_arch_lifecycle_version",
@@ -37,7 +38,7 @@ ext {
             "com.google.android.material:material:$material_version",
             "com.github.bumptech.glide:glide:$glide_version",
             "com.github.bumptech.glide:annotations:$glide_version",
-            "com.google.dagger:hilt-android:$hilt_version"
+            "com.google.dagger:hilt-android:$hilt_version",
     ]
 
     appKaptDependencies = [
