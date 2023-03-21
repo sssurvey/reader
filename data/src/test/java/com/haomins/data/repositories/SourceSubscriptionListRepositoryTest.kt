@@ -6,7 +6,7 @@ import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data_model.SharedPreferenceKey
 import com.haomins.data_model.remote.subscription.SubscriptionItemModel
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.model.entities.SubscriptionEntity
+import com.haomins.domain_model.entities.SubscriptionEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import org.junit.After
@@ -73,7 +73,7 @@ class SourceSubscriptionListRepositoryTest {
 
         mockHelper()
 
-        val testObserver = TestObserver<List<SubscriptionEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain_model.entities.SubscriptionEntity>>()
         sourceSubscriptionListRepository
             .loadSubscriptionList()
             .subscribeWith(testObserver)
@@ -89,7 +89,7 @@ class SourceSubscriptionListRepositoryTest {
     fun `test loadSubscriptionList() failed`() {
 
         val testException = Exception()
-        val testObserver = TestObserver<List<SubscriptionEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain_model.entities.SubscriptionEntity>>()
 
         fun mockHelper() {
 

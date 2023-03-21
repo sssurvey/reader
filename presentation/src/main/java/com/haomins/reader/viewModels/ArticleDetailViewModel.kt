@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.domain.usecase.articledetails.LoadArticleData
 import com.haomins.reader.utils.DarkModeManager
 import com.haomins.reader.view.fragments.articles.ArticleDetailFragment
@@ -30,8 +30,8 @@ class ArticleDetailViewModel @Inject constructor(
 
     fun loadArticleDetail(itemId: String) {
         loadArticleData.execute(
-            object : DisposableSingleObserver<ArticleEntity>() {
-                override fun onSuccess(t: ArticleEntity) {
+            object : DisposableSingleObserver<com.haomins.domain_model.entities.ArticleEntity>() {
+                override fun onSuccess(t: com.haomins.domain_model.entities.ArticleEntity) {
                     _contentDataForDisplay.postValue(mapArticleEntityToUiItem(t))
                 }
 
@@ -53,7 +53,7 @@ class ArticleDetailViewModel @Inject constructor(
         loadArticleData.dispose()
     }
 
-    private fun mapArticleEntityToUiItem(articleEntity: ArticleEntity): ArticleDetailFragment.ArticleDetailUiItem {
+    private fun mapArticleEntityToUiItem(articleEntity: com.haomins.domain_model.entities.ArticleEntity): ArticleDetailFragment.ArticleDetailUiItem {
         return ArticleDetailFragment.ArticleDetailUiItem(
             title = articleEntity.itemTitle,
             updateTime = articleEntity.updatedTime,

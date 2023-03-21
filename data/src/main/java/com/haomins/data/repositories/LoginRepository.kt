@@ -6,7 +6,7 @@ import com.haomins.data_model.SharedPreferenceKey
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.putValue
 import com.haomins.data.util.removeValue
-import com.haomins.domain.model.responses.UserAuthResponseModel
+import com.haomins.domain_model.responses.UserAuthResponseModel
 import com.haomins.domain.repositories.LoginRepositoryContract
 import io.reactivex.Single
 import javax.inject.Inject
@@ -19,7 +19,7 @@ class LoginRepository @Inject constructor(
     private val userAuthResponseModelMapper: UserAuthResponseModelMapper
 ) : LoginRepositoryContract {
 
-    override fun login(userName: String, userPassword: String): Single<UserAuthResponseModel> {
+    override fun login(userName: String, userPassword: String): Single<com.haomins.domain_model.responses.UserAuthResponseModel> {
         return theOldReaderService
             .loginUser(userName, userPassword)
             .doOnError {

@@ -1,4 +1,4 @@
-package com.haomins.domain.model
+package com.haomins.domain_model
 
 data class DisclosureInfo(
     val disclosureContent: String,

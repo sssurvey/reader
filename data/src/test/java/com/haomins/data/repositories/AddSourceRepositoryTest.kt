@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.haomins.data.mapper.responsemapper.AddSourceResponseModelMapper
 import com.haomins.data_model.SharedPreferenceKey
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.model.responses.AddSourceResponseModel
+import com.haomins.domain_model.responses.AddSourceResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import junit.framework.Assert.assertTrue
@@ -40,7 +40,7 @@ class AddSourceRepositoryTest {
     @Test
     fun `addSource success call`() {
 
-        val testObserver = TestObserver<AddSourceResponseModel>()
+        val testObserver = TestObserver<com.haomins.domain_model.responses.AddSourceResponseModel>()
         val testSource = "123"
         val testAuthKey = "test_auth_key"
         val testTheOldReaderServiceAddSourceReturn = Single.just(

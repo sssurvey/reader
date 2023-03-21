@@ -1,6 +1,6 @@
 package com.haomins.domain.usecase.source
 
-import com.haomins.domain.model.entities.SubscriptionEntity
+import com.haomins.domain_model.entities.SubscriptionEntity
 import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler

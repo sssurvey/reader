@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.reader.adapters.ArticleTitleListAdapter
 import com.haomins.reader.databinding.FragmentArticleListBinding
 import com.haomins.reader.utils.GlideUtils
@@ -45,7 +45,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     private lateinit var binding: FragmentArticleListBinding
 
     private val articleListViewModel by viewModels<ArticleListViewModel>()
-    private val articleTitleUiItems = mutableListOf<ArticleEntity>()
+    private val articleTitleUiItems = mutableListOf<com.haomins.domain_model.entities.ArticleEntity>()
 
     private val feedId by lazy { arguments?.getString(currentArticleListViewMode.key).toString() }
     private val handler by lazy { Handler() }
@@ -60,7 +60,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         binding.articleTitleRecyclerView.adapter
     }
     private val articleTitleListUiItemObserver by lazy {
-        Observer<Set<ArticleEntity>> { set ->
+        Observer<Set<com.haomins.domain_model.entities.ArticleEntity>> { set ->
             articleTitleUiItems.clear()
             articleTitleUiItems.addAll(set)
             adapter?.notifyItemInserted(

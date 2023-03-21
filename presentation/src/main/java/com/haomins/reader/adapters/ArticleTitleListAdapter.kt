@@ -6,12 +6,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.reader.databinding.ArticleTitleRecyclerViewItemBinding
 import com.haomins.reader.utils.GlideUtils
 
 class ArticleTitleListAdapter(
-    private val articleTitleListUiItems: List<ArticleEntity>,
+    private val articleTitleListUiItems: List<com.haomins.domain_model.entities.ArticleEntity>,
     private val glideUtils: GlideUtils,
     private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
 ) :
@@ -61,7 +61,7 @@ class ArticleTitleListAdapter(
             itemRootView = binding.root
         }
 
-        fun bind(articleEntity: ArticleEntity, position: Int) {
+        fun bind(articleEntity: com.haomins.domain_model.entities.ArticleEntity, position: Int) {
             with(articleEntity) {
                 articleTitleTextView.text = itemTitle
                 articlePostedTimeTextView.text = howLongAgo

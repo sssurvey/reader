@@ -21,7 +21,7 @@ class SourceSubscriptionListRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : SourceSubscriptionListRepositoryContract {
 
-    override fun loadSubscriptionList(): Single<List<com.haomins.domain.model.entities.SubscriptionEntity>> {
+    override fun loadSubscriptionList(): Single<List<com.haomins.domain_model.entities.SubscriptionEntity>> {
         return theOldReaderService
             .loadSubscriptionSourceList(headerAuthValue = loadHeaderAuthValue())
             .map {

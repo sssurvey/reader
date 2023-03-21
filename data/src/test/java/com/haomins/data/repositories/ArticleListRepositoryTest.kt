@@ -58,7 +58,7 @@ class ArticleListRepositoryTest {
 
     @Test
     fun `test loadAllArticleItems() order verification`() {
-        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain_model.entities.ArticleEntity>>()
         articleListRepository.loadAllArticleItems().subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService, times(1))
@@ -72,7 +72,7 @@ class ArticleListRepositoryTest {
 
     @Test
     fun `test loadArticleItemRefs() order verification`() {
-        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain_model.entities.ArticleEntity>>()
         articleListRepository.loadArticleItems("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
@@ -84,7 +84,7 @@ class ArticleListRepositoryTest {
     @Test
     fun `test should load articles from DB directly by feed if error was thrown during api access`() {
         val noConnectionMockTheOldReaderService = mock(TheOldReaderService::class.java)
-        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain_model.entities.ArticleEntity>>()
         val noConnectionArticleListRepository = ArticleListRepository(
             noConnectionMockTheOldReaderService,
             mockArticleDao,
@@ -110,7 +110,7 @@ class ArticleListRepositoryTest {
     @Test
     fun `test should load all articles from DB directly if error was thrown during api access`() {
         val noConnectionMockTheOldReaderService = mock(TheOldReaderService::class.java)
-        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain_model.entities.ArticleEntity>>()
         val noConnectionArticleListRepository = ArticleListRepository(
             noConnectionMockTheOldReaderService,
             mockArticleDao,
@@ -135,7 +135,7 @@ class ArticleListRepositoryTest {
 
     @Test
     fun `test continueLoadAllArticleItems()`() {
-        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain_model.entities.ArticleEntity>>()
         articleListRepository.continueLoadAllArticleItems().subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)
@@ -146,7 +146,7 @@ class ArticleListRepositoryTest {
 
     @Test
     fun continueLoadArticleItemRefs() {
-        val testObserver = TestObserver<List<com.haomins.domain.model.entities.ArticleEntity>>()
+        val testObserver = TestObserver<List<com.haomins.domain_model.entities.ArticleEntity>>()
         articleListRepository.continueLoadArticleItems("test_feed_id").subscribe(testObserver)
         testObserver.assertSubscribed()
         verify(mockTheOldReaderService)

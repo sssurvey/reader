@@ -5,7 +5,7 @@ import com.haomins.data.mapper.responsemapper.AddSourceResponseModelMapper
 import com.haomins.data_model.SharedPreferenceKey
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.getString
-import com.haomins.domain.model.responses.AddSourceResponseModel
+import com.haomins.domain_model.responses.AddSourceResponseModel
 import com.haomins.domain.repositories.AddSourceRepositoryContract
 import io.reactivex.Single
 import javax.inject.Inject
@@ -16,7 +16,7 @@ class AddSourceRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : AddSourceRepositoryContract {
 
-    override fun addSource(source: String): Single<AddSourceResponseModel> {
+    override fun addSource(source: String): Single<com.haomins.domain_model.responses.AddSourceResponseModel> {
         return theOldReaderService
             .addSubscription(
                 headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX

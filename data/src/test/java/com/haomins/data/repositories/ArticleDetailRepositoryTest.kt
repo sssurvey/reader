@@ -3,7 +3,7 @@ package com.haomins.data.repositories
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.util.DateUtils
-import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.domain_model.entities.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -57,7 +57,7 @@ class ArticleDetailRepositoryTest {
             href = "www.test.com",
             previewImageUrl = "www.test.com/test.jpeg"
         )
-        val testObserver = TestObserver<ArticleEntity>()
+        val testObserver = TestObserver<com.haomins.domain_model.entities.ArticleEntity>()
 
         fun mockBehavior() {
             `when`(mockArticleDao.selectArticleByItemId(any()))
@@ -89,7 +89,7 @@ class ArticleDetailRepositoryTest {
     fun `test loadArticleDetail fail`() {
 
         val testId = "test id"
-        val testObserver = TestObserver<ArticleEntity>()
+        val testObserver = TestObserver<com.haomins.domain_model.entities.ArticleEntity>()
 
         fun mockBehavior() {
             `when`(mockArticleDao.selectArticleByItemId(any()))

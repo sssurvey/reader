@@ -1,6 +1,6 @@
 package com.haomins.domain.usecase.article
 
-import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler

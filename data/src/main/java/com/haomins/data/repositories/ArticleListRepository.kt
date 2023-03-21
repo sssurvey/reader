@@ -9,7 +9,7 @@ import com.haomins.data_model.remote.article.ArticleResponseModel
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.extractImageFromImgTags
 import com.haomins.data.util.getString
-import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -34,26 +34,26 @@ class ArticleListRepository @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
-    override fun loadAllArticleItems(): Single<List<ArticleEntity>> {
+    override fun loadAllArticleItems(): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
         return loadAllArticleItemsFromRemote()
     }
 
-    override fun continueLoadAllArticleItems(): Single<List<ArticleEntity>> {
+    override fun continueLoadAllArticleItems(): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
         return loadAllArticleItemsFromRemote(true)
     }
 
-    override fun loadArticleItems(feedId: String): Single<List<ArticleEntity>> {
+    override fun loadArticleItems(feedId: String): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
         return loadAllArticleItemsFromRemoteByFeedId(feedId)
     }
 
-    override fun continueLoadArticleItems(feedId: String): Single<List<ArticleEntity>> {
+    override fun continueLoadArticleItems(feedId: String): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
         return loadAllArticleItemsFromRemoteByFeedId(feedId, true)
     }
 
     private fun loadAllArticleItemsFromRemoteByFeedId(
         feedId: String,
         continueLoad: Boolean = false
-    ): Single<List<ArticleEntity>> {
+    ): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
         return if (continueLoad) {
             theOldReaderService.loadArticleListByFeed(
                 headerAuthValue = headerAuthValue,
@@ -95,7 +95,7 @@ class ArticleListRepository @Inject constructor(
             }
     }
 
-    private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<ArticleEntity>> {
+    private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
         return if (continueLoad) {
             theOldReaderService.loadAllArticles(
                 headerAuthValue = headerAuthValue,

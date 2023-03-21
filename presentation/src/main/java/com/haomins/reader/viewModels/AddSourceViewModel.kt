@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.model.responses.AddSourceResponseModel
+import com.haomins.domain_model.responses.AddSourceResponseModel
 import com.haomins.domain.usecase.addsource.AddNewSource
 import com.haomins.reader.R
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,8 +34,8 @@ class AddSourceViewModel @Inject constructor(
     fun addSource(source: String) {
         addNewSource.execute(
             params = AddNewSource.forAddNewRssSource(source = source),
-            observer = object : DisposableSingleObserver<AddSourceResponseModel>() {
-                override fun onSuccess(t: AddSourceResponseModel) {
+            observer = object : DisposableSingleObserver<com.haomins.domain_model.responses.AddSourceResponseModel>() {
+                override fun onSuccess(t: com.haomins.domain_model.responses.AddSourceResponseModel) {
                     checkIfSuccess(t)
                 }
 
@@ -49,8 +49,8 @@ class AddSourceViewModel @Inject constructor(
     fun addMediumSource(source: String) {
         addNewSource.execute(
             params = AddNewSource.forAddingNewMediumSource(source = source),
-            observer = object : DisposableSingleObserver<AddSourceResponseModel>() {
-                override fun onSuccess(t: AddSourceResponseModel) {
+            observer = object : DisposableSingleObserver<com.haomins.domain_model.responses.AddSourceResponseModel>() {
+                override fun onSuccess(t: com.haomins.domain_model.responses.AddSourceResponseModel) {
                     checkIfSuccess(t)
                 }
 
@@ -71,7 +71,7 @@ class AddSourceViewModel @Inject constructor(
         Log.d(TAG, "${t.printStackTrace()}")
     }
 
-    private fun checkIfSuccess(addSourceResponseModel: AddSourceResponseModel) {
+    private fun checkIfSuccess(addSourceResponseModel: com.haomins.domain_model.responses.AddSourceResponseModel) {
         when (addSourceResponseModel.result) {
             1 -> isSourceAdded.postValue(
                 Pair(

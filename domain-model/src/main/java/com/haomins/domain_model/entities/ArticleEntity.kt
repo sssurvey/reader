@@ -1,4 +1,4 @@
-package com.haomins.domain.model.entities
+package com.haomins.domain_model.entities
 
 data class ArticleEntity(
     val itemTitle: String,

@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.articledetails
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleDetailRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler

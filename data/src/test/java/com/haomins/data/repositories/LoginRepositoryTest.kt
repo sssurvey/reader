@@ -66,7 +66,7 @@ class LoginRepositoryTest {
         mockOldReaderServiceBehavior(throwException = false)
         mockBehavior()
 
-        val observer = TestObserver<com.haomins.domain.model.responses.UserAuthResponseModel>()
+        val observer = TestObserver<com.haomins.domain_model.responses.UserAuthResponseModel>()
         loginRepository
             .login("testId", "testPassword")
             .observeOn(testScheduler)
@@ -97,7 +97,7 @@ class LoginRepositoryTest {
         mockOldReaderServiceBehavior(throwException = true)
         mockBehavior()
 
-        val observer = TestObserver<com.haomins.domain.model.responses.UserAuthResponseModel>()
+        val observer = TestObserver<com.haomins.domain_model.responses.UserAuthResponseModel>()
         loginRepository
             .login("testId", "testPassword")
             .observeOn(testScheduler)

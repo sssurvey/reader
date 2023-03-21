@@ -1,6 +1,6 @@
 package com.haomins.domain.repositories
 
-import com.haomins.domain.model.entities.SubscriptionEntity
+import com.haomins.domain_model.entities.SubscriptionEntity
 import io.reactivex.Single
 
 interface SourceSubscriptionListRepositoryContract {

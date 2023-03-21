@@ -8,10 +8,10 @@ import javax.inject.Inject
 class ArticleEntityMapper @Inject constructor(
     private val dateUtils: DateUtils
 ) :
-    BaseDataToDomainMapper<ArticleEntity, com.haomins.domain.model.entities.ArticleEntity> {
+    BaseDataToDomainMapper<ArticleEntity, com.haomins.domain_model.entities.ArticleEntity> {
 
-    override fun dataModelToDomainModel(dataModel: ArticleEntity): com.haomins.domain.model.entities.ArticleEntity {
-        return com.haomins.domain.model.entities.ArticleEntity(
+    override fun dataModelToDomainModel(dataModel: ArticleEntity): com.haomins.domain_model.entities.ArticleEntity {
+        return com.haomins.domain_model.entities.ArticleEntity(
             itemTitle = dataModel.itemTitle,
             itemId = dataModel.itemId,
             author = dataModel.author,
@@ -25,7 +25,7 @@ class ArticleEntityMapper @Inject constructor(
         )
     }
 
-    override fun domainModelToDataModel(domainModel: com.haomins.domain.model.entities.ArticleEntity): ArticleEntity {
+    override fun domainModelToDataModel(domainModel: com.haomins.domain_model.entities.ArticleEntity): ArticleEntity {
         TODO("Not yet implemented")
     }
 }
