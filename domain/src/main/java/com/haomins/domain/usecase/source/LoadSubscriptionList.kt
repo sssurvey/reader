@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.source
 
 import com.haomins.domain_model.entities.SubscriptionEntity
-import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
+import com.haomins.domain.repositories.SourcesRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
@@ -9,7 +9,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class LoadSubscriptionList @Inject constructor(
-    private val sourceSubscriptionListRepositoryContract: SourceSubscriptionListRepositoryContract,
+    private val sourcesRepository: SourcesRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<Unit, List<SubscriptionEntity>>(
@@ -18,7 +18,7 @@ class LoadSubscriptionList @Inject constructor(
 ) {
 
     override fun buildUseCaseSingle(params: Unit?): Single<List<SubscriptionEntity>> {
-        return sourceSubscriptionListRepositoryContract
+        return sourcesRepository
             .loadSubscriptionList()
     }
 

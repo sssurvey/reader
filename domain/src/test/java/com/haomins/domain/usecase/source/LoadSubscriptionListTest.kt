@@ -2,7 +2,7 @@ package com.haomins.domain.usecase.source
 
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain_model.entities.SubscriptionEntity
-import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
+import com.haomins.domain.repositories.SourcesRepository
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 class LoadSubscriptionListTest {
 
     @Mock
-    lateinit var mockSourceSubscriptionListRepositoryContract: SourceSubscriptionListRepositoryContract
+    lateinit var mockSourcesRepository: SourcesRepository
 
     private lateinit var loadSubscriptionList: LoadSubscriptionList
 
@@ -29,7 +29,7 @@ class LoadSubscriptionListTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         loadSubscriptionList = LoadSubscriptionList(
-            mockSourceSubscriptionListRepositoryContract,
+            mockSourcesRepository,
             testExecutionScheduler,
             testPostExecutionScheduler
         )
@@ -50,7 +50,7 @@ class LoadSubscriptionListTest {
         )
 
         fun mockAction() {
-            `when`(mockSourceSubscriptionListRepositoryContract.loadSubscriptionList()).thenReturn(
+            `when`(mockSourcesRepository.loadSubscriptionList()).thenReturn(
                 Single.timer(1, TimeUnit.SECONDS, testExecutionScheduler.scheduler).flatMap {
                     Single.just(
                         listOf(

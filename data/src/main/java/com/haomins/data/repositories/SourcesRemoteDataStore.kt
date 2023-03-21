@@ -8,18 +8,18 @@ import com.haomins.data_model.SharedPreferenceKey
 import com.haomins.data_model.entity.SubscriptionEntity
 import com.haomins.data_model.remote.subscription.SubscriptionItemModel
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
+import com.haomins.domain.repositories.SourcesRepository
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SourceSubscriptionListRepository @Inject constructor(
+class SourcesRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val subscriptionEntityMapper: SubscriptionEntityMapper,
     private val subscriptionDao: SubscriptionDao,
     private val sharedPreferences: SharedPreferences
-) : SourceSubscriptionListRepositoryContract {
+) : SourcesRepository {
 
     override fun loadSubscriptionList(): Single<List<com.haomins.domain_model.entities.SubscriptionEntity>> {
         return theOldReaderService

@@ -6,7 +6,6 @@ import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data_model.SharedPreferenceKey
 import com.haomins.data_model.remote.subscription.SubscriptionItemModel
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain_model.entities.SubscriptionEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import org.junit.After
@@ -21,7 +20,7 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import java.util.*
 
-class SourceSubscriptionListRepositoryTest {
+class SourcesRemoteDataStoreTest {
 
     @Mock
     lateinit var mockTheOldReaderService: TheOldReaderService
@@ -32,12 +31,12 @@ class SourceSubscriptionListRepositoryTest {
     @Mock
     lateinit var mockSubscriptionDao: SubscriptionDao
 
-    private lateinit var sourceSubscriptionListRepository: SourceSubscriptionListRepository
+    private lateinit var sourcesRemoteDataStore: SourcesRemoteDataStore
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        sourceSubscriptionListRepository = SourceSubscriptionListRepository(
+        sourcesRemoteDataStore = SourcesRemoteDataStore(
             theOldReaderService = mockTheOldReaderService,
             subscriptionDao = mockSubscriptionDao,
             sharedPreferences = mockSharedPreference,
@@ -74,7 +73,7 @@ class SourceSubscriptionListRepositoryTest {
         mockHelper()
 
         val testObserver = TestObserver<List<com.haomins.domain_model.entities.SubscriptionEntity>>()
-        sourceSubscriptionListRepository
+        sourcesRemoteDataStore
             .loadSubscriptionList()
             .subscribeWith(testObserver)
 
@@ -116,7 +115,7 @@ class SourceSubscriptionListRepositoryTest {
 
         mockHelper()
 
-        sourceSubscriptionListRepository
+        sourcesRemoteDataStore
             .loadSubscriptionList()
             .subscribeWith(testObserver)
 
@@ -132,7 +131,7 @@ class SourceSubscriptionListRepositoryTest {
     fun `test convertSubscriptionItemModelToEntity`() {
         val models = generateSourceListResponse().subscriptions
         val entities =
-            sourceSubscriptionListRepository.convertSubscriptionItemModelToEntityForTesting(models)
+            sourcesRemoteDataStore.convertSubscriptionItemModelToEntityForTesting(models)
 
         assertTrue(models.size == entities.size)
 
