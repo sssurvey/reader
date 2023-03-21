@@ -16,6 +16,7 @@ ext {
     def constraint_layout_version = "2.1.2"
     def espresso_version = "3.4.0"
     def hilt_version = "2.45"
+    def androidx_test_junit_version = "1.1.5"
 
     appDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
@@ -92,7 +93,7 @@ ext {
     ]
 
     appAndroidTestImplementation = [
-            'androidx.test.ext:junit:1.1.3',
+            "androidx.test.ext:junit:$androidx_test_junit_version",
             "androidx.test.espresso:espresso-core:$espresso_version",
             "androidx.test.espresso:espresso-contrib:$espresso_version",
             'org.junit.jupiter:junit-jupiter-api:5.8.2'
@@ -105,8 +106,8 @@ ext {
     ]
 
     dataAndroidTestImplementation = [
-            'androidx.test.ext:junit:1.1.1',
-            'androidx.test.espresso:espresso-core:3.2.0',
+            "androidx.test.ext:junit:$androidx_test_junit_version",
+            "androidx.room:room-testing:$room_version",
             "junit:junit:$junit_version"
     ]
 }
