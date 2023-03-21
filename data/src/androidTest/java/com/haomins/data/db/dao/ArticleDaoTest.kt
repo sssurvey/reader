@@ -3,7 +3,7 @@ package com.haomins.data.db.dao
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import com.haomins.data.db.AppDatabase
-import com.haomins.data_model.local.ArticleEntity
+import com.haomins.data_model.entity.ArticleEntity
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before

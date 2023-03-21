@@ -129,8 +129,8 @@ class ArticleListRepository @Inject constructor(
             }
     }
 
-    private fun ArticleResponseModel.toArticleEntity(): com.haomins.data_model.local.ArticleEntity {
-        return com.haomins.data_model.local.ArticleEntity(
+    private fun ArticleResponseModel.toArticleEntity(): com.haomins.data_model.entity.ArticleEntity {
+        return com.haomins.data_model.entity.ArticleEntity(
             itemId = items.first().id,
             itemTitle = items.first().title,
             itemUpdatedMillisecond = items.first().updatedMillisecond,

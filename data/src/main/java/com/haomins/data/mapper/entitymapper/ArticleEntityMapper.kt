@@ -1,7 +1,7 @@
 package com.haomins.data.mapper.entitymapper
 
 import com.haomins.data.mapper.BaseDataToDomainMapper
-import com.haomins.data_model.local.ArticleEntity
+import com.haomins.data_model.entity.ArticleEntity
 import com.haomins.data.util.DateUtils
 import javax.inject.Inject
 

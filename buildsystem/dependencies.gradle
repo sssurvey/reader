@@ -77,7 +77,8 @@ ext {
 
     dataModelDependencies = [
             'com.google.code.gson:gson:2.8.5',
-            "androidx.room:room-common:$room_version"
+            "androidx.room:room-common:$room_version",
+            'javax.inject:javax.inject:1',
     ]
 
     uiDependencies = [

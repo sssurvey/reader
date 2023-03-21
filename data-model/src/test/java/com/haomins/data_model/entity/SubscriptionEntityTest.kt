@@ -1,4 +1,4 @@
-package com.haomins.data_model.local
+package com.haomins.data_model.entity
 
 import org.junit.Assert.assertTrue
 import org.junit.Test

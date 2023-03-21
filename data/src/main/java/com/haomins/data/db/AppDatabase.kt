@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.db.dao.SubscriptionDao
-import com.haomins.data_model.local.ArticleEntity
-import com.haomins.data_model.local.SubscriptionEntity
+import com.haomins.data_model.entity.ArticleEntity
+import com.haomins.data_model.entity.SubscriptionEntity
 
 @Database(
     entities = [SubscriptionEntity::class, ArticleEntity::class],

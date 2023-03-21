@@ -1,4 +1,4 @@
-package com.haomins.data_model.local
+package com.haomins.data_model.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -147,12 +147,12 @@ class SourceSubscriptionListRepositoryTest {
         }
     }
 
-    private fun generateSubscriptionListEntity(): List<com.haomins.data_model.local.SubscriptionEntity> {
+    private fun generateSubscriptionListEntity(): List<com.haomins.data_model.entity.SubscriptionEntity> {
         val subscriptionEntityList =
-            mutableListOf<com.haomins.data_model.local.SubscriptionEntity>()
+            mutableListOf<com.haomins.data_model.entity.SubscriptionEntity>()
         for (i in 0 until 100) {
             subscriptionEntityList.add(
-                com.haomins.data_model.local.SubscriptionEntity(
+                com.haomins.data_model.entity.SubscriptionEntity(
                     id = i.toString(),
                     title = "test sub entity $i",
                     sortId = (i * i).toString(),

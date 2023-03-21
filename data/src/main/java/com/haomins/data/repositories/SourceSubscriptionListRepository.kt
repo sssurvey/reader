@@ -5,7 +5,7 @@ import androidx.annotation.VisibleForTesting
 import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data_model.SharedPreferenceKey
-import com.haomins.data_model.local.SubscriptionEntity
+import com.haomins.data_model.entity.SubscriptionEntity
 import com.haomins.data_model.remote.subscription.SubscriptionItemModel
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
