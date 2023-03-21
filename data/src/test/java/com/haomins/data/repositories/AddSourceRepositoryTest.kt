@@ -44,7 +44,7 @@ class AddSourceRepositoryTest {
         val testSource = "123"
         val testAuthKey = "test_auth_key"
         val testTheOldReaderServiceAddSourceReturn = Single.just(
-            com.haomins.data.model.responses.subscription.AddSourceResponseModel(
+            com.haomins.data_model.remote.subscription.AddSourceResponseModel(
                 query = "test_query",
                 numResults = 1,
                 streamId = "test_string_id",

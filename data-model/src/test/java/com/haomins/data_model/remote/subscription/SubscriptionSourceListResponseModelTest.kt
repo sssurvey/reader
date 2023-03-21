@@ -1,4 +1,4 @@
-package com.haomins.data.model.responses.subscription
+package com.haomins.data_model.remote.subscription
 
 import com.google.gson.Gson
 import org.junit.Assert.assertTrue

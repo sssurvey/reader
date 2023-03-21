@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
-import com.haomins.data.model.responses.subscription.SubscriptionItemModel
+import com.haomins.data_model.remote.subscription.SubscriptionItemModel
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.model.entities.SubscriptionEntity
 import io.reactivex.Single
@@ -166,7 +166,7 @@ class SourceSubscriptionListRepositoryTest {
         return subscriptionEntityList
     }
 
-    private fun generateSourceListResponse(): com.haomins.data.model.responses.subscription.SubscriptionSourceListResponseModel {
+    private fun generateSourceListResponse(): com.haomins.data_model.remote.subscription.SubscriptionSourceListResponseModel {
         val subscriptionsList = mutableListOf<SubscriptionItemModel>()
         for (i in 0 until 100) {
             subscriptionsList
@@ -183,7 +183,7 @@ class SourceSubscriptionListRepositoryTest {
                     )
                 )
         }
-        return com.haomins.data.model.responses.subscription.SubscriptionSourceListResponseModel(
+        return com.haomins.data_model.remote.subscription.SubscriptionSourceListResponseModel(
             subscriptions = ArrayList(subscriptionsList)
         )
     }

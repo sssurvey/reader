@@ -6,7 +6,7 @@ import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
 import com.haomins.data.model.entities.SubscriptionEntity
-import com.haomins.data.model.responses.subscription.SubscriptionItemModel
+import com.haomins.data_model.remote.subscription.SubscriptionItemModel
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.repositories.SourceSubscriptionListRepositoryContract
 import io.reactivex.Single

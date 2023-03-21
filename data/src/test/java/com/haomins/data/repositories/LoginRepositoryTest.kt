@@ -3,7 +3,7 @@ package com.haomins.data.repositories
 import android.content.SharedPreferences
 import com.haomins.data.mapper.responsemapper.UserAuthResponseModelMapper
 import com.haomins.data.model.SharedPreferenceKey
-import com.haomins.data.model.responses.user.UserAuthResponseModel
+import com.haomins.data_model.remote.user.UserAuthResponseModel
 import com.haomins.data.service.TheOldReaderService
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver

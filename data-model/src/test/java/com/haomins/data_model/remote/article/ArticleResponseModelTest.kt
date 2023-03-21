@@ -1,4 +1,4 @@
-package com.haomins.data.model.responses.article
+package com.haomins.data_model.remote.article
 
 import com.google.gson.Gson
 import junit.framework.Assert.assertTrue

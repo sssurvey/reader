@@ -1,7 +1,7 @@
 package com.haomins.data.mapper.responsemapper
 
 import com.haomins.data.mapper.BaseDataToDomainMapper
-import com.haomins.data.model.responses.user.UserAuthResponseModel
+import com.haomins.data_model.remote.user.UserAuthResponseModel
 import javax.inject.Inject
 
 class UserAuthResponseModelMapper @Inject constructor() :

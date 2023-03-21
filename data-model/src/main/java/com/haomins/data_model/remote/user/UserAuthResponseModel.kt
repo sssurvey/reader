@@ -1,4 +1,4 @@
-package com.haomins.data.model.responses.user
+package com.haomins.data_model.remote.user
 
 import com.google.gson.annotations.SerializedName
 

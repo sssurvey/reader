@@ -75,6 +75,10 @@ ext {
             "com.google.dagger:hilt-compiler:$hilt_version"
     ]
 
+    dataModelDependencies = [
+            'com.google.code.gson:gson:2.8.5',
+    ]
+
     uiDependencies = [
             "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
             "com.google.android.material:material:$material_version",
@@ -109,5 +113,11 @@ ext {
             "androidx.test.ext:junit:$androidx_test_junit_version",
             "androidx.room:room-testing:$room_version",
             "junit:junit:$junit_version"
+    ]
+
+    dataModelTestDependencies = [
+            "junit:junit:$junit_version",
+            "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin2_version",
+            "org.mockito:mockito-inline:$mockito_version"
     ]
 }

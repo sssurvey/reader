@@ -5,7 +5,7 @@ import android.util.Log
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.model.SharedPreferenceKey
-import com.haomins.data.model.responses.article.ArticleResponseModel
+import com.haomins.data_model.remote.article.ArticleResponseModel
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.extractImageFromImgTags
 import com.haomins.data.util.getString
