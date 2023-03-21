@@ -5,17 +5,20 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.haomins.ui.R
-import kotlinx.android.synthetic.main.reader_navigation_bar.view.*
+import com.haomins.ui.databinding.ReaderNavigationBarBinding
 
 class ReaderNavigationBar : ConstraintLayout {
 
+    private val binding: ReaderNavigationBarBinding =
+        ReaderNavigationBarBinding.inflate(LayoutInflater.from(context))
+
     init {
-        inflate(context, R.layout.reader_navigation_bar, this)
         setCurrentlySelected(1) // Default to 1 which is home screen icon
     }
 
@@ -30,37 +33,39 @@ class ReaderNavigationBar : ConstraintLayout {
     )
 
     fun setCurrentlySelected(selection: Int) {
-        when (selection) {
-            0 -> {
-                add_source.drawable.setTint(Color.WHITE)
-                all_source.drawable.setTintList(null)
-                search_source.drawable.setTintList(null)
-                saved_source.drawable.setTintList(null)
-            }
-            1 -> {
-                add_source.drawable.setTintList(null)
-                all_source.drawable.setTint(Color.WHITE)
-                search_source.drawable.setTintList(null)
-                saved_source.drawable.setTintList(null)
-            }
-            2 -> {
-                add_source.drawable.setTintList(null)
-                all_source.drawable.setTintList(null)
-                search_source.drawable.setTint(Color.WHITE)
-                saved_source.drawable.setTintList(null)
-            }
-            3 -> {
-                add_source.drawable.setTintList(null)
-                all_source.drawable.setTintList(null)
-                search_source.drawable.setTintList(null)
-                saved_source.drawable.setTint(Color.WHITE)
-            }
-            else -> {
-                add_source.drawable.setTintList(null)
-                all_source.drawable.setTintList(null)
-                search_source.drawable.setTintList(null)
-                saved_source.drawable.setTintList(null)
-                Log.d(TAG, "Navigation Selection Out of Range")
+        with(binding) {
+            when (selection) {
+                0 -> {
+                    addSource.drawable.setTint(Color.WHITE)
+                    allSource.drawable.setTintList(null)
+                    searchSource.drawable.setTintList(null)
+                    savedSource.drawable.setTintList(null)
+                }
+                1 -> {
+                    addSource.drawable.setTintList(null)
+                    allSource.drawable.setTint(Color.WHITE)
+                    searchSource.drawable.setTintList(null)
+                    savedSource.drawable.setTintList(null)
+                }
+                2 -> {
+                    addSource.drawable.setTintList(null)
+                    allSource.drawable.setTintList(null)
+                    searchSource.drawable.setTint(Color.WHITE)
+                    savedSource.drawable.setTintList(null)
+                }
+                3 -> {
+                    addSource.drawable.setTintList(null)
+                    allSource.drawable.setTintList(null)
+                    searchSource.drawable.setTintList(null)
+                    savedSource.drawable.setTint(Color.WHITE)
+                }
+                else -> {
+                    addSource.drawable.setTintList(null)
+                    allSource.drawable.setTintList(null)
+                    searchSource.drawable.setTintList(null)
+                    savedSource.drawable.setTintList(null)
+                    Log.d(TAG, "Navigation Selection Out of Range")
+                }
             }
         }
     }
@@ -78,28 +83,28 @@ class ReaderNavigationBar : ConstraintLayout {
     }
 
     private fun setAddSourceOnClick(onClickListener: OnClickListener) {
-        with(add_source) {
+        with(binding.addSource) {
             setOnClickListener(onClickListener)
             onClickEffect()
         }
     }
 
     private fun setAllSourceOnClick(onClickListener: OnClickListener) {
-        with(all_source) {
+        with(binding.allSource) {
             setOnClickListener(onClickListener)
             onClickEffect()
         }
     }
 
     private fun setSearchSourceOnClick(onClickListener: OnClickListener) {
-        with(search_source) {
+        with(binding.searchSource) {
             setOnClickListener(onClickListener)
             onClickEffect()
         }
     }
 
     private fun setSavedSourceOnClick(onClickListener: OnClickListener) {
-        with(saved_source) {
+        with(binding.savedSource) {
             setOnClickListener(onClickListener)
             onClickEffect()
         }
