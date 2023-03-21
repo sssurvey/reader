@@ -11,12 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.domain.model.entities.ArticleEntity
-import com.haomins.reader.R
 import com.haomins.reader.adapters.ArticleTitleListAdapter
+import com.haomins.reader.databinding.FragmentArticleListBinding
 import com.haomins.reader.utils.GlideUtils
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_article_list.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -43,6 +42,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     lateinit var glideUtils: GlideUtils
 
     private lateinit var currentArticleListViewMode: ArticleListViewMode
+    private lateinit var binding: FragmentArticleListBinding
 
     private val articleListViewModel by viewModels<ArticleListViewModel>()
     private val articleTitleUiItems = mutableListOf<ArticleEntity>()
@@ -57,7 +57,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         }
     }
     private val adapter by lazy {
-        article_title_recycler_view.adapter
+        binding.articleTitleRecyclerView.adapter
     }
     private val articleTitleListUiItemObserver by lazy {
         Observer<Set<ArticleEntity>> { set ->
@@ -82,8 +82,9 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_article_list, container, false)
+    ): View {
+        binding = FragmentArticleListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,7 +92,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
         currentArticleListViewMode = arguments?.get(LOAD_MODE_KEY) as ArticleListViewMode
         loadArticleList()
         registerLiveDataObservers()
-        article_title_recycler_view.apply {
+        binding.articleTitleRecyclerView.apply {
             setHasFixedSize(true)
             adapter = ArticleTitleListAdapter(
                 articleTitleUiItems,
@@ -134,11 +135,11 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     }
 
     private fun hideProgressBar() {
-        handler.postDelayed({ bottom_progress_bar.visibility = View.GONE }, PROGRESS_BAR_DELAY)
+        handler.postDelayed({ binding.bottomProgressBar.visibility = View.GONE }, PROGRESS_BAR_DELAY)
     }
 
     private fun showProgressBar() {
-        bottom_progress_bar.visibility = View.VISIBLE
+        binding.bottomProgressBar.visibility = View.VISIBLE
     }
 
     private fun registerLiveDataObservers() {
