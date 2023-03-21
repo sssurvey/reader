@@ -16,7 +16,6 @@ import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -124,6 +123,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val SPLASH_ART_COUNTDOWN_TIMER_SECONDS = 2L
-//        private const val TAG = "MainActivity"
     }
 }

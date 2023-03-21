@@ -9,7 +9,6 @@ import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.ArticleDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_article_detail.*
 
 @AndroidEntryPoint
 class ArticleDetailActivity : AppCompatActivity() {
@@ -41,8 +40,8 @@ class ArticleDetailActivity : AppCompatActivity() {
                 this,
                 it
             )
-            article_detail_view_pager.adapter = adapter
-            article_detail_view_pager.setCurrentItem(currentPosition, false)
+            binding.articleDetailViewPager.adapter = adapter
+            binding.articleDetailViewPager.setCurrentItem(currentPosition, false)
         }
     }
 

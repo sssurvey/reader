@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
-import com.haomins.reader.databinding.ActivityAddSourceBinding
 import com.haomins.reader.databinding.ActivitySettingsBinding
 import com.haomins.reader.utils.slideAnimation
 import com.haomins.reader.utils.slideInAnimation
