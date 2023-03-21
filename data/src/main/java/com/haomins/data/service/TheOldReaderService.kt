@@ -1,10 +1,10 @@
 package com.haomins.data.service
 
-import com.haomins.data_model.remote.article.ArticleResponseModel
-import com.haomins.data_model.remote.article.ItemRefListResponseModel
-import com.haomins.data_model.remote.subscription.AddSourceResponseModel
-import com.haomins.data_model.remote.subscription.SubscriptionSourceListResponseModel
-import com.haomins.data_model.remote.user.UserAuthResponseModel
+import com.haomins.model.remote.article.ArticleResponseModel
+import com.haomins.model.remote.article.ItemRefListResponseModel
+import com.haomins.model.remote.subscription.AddSourceResponseModel
+import com.haomins.model.remote.subscription.SubscriptionSourceListResponseModel
+import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Header

@@ -35,17 +35,17 @@ class DarkModeManager @Inject constructor(
     }
 
     fun checkIsCurrentDarkModeEnabled(): Boolean {
-        return sharedPreferences.getBoolean(com.haomins.data_model.SharedPreferenceKey.IS_DARK_MODE_ENABLED)
+        return sharedPreferences.getBoolean(com.haomins.model.SharedPreferenceKey.IS_DARK_MODE_ENABLED)
     }
 
     private fun followSystemDarkMode(): Boolean {
-        return !sharedPreferences.contains(com.haomins.data_model.SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS)
+        return !sharedPreferences.contains(com.haomins.model.SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS)
     }
 
     private fun saveDarkModeSettings(isEnabled: Boolean) {
         with(sharedPreferences) {
-            putValue(com.haomins.data_model.SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS, true)
-            putValue(com.haomins.data_model.SharedPreferenceKey.IS_DARK_MODE_ENABLED, isEnabled)
+            putValue(com.haomins.model.SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS, true)
+            putValue(com.haomins.model.SharedPreferenceKey.IS_DARK_MODE_ENABLED, isEnabled)
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.haomins.data
 
-import com.haomins.data_model.remote.article.*
-import com.haomins.data_model.remote.subscription.AddSourceResponseModel
-import com.haomins.data_model.remote.subscription.SubscriptionSourceListResponseModel
-import com.haomins.data_model.remote.user.UserAuthResponseModel
+import com.haomins.model.remote.article.*
+import com.haomins.model.remote.subscription.AddSourceResponseModel
+import com.haomins.model.remote.subscription.SubscriptionSourceListResponseModel
+import com.haomins.model.remote.user.UserAuthResponseModel
 import com.haomins.data.service.TheOldReaderService
 import io.reactivex.Single
 

@@ -10,7 +10,7 @@ java {
 
 dependencies {
     implementation domainDependencies
-    implementation project(":data-model")
+    implementation project(':model')
     api project(":domain-model")
     testImplementation domainTestImplementation
 }

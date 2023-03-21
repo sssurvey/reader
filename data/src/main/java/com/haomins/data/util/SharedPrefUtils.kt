@@ -1,7 +1,7 @@
 package com.haomins.data.util
 
 import android.content.SharedPreferences
-import com.haomins.data_model.SharedPreferenceKey
+import com.haomins.model.SharedPreferenceKey
 
 fun SharedPreferences.getString(key: SharedPreferenceKey): String {
     return this.getString(key.string, "")!!

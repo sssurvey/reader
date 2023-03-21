@@ -37,7 +37,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':domain')
-    api project(':data-model')
+    api project(':model')
     implementation dataDependencies
     kapt dataKaptDependencies
     testImplementation dataTestImplementation

@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.haomins.data_model.entity.SubscriptionEntity
+import com.haomins.model.entity.SubscriptionEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 

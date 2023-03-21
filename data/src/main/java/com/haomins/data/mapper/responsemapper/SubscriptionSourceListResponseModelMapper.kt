@@ -1,7 +1,7 @@
 package com.haomins.data.mapper.responsemapper
 
 import com.haomins.data.mapper.BaseDataToDomainMapper
-import com.haomins.data_model.remote.subscription.SubscriptionSourceListResponseModel
+import com.haomins.model.remote.subscription.SubscriptionSourceListResponseModel
 import javax.inject.Inject
 
 class SubscriptionSourceListResponseModelMapper @Inject constructor() :

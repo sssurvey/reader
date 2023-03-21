@@ -1,7 +1,7 @@
 package com.haomins.data.mapper.entitymapper
 
 import com.haomins.data.mapper.BaseDataToDomainMapper
-import com.haomins.data_model.entity.SubscriptionEntity
+import com.haomins.model.entity.SubscriptionEntity
 import javax.inject.Inject
 
 class SubscriptionEntityMapper @Inject constructor() :

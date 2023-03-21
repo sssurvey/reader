@@ -1,7 +1,7 @@
 package com.haomins.data.repositories.local
 
 import com.haomins.data.db.dao.SubscriptionDao
-import com.haomins.data_model.entity.SubscriptionEntity
+import com.haomins.model.entity.SubscriptionEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject

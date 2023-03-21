@@ -4,12 +4,11 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
-import com.haomins.data_model.SharedPreferenceKey
-import com.haomins.data_model.remote.article.ArticleResponseModel
+import com.haomins.model.SharedPreferenceKey
+import com.haomins.model.remote.article.ArticleResponseModel
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.extractImageFromImgTags
 import com.haomins.data.util.getString
-import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -129,8 +128,8 @@ class ArticleListRepository @Inject constructor(
             }
     }
 
-    private fun ArticleResponseModel.toArticleEntity(): com.haomins.data_model.entity.ArticleEntity {
-        return com.haomins.data_model.entity.ArticleEntity(
+    private fun ArticleResponseModel.toArticleEntity(): com.haomins.model.entity.ArticleEntity {
+        return com.haomins.model.entity.ArticleEntity(
             itemId = items.first().id,
             itemTitle = items.first().title,
             itemUpdatedMillisecond = items.first().updatedMillisecond,

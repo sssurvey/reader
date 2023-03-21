@@ -3,7 +3,6 @@ package com.haomins.data.repositories
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.data.util.DateUtils
-import com.haomins.domain_model.entities.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -46,7 +45,7 @@ class ArticleDetailRepositoryTest {
     fun `test loadArticleDetail success`() {
 
         val testId = "test id"
-        val testArticleEntity = com.haomins.data_model.entity.ArticleEntity(
+        val testArticleEntity = com.haomins.model.entity.ArticleEntity(
             itemId = testId,
             feedId = "test feed id",
             itemTitle = "test title",

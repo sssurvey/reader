@@ -4,8 +4,8 @@ import android.content.SharedPreferences
 import com.haomins.data.MockTheOldReaderService
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
-import com.haomins.data_model.SharedPreferenceKey
-import com.haomins.data_model.entity.ArticleEntity
+import com.haomins.model.SharedPreferenceKey
+import com.haomins.model.entity.ArticleEntity
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.DateUtils
 import io.reactivex.Single

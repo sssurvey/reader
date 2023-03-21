@@ -4,9 +4,9 @@ import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
-import com.haomins.data_model.SharedPreferenceKey
-import com.haomins.data_model.entity.SubscriptionEntity
-import com.haomins.data_model.remote.subscription.SubscriptionItemModel
+import com.haomins.model.SharedPreferenceKey
+import com.haomins.model.entity.SubscriptionEntity
+import com.haomins.model.remote.subscription.SubscriptionItemModel
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.repositories.SourcesRepository
 import io.reactivex.Single
