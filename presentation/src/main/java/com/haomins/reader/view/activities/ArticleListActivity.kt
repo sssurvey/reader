@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.haomins.reader.R
+import com.haomins.reader.databinding.ActivityArticleListBinding
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
-import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
+import com.haomins.reader.view.fragments.articles.ArticleListFragment
+import com.haomins.reader.view.fragments.articles.ArticleListFragment.Companion.LOAD_MODE_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,11 +22,13 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
         private const val TAG = "ArticleListActivity"
     }
 
+    private lateinit var binding: ActivityArticleListBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "::onCreate")
+        inflateView()
         slideInAnimation()
-        setContentView(R.layout.activity_article_list)
         checkIntent()
     }
 
@@ -83,5 +86,9 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
         ).commit()
     }
 
+    private fun inflateView() {
+        binding = ActivityArticleListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
 
 }

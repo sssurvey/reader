@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.haomins.reader.R
+import com.haomins.reader.databinding.FragmentAddSourceBinding
 import com.haomins.reader.utils.hideKeyboard
 import com.haomins.reader.utils.showSnackbar
 import com.haomins.reader.viewModels.AddSourceViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_add_source.*
 
 @AndroidEntryPoint
 class AddSourceFragment : Fragment() {
@@ -23,6 +23,7 @@ class AddSourceFragment : Fragment() {
     }
 
     private val addSourceViewModel by viewModels<AddSourceViewModel>()
+    private lateinit var binding: FragmentAddSourceBinding
 
     private val isSourceAddedObserver by lazy {
         Observer<Pair<AddSourceViewModel.AddSourceStatus, String>> {
@@ -45,8 +46,9 @@ class AddSourceFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_add_source, container, false)
+    ): View {
+        binding = FragmentAddSourceBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,37 +63,52 @@ class AddSourceFragment : Fragment() {
     }
 
     private fun setOnclickListeners() {
-        add_feed_button.setOnClickListener { if (!feed_input_box.text.isNullOrEmpty()) addFeedOnClick() }
-        add_medium_feed_button.setOnClickListener { if (!medium_feed_desc.text.isNullOrEmpty()) addMediumFeedOnClick() }
+        with(binding) {
+            addFeedButton
+                .setOnClickListener { if (!feedInputBox.text.isNullOrEmpty()) addFeedOnClick() }
+            addMediumFeedButton
+                .setOnClickListener { if (!mediumFeedDesc.text.isNullOrEmpty()) addMediumFeedOnClick() }
+        }
     }
 
     private fun addFeedOnClick() {
-        view?.hideKeyboard()
-        addSourceViewModel.addSource(source = feed_input_box.text.toString())
+        with(binding) {
+            root.hideKeyboard()
+            addSourceViewModel.addSource(source = feedInputBox.text.toString())
+        }
     }
 
     private fun addMediumFeedOnClick() {
-        view?.hideKeyboard()
-        addSourceViewModel.addMediumSource(source = medium_feed_input_box.text.toString())
+        with(binding) {
+            root.hideKeyboard()
+            addSourceViewModel.addMediumSource(source = mediumFeedInputBox.text.toString())
+        }
     }
 
     private fun resetTextField() {
-        feed_input_box.apply {
-            text?.clear()
-            clearFocus()
-        }
-        medium_feed_input_box.apply {
-            text?.clear()
-            clearFocus()
+        with(binding) {
+            feedInputBox.apply {
+                text?.clear()
+                clearFocus()
+            }
+            mediumFeedInputBox.apply {
+                text?.clear()
+                clearFocus()
+            }
         }
     }
 
     private fun configMediumFeedEditText() {
-        medium_feed_input_box.doOnTextChanged { text, _, _, after ->
-            when (after > 0) {
-                true -> medium_feed_desc.text =
-                    getString(R.string.medium_feed_sample_desc_template, text)
-                false -> medium_feed_desc.text = getString(R.string.medium_feed_sample_desc)
+        with(binding) {
+            mediumFeedInputBox.doOnTextChanged { text, _, _, after ->
+                when (after > 0) {
+                    true ->
+                        mediumFeedDesc.text =
+                            getString(R.string.medium_feed_sample_desc_template, text)
+                    false ->
+                        mediumFeedDesc.text =
+                            getString(R.string.medium_feed_sample_desc)
+                }
             }
         }
     }

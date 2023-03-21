@@ -1,4 +1,4 @@
-package com.haomins.reader.view.fragments
+package com.haomins.reader.view.fragments.articles
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -15,10 +15,10 @@ import androidx.lifecycle.Observer
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.haomins.reader.R
+import com.haomins.reader.databinding.FragmentArticleDetailBinding
 import com.haomins.reader.view.activities.ArticleDetailActivity.Companion.ARTICLE_ITEM_ID
 import com.haomins.reader.viewModels.ArticleDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_article_detail.*
 
 @AndroidEntryPoint
 class ArticleDetailFragment : Fragment() {
@@ -44,22 +44,26 @@ class ArticleDetailFragment : Fragment() {
     private val articleDetailViewModel by viewModels<ArticleDetailViewModel>()
     private var articleId: String = ""
 
+    private lateinit var binding: FragmentArticleDetailBinding
     private val handler by lazy {
         Handler()
     }
 
     private val contentDataObserver by lazy {
         Observer<ArticleDetailUiItem> {
-            article_detail_title_text_view.text = it.title
-            article_detail_author_text_view.text = it.author
-            article_detail_update_time_text_view.text = it.updateTime
-            article_detail_web_view.loadDataWithBaseURL(
-                BASE_URL,
-                (IMAGE_CSS_STYLE + it.contentHtmlData),
-                MIME_TYPE,
-                ENCODING,
-                BASE_URL
-            )
+            with(binding) {
+                articleDetailTitleTextView.text = it.title
+                articleDetailAuthorTextView.text = it.author
+                articleDetailUpdateTimeTextView.text = it.updateTime
+                articleDetailWebView.loadDataWithBaseURL(
+                    BASE_URL,
+                    (IMAGE_CSS_STYLE + it.contentHtmlData),
+                    MIME_TYPE,
+                    ENCODING,
+                    BASE_URL
+                )
+            }
+
         }
     }
 
@@ -82,8 +86,9 @@ class ArticleDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_article_detail, container, false)
+    ): View {
+        binding = FragmentArticleDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,12 +106,14 @@ class ArticleDetailFragment : Fragment() {
 
     private fun configWebView() {
         checkDarkModeSupport()
-        article_detail_web_view.webViewClient = webViewClient
-        article_detail_web_view.settings.apply {
-            domStorageEnabled = true
-            loadsImagesAutomatically = true
-            setAppCacheEnabled(true)
-            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        with(binding) {
+            articleDetailWebView.webViewClient = webViewClient
+            articleDetailWebView.settings.apply {
+                domStorageEnabled = true
+                loadsImagesAutomatically = true
+                setAppCacheEnabled(true)
+                mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+            }
         }
     }
 
@@ -115,10 +122,10 @@ class ArticleDetailFragment : Fragment() {
             && articleDetailViewModel.isDarkModeEnabled()
         ) {
             context?.getColor(R.color.default_background)?.let {
-                article_detail_web_view.setBackgroundColor(it)
+                binding.articleDetailWebView.setBackgroundColor(it)
             }
             WebSettingsCompat.setForceDark(
-                article_detail_web_view.settings,
+                binding.articleDetailWebView.settings,
                 WebSettingsCompat.FORCE_DARK_ON
             )
         }
@@ -146,18 +153,14 @@ class ArticleDetailFragment : Fragment() {
     private fun hideProgressBar() {
         handler.postDelayed(
             {
-                top_progress_bar?.let {
-                    top_progress_bar.visibility = View.INVISIBLE
-                }
+                binding.topProgressBar.bottomLoadingProgressBar.visibility = View.INVISIBLE
             },
             PROGRESS_BAR_DELAY
         )
     }
 
     private fun showProgressBar() {
-        top_progress_bar?.let {
-            top_progress_bar.visibility = View.VISIBLE
-        }
+        binding.topProgressBar.bottomLoadingProgressBar.visibility = View.VISIBLE
     }
 
 }

@@ -8,12 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.haomins.reader.R
 import com.haomins.reader.adapters.SourceTitleListAdapter
+import com.haomins.reader.databinding.FragmentSourceListTitleBinding
 import com.haomins.reader.view.activities.MainActivity
 import com.haomins.reader.viewModels.SourceTitleListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_source_list_title.*
 
 @AndroidEntryPoint
 class SourceTitleListFragment : Fragment() {
@@ -25,6 +24,7 @@ class SourceTitleListFragment : Fragment() {
     private val sourceTitleListViewModel by viewModels<SourceTitleListViewModel>()
     private val sourceListDisplayDataList: MutableList<SourceTitleListViewModel.SourceListUi> =
         mutableListOf()
+    private lateinit var binding: FragmentSourceListTitleBinding
 
     private val sourceTitleListAdapter by lazy {
         SourceTitleListAdapter(
@@ -51,18 +51,15 @@ class SourceTitleListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_source_list_title, container, false)
+    ): View {
+        binding = FragmentSourceListTitleBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerLiveDataObserver()
-        source_title_recycler_view.apply {
-            setHasFixedSize(true)
-            layoutManager = recyclerLayoutManager
-            adapter = sourceTitleListAdapter
-        }
+        initiateRecyclerView()
     }
 
     override fun onResume() {
@@ -76,6 +73,16 @@ class SourceTitleListFragment : Fragment() {
                 viewLifecycleOwner,
                 sourceListDataSetObserver
             )
+        }
+    }
+
+    private fun initiateRecyclerView() {
+        with(binding) {
+            sourceTitleRecyclerView.apply {
+                setHasFixedSize(true)
+                layoutManager = recyclerLayoutManager
+                adapter = sourceTitleListAdapter
+            }
         }
     }
 

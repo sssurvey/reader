@@ -1,4 +1,4 @@
-package com.haomins.reader.view.fragments
+package com.haomins.reader.view.fragments.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.haomins.reader.R
+import com.haomins.reader.databinding.FragmentDisclosureBinding
 import com.haomins.reader.viewModels.DisclosureViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_disclosure.*
 
 @AndroidEntryPoint
 class DisclosureFragment : Fragment() {
@@ -19,13 +18,15 @@ class DisclosureFragment : Fragment() {
     }
 
     private val disclosureViewModel by viewModels<DisclosureViewModel>()
+    private lateinit var binding: FragmentDisclosureBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_disclosure, container, false)
+    ): View {
+        binding = FragmentDisclosureBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,11 +36,11 @@ class DisclosureFragment : Fragment() {
 
     private fun loadDisclosureContents() {
         with(disclosureViewModel) {
-            news_disclosure_title.text = loadDisclosureTitle()
+            binding.newsDisclosureTitle.text = loadDisclosureTitle()
             loadDisclosure { disclosureData ->
-                news_disclosure_content.text = disclosureData.disclosureContent
-                news_disclosure_contact_email.text = disclosureData.contactEmail
-                news_disclosure_contact_website.text = disclosureData.website
+                binding.newsDisclosureContent.text = disclosureData.disclosureContent
+                binding.newsDisclosureContactEmail.text = disclosureData.contactEmail
+                binding.newsDisclosureContactWebsite.text = disclosureData.website
             }
         }
     }

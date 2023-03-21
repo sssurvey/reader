@@ -7,24 +7,25 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
+import com.haomins.reader.databinding.ActivityMainBinding
 import com.haomins.reader.utils.delayedUiOperation
-import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
-import com.haomins.reader.view.fragments.DisclosureFragment
+import com.haomins.reader.view.fragments.articles.ArticleListFragment
+import com.haomins.reader.view.fragments.articles.ArticleListFragment.Companion.LOAD_MODE_KEY
+import com.haomins.reader.view.fragments.settings.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SourceTitleListFragment
 import com.haomins.reader.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        inflateView()
         showSplashArt()
         handleLoginFragment()
     }
@@ -88,10 +89,15 @@ class MainActivity : AppCompatActivity() {
         showSourceListFragment()
     }
 
+    private fun inflateView() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
     private fun showSplashArt() {
         delayedUiOperation(
             seconds = SPLASH_ART_COUNTDOWN_TIMER_SECONDS,
-            doAfterDelay = { splash_screen.visibility = View.GONE }
+            doAfterDelay = { binding.splashScreen.visibility = View.GONE }
         )
     }
 
@@ -117,6 +123,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val SPLASH_ART_COUNTDOWN_TIMER_SECONDS = 2L
-//        private const val TAG = "MainActivity"
     }
 }

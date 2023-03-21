@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
+import com.haomins.reader.databinding.SourceTitleRecyclerViewItemBinding
 import com.haomins.reader.viewModels.SourceTitleListViewModel
-import kotlinx.android.synthetic.main.source_title_recycler_view_item.view.*
 import java.net.URL
 
 class SourceTitleListAdapter(
@@ -17,12 +17,16 @@ class SourceTitleListAdapter(
     private val application: Application
 ) : RecyclerView.Adapter<SourceTitleListAdapter.CustomViewHolder>() {
 
-    inner class CustomViewHolder(val viewHolder: View) : RecyclerView.ViewHolder(viewHolder)
+    inner class CustomViewHolder(val binding: SourceTitleRecyclerViewItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val sourceListItemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.source_title_recycler_view_item, parent, false)
-        return CustomViewHolder(sourceListItemView)
+        val itemBinding = SourceTitleRecyclerViewItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return CustomViewHolder(itemBinding)
     }
 
     override fun getItemCount(): Int {
@@ -39,7 +43,7 @@ class SourceTitleListAdapter(
             Set custom view holder for RSS sources.
              */
             SourceTitleListViewModel.TYPE.RSS_SOURCE -> {
-                holder.viewHolder.source_title_text_view.text = name
+                holder.binding.sourceTitleTextView.text = name
                 sourceIconUrl?.let { loadIconImage(holder, it) }
                 setOnClick(holder, type, id)
             }
@@ -48,44 +52,44 @@ class SourceTitleListAdapter(
              */
             SourceTitleListViewModel.TYPE.ALL_ITEMS_OPTION -> {
                 holder.setIsRecyclable(false)
-                holder.viewHolder.source_title_text_view.textAlignment =
+                holder.binding.sourceTitleTextView.textAlignment =
                     View.TEXT_ALIGNMENT_TEXT_END
-                holder.viewHolder.source_icon_image_view.visibility = View.INVISIBLE
-                holder.viewHolder.source_title_text_view.text = name
-                holder.viewHolder.source_title_text_view.textSize = 30.0f
-                holder.viewHolder.source_title_text_view.setTextColor(
+                holder.binding.sourceIconImageView.visibility = View.INVISIBLE
+                holder.binding.sourceTitleTextView.text = name
+                holder.binding.sourceTitleTextView.textSize = 30.0f
+                holder.binding.sourceTitleTextView.setTextColor(
                     application.resources.getColor(R.color.colorAccent, null)
                 ) //TODO: to be implemented
                 setOnClick(holder, type, id)
             }
             SourceTitleListViewModel.TYPE.ADD_SOURCE_OPTION -> {
                 holder.setIsRecyclable(false)
-                holder.viewHolder.source_title_text_view.textAlignment =
+                holder.binding.sourceTitleTextView.textAlignment =
                     View.TEXT_ALIGNMENT_TEXT_END
-                holder.viewHolder.source_icon_image_view.visibility = View.INVISIBLE
-                holder.viewHolder.source_title_text_view.text = name
-                holder.viewHolder.source_title_text_view.textSize = 30.0f
-                holder.viewHolder.source_title_text_view.setTextColor(
+                holder.binding.sourceIconImageView.visibility = View.INVISIBLE
+                holder.binding.sourceTitleTextView.text = name
+                holder.binding.sourceTitleTextView.textSize = 30.0f
+                holder.binding.sourceTitleTextView.setTextColor(
                     application.resources.getColor(R.color.colorPrimary, null)
                 ) //TODO: to be implemented
                 setOnClick(holder, type, id)
             }
             SourceTitleListViewModel.TYPE.SETTINGS_OPTION -> {
                 holder.setIsRecyclable(false)
-                holder.viewHolder.source_title_text_view.textAlignment =
+                holder.binding.sourceTitleTextView.textAlignment =
                     View.TEXT_ALIGNMENT_TEXT_END
-                holder.viewHolder.source_icon_image_view.visibility = View.INVISIBLE
-                holder.viewHolder.source_title_text_view.text = name
-                holder.viewHolder.source_title_text_view.textSize = 30.0f
+                holder.binding.sourceIconImageView.visibility = View.INVISIBLE
+                holder.binding.sourceTitleTextView.text = name
+                holder.binding.sourceTitleTextView.textSize = 30.0f
                 setOnClick(holder, type, id)
             } //TODO: to be implemented
             SourceTitleListViewModel.TYPE.SUMMARY_OPTION -> {
                 holder.setIsRecyclable(false)
-                holder.viewHolder.source_title_text_view.textAlignment =
+                holder.binding.sourceTitleTextView.textAlignment =
                     View.TEXT_ALIGNMENT_TEXT_END
-                holder.viewHolder.source_icon_image_view.visibility = View.INVISIBLE
-                holder.viewHolder.source_title_text_view.text = name
-                holder.viewHolder.source_title_text_view.textSize = 20.0f
+                holder.binding.sourceIconImageView.visibility = View.INVISIBLE
+                holder.binding.sourceTitleTextView.text = name
+                holder.binding.sourceTitleTextView.textSize = 20.0f
                 setOnClick(holder, type, id)
             } //TODO: to be implemented
         }
@@ -96,14 +100,14 @@ class SourceTitleListAdapter(
         type: SourceTitleListViewModel.TYPE,
         id: String
     ) {
-        holder.viewHolder.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             sourceListRecyclerViewItemClickedAt(type, id)
         }
     }
 
     private fun loadIconImage(holder: CustomViewHolder, url: URL) {
         sourceTitleListViewModel.loadImageIcon(
-            imageView = holder.viewHolder.source_icon_image_view,
+            imageView = holder.binding.sourceIconImageView,
             url = url
         )
     }
