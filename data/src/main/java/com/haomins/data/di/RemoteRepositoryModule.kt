@@ -1,6 +1,7 @@
 package com.haomins.data.di
 
 import com.haomins.data.repositories.*
+import com.haomins.data.repositories.remote.SubscriptionRemoteDataStore
 import com.haomins.domain.repositories.*
 import dagger.Binds
 import dagger.Module
@@ -10,7 +11,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-interface RepositoryModule {
+interface RemoteRepositoryModule {
 
     @Binds
     @ViewModelScoped
@@ -29,8 +30,8 @@ interface RepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindSourcesRepository(subscriptionRemoteDataStore: SubscriptionRemoteDataStore):
-            SubscriptionRepository
+    fun bindSubscriptionRemoteRepository(subscriptionRemoteDataStore: SubscriptionRemoteDataStore):
+            SubscriptionRemoteRepository
 
     @Binds
     @ViewModelScoped

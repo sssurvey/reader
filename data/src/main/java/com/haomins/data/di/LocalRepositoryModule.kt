@@ -14,6 +14,8 @@ interface LocalRepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindSourceLocalRepository(subscriptionLocalDataStore: SubscriptionLocalDataStore): SubscriptionLocalRepository
+    fun bindSubscriptionLocalRepository(
+        subscriptionLocalDataStore: SubscriptionLocalDataStore
+    ): SubscriptionLocalRepository
 
 }

@@ -2,6 +2,7 @@ package com.haomins.data.repositories
 
 import android.content.SharedPreferences
 import com.haomins.data.db.dao.SubscriptionDao
+import com.haomins.data.repositories.remote.SubscriptionRemoteDataStore
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.entity.SubscriptionEntity

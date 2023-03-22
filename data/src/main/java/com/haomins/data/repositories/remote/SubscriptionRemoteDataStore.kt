@@ -1,10 +1,10 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.remote
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.repositories.SubscriptionRepository
+import com.haomins.domain.repositories.SubscriptionRemoteRepository
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.model.remote.subscription.SubscriptionItemModel
@@ -17,7 +17,7 @@ class SubscriptionRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val subscriptionDao: SubscriptionDao,
     private val sharedPreferences: SharedPreferences
-) : SubscriptionRepository {
+) : SubscriptionRemoteRepository {
 
     override fun loadSubscriptionList(): Single<List<SubscriptionEntity>> {
         return theOldReaderService
