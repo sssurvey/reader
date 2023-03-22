@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.usecase.source.LoadAndSaveSubscriptionList
+import com.haomins.domain.usecase.subscription.LoadAndSaveSubscriptionList
 import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.reader.R
 import com.haomins.reader.utils.GlideUtils
@@ -17,7 +17,7 @@ import java.net.URL
 import javax.inject.Inject
 
 @HiltViewModel
-class SourceTitleListViewModel @Inject constructor(
+class SubscriptionListViewModel @Inject constructor(
     private val loadAndSaveSubscriptionList: LoadAndSaveSubscriptionList,
     private val glideUtils: GlideUtils,
     private val application: Application,
@@ -35,28 +35,28 @@ class SourceTitleListViewModel @Inject constructor(
         SUMMARY_OPTION,
     }
 
-    data class SourceListUi(
+    data class SubscriptionListUi(
         val name: String,
         val sourceIconUrl: URL? = null,
         val id: String,
         val type: TYPE,
     )
 
-    private val _sourceListUiDataSet by lazy {
-        MutableLiveData<List<SourceListUi>>()
+    private val _subscriptionListUiDataSet by lazy {
+        MutableLiveData<List<SubscriptionListUi>>()
     }
 
-    val sourceListUiDataSet: LiveData<List<SourceListUi>> = _sourceListUiDataSet
+    val subscriptionListUiDataSet: LiveData<List<SubscriptionListUi>> = _subscriptionListUiDataSet
 
     fun loadImageIcon(imageView: ImageView, url: URL) {
         glideUtils.loadIconImage(imageView, url)
     }
 
-    fun loadSourceSubscriptionList() {
+    fun loadSubscriptionList() {
         loadAndSaveSubscriptionList.execute(
             object : DisposableSingleObserver<List<SubscriptionEntity>>() {
                 override fun onSuccess(t: List<SubscriptionEntity>) {
-                    _sourceListUiDataSet.postValue(populateSubSourceDataSet(t))
+                    _subscriptionListUiDataSet.postValue(populateSubSourceDataSet(t))
                     Log.d(TAG, "loadAndSaveSubscriptionList :: onSuccess")
                 }
 
@@ -67,23 +67,23 @@ class SourceTitleListViewModel @Inject constructor(
         )
     }
 
-    private fun MutableList<SourceListUi>.populateSourceListMenus() {
+    private fun MutableList<SubscriptionListUi>.populateSourceListMenus() {
         add(
-            SourceListUi(
+            SubscriptionListUi(
                 name = application.resources.getString(R.string.menu_all_articles),
                 type = TYPE.ALL_ITEMS_OPTION,
                 id = ""
             )
         )
         add(
-            SourceListUi(
+            SubscriptionListUi(
                 name = application.resources.getString(R.string.menu_add_sources),
                 type = TYPE.ADD_SOURCE_OPTION,
                 id = ""
             )
         )
         add(
-            SourceListUi(
+            SubscriptionListUi(
                 name = application.resources.getString(R.string.menu_settings),
                 type = TYPE.SETTINGS_OPTION,
                 id = ""
@@ -91,16 +91,16 @@ class SourceTitleListViewModel @Inject constructor(
         )
     }
 
-    private fun MutableList<SourceListUi>.addSourceListSummary(count: Int) {
-        add(SourceListUi(name = "$count Subscriptions", type = TYPE.SUMMARY_OPTION, id = ""))
+    private fun MutableList<SubscriptionListUi>.addSourceListSummary(count: Int) {
+        add(SubscriptionListUi(name = "$count Subscriptions", type = TYPE.SUMMARY_OPTION, id = ""))
     }
 
-    private fun populateSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>): MutableList<SourceListUi> {
-        return mutableListOf<SourceListUi>().apply {
+    private fun populateSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>): MutableList<SubscriptionListUi> {
+        return mutableListOf<SubscriptionListUi>().apply {
             populateSourceListMenus()
             subscriptionEntities.forEach {
                 add(
-                    SourceListUi(
+                    SubscriptionListUi(
                         name = it.title,
                         sourceIconUrl = URL(TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl),
                         id = it.id,

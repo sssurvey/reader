@@ -12,6 +12,6 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         tools:itemCount="15"
-        tools:listitem="@layout/source_title_recycler_view_item" />
+        tools:listitem="@layout/subscription_recycler_view_item" />
 
 </LinearLayout>

@@ -2,7 +2,7 @@ package com.haomins.model.remote.subscription
 
 import com.google.gson.annotations.SerializedName
 
-data class SubscriptionSourceListResponseModel(
+data class SubscriptionListResponseModel(
 
     @SerializedName("subscriptions")
     val subscriptions: ArrayList<SubscriptionItemModel>

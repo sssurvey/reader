@@ -8,38 +8,38 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.haomins.reader.adapters.SourceTitleListAdapter
-import com.haomins.reader.databinding.FragmentSourceListTitleBinding
+import com.haomins.reader.adapters.SubscriptionListAdapter
+import com.haomins.reader.databinding.FragmentSubscriptionListBinding
 import com.haomins.reader.view.activities.MainActivity
-import com.haomins.reader.viewModels.SourceTitleListViewModel
+import com.haomins.reader.viewModels.SubscriptionListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SourceTitleListFragment : Fragment() {
+class SubscriptionListFragment : Fragment() {
 
     companion object {
-        const val TAG = "SourceTitleListFragment"
+        const val TAG = "SubscriptionListFragment"
     }
 
-    private val sourceTitleListViewModel by viewModels<SourceTitleListViewModel>()
-    private val sourceListDisplayDataList: MutableList<SourceTitleListViewModel.SourceListUi> =
+    private val subscriptionListViewModel by viewModels<SubscriptionListViewModel>()
+    private val subscriptionListDisplayDataList: MutableList<SubscriptionListViewModel.SubscriptionListUi> =
         mutableListOf()
-    private lateinit var binding: FragmentSourceListTitleBinding
+    private lateinit var binding: FragmentSubscriptionListBinding
 
-    private val sourceTitleListAdapter by lazy {
-        SourceTitleListAdapter(
-            subSourceDisplayItems = sourceListDisplayDataList,
-            sourceTitleListViewModel = sourceTitleListViewModel,
+    private val subscriptionListAdapter by lazy {
+        SubscriptionListAdapter(
+            subscriptionDisplayItems = subscriptionListDisplayDataList,
+            subscriptionListViewModel = subscriptionListViewModel,
             onRowItemClicked = ::sourceListRecyclerViewItemClickedAt,
             application = activity?.application!!
         )
     }
 
-    private val sourceListDataSetObserver by lazy {
-        Observer<List<SourceTitleListViewModel.SourceListUi>> {
-            sourceListDisplayDataList.clear()
-            sourceListDisplayDataList.addAll(it)
-            sourceTitleListAdapter.notifyDataSetChanged()
+    private val subscriptionListDataSetObserver by lazy {
+        Observer<List<SubscriptionListViewModel.SubscriptionListUi>> {
+            subscriptionListDisplayDataList.clear()
+            subscriptionListDisplayDataList.addAll(it)
+            subscriptionListAdapter.notifyDataSetChanged()
         }
     }
 
@@ -52,7 +52,7 @@ class SourceTitleListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSourceListTitleBinding.inflate(inflater, container, false)
+        binding = FragmentSubscriptionListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -64,14 +64,14 @@ class SourceTitleListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        sourceTitleListViewModel.loadSourceSubscriptionList()
+        subscriptionListViewModel.loadSubscriptionList()
     }
 
     private fun registerLiveDataObserver() {
-        sourceTitleListViewModel.apply {
-            sourceListUiDataSet.observe(
+        subscriptionListViewModel.apply {
+            subscriptionListUiDataSet.observe(
                 viewLifecycleOwner,
-                sourceListDataSetObserver
+                subscriptionListDataSetObserver
             )
         }
     }
@@ -81,41 +81,41 @@ class SourceTitleListFragment : Fragment() {
             sourceTitleRecyclerView.apply {
                 setHasFixedSize(true)
                 layoutManager = recyclerLayoutManager
-                adapter = sourceTitleListAdapter
+                adapter = subscriptionListAdapter
             }
         }
     }
 
     private fun sourceListRecyclerViewItemClickedAt(
-        itemType: SourceTitleListViewModel.TYPE,
+        itemType: SubscriptionListViewModel.TYPE,
         id: String
     ) {
         when (itemType) {
-            SourceTitleListViewModel.TYPE.RSS_SOURCE -> {
+            SubscriptionListViewModel.TYPE.RSS_SOURCE -> {
                 activity?.let {
                     (it as MainActivity)
                         .startArticleListActivity(id)
                 }
             }
-            SourceTitleListViewModel.TYPE.ALL_ITEMS_OPTION -> {
+            SubscriptionListViewModel.TYPE.ALL_ITEMS_OPTION -> {
                 activity?.let {
                     (it as MainActivity)
                         .startArticleListActivityForAllItems()
                 }
             }
-            SourceTitleListViewModel.TYPE.ADD_SOURCE_OPTION -> {
+            SubscriptionListViewModel.TYPE.ADD_SOURCE_OPTION -> {
                 activity?.let {
                     (it as MainActivity)
                         .startAddSourceActivity()
                 }
             }
-            SourceTitleListViewModel.TYPE.SETTINGS_OPTION -> {
+            SubscriptionListViewModel.TYPE.SETTINGS_OPTION -> {
                 activity?.let {
                     (it as MainActivity)
                         .startSettingsActivity()
                 }
             }
-            SourceTitleListViewModel.TYPE.SUMMARY_OPTION -> {}
+            SubscriptionListViewModel.TYPE.SUMMARY_OPTION -> {}
         }
 
     }

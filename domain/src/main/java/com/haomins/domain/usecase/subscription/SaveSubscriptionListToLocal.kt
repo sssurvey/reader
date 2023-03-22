@@ -1,7 +1,7 @@
-package com.haomins.domain.usecase.source
+package com.haomins.domain.usecase.subscription
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.repositories.local.SourceLocalRepository
+import com.haomins.domain.repositories.local.SubscriptionLocalRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.CompletableUseCase
@@ -10,7 +10,7 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 class SaveSubscriptionListToLocal @Inject constructor(
-    private val sourcesLocalRepository: SourceLocalRepository,
+    private val sourcesLocalRepository: SubscriptionLocalRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : CompletableUseCase<SaveSubscriptionListToLocal.Companion.Params>(
@@ -20,7 +20,7 @@ class SaveSubscriptionListToLocal @Inject constructor(
 
     override fun buildUseCaseCompletable(params: Params?): Completable {
         if (params == null) throw ParamsShouldNotBeNullException()
-        return sourcesLocalRepository.saveAllSourcesToLocal(params.subscriptionEntities)
+        return sourcesLocalRepository.saveAllSubscriptionToLocal(params.subscriptionEntities)
     }
 
     companion object {

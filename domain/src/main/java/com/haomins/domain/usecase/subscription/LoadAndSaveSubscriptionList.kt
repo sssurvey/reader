@@ -1,4 +1,4 @@
-package com.haomins.domain.usecase.source
+package com.haomins.domain.usecase.subscription
 
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler

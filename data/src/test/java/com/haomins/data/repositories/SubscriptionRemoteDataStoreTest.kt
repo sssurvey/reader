@@ -20,7 +20,7 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import java.util.*
 
-class SourcesRemoteDataStoreTest {
+class SubscriptionRemoteDataStoreTest {
 
     @Mock
     lateinit var mockTheOldReaderService: TheOldReaderService
@@ -31,12 +31,12 @@ class SourcesRemoteDataStoreTest {
     @Mock
     lateinit var mockSubscriptionDao: SubscriptionDao
 
-    private lateinit var sourcesRemoteDataStore: SourcesRemoteDataStore
+    private lateinit var subscriptionRemoteDataStore: SubscriptionRemoteDataStore
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        sourcesRemoteDataStore = SourcesRemoteDataStore(
+        subscriptionRemoteDataStore = SubscriptionRemoteDataStore(
             theOldReaderService = mockTheOldReaderService,
             subscriptionDao = mockSubscriptionDao,
             sharedPreferences = mockSharedPreference
@@ -72,7 +72,7 @@ class SourcesRemoteDataStoreTest {
         mockHelper()
 
         val testObserver = TestObserver<List<SubscriptionEntity>>()
-        sourcesRemoteDataStore
+        subscriptionRemoteDataStore
             .loadSubscriptionList()
             .subscribeWith(testObserver)
 
@@ -114,7 +114,7 @@ class SourcesRemoteDataStoreTest {
 
         mockHelper()
 
-        sourcesRemoteDataStore
+        subscriptionRemoteDataStore
             .loadSubscriptionList()
             .subscribeWith(testObserver)
 
@@ -130,7 +130,7 @@ class SourcesRemoteDataStoreTest {
     fun `test convertSubscriptionItemModelToEntity`() {
         val models = generateSourceListResponse().subscriptions
         val entities =
-            sourcesRemoteDataStore.convertSubscriptionItemModelToEntityForTesting(models)
+            subscriptionRemoteDataStore.convertSubscriptionItemModelToEntityForTesting(models)
 
         assertTrue(models.size == entities.size)
 
@@ -164,7 +164,7 @@ class SourcesRemoteDataStoreTest {
         return subscriptionEntityList
     }
 
-    private fun generateSourceListResponse(): com.haomins.model.remote.subscription.SubscriptionSourceListResponseModel {
+    private fun generateSourceListResponse(): com.haomins.model.remote.subscription.SubscriptionListResponseModel {
         val subscriptionsList = mutableListOf<SubscriptionItemModel>()
         for (i in 0 until 100) {
             subscriptionsList
@@ -181,7 +181,7 @@ class SourcesRemoteDataStoreTest {
                     )
                 )
         }
-        return com.haomins.model.remote.subscription.SubscriptionSourceListResponseModel(
+        return com.haomins.model.remote.subscription.SubscriptionListResponseModel(
             subscriptions = ArrayList(subscriptionsList)
         )
     }

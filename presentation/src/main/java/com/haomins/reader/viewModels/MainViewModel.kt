@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.haomins.data.util.getString
-import com.haomins.domain.usecase.source.LoadSubscriptionListFromRemote
+import com.haomins.domain.usecase.subscription.LoadSubscriptionListFromRemote
 import com.haomins.model.entity.SubscriptionEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver

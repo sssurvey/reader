@@ -29,8 +29,8 @@ interface RepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindSourcesRepository(sourcesRemoteDataStore: SourcesRemoteDataStore):
-            SourcesRepository
+    fun bindSourcesRepository(subscriptionRemoteDataStore: SubscriptionRemoteDataStore):
+            SubscriptionRepository
 
     @Binds
     @ViewModelScoped

@@ -3,7 +3,7 @@ package com.haomins.data.service
 import com.haomins.model.remote.article.ArticleResponseModel
 import com.haomins.model.remote.article.ItemRefListResponseModel
 import com.haomins.model.remote.subscription.AddSourceResponseModel
-import com.haomins.model.remote.subscription.SubscriptionSourceListResponseModel
+import com.haomins.model.remote.subscription.SubscriptionListResponseModel
 import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -65,7 +65,7 @@ interface TheOldReaderService {
     fun loadSubscriptionSourceList(
         @Header("Authorization") headerAuthValue: String,
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
-    ): Single<SubscriptionSourceListResponseModel>
+    ): Single<SubscriptionListResponseModel>
 
     /**
      * Get article refs based on feed (id)

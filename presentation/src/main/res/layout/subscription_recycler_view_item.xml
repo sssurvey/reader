@@ -10,7 +10,7 @@
 
     <!-- Material Card View has no ripple bug-->
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/source_title_recycler_view_item"
+        android:id="@+id/subscription_title_recycler_view_item"
         style="@style/ReaderCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/source_icon_image_view"
+                android:id="@+id/subscription_icon_image_view"
                 android:layout_width="@dimen/imageIconViewHeight"
                 android:layout_height="@dimen/imageIconViewHeight"
                 android:padding="@dimen/imageIconViewPadding"
@@ -32,12 +32,12 @@
                 tools:src="@mipmap/ic_launcher" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/source_title_text_view"
+                android:id="@+id/subscription_title_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/source_icon_image_view"
+                android:layout_alignBaseline="@id/subscription_icon_image_view"
                 android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/source_icon_image_view"
+                android:layout_toEndOf="@id/subscription_icon_image_view"
                 android:height="@dimen/imageIconViewHeight"
                 android:gravity="center_vertical"
                 android:maxLines="@integer/textViewDefaultLineRestriction"

@@ -1,7 +1,7 @@
 package com.haomins.data.di
 
-import com.haomins.data.repositories.local.SourceLocalDataStore
-import com.haomins.domain.repositories.local.SourceLocalRepository
+import com.haomins.data.repositories.local.SubscriptionLocalDataStore
+import com.haomins.domain.repositories.local.SubscriptionLocalRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,6 +14,6 @@ interface LocalRepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindSourceLocalRepository(sourceLocalDataStore: SourceLocalDataStore): SourceLocalRepository
+    fun bindSourceLocalRepository(subscriptionLocalDataStore: SubscriptionLocalDataStore): SubscriptionLocalRepository
 
 }
