@@ -1,10 +1,10 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.remote
 
 import android.content.SharedPreferences
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.putValue
 import com.haomins.data.util.removeValue
-import com.haomins.domain.repositories.LoginRepositoryContract
+import com.haomins.domain.repositories.LoginRemoteRepository
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
@@ -12,10 +12,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LoginRepository @Inject constructor(
+class LoginRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val sharedPreferences: SharedPreferences,
-) : LoginRepositoryContract {
+) : LoginRemoteRepository {
 
     override fun login(userName: String, userPassword: String): Single<UserAuthResponseModel> {
         return theOldReaderService

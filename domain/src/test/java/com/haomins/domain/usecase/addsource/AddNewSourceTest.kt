@@ -2,7 +2,7 @@ package com.haomins.domain.usecase.addsource
 
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.repositories.AddSourceRepositoryContract
+import com.haomins.domain.repositories.AddSourceRemoteRepository
 import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
 import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 class AddNewSourceTest {
 
     @Mock
-    lateinit var mockAddSourceRepositoryContract: AddSourceRepositoryContract
+    lateinit var mockAddSourceRemoteRepository: AddSourceRemoteRepository
 
     private val testExecutionScheduler = TestSchedulers.executionScheduler()
     private val testPostExecutionScheduler = TestSchedulers.postExecutionScheduler()
@@ -33,7 +33,7 @@ class AddNewSourceTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         addNewSource = AddNewSource(
-            addSourceRepositoryContract = mockAddSourceRepositoryContract,
+            addSourceRemoteRepository = mockAddSourceRemoteRepository,
             executionScheduler = testExecutionScheduler,
             postExecutionScheduler = testPostExecutionScheduler
         )
@@ -70,7 +70,7 @@ class AddNewSourceTest {
             )
         )
 
-        `when`(mockAddSourceRepositoryContract.addSource(testSourceString))
+        `when`(mockAddSourceRemoteRepository.addSource(testSourceString))
             .thenReturn(testAddSourceReturn)
 
         addNewSource
@@ -82,7 +82,7 @@ class AddNewSourceTest {
         (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
         (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
 
-        verify(mockAddSourceRepositoryContract, Times(1)).addSource(testSourceString)
+        verify(mockAddSourceRemoteRepository, Times(1)).addSource(testSourceString)
 
         testObserver.assertComplete()
         assertTrue(
@@ -106,7 +106,7 @@ class AddNewSourceTest {
             )
         )
 
-        `when`(mockAddSourceRepositoryContract.addSource(mediumSourceValidator))
+        `when`(mockAddSourceRemoteRepository.addSource(mediumSourceValidator))
             .thenReturn(testAddSourceReturn)
 
         addNewSource
@@ -118,7 +118,7 @@ class AddNewSourceTest {
         (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
         (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
 
-        verify(mockAddSourceRepositoryContract, Times(1)).addSource(mediumSourceValidator)
+        verify(mockAddSourceRemoteRepository, Times(1)).addSource(mediumSourceValidator)
 
         testObserver.assertComplete()
         assertTrue(

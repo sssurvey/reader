@@ -1,6 +1,8 @@
 package com.haomins.data.di
 
 import com.haomins.data.repositories.*
+import com.haomins.data.repositories.remote.AddSourceRemoteDataStore
+import com.haomins.data.repositories.remote.LoginRemoteDataStore
 import com.haomins.data.repositories.remote.SubscriptionRemoteDataStore
 import com.haomins.domain.repositories.*
 import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
@@ -16,18 +18,13 @@ interface RemoteRepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindAddSourceRepository(addSourceRepository: AddSourceRepository):
-            AddSourceRepositoryContract
+    fun bindAddSourceRemoteRepository(addSourceRemoteDataStore: AddSourceRemoteDataStore):
+            AddSourceRemoteRepository
 
     @Binds
     @ViewModelScoped
-    fun bindLoginRepository(loginRepository: LoginRepository):
-            LoginRepositoryContract
-
-    @Binds
-    @ViewModelScoped
-    fun bindArticleDetailRepository(articleDetailRepository: ArticleDetailRepository):
-            ArticleDetailRepositoryContract
+    fun bindLoginRemoteRepository(loginRemoteDataStore: LoginRemoteDataStore):
+            LoginRemoteRepository
 
     @Binds
     @ViewModelScoped
@@ -39,18 +36,4 @@ interface RemoteRepositoryModule {
     fun bindArticleListRepository(articleListRepository: ArticleListRepository):
             ArticleListRepositoryContract
 
-    @Binds
-    @ViewModelScoped
-    fun bindLoggingRepository(loggingRepository: LoggingRepository):
-            LoggingRepositoryContract
-
-    @Binds
-    @ViewModelScoped
-    fun bindContactInfoRepository(contactInfoRepository: ContactInfoRepository):
-            ContactInfoRepositoryContract
-
-    @Binds
-    @ViewModelScoped
-    fun bindDisclosureRepository(disclosureRepository: DisclosureRepository):
-            DisclosureRepositoryContract
 }

@@ -1,18 +1,18 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.remote
 
 import android.content.SharedPreferences
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.getString
-import com.haomins.domain.repositories.AddSourceRepositoryContract
+import com.haomins.domain.repositories.AddSourceRemoteRepository
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
 import javax.inject.Inject
 
-class AddSourceRepository @Inject constructor(
+class AddSourceRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val sharedPreferences: SharedPreferences
-) : AddSourceRepositoryContract {
+) : AddSourceRemoteRepository {
 
     override fun addSource(source: String): Single<AddSourceResponseModel> {
         return theOldReaderService

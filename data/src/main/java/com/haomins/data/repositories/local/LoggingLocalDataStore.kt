@@ -1,19 +1,19 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.local
 
 import android.util.Log
 import com.haomins.data.service.AndroidService
 import com.haomins.data.util.DateUtils
-import com.haomins.domain.repositories.LoggingRepositoryContract
+import com.haomins.domain.repositories.LoggingLocalRepository
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileWriter
 import java.io.InputStreamReader
 import javax.inject.Inject
 
-class LoggingRepository @Inject constructor(
+class LoggingLocalDataStore @Inject constructor(
     private val dateUtils: DateUtils,
     private val androidService: AndroidService
-) : LoggingRepositoryContract {
+) : LoggingLocalRepository {
 
     companion object {
         private const val TAG = "LoggingRepository"

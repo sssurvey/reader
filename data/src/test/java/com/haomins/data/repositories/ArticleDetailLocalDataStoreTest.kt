@@ -1,6 +1,7 @@
 package com.haomins.data.repositories
 
 import com.haomins.data.db.dao.ArticleDao
+import com.haomins.data.repositories.local.ArticleDetailLocalDataStore
 import com.haomins.data.util.DateUtils
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
@@ -15,7 +16,7 @@ import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
 import java.util.concurrent.TimeUnit
 
-class ArticleDetailRepositoryTest {
+class ArticleDetailLocalDataStoreTest {
 
     @Mock
     lateinit var mockArticleDao: ArticleDao
@@ -26,7 +27,7 @@ class ArticleDetailRepositoryTest {
     private val testScheduler = TestScheduler()
     private val testException = Exception("test exception")
 
-    private lateinit var articleDetailRepository: ArticleDetailRepository
+    private lateinit var articleDetailLocalDataStore: ArticleDetailLocalDataStore
 
     @Before
     fun setUp() {
@@ -35,7 +36,7 @@ class ArticleDetailRepositoryTest {
         `when`(mockDateUtils.howLongAgo(any())).thenReturn("1")
         `when`(mockDateUtils.to24HrString(any())).thenReturn("1")
 
-        articleDetailRepository = ArticleDetailRepository(
+        articleDetailLocalDataStore = ArticleDetailLocalDataStore(
             articleDao = mockArticleDao,
         )
     }
@@ -70,7 +71,7 @@ class ArticleDetailRepositoryTest {
 
         mockBehavior()
 
-        articleDetailRepository
+        articleDetailLocalDataStore
             .loadArticleDetail(testId)
             .subscribeOn(testScheduler)
             .subscribeWith(testObserver)
@@ -102,7 +103,7 @@ class ArticleDetailRepositoryTest {
 
         mockBehavior()
 
-        articleDetailRepository
+        articleDetailLocalDataStore
             .loadArticleDetail(testId)
             .subscribeOn(testScheduler)
             .subscribeWith(testObserver)

@@ -1,6 +1,7 @@
 package com.haomins.data.repositories
 
 import android.content.SharedPreferences
+import com.haomins.data.repositories.remote.LoginRemoteDataStore
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.user.UserAuthResponseModel
@@ -31,14 +32,14 @@ class LoginRepositoryTest {
     @Mock
     lateinit var mockSharedPreferencesEditor: SharedPreferences.Editor
 
-    private lateinit var loginRepository: LoginRepository
+    private lateinit var loginRemoteDataStore: LoginRemoteDataStore
     private val testScheduler = TestScheduler()
     private val testException = Exception("test exception")
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        loginRepository = LoginRepository(
+        loginRemoteDataStore = LoginRemoteDataStore(
             theOldReaderService = mockTheOldReaderService,
             sharedPreferences = mockSharedPreferences
         )
@@ -65,7 +66,7 @@ class LoginRepositoryTest {
         mockBehavior()
 
         val observer = TestObserver<UserAuthResponseModel>()
-        loginRepository
+        loginRemoteDataStore
             .login("testId", "testPassword")
             .observeOn(testScheduler)
             .subscribe(observer)
@@ -96,7 +97,7 @@ class LoginRepositoryTest {
         mockBehavior()
 
         val observer = TestObserver<UserAuthResponseModel>()
-        loginRepository
+        loginRemoteDataStore
             .login("testId", "testPassword")
             .observeOn(testScheduler)
             .subscribe(observer)
@@ -113,7 +114,7 @@ class LoginRepositoryTest {
     fun `test getSignUpUrlString()`() {
         assertEquals(
             TheOldReaderService.SIGN_UP_PAGE_URL,
-            loginRepository.getSignUpUrlString()
+            loginRemoteDataStore.getSignUpUrlString()
         )
     }
 
@@ -121,7 +122,7 @@ class LoginRepositoryTest {
     fun `test getForgetPasswordUrlString()`() {
         assertEquals(
             TheOldReaderService.FORGET_PASSWORD_PAGE_URL,
-            loginRepository.getForgetPasswordUrlString()
+            loginRemoteDataStore.getForgetPasswordUrlString()
         )
     }
 

@@ -1,6 +1,7 @@
 package com.haomins.data.repositories
 
 import android.content.SharedPreferences
+import com.haomins.data.repositories.remote.AddSourceRemoteDataStore
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.subscription.AddSourceResponseModel
@@ -23,12 +24,12 @@ class AddSourceRepositoryTest {
     @Mock
     lateinit var mockTheOldReaderService: TheOldReaderService
 
-    private lateinit var addSourceRepository: AddSourceRepository
+    private lateinit var addSourceRemoteDataStore: AddSourceRemoteDataStore
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        addSourceRepository = AddSourceRepository(
+        addSourceRemoteDataStore = AddSourceRemoteDataStore(
             mockTheOldReaderService,
             mockSharedPreferences
         )
@@ -65,7 +66,7 @@ class AddSourceRepositoryTest {
             testTheOldReaderServiceAddSourceReturn
         )
 
-        addSourceRepository
+        addSourceRemoteDataStore
             .addSource(testSource)
             .subscribeWith(testObserver)
 

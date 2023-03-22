@@ -1,5 +1,6 @@
 package com.haomins.data.repositories
 
+import com.haomins.data.repositories.local.DisclosureLocalDataStore
 import com.haomins.data.service.AndroidService
 import io.reactivex.observers.TestObserver
 import org.junit.Assert.assertTrue
@@ -11,17 +12,17 @@ import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
 import java.io.ByteArrayInputStream
 
-class DisclosureRepositoryTest {
+class DisclosureLocalDataStoreTest {
 
     @Mock
     lateinit var mockAndroidService: AndroidService
 
-    private lateinit var disclosureRepository: DisclosureRepository
+    private lateinit var disclosureLocalDataStore: DisclosureLocalDataStore
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        disclosureRepository = DisclosureRepository(
+        disclosureLocalDataStore = DisclosureLocalDataStore(
             mockAndroidService
         )
     }
@@ -40,7 +41,7 @@ class DisclosureRepositoryTest {
 
         val testObserver = TestObserver<String>()
 
-        disclosureRepository
+        disclosureLocalDataStore
             .loadDisclosureContent()
             .subscribeWith(testObserver)
 

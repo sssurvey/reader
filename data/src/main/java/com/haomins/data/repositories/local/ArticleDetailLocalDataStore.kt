@@ -1,16 +1,16 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.local
 
 import com.haomins.data.db.dao.ArticleDao
-import com.haomins.domain.repositories.ArticleDetailRepositoryContract
+import com.haomins.domain.repositories.ArticleDetailLocalRepository
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ArticleDetailRepository @Inject constructor(
+class ArticleDetailLocalDataStore @Inject constructor(
     private val articleDao: ArticleDao,
-) : ArticleDetailRepositoryContract {
+) : ArticleDetailLocalRepository {
 
     companion object {
         const val TAG = "ArticleDetailRepository"

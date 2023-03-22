@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.login
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.repositories.LoginRepositoryContract
+import com.haomins.domain.repositories.LoginRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
@@ -10,7 +10,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class Login @Inject constructor(
-    private val loginRepositoryContract: LoginRepositoryContract,
+    private val loginRemoteRepository: LoginRemoteRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<Login.Companion.Param, UserAuthResponseModel>(
@@ -30,7 +30,7 @@ class Login @Inject constructor(
      */
     override fun buildUseCaseSingle(params: Param?): Single<UserAuthResponseModel> {
         if (params == null) throw ParamsShouldNotBeNullException()
-        return loginRepositoryContract
+        return loginRemoteRepository
             .login(
                 params.userName,
                 params.userPassword

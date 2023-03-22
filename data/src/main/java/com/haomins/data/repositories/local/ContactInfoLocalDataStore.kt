@@ -1,9 +1,9 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.local
 
-import com.haomins.domain.repositories.ContactInfoRepositoryContract
+import com.haomins.domain.repositories.ContactInfoLocalRepository
 import javax.inject.Inject
 
-class ContactInfoRepository @Inject constructor() : ContactInfoRepositoryContract {
+class ContactInfoLocalDataStore @Inject constructor() : ContactInfoLocalRepository {
 
     companion object {
         private const val FEEDBACK_EMAIL = "youngmobileachiever@gmail.com"

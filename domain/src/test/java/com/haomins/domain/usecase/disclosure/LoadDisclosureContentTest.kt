@@ -1,8 +1,8 @@
 package com.haomins.domain.usecase.disclosure
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.ContactInfoRepositoryContract
-import com.haomins.domain.repositories.DisclosureRepositoryContract
+import com.haomins.domain.repositories.ContactInfoLocalRepository
+import com.haomins.domain.repositories.DisclosureLocalRepository
 import com.haomins.model.DisclosureInfo
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit
 class LoadDisclosureContentTest {
 
     @Mock
-    lateinit var mockDisclosureRepositoryContract: DisclosureRepositoryContract
+    lateinit var mockDisclosureLocalRepository: DisclosureLocalRepository
 
     @Mock
-    lateinit var mockContractInfoRepositoryContract: ContactInfoRepositoryContract
+    lateinit var mockContractInfoRepositoryContract: ContactInfoLocalRepository
 
     private val testExecutionScheduler = TestSchedulers.executionScheduler()
     private val testPostExecutionScheduler = TestSchedulers.postExecutionScheduler()
@@ -32,7 +32,7 @@ class LoadDisclosureContentTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         loadDisclosureContent = LoadDisclosureContent(
-            mockDisclosureRepositoryContract,
+            mockDisclosureLocalRepository,
             mockContractInfoRepositoryContract,
             testExecutionScheduler,
             testPostExecutionScheduler
@@ -48,7 +48,7 @@ class LoadDisclosureContentTest {
         val testWebsite = "test.com"
 
         fun mock() {
-            `when`(mockDisclosureRepositoryContract.loadDisclosureContent()).thenReturn(
+            `when`(mockDisclosureLocalRepository.loadDisclosureContent()).thenReturn(
                 Single.just(testDisclosure)
             )
             `when`(mockContractInfoRepositoryContract.getFeedbackEmail()).thenReturn(testEmail)

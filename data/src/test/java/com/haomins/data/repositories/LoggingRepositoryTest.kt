@@ -1,5 +1,6 @@
 package com.haomins.data.repositories
 
+import com.haomins.data.repositories.local.LoggingLocalDataStore
 import com.haomins.data.service.AndroidService
 import com.haomins.data.util.DateUtils
 import org.junit.Before
@@ -22,12 +23,12 @@ class LoggingRepositoryTest {
     @Mock
     lateinit var mockAndroidService: AndroidService
 
-    private lateinit var loggingRepository: LoggingRepository
+    private lateinit var loggingLocalDataStore: LoggingLocalDataStore
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        loggingRepository = LoggingRepository(
+        loggingLocalDataStore = LoggingLocalDataStore(
             mockDateUtils,
             mockAndroidService
         )
@@ -55,7 +56,7 @@ class LoggingRepositoryTest {
 
         mock()
 
-        loggingRepository.getLogFile()
+        loggingLocalDataStore.getLogFile()
 
         verify(mockRuntime, times(1)).exec(String.format("logcat -d -v threadtime *:*"))
         verify(mockRuntime, times(1)).exec("logcat -c")

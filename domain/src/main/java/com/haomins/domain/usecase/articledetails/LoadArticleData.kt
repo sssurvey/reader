@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.articledetails
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.repositories.ArticleDetailRepositoryContract
+import com.haomins.domain.repositories.ArticleDetailLocalRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
@@ -10,7 +10,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class LoadArticleData @Inject constructor(
-    private val articleDetailRepositoryContract: ArticleDetailRepositoryContract,
+    private val articleDetailLocalRepository: ArticleDetailLocalRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<LoadArticleData.Companion.Param, ArticleEntity>(
@@ -28,7 +28,7 @@ class LoadArticleData @Inject constructor(
      */
     override fun buildUseCaseSingle(params: Param?): Single<ArticleEntity> {
         if (params == null) throw ParamsShouldNotBeNullException()
-        return articleDetailRepositoryContract
+        return articleDetailLocalRepository
             .loadArticleDetail(params.articleId)
     }
 

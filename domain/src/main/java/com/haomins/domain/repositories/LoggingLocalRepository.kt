@@ -2,7 +2,7 @@ package com.haomins.domain.repositories
 
 import java.io.File
 
-interface LoggingRepositoryContract {
+interface LoggingLocalRepository {
 
     fun getLogFile(): File
 

@@ -1,6 +1,6 @@
 package com.haomins.domain.repositories
 
-interface ContactInfoRepositoryContract {
+interface ContactInfoLocalRepository {
 
     fun getFeedbackEmail(): String
 

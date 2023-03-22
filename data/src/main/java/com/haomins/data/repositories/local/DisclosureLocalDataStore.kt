@@ -1,16 +1,16 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.local
 
 import android.util.Log
 import com.haomins.data.service.AndroidService
-import com.haomins.domain.repositories.DisclosureRepositoryContract
+import com.haomins.domain.repositories.DisclosureLocalRepository
 import io.reactivex.Single
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import javax.inject.Inject
 
-class DisclosureRepository @Inject constructor(
+class DisclosureLocalDataStore @Inject constructor(
     private val androidService: AndroidService
-) : DisclosureRepositoryContract {
+) : DisclosureLocalRepository {
 
     companion object {
         private const val TAG = "DisclosureRepository"

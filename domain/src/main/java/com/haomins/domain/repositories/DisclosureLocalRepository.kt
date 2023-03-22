@@ -2,7 +2,7 @@ package com.haomins.domain.repositories
 
 import io.reactivex.Single
 
-interface DisclosureRepositoryContract {
+interface DisclosureLocalRepository {
 
     fun loadDisclosureContent(): Single<String>
 
