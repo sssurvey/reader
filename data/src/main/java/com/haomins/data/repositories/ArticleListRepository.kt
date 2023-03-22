@@ -41,18 +41,32 @@ class ArticleListRepository @Inject constructor(
         return loadAllArticleItemsFromRemoteV2(true)
     }
 
+    //TODO: new
+    override fun loadArticleAllItemsV2(feedId: String): Single<List<ArticleResponseModel>> {
+        return loadAllArticleItemsFromRemoteByFeedIdV2(feedId)
+    }
+
+    //TODO: new
+    override fun continueLoadAllArticleItemsV2(feedId: String): Single<List<ArticleResponseModel>> {
+        return loadAllArticleItemsFromRemoteByFeedIdV2(feedId, true)
+    }
+
+    @Deprecated(message = "replaced with V2", replaceWith = ReplaceWith(""))
     override fun loadAllArticleItems(): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemote()
     }
 
+    @Deprecated(message = "replaced with V2", replaceWith = ReplaceWith(""))
     override fun continueLoadAllArticleItems(): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemote(true)
     }
 
+    @Deprecated(message = "TO BE replaced with V2", replaceWith = ReplaceWith(""))
     override fun loadArticleItems(feedId: String): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemoteByFeedId(feedId)
     }
 
+    @Deprecated(message = "TO BE replaced with V2", replaceWith = ReplaceWith(""))
     override fun continueLoadArticleItems(feedId: String): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemoteByFeedId(feedId, true)
     }
@@ -95,6 +109,39 @@ class ArticleListRepository @Inject constructor(
             }.onErrorResumeNext { articleDao.selectAllArticleByFeedId(feedId) }
     }
 
+    private fun loadAllArticleItemsFromRemoteByFeedIdV2(
+        feedId: String,
+        continueLoad: Boolean = false
+    ): Single<List<ArticleResponseModel>> {
+        return if (continueLoad) {
+            theOldReaderService.loadArticleListByFeed(
+                headerAuthValue = headerAuthValue,
+                feedId = feedId,
+                continueLoad = continueId
+            ).doOnSuccess {
+                continueId = it.continuation
+            }
+        } else {
+            theOldReaderService.loadArticleListByFeed(
+                headerAuthValue = headerAuthValue,
+                feedId = feedId
+            )
+        }
+            .doOnError(::onLoadError)
+            .flatMapObservable {
+                Observable
+                    .fromIterable(it.itemRefs)
+                    .flatMapSingle { itemRef ->
+                        theOldReaderService.loadArticleDetailsByRefId(
+                            headerAuthValue = headerAuthValue,
+                            refItemId = itemRef.id
+                        )
+                    }
+            }
+            .toList()
+    }
+
+    @Deprecated(message = "replaced with V2", replaceWith = ReplaceWith(""))
     private fun loadAllArticleItemsFromRemoteV2(continueLoad: Boolean = false): Single<List<ArticleResponseModel>> {
         return if (continueLoad) {
             theOldReaderService.loadAllArticles(
@@ -120,6 +167,7 @@ class ArticleListRepository @Inject constructor(
             .toList()
     }
 
+    @Deprecated(message = "replaced with V2", replaceWith = ReplaceWith(""))
     private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<ArticleEntity>> {
         return if (continueLoad) {
             theOldReaderService.loadAllArticles(

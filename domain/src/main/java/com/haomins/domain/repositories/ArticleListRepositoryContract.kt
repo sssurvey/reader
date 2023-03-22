@@ -17,4 +17,6 @@ interface ArticleListRepositoryContract {
     fun loadAllArticleItemsV2(): Single<List<ArticleResponseModel>>
 
     fun continueLoadAllArticleItemsV2(): Single<List<ArticleResponseModel>>
+    fun continueLoadAllArticleItemsV2(feedId: String): Single<List<ArticleResponseModel>>
+    fun loadArticleAllItemsV2(feedId: String): Single<List<ArticleResponseModel>>
 }
