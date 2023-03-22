@@ -1,4 +1,4 @@
-package com.haomins.domain.usecase.subscription
+package com.haomins.domain.usecase.subscription.local
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
 import com.haomins.domain.repositories.local.SubscriptionLocalRepository

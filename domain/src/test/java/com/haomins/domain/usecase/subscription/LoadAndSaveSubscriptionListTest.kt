@@ -2,6 +2,9 @@ package com.haomins.domain.usecase.subscription
 
 import com.haomins.domain.MockGenerator
 import com.haomins.domain.TestSchedulers
+import com.haomins.domain.usecase.subscription.local.LoadSubscriptionListFromLocal
+import com.haomins.domain.usecase.subscription.local.SaveSubscriptionListToLocal
+import com.haomins.domain.usecase.subscription.remote.LoadSubscriptionListFromRemote
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.junit.After

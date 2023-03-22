@@ -2,11 +2,10 @@ package com.haomins.domain.usecase.subscription
 
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
+import com.haomins.domain.usecase.subscription.remote.LoadSubscriptionListFromRemote
 import com.haomins.model.remote.subscription.SubscriptionItemModel
 import com.haomins.model.remote.subscription.SubscriptionListResponseModel
 import io.reactivex.Single
-import io.reactivex.observers.TestObserver
-import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before

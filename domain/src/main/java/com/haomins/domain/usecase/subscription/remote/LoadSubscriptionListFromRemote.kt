@@ -1,4 +1,4 @@
-package com.haomins.domain.usecase.subscription
+package com.haomins.domain.usecase.subscription.remote
 
 import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler

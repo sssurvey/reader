@@ -3,6 +3,9 @@ package com.haomins.domain.usecase.subscription
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
+import com.haomins.domain.usecase.subscription.local.LoadSubscriptionListFromLocal
+import com.haomins.domain.usecase.subscription.local.SaveSubscriptionListToLocal
+import com.haomins.domain.usecase.subscription.remote.LoadSubscriptionListFromRemote
 import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.model.remote.subscription.SubscriptionItemModel
 import io.reactivex.Single
