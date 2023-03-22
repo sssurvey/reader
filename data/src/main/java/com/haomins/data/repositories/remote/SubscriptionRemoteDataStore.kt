@@ -1,12 +1,9 @@
 package com.haomins.data.repositories.remote
 
 import android.content.SharedPreferences
-import androidx.annotation.VisibleForTesting
-import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.repositories.SubscriptionRemoteRepository
 import com.haomins.model.SharedPreferenceKey
-import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.model.remote.subscription.SubscriptionItemModel
 import io.reactivex.Single
 import javax.inject.Inject
@@ -15,32 +12,13 @@ import javax.inject.Singleton
 @Singleton
 class SubscriptionRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
-    private val subscriptionDao: SubscriptionDao,
     private val sharedPreferences: SharedPreferences
 ) : SubscriptionRemoteRepository {
 
-    override fun loadSubscriptionList(): Single<List<SubscriptionEntity>> {
+    override fun loadSubscriptionList(): Single<List<SubscriptionItemModel>> {
         return theOldReaderService
             .loadSubscriptionSourceList(headerAuthValue = loadHeaderAuthValue())
-            .map {
-                it.subscriptions.convertSubscriptionItemModelToEntity().apply {
-                    saveSubListToDatabase(this)
-                }
-            }
-            .onErrorResumeNext { retrieveSubListFromDB() }
-    }
-
-    private fun retrieveSubListFromDB(): Single<List<SubscriptionEntity>> {
-        return subscriptionDao.getAll()
-    }
-
-    private fun saveSubListToDatabase(
-        entityList: List<SubscriptionEntity>,
-    ) {
-        with(subscriptionDao) {
-            clearTable()
-            insertAll(*entityList.toTypedArray())
-        }
+            .map { it.subscriptions }
     }
 
     private fun loadHeaderAuthValue(): String {
@@ -48,24 +26,4 @@ class SubscriptionRemoteDataStore @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY.string, ""))
     }
 
-    private fun ArrayList<SubscriptionItemModel>.convertSubscriptionItemModelToEntity()
-            : List<SubscriptionEntity> {
-        return map {
-            SubscriptionEntity(
-                id = it.id,
-                title = it.title,
-                sortId = it.sortId,
-                firstItemMilSec = it.firstItemMilSec,
-                url = it.url,
-                htmlUrl = it.htmlUrl,
-                iconUrl = it.iconUrl
-            )
-        }
-    }
-
-    @VisibleForTesting
-    fun convertSubscriptionItemModelToEntityForTesting(subscriptions: ArrayList<SubscriptionItemModel>)
-            : List<SubscriptionEntity> {
-        return subscriptions.convertSubscriptionItemModelToEntity()
-    }
 }
