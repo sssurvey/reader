@@ -3,7 +3,6 @@ package com.haomins.data.repositories
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import com.haomins.data.db.dao.SubscriptionDao
-import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.repositories.SourcesRepository
 import com.haomins.model.SharedPreferenceKey
@@ -16,7 +15,6 @@ import javax.inject.Singleton
 @Singleton
 class SourcesRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
-    private val subscriptionEntityMapper: SubscriptionEntityMapper,
     private val subscriptionDao: SubscriptionDao,
     private val sharedPreferences: SharedPreferences
 ) : SourcesRepository {

@@ -3,15 +3,13 @@ package com.haomins.data.repositories
 import android.content.SharedPreferences
 import android.util.Log
 import com.haomins.data.db.dao.ArticleDao
-import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
-import com.haomins.model.SharedPreferenceKey
-import com.haomins.model.remote.article.ArticleResponseModel
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.data.util.DateUtils
 import com.haomins.data.util.extractImageFromImgTags
 import com.haomins.data.util.getString
 import com.haomins.domain.repositories.ArticleListRepositoryContract
+import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.entity.ArticleEntity
+import com.haomins.model.remote.article.ArticleResponseModel
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -22,8 +20,6 @@ class ArticleListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val articleDao: ArticleDao,
     private val sharedPreferences: SharedPreferences,
-    private val dateUtils: DateUtils,
-    private val articleEntityMapper: ArticleEntityMapper
 ) : ArticleListRepositoryContract {
 
     companion object {
