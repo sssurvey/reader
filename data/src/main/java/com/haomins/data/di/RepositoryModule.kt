@@ -14,41 +14,41 @@ interface RepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindsAddSourceRepository(addSourceRepository: AddSourceRepository):
+    fun bindAddSourceRepository(addSourceRepository: AddSourceRepository):
             AddSourceRepositoryContract
 
     @Binds
     @ViewModelScoped
-    fun bindsLoginRepository(loginRepository: LoginRepository):
+    fun bindLoginRepository(loginRepository: LoginRepository):
             LoginRepositoryContract
 
     @Binds
     @ViewModelScoped
-    fun bindsArticleDetailRepository(articleDetailRepository: ArticleDetailRepository):
+    fun bindArticleDetailRepository(articleDetailRepository: ArticleDetailRepository):
             ArticleDetailRepositoryContract
 
     @Binds
     @ViewModelScoped
-    fun bindsSourcesRepository(sourcesRemoteDataStore: SourcesRemoteDataStore):
+    fun bindSourcesRepository(sourcesRemoteDataStore: SourcesRemoteDataStore):
             SourcesRepository
 
     @Binds
     @ViewModelScoped
-    fun bindsArticleListRepository(articleListRepository: ArticleListRepository):
+    fun bindArticleListRepository(articleListRepository: ArticleListRepository):
             ArticleListRepositoryContract
 
     @Binds
     @ViewModelScoped
-    fun bindsLoggingRepository(loggingRepository: LoggingRepository):
+    fun bindLoggingRepository(loggingRepository: LoggingRepository):
             LoggingRepositoryContract
 
     @Binds
     @ViewModelScoped
-    fun bindsContactInfoRepository(contactInfoRepository: ContactInfoRepository):
+    fun bindContactInfoRepository(contactInfoRepository: ContactInfoRepository):
             ContactInfoRepositoryContract
 
     @Binds
     @ViewModelScoped
-    fun bindsDisclosureRepository(disclosureRepository: DisclosureRepository):
+    fun bindDisclosureRepository(disclosureRepository: DisclosureRepository):
             DisclosureRepositoryContract
 }
