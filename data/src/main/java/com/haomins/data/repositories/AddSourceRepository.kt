@@ -6,6 +6,7 @@ import com.haomins.model.SharedPreferenceKey
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.getString
 import com.haomins.domain.repositories.AddSourceRepositoryContract
+import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -15,16 +16,13 @@ class AddSourceRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : AddSourceRepositoryContract {
 
-    override fun addSource(source: String): Single<com.haomins.domain_model.responses.AddSourceResponseModel> {
+    override fun addSource(source: String): Single<AddSourceResponseModel> {
         return theOldReaderService
             .addSubscription(
                 headerAuthValue = (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
                         + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY)),
                 quickAddSubscription = source
             )
-            .map {
-                addSourceResponseModelMapper.dataModelToDomainModel(it)
-            }
     }
 
 }

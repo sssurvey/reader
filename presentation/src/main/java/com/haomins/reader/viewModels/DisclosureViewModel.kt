@@ -3,8 +3,8 @@ package com.haomins.reader.viewModels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.haomins.domain_model.DisclosureInfo
 import com.haomins.domain.usecase.disclosure.LoadDisclosureContent
+import com.haomins.model.DisclosureInfo
 import com.haomins.reader.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
@@ -20,10 +20,10 @@ class DisclosureViewModel @Inject constructor(
         private const val TAG = "DisclosureViewModel"
     }
 
-    fun loadDisclosure(thenDo: (com.haomins.domain_model.DisclosureInfo) -> Unit) {
+    fun loadDisclosure(thenDo: (DisclosureInfo) -> Unit) {
         loadDisclosureContent.execute(
-            object : DisposableSingleObserver<com.haomins.domain_model.DisclosureInfo>() {
-                override fun onSuccess(t: com.haomins.domain_model.DisclosureInfo) {
+            object : DisposableSingleObserver<DisclosureInfo>() {
+                override fun onSuccess(t: DisclosureInfo) {
                     thenDo(t)
                 }
 

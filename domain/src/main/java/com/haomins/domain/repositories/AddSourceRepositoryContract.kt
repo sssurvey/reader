@@ -1,6 +1,6 @@
 package com.haomins.domain.repositories
 
-import com.haomins.domain_model.responses.AddSourceResponseModel
+import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
 
 interface AddSourceRepositoryContract {

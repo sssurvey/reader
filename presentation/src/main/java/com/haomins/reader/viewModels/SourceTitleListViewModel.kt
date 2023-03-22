@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain_model.entities.SubscriptionEntity
 import com.haomins.domain.usecase.source.LoadSubscriptionList
+import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.reader.R
 import com.haomins.reader.utils.GlideUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -55,8 +55,8 @@ class SourceTitleListViewModel @Inject constructor(
     fun loadSourceSubscriptionList() {
         loadSubscriptionList.execute(
             object :
-                DisposableSingleObserver<List<com.haomins.domain_model.entities.SubscriptionEntity>>() {
-                override fun onSuccess(t: List<com.haomins.domain_model.entities.SubscriptionEntity>) {
+                DisposableSingleObserver<List<SubscriptionEntity>>() {
+                override fun onSuccess(t: List<SubscriptionEntity>) {
                     _sourceListUiDataSet.postValue(populateSubSourceDataSet(t))
                     Log.d(TAG, "loadSubscriptionList :: onSuccess")
                 }
@@ -97,7 +97,7 @@ class SourceTitleListViewModel @Inject constructor(
         add(SourceListUi(name = "$count Subscriptions", type = TYPE.SUMMARY_OPTION, id = ""))
     }
 
-    private fun populateSubSourceDataSet(subscriptionEntities: List<com.haomins.domain_model.entities.SubscriptionEntity>): MutableList<SourceListUi> {
+    private fun populateSubSourceDataSet(subscriptionEntities: List<SubscriptionEntity>): MutableList<SourceListUi> {
         return mutableListOf<SourceListUi>().apply {
             populateSourceListMenus()
             subscriptionEntities.forEach {

@@ -1,6 +1,6 @@
 package com.haomins.domain.repositories
 
-import com.haomins.domain_model.responses.UserAuthResponseModel
+import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 
 interface LoginRepositoryContract {

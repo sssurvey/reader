@@ -6,13 +6,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.haomins.domain_model.entities.ArticleEntity
+import com.haomins.data.util.DateUtils
+import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.databinding.ArticleTitleRecyclerViewItemBinding
 import com.haomins.reader.utils.GlideUtils
 
 class ArticleTitleListAdapter(
-    private val articleTitleListUiItems: List<com.haomins.domain_model.entities.ArticleEntity>,
+    private val articleTitleListUiItems: List<ArticleEntity>,
     private val glideUtils: GlideUtils,
+    private val dateUtils: DateUtils,
     private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
 ) :
     RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
@@ -42,7 +44,7 @@ class ArticleTitleListAdapter(
     }
 
     override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
-        holder.bind(articleTitleListUiItems[position], position)
+        holder.bind(articleTitleListUiItems[position])
         articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }
 
@@ -61,10 +63,10 @@ class ArticleTitleListAdapter(
             itemRootView = binding.root
         }
 
-        fun bind(articleEntity: com.haomins.domain_model.entities.ArticleEntity, position: Int) {
+        fun bind(articleEntity: ArticleEntity) {
             with(articleEntity) {
                 articleTitleTextView.text = itemTitle
-                articlePostedTimeTextView.text = howLongAgo
+                articlePostedTimeTextView.text = dateUtils.howLongAgo(itemPublishedMillisecond)
                 glideUtils.loadPreviewImage(
                     articlePreviewImageView,
                     previewImageUrl

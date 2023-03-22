@@ -7,6 +7,7 @@ import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.putValue
 import com.haomins.data.util.removeValue
 import com.haomins.domain.repositories.LoginRepositoryContract
+import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,7 +19,7 @@ class LoginRepository @Inject constructor(
     private val userAuthResponseModelMapper: UserAuthResponseModelMapper
 ) : LoginRepositoryContract {
 
-    override fun login(userName: String, userPassword: String): Single<com.haomins.domain_model.responses.UserAuthResponseModel> {
+    override fun login(userName: String, userPassword: String): Single<UserAuthResponseModel> {
         return theOldReaderService
             .loginUser(userName, userPassword)
             .doOnError {
@@ -26,7 +27,7 @@ class LoginRepository @Inject constructor(
             }
             .map {
                 sharedPreferences.putValue(SharedPreferenceKey.AUTH_CODE_KEY, it.auth)
-                userAuthResponseModelMapper.dataModelToDomainModel(it)
+                it
             }
     }
 

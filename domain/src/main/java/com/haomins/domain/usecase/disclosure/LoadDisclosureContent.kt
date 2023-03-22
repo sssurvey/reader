@@ -1,6 +1,6 @@
 package com.haomins.domain.usecase.disclosure
 
-import com.haomins.domain_model.DisclosureInfo
+import com.haomins.model.DisclosureInfo
 import com.haomins.domain.repositories.ContactInfoRepositoryContract
 import com.haomins.domain.repositories.DisclosureRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler

@@ -1,11 +1,11 @@
 package com.haomins.domain.usecase.article
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
+import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import javax.inject.Inject
 

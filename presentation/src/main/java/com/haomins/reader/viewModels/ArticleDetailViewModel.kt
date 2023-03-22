@@ -4,8 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain_model.entities.ArticleEntity
+import com.haomins.data.util.DateUtils
 import com.haomins.domain.usecase.articledetails.LoadArticleData
+import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.utils.DarkModeManager
 import com.haomins.reader.view.fragments.articles.ArticleDetailFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ArticleDetailViewModel @Inject constructor(
     private val loadArticleData: LoadArticleData,
+    private val dateUtils: DateUtils,
     private val darkModeManager: DarkModeManager
 ) : ViewModel() {
 
@@ -30,8 +32,8 @@ class ArticleDetailViewModel @Inject constructor(
 
     fun loadArticleDetail(itemId: String) {
         loadArticleData.execute(
-            object : DisposableSingleObserver<com.haomins.domain_model.entities.ArticleEntity>() {
-                override fun onSuccess(t: com.haomins.domain_model.entities.ArticleEntity) {
+            object : DisposableSingleObserver<ArticleEntity>() {
+                override fun onSuccess(t: ArticleEntity) {
                     _contentDataForDisplay.postValue(mapArticleEntityToUiItem(t))
                 }
 
@@ -53,10 +55,10 @@ class ArticleDetailViewModel @Inject constructor(
         loadArticleData.dispose()
     }
 
-    private fun mapArticleEntityToUiItem(articleEntity: com.haomins.domain_model.entities.ArticleEntity): ArticleDetailFragment.ArticleDetailUiItem {
+    private fun mapArticleEntityToUiItem(articleEntity: ArticleEntity): ArticleDetailFragment.ArticleDetailUiItem {
         return ArticleDetailFragment.ArticleDetailUiItem(
             title = articleEntity.itemTitle,
-            updateTime = articleEntity.updatedTime,
+            updateTime = dateUtils.to24HrString(articleEntity.itemUpdatedMillisecond),
             author = articleEntity.author,
             contentHtmlData = articleEntity.content
         )

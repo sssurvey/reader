@@ -1,12 +1,12 @@
 package com.haomins.domain.usecase.addsource
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain_model.responses.AddSourceResponseModel
 import com.haomins.domain.repositories.AddSourceRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
 import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
+import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
 import javax.inject.Inject
 

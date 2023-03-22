@@ -6,10 +6,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain_model.responses.UserAuthResponseModel
 import com.haomins.domain.usecase.login.ForgetPassword
 import com.haomins.domain.usecase.login.Login
 import com.haomins.domain.usecase.login.SignUp
+import com.haomins.model.remote.user.UserAuthResponseModel
 import com.haomins.reader.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
@@ -34,8 +34,8 @@ class LoginViewModel @Inject constructor(
 
     fun authorize(userName: String, userPassword: String, onError: (errorMessage: String) -> Unit) {
         login.execute(
-            observer = object : DisposableSingleObserver<com.haomins.domain_model.responses.UserAuthResponseModel>() {
-                override fun onSuccess(t: com.haomins.domain_model.responses.UserAuthResponseModel) {
+            observer = object : DisposableSingleObserver<UserAuthResponseModel>() {
+                override fun onSuccess(t: UserAuthResponseModel) {
                     _isUserLoggedIn.postValue(true)
                 }
 

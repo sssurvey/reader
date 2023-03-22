@@ -7,9 +7,11 @@ import com.haomins.data.mapper.entitymapper.ArticleEntityMapper
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.article.ArticleResponseModel
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.data.util.DateUtils
 import com.haomins.data.util.extractImageFromImgTags
 import com.haomins.data.util.getString
 import com.haomins.domain.repositories.ArticleListRepositoryContract
+import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -20,6 +22,7 @@ class ArticleListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val articleDao: ArticleDao,
     private val sharedPreferences: SharedPreferences,
+    private val dateUtils: DateUtils,
     private val articleEntityMapper: ArticleEntityMapper
 ) : ArticleListRepositoryContract {
 
@@ -33,26 +36,26 @@ class ArticleListRepository @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
-    override fun loadAllArticleItems(): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
+    override fun loadAllArticleItems(): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemote()
     }
 
-    override fun continueLoadAllArticleItems(): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
+    override fun continueLoadAllArticleItems(): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemote(true)
     }
 
-    override fun loadArticleItems(feedId: String): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
+    override fun loadArticleItems(feedId: String): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemoteByFeedId(feedId)
     }
 
-    override fun continueLoadArticleItems(feedId: String): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
+    override fun continueLoadArticleItems(feedId: String): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemoteByFeedId(feedId, true)
     }
 
     private fun loadAllArticleItemsFromRemoteByFeedId(
         feedId: String,
         continueLoad: Boolean = false
-    ): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
+    ): Single<List<ArticleEntity>> {
         return if (continueLoad) {
             theOldReaderService.loadArticleListByFeed(
                 headerAuthValue = headerAuthValue,
@@ -85,16 +88,9 @@ class ArticleListRepository @Inject constructor(
                 articleDao.insert(*articleEntities.toTypedArray())
                 articleEntities
             }.onErrorResumeNext { articleDao.selectAllArticleByFeedId(feedId) }
-            .map {
-                it.map { articleEntity ->
-                    articleEntityMapper.dataModelToDomainModel(
-                        articleEntity
-                    )
-                }
-            }
     }
 
-    private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<com.haomins.domain_model.entities.ArticleEntity>> {
+    private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<ArticleEntity>> {
         return if (continueLoad) {
             theOldReaderService.loadAllArticles(
                 headerAuthValue = headerAuthValue,
@@ -123,13 +119,10 @@ class ArticleListRepository @Inject constructor(
                 articleDao.insert(*articleEntities.toTypedArray())
                 articleEntities
             }.onErrorResumeNext { articleDao.getAll() }
-            .map {
-                it.map { articleEntity -> articleEntityMapper.dataModelToDomainModel(articleEntity) }
-            }
     }
 
-    private fun ArticleResponseModel.toArticleEntity(): com.haomins.model.entity.ArticleEntity {
-        return com.haomins.model.entity.ArticleEntity(
+    private fun ArticleResponseModel.toArticleEntity(): ArticleEntity {
+        return ArticleEntity(
             itemId = items.first().id,
             itemTitle = items.first().title,
             itemUpdatedMillisecond = items.first().updatedMillisecond,

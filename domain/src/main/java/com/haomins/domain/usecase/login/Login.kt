@@ -1,11 +1,11 @@
 package com.haomins.domain.usecase.login
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain_model.responses.UserAuthResponseModel
 import com.haomins.domain.repositories.LoginRepositoryContract
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
+import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import javax.inject.Inject
 

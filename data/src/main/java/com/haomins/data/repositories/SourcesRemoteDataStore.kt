@@ -4,11 +4,11 @@ import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import com.haomins.data.db.dao.SubscriptionDao
 import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
+import com.haomins.data.service.TheOldReaderService
+import com.haomins.domain.repositories.SourcesRepository
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.model.remote.subscription.SubscriptionItemModel
-import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.repositories.SourcesRepository
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,7 +21,7 @@ class SourcesRemoteDataStore @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : SourcesRepository {
 
-    override fun loadSubscriptionList(): Single<List<com.haomins.domain_model.entities.SubscriptionEntity>> {
+    override fun loadSubscriptionList(): Single<List<SubscriptionEntity>> {
         return theOldReaderService
             .loadSubscriptionSourceList(headerAuthValue = loadHeaderAuthValue())
             .map {
@@ -30,11 +30,6 @@ class SourcesRemoteDataStore @Inject constructor(
                 }
             }
             .onErrorResumeNext { retrieveSubListFromDB() }
-            .map {
-                it.map { subscriptionEntity ->
-                    subscriptionEntityMapper.dataModelToDomainModel(subscriptionEntity)
-                }
-            }
     }
 
     private fun retrieveSubListFromDB(): Single<List<SubscriptionEntity>> {

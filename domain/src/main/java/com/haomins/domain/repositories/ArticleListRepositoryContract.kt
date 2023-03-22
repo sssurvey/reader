@@ -1,6 +1,6 @@
 package com.haomins.domain.repositories
 
-import com.haomins.domain_model.entities.ArticleEntity
+import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 
 interface ArticleListRepositoryContract {
