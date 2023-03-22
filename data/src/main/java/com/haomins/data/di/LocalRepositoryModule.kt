@@ -1,11 +1,7 @@
 package com.haomins.data.di
 
 import com.haomins.data.repositories.local.*
-import com.haomins.domain.repositories.local.ArticleDetailLocalRepository
-import com.haomins.domain.repositories.local.ContactInfoLocalRepository
-import com.haomins.domain.repositories.local.DisclosureLocalRepository
-import com.haomins.domain.repositories.local.LoggingLocalRepository
-import com.haomins.domain.repositories.local.SubscriptionLocalRepository
+import com.haomins.domain.repositories.local.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -41,5 +37,10 @@ interface LocalRepositoryModule {
     @ViewModelScoped
     fun bindDisclosureLocalRepository(disclosureLocalDataStore: DisclosureLocalDataStore):
             DisclosureLocalRepository
+
+    @Binds
+    @ViewModelScoped
+    fun bindArticleListLocalRepository(articleListLocalDataStore: ArticleListLocalDataStore):
+            ArticleListLocalRepository
 
 }
