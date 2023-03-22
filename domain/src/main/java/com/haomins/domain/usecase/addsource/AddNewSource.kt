@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.addsource
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.repositories.AddSourceRemoteRepository
+import com.haomins.domain.repositories.remote.AddSourceRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase

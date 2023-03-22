@@ -1,6 +1,6 @@
 package com.haomins.data.repositories.local
 
-import com.haomins.domain.repositories.ContactInfoLocalRepository
+import com.haomins.domain.repositories.local.ContactInfoLocalRepository
 import javax.inject.Inject
 
 class ContactInfoLocalDataStore @Inject constructor() : ContactInfoLocalRepository {

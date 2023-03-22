@@ -1,6 +1,6 @@
 package com.haomins.domain.usecase.logging
 
-import com.haomins.domain.repositories.LoggingLocalRepository
+import com.haomins.domain.repositories.local.LoggingLocalRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase

@@ -1,4 +1,4 @@
-package com.haomins.domain.repositories
+package com.haomins.domain.repositories.local
 
 import io.reactivex.Single
 

@@ -1,8 +1,8 @@
 package com.haomins.domain.usecase.disclosure
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.ContactInfoLocalRepository
-import com.haomins.domain.repositories.DisclosureLocalRepository
+import com.haomins.domain.repositories.local.ContactInfoLocalRepository
+import com.haomins.domain.repositories.local.DisclosureLocalRepository
 import com.haomins.model.DisclosureInfo
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver

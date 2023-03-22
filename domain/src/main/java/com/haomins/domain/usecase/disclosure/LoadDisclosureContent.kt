@@ -1,8 +1,8 @@
 package com.haomins.domain.usecase.disclosure
 
 import com.haomins.model.DisclosureInfo
-import com.haomins.domain.repositories.ContactInfoLocalRepository
-import com.haomins.domain.repositories.DisclosureLocalRepository
+import com.haomins.domain.repositories.local.ContactInfoLocalRepository
+import com.haomins.domain.repositories.local.DisclosureLocalRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase

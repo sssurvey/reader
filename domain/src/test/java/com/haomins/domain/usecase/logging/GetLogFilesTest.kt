@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.logging
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.LoggingLocalRepository
+import com.haomins.domain.repositories.local.LoggingLocalRepository
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Before

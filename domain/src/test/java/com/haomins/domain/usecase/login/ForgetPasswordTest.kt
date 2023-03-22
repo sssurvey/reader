@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.login
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.LoginRemoteRepository
+import com.haomins.domain.repositories.remote.LoginRemoteRepository
 import io.reactivex.observers.TestObserver
 import org.junit.Assert.assertTrue
 import org.junit.Before

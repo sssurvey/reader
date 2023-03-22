@@ -2,7 +2,7 @@ package com.haomins.data.repositories.local
 
 import android.util.Log
 import com.haomins.data.service.AndroidService
-import com.haomins.domain.repositories.DisclosureLocalRepository
+import com.haomins.domain.repositories.local.DisclosureLocalRepository
 import io.reactivex.Single
 import java.io.BufferedReader
 import java.io.InputStreamReader

@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.articledetails
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.repositories.ArticleDetailLocalRepository
+import com.haomins.domain.repositories.local.ArticleDetailLocalRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase

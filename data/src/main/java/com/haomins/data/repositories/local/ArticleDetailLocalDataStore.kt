@@ -1,7 +1,7 @@
 package com.haomins.data.repositories.local
 
 import com.haomins.data.db.dao.ArticleDao
-import com.haomins.domain.repositories.ArticleDetailLocalRepository
+import com.haomins.domain.repositories.local.ArticleDetailLocalRepository
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import javax.inject.Inject

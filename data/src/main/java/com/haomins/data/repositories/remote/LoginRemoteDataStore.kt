@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.putValue
 import com.haomins.data.util.removeValue
-import com.haomins.domain.repositories.LoginRemoteRepository
+import com.haomins.domain.repositories.remote.LoginRemoteRepository
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single

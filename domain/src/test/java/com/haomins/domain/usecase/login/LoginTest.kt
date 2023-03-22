@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.login
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.LoginRemoteRepository
+import com.haomins.domain.repositories.remote.LoginRemoteRepository
 import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver

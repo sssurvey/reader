@@ -2,7 +2,7 @@ package com.haomins.domain.usecase.addsource
 
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.repositories.AddSourceRemoteRepository
+import com.haomins.domain.repositories.remote.AddSourceRemoteRepository
 import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
 import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single

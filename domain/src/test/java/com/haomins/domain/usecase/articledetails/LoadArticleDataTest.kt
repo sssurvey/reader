@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.articledetails
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.ArticleDetailLocalRepository
+import com.haomins.domain.repositories.local.ArticleDetailLocalRepository
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver

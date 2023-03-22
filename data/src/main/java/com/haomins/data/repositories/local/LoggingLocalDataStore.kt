@@ -3,7 +3,7 @@ package com.haomins.data.repositories.local
 import android.util.Log
 import com.haomins.data.service.AndroidService
 import com.haomins.data.util.DateUtils
-import com.haomins.domain.repositories.LoggingLocalRepository
+import com.haomins.domain.repositories.local.LoggingLocalRepository
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileWriter

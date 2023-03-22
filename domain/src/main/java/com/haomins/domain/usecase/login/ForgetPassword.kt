@@ -1,6 +1,6 @@
 package com.haomins.domain.usecase.login
 
-import com.haomins.domain.repositories.LoginRemoteRepository
+import com.haomins.domain.repositories.remote.LoginRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase

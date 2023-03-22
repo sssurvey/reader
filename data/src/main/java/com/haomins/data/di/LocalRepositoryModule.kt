@@ -1,10 +1,10 @@
 package com.haomins.data.di
 
 import com.haomins.data.repositories.local.*
-import com.haomins.domain.repositories.ArticleDetailLocalRepository
-import com.haomins.domain.repositories.ContactInfoLocalRepository
-import com.haomins.domain.repositories.DisclosureLocalRepository
-import com.haomins.domain.repositories.LoggingLocalRepository
+import com.haomins.domain.repositories.local.ArticleDetailLocalRepository
+import com.haomins.domain.repositories.local.ContactInfoLocalRepository
+import com.haomins.domain.repositories.local.DisclosureLocalRepository
+import com.haomins.domain.repositories.local.LoggingLocalRepository
 import com.haomins.domain.repositories.local.SubscriptionLocalRepository
 import dagger.Binds
 import dagger.Module
