@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.haomins.model.entity.ArticleEntity
+import io.reactivex.Completable
 import io.reactivex.Single
 
 @Dao
@@ -24,5 +25,11 @@ interface ArticleDao {
 
     @Query("SELECT * FROM article_entity WHERE item_id == :itemId")
     fun selectArticleByItemId(itemId: String): Single<ArticleEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertV2(articleEntities: List<ArticleEntity>): Completable
+
+    @Query("DELETE FROM article_entity")
+    fun clearTableV2(): Completable
 
 }
