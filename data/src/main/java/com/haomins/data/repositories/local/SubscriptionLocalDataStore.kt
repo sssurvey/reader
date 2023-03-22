@@ -14,11 +14,11 @@ class SubscriptionLocalDataStore @Inject constructor(
 ) : SubscriptionLocalRepository {
 
     override fun saveAllSubscriptionToLocal(sources: List<SubscriptionEntity>): Completable {
-        return subscriptionDao.insertAllV2(sources)
+        return subscriptionDao.insertAll(sources)
     }
 
     override fun loadAllSubscriptionFromLocal(): Single<List<SubscriptionEntity>> {
-        return subscriptionDao.getAllV2()
+        return subscriptionDao.getAll()
     }
 
 }
