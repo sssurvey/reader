@@ -2,7 +2,8 @@ package com.haomins.domain.usecase.subscription
 
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
-import com.haomins.model.entity.SubscriptionEntity
+import com.haomins.model.remote.subscription.SubscriptionItemModel
+import com.haomins.model.remote.subscription.SubscriptionListResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -13,6 +14,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class LoadSubscriptionListFromRemoteTest {
@@ -22,8 +24,8 @@ class LoadSubscriptionListFromRemoteTest {
 
     private lateinit var loadSubscriptionListFromRemote: LoadSubscriptionListFromRemote
 
-    private val testExecutionScheduler = TestSchedulers.executionScheduler()
-    private val testPostExecutionScheduler = TestSchedulers.postExecutionScheduler()
+    private val testExecutionScheduler = TestSchedulers.executionSchedulerTrampolineScheduler()
+    private val testPostExecutionScheduler = TestSchedulers.postExecutionSchedulerTrampolineScheduler()
 
     @Before
     fun setUp() {
@@ -42,20 +44,13 @@ class LoadSubscriptionListFromRemoteTest {
     @Test
     fun `test buildUseCaseSingle$domain`() {
 
-        val testObserver = TestObserver<List<SubscriptionEntity>>()
-        val testEntity = SubscriptionEntity(
-            title = "test",
-            iconUrl = "test_url",
-            id = "123"
-        )
+        val testSubscriptionItemModels = generateSourceListResponse().subscriptions
 
         fun mockAction() {
             `when`(mockSubscriptionRemoteRepository.loadSubscriptionList()).thenReturn(
                 Single.timer(1, TimeUnit.SECONDS, testExecutionScheduler.scheduler).flatMap {
                     Single.just(
-                        listOf(
-                            testEntity
-                        )
+                        testSubscriptionItemModels
                     )
                 }
             )
@@ -63,16 +58,34 @@ class LoadSubscriptionListFromRemoteTest {
 
         mockAction()
 
-        loadSubscriptionListFromRemote
+        val testObserver = loadSubscriptionListFromRemote
             .buildUseCaseSingle(Unit)
-            .subscribeWith(testObserver)
+            .test()
 
         testObserver.assertSubscribed()
-
-        (testExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(10, TimeUnit.SECONDS)
-        (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(11, TimeUnit.SECONDS)
-
         testObserver.assertComplete()
-        assertTrue(testObserver.values().first().first() == testEntity)
+        assertTrue(testObserver.values().first() == testSubscriptionItemModels)
+    }
+
+    private fun generateSourceListResponse(): SubscriptionListResponseModel {
+        val subscriptionsList = mutableListOf<SubscriptionItemModel>()
+        for (i in 0 until 100) {
+            subscriptionsList
+                .add(
+                    SubscriptionItemModel(
+                        id = "testIdOf::$i",
+                        title = "Test Rss Source $i",
+                        categories = arrayOf(),
+                        sortId = "${i + i}",
+                        firstItemMilSec = Calendar.getInstance().time.toString(),
+                        url = "https://rss.testdata.com",
+                        htmlUrl = "https://rss.testdataABC.com",
+                        iconUrl = "https://www.testdataABC.com/image.img"
+                    )
+                )
+        }
+        return SubscriptionListResponseModel(
+            subscriptions = ArrayList(subscriptionsList)
+        )
     }
 }
