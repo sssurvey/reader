@@ -10,7 +10,7 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 class SaveSubscriptionListToLocal @Inject constructor(
-    private val sourcesLocalRepository: SubscriptionLocalRepository,
+    private val subscriptionLocalRepository: SubscriptionLocalRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : CompletableUseCase<SaveSubscriptionListToLocal.Companion.Params>(
@@ -20,7 +20,7 @@ class SaveSubscriptionListToLocal @Inject constructor(
 
     override fun buildUseCaseCompletable(params: Params?): Completable {
         if (params == null) throw ParamsShouldNotBeNullException()
-        return sourcesLocalRepository.saveAllSubscriptionToLocal(params.subscriptionEntities)
+        return subscriptionLocalRepository.saveAllSubscriptionToLocal(params.subscriptionEntities)
     }
 
     companion object {
