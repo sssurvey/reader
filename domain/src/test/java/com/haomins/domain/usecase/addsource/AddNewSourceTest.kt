@@ -2,9 +2,9 @@ package com.haomins.domain.usecase.addsource
 
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain_model.responses.AddSourceResponseModel
 import com.haomins.domain.repositories.AddSourceRepositoryContract
 import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
+import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -63,7 +63,9 @@ class AddNewSourceTest {
         val testSourceString = "123"
         val testAddSourceReturn = Single.just(
             AddSourceResponseModel(
-                result = 1,
+                query = "",
+                streamId = "",
+                numResults = 1,
                 error = "test error"
             )
         )
@@ -97,7 +99,9 @@ class AddNewSourceTest {
         val mediumSourceValidator = MEDIUM_RSS_FEED_BASE + testSourceString
         val testAddSourceReturn = Single.just(
             AddSourceResponseModel(
-                result = 1,
+                query = "",
+                streamId = "",
+                numResults = 1,
                 error = "test error"
             )
         )

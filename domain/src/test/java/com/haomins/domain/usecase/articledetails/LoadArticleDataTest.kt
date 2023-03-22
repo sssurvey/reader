@@ -1,8 +1,8 @@
 package com.haomins.domain.usecase.articledetails
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleDetailRepositoryContract
+import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -44,12 +44,11 @@ class LoadArticleDataTest {
             itemId = testId,
             author = "test author",
             content = "test content",
-            howLongAgo = "1",
-            updatedTime = "1",
             itemPublishedMillisecond = 1,
             itemUpdatedMillisecond = 1,
             href = "www.test.com",
-            previewImageUrl = "www.test.com/test.png"
+            previewImageUrl = "www.test.com/test.png",
+            feedId = "test feed id"
         )
 
         fun mockBehavior() {

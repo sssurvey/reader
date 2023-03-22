@@ -1,8 +1,8 @@
 package com.haomins.domain.usecase.article
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain_model.entities.ArticleEntity
 import com.haomins.domain.repositories.ArticleListRepositoryContract
+import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -45,25 +45,23 @@ class LoadAllArticlesTest {
                 "123",
                 "123",
                 "123",
-                "123",
-                "123",
-                "123",
                 123,
                 123,
+                "123",
+                "123",
+                "123",
                 "",
-                ""
             ),
             ArticleEntity(
                 "123",
                 "1234",
                 "123",
-                "123",
-                "123",
-                "123",
                 123,
                 123,
+                "123",
+                "123",
+                "123",
                 "",
-                ""
             )
         )
 
