@@ -30,6 +30,17 @@ class ArticleListRepository @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
+
+    //TODO: new
+    override fun loadAllArticleItemsV2(): Single<List<ArticleResponseModel>> {
+        return loadAllArticleItemsFromRemoteV2()
+    }
+
+    //TODO: new
+    override fun continueLoadAllArticleItemsV2(): Single<List<ArticleResponseModel>> {
+        return loadAllArticleItemsFromRemoteV2(true)
+    }
+
     override fun loadAllArticleItems(): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemote()
     }
@@ -82,6 +93,31 @@ class ArticleListRepository @Inject constructor(
                 articleDao.insert(*articleEntities.toTypedArray())
                 articleEntities
             }.onErrorResumeNext { articleDao.selectAllArticleByFeedId(feedId) }
+    }
+
+    private fun loadAllArticleItemsFromRemoteV2(continueLoad: Boolean = false): Single<List<ArticleResponseModel>> {
+        return if (continueLoad) {
+            theOldReaderService.loadAllArticles(
+                headerAuthValue = headerAuthValue,
+                continueLoad = continueId
+            ).doOnSuccess {
+                continueId = it.continuation
+            }
+        } else {
+            theOldReaderService.loadAllArticles(headerAuthValue = headerAuthValue)
+        }
+            .doOnError(::onLoadError)
+            .flatMapObservable {
+                Observable
+                    .fromIterable(it.itemRefs)
+                    .flatMapSingle { itemRef ->
+                        theOldReaderService.loadArticleDetailsByRefId(
+                            headerAuthValue = headerAuthValue,
+                            refItemId = itemRef.id
+                        )
+                    }
+            }
+            .toList()
     }
 
     private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<ArticleEntity>> {
