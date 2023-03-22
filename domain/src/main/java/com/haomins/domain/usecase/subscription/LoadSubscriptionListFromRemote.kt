@@ -1,6 +1,6 @@
 package com.haomins.domain.usecase.subscription
 
-import com.haomins.domain.repositories.SubscriptionRemoteRepository
+import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase

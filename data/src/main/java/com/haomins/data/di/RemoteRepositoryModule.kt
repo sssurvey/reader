@@ -3,6 +3,7 @@ package com.haomins.data.di
 import com.haomins.data.repositories.*
 import com.haomins.data.repositories.remote.SubscriptionRemoteDataStore
 import com.haomins.domain.repositories.*
+import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

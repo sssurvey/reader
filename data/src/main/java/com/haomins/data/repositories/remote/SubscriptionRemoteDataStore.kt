@@ -2,7 +2,7 @@ package com.haomins.data.repositories.remote
 
 import android.content.SharedPreferences
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.repositories.SubscriptionRemoteRepository
+import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.subscription.SubscriptionItemModel
 import io.reactivex.Single

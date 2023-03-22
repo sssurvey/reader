@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.subscription
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.SubscriptionRemoteRepository
+import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
 import com.haomins.model.entity.SubscriptionEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver

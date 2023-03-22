@@ -1,4 +1,4 @@
-package com.haomins.domain.repositories
+package com.haomins.domain.repositories.remote
 
 import com.haomins.model.remote.subscription.SubscriptionItemModel
 import io.reactivex.Single
