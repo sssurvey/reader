@@ -1,10 +1,9 @@
 package com.haomins.data.repositories
 
 import android.content.SharedPreferences
-import com.haomins.data.mapper.responsemapper.UserAuthResponseModelMapper
+import com.haomins.data.service.TheOldReaderService
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.user.UserAuthResponseModel
-import com.haomins.data.service.TheOldReaderService
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -41,8 +40,7 @@ class LoginRepositoryTest {
         MockitoAnnotations.initMocks(this)
         loginRepository = LoginRepository(
             theOldReaderService = mockTheOldReaderService,
-            sharedPreferences = mockSharedPreferences,
-            userAuthResponseModelMapper = UserAuthResponseModelMapper()
+            sharedPreferences = mockSharedPreferences
         )
     }
 
@@ -66,7 +64,7 @@ class LoginRepositoryTest {
         mockOldReaderServiceBehavior(throwException = false)
         mockBehavior()
 
-        val observer = TestObserver<com.haomins.domain_model.responses.UserAuthResponseModel>()
+        val observer = TestObserver<UserAuthResponseModel>()
         loginRepository
             .login("testId", "testPassword")
             .observeOn(testScheduler)
@@ -97,7 +95,7 @@ class LoginRepositoryTest {
         mockOldReaderServiceBehavior(throwException = true)
         mockBehavior()
 
-        val observer = TestObserver<com.haomins.domain_model.responses.UserAuthResponseModel>()
+        val observer = TestObserver<UserAuthResponseModel>()
         loginRepository
             .login("testId", "testPassword")
             .observeOn(testScheduler)

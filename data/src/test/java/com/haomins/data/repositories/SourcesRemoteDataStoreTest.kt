@@ -2,10 +2,10 @@ package com.haomins.data.repositories
 
 import android.content.SharedPreferences
 import com.haomins.data.db.dao.SubscriptionDao
-import com.haomins.data.mapper.entitymapper.SubscriptionEntityMapper
-import com.haomins.model.SharedPreferenceKey
-import com.haomins.model.remote.subscription.SubscriptionItemModel
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.model.SharedPreferenceKey
+import com.haomins.model.entity.SubscriptionEntity
+import com.haomins.model.remote.subscription.SubscriptionItemModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import org.junit.After
@@ -39,8 +39,7 @@ class SourcesRemoteDataStoreTest {
         sourcesRemoteDataStore = SourcesRemoteDataStore(
             theOldReaderService = mockTheOldReaderService,
             subscriptionDao = mockSubscriptionDao,
-            sharedPreferences = mockSharedPreference,
-            subscriptionEntityMapper = SubscriptionEntityMapper()
+            sharedPreferences = mockSharedPreference
         )
     }
 
@@ -72,7 +71,7 @@ class SourcesRemoteDataStoreTest {
 
         mockHelper()
 
-        val testObserver = TestObserver<List<com.haomins.domain_model.entities.SubscriptionEntity>>()
+        val testObserver = TestObserver<List<SubscriptionEntity>>()
         sourcesRemoteDataStore
             .loadSubscriptionList()
             .subscribeWith(testObserver)
@@ -88,7 +87,7 @@ class SourcesRemoteDataStoreTest {
     fun `test loadSubscriptionList() failed`() {
 
         val testException = Exception()
-        val testObserver = TestObserver<List<com.haomins.domain_model.entities.SubscriptionEntity>>()
+        val testObserver = TestObserver<List<SubscriptionEntity>>()
 
         fun mockHelper() {
 

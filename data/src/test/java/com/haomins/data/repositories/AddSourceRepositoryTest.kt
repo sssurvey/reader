@@ -1,9 +1,9 @@
 package com.haomins.data.repositories
 
 import android.content.SharedPreferences
-import com.haomins.data.mapper.responsemapper.AddSourceResponseModelMapper
-import com.haomins.model.SharedPreferenceKey
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.model.SharedPreferenceKey
+import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import junit.framework.Assert.assertTrue
@@ -23,14 +23,12 @@ class AddSourceRepositoryTest {
     @Mock
     lateinit var mockTheOldReaderService: TheOldReaderService
 
-    private val addSourceResponseModelMapper = AddSourceResponseModelMapper()
     private lateinit var addSourceRepository: AddSourceRepository
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         addSourceRepository = AddSourceRepository(
-            addSourceResponseModelMapper,
             mockTheOldReaderService,
             mockSharedPreferences
         )
@@ -39,11 +37,11 @@ class AddSourceRepositoryTest {
     @Test
     fun `addSource success call`() {
 
-        val testObserver = TestObserver<com.haomins.domain_model.responses.AddSourceResponseModel>()
+        val testObserver = TestObserver<AddSourceResponseModel>()
         val testSource = "123"
         val testAuthKey = "test_auth_key"
         val testTheOldReaderServiceAddSourceReturn = Single.just(
-            com.haomins.model.remote.subscription.AddSourceResponseModel(
+            AddSourceResponseModel(
                 query = "test_query",
                 numResults = 1,
                 streamId = "test_string_id",
@@ -87,7 +85,7 @@ class AddSourceRepositoryTest {
 
         assertTrue(
             testObserver.values()
-                .first().result == testTheOldReaderServiceAddSourceReturn.blockingGet().numResults
+                .first().numResults == testTheOldReaderServiceAddSourceReturn.blockingGet().numResults
         )
 
         assertTrue(
