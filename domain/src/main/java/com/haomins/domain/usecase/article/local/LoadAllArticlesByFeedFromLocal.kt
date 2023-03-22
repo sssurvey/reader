@@ -1,4 +1,4 @@
-package com.haomins.domain.usecase.article
+package com.haomins.domain.usecase.article.local
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
 import com.haomins.domain.repositories.local.ArticleListLocalRepository
