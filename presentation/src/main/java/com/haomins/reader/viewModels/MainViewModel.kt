@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.haomins.data.util.getString
-import com.haomins.domain.usecase.source.LoadSubscriptionList
+import com.haomins.domain.usecase.source.LoadSubscriptionListFromRemote
 import com.haomins.model.entity.SubscriptionEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
-    private val loadSubscriptionList: LoadSubscriptionList
+    private val loadSubscriptionListFromRemote: LoadSubscriptionListFromRemote
 ) : ViewModel() {
 
     fun hasAuthToken(): Boolean {
@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun loadSubscriptionList(doOnSuccess: () -> Unit = {}) {
-        loadSubscriptionList.execute(
+        loadSubscriptionListFromRemote.execute(
             object : DisposableSingleObserver<List<SubscriptionEntity>>() {
                 override fun onSuccess(t: List<SubscriptionEntity>) {
                     Log.d(TAG, "loadSubscriptionList :: onSuccess loaded ${t.size} sources.")

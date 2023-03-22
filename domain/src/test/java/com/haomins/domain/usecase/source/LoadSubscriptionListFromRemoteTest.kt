@@ -15,12 +15,12 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import java.util.concurrent.TimeUnit
 
-class LoadSubscriptionListTest {
+class LoadSubscriptionListFromRemoteTest {
 
     @Mock
     lateinit var mockSourcesRepository: SourcesRepository
 
-    private lateinit var loadSubscriptionList: LoadSubscriptionList
+    private lateinit var loadSubscriptionListFromRemote: LoadSubscriptionListFromRemote
 
     private val testExecutionScheduler = TestSchedulers.executionScheduler()
     private val testPostExecutionScheduler = TestSchedulers.postExecutionScheduler()
@@ -28,7 +28,7 @@ class LoadSubscriptionListTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        loadSubscriptionList = LoadSubscriptionList(
+        loadSubscriptionListFromRemote = LoadSubscriptionListFromRemote(
             mockSourcesRepository,
             testExecutionScheduler,
             testPostExecutionScheduler
@@ -63,7 +63,7 @@ class LoadSubscriptionListTest {
 
         mockAction()
 
-        loadSubscriptionList
+        loadSubscriptionListFromRemote
             .buildUseCaseSingle(Unit)
             .subscribeWith(testObserver)
 

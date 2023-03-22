@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.usecase.source.LoadSubscriptionList
+import com.haomins.domain.usecase.source.LoadAndSaveSubscriptionList
 import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.reader.R
 import com.haomins.reader.utils.GlideUtils
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SourceTitleListViewModel @Inject constructor(
-    private val loadSubscriptionList: LoadSubscriptionList,
+    private val loadAndSaveSubscriptionList: LoadAndSaveSubscriptionList,
     private val glideUtils: GlideUtils,
     private val application: Application,
 ) : ViewModel() {
@@ -53,18 +53,16 @@ class SourceTitleListViewModel @Inject constructor(
     }
 
     fun loadSourceSubscriptionList() {
-        loadSubscriptionList.execute(
-            object :
-                DisposableSingleObserver<List<SubscriptionEntity>>() {
+        loadAndSaveSubscriptionList.execute(
+            object : DisposableSingleObserver<List<SubscriptionEntity>>() {
                 override fun onSuccess(t: List<SubscriptionEntity>) {
                     _sourceListUiDataSet.postValue(populateSubSourceDataSet(t))
-                    Log.d(TAG, "loadSubscriptionList :: onSuccess")
+                    Log.d(TAG, "loadAndSaveSubscriptionList :: onSuccess")
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e(TAG, "loadSubscriptionList :: onError ${e.printStackTrace()}")
+                    Log.e(TAG, "loadAndSaveSubscriptionList :: onError ${e.printStackTrace()}")
                 }
-
             }
         )
     }

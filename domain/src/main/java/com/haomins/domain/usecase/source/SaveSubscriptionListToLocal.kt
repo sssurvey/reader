@@ -9,11 +9,11 @@ import com.haomins.model.entity.SubscriptionEntity
 import io.reactivex.Completable
 import javax.inject.Inject
 
-class SaveSubscriptionList @Inject constructor(
+class SaveSubscriptionListToLocal @Inject constructor(
     private val sourcesLocalRepository: SourceLocalRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
-) : CompletableUseCase<SaveSubscriptionList.Companion.Params>(
+) : CompletableUseCase<SaveSubscriptionListToLocal.Companion.Params>(
     executionScheduler,
     postExecutionScheduler
 ) {

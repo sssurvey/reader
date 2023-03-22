@@ -8,7 +8,7 @@ import com.haomins.model.entity.SubscriptionEntity
 import io.reactivex.Single
 import javax.inject.Inject
 
-class LoadSubscriptionList @Inject constructor(
+class LoadSubscriptionListFromRemote @Inject constructor(
     private val sourcesRepository: SourcesRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
