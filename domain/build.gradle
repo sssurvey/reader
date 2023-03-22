@@ -11,6 +11,5 @@ java {
 dependencies {
     implementation domainDependencies
     api project(':model')
-    api project(":domain-model")
     testImplementation domainTestImplementation
 }
