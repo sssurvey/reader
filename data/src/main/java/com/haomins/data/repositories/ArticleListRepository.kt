@@ -13,9 +13,7 @@ import com.haomins.model.remote.article.ArticleResponseModel
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class ArticleListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val articleDao: ArticleDao,

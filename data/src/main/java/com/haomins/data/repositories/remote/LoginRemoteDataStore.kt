@@ -9,9 +9,7 @@ import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class LoginRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val sharedPreferences: SharedPreferences,

@@ -7,9 +7,7 @@ import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.subscription.SubscriptionItemModel
 import io.reactivex.Single
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class SubscriptionRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val sharedPreferences: SharedPreferences

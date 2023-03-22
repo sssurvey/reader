@@ -5,9 +5,7 @@ import com.haomins.domain.repositories.local.ArticleDetailLocalRepository
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class ArticleDetailLocalDataStore @Inject constructor(
     private val articleDao: ArticleDao,
 ) : ArticleDetailLocalRepository {
