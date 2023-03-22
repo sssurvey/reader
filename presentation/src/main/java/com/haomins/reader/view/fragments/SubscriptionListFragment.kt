@@ -39,7 +39,7 @@ class SubscriptionListFragment : Fragment() {
         Observer<List<SubscriptionListViewModel.SubscriptionListUi>> {
             subscriptionListDisplayDataList.clear()
             subscriptionListDisplayDataList.addAll(it)
-            subscriptionListAdapter.notifyDataSetChanged()
+            subscriptionListAdapter.notifyItemInserted(it.size)
         }
     }
 
