@@ -19,7 +19,7 @@ class LoadAllArticlesFromRemote @Inject constructor(
 
     override fun buildUseCaseSingle(params: Unit?): Single<List<ArticleResponseModel>> {
         return articleListRepositoryContract
-            .loadAllArticleItemsV2()
+            .loadAllArticleItems()
     }
 
 }

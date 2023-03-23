@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.usecase.article.ContinueLoadAllArticles
+import com.haomins.domain.usecase.article.ContinueLoadAllArticlesAndSaveToLocal
 import com.haomins.domain.usecase.article.ContinueLoadArticlesByFeed
-import com.haomins.domain.usecase.article.LoadAllArticles
+import com.haomins.domain.usecase.article.LoadAllArticlesAndSaveToLocal
 import com.haomins.domain.usecase.article.LoadArticlesByFeed
 import com.haomins.model.entity.ArticleEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +17,8 @@ import javax.inject.Inject
 class ArticleListViewModel @Inject constructor(
     private val loadArticlesByFeed: LoadArticlesByFeed,
     private val continueLoadArticlesByFeed: ContinueLoadArticlesByFeed,
-    private val continueLoadAllArticles: ContinueLoadAllArticles,
-    private val loadAllArticles: LoadAllArticles,
+    private val loadAllArticlesAndSaveToLocal: LoadAllArticlesAndSaveToLocal,
+    private val continueLoadAllArticlesAndSaveToLocal: ContinueLoadAllArticlesAndSaveToLocal
 ) : ViewModel() {
 
     companion object {
@@ -53,16 +53,16 @@ class ArticleListViewModel @Inject constructor(
     fun loadAllArticles() {
         isLoading.postValue(true)
         Log.d(TAG, "loadAllArticles called")
-        loadAllArticles.execute(
+        loadAllArticlesAndSaveToLocal.execute(
             observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
                 override fun onSuccess(t: List<ArticleEntity>) {
                     onArticleLoaded(t)
                     isLoading.postValue(false)
-                    Log.d(TAG, "loadAllArticles :: onSuccess: called")
+                    Log.d(TAG, "loadAllArticlesAndSaveToLocal :: onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e(TAG, "loadAllArticles :: onError: ${e.printStackTrace()}")
+                    Log.e(TAG, "loadAllArticlesAndSaveToLocal :: onError: ${e.printStackTrace()}")
                 }
             }
         )
@@ -70,9 +70,8 @@ class ArticleListViewModel @Inject constructor(
 
     fun continueLoadAllArticles() {
         Log.d(TAG, "continueLoadAllArticles called")
-        continueLoadAllArticles.execute(
+        continueLoadAllArticlesAndSaveToLocal.execute(
             observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
-
                 override fun onStart() {
                     super.onStart()
                     isLoading.postValue(true)
@@ -81,11 +80,14 @@ class ArticleListViewModel @Inject constructor(
                 override fun onSuccess(t: List<ArticleEntity>) {
                     onArticleLoaded(t)
                     isLoading.postValue(false)
-                    Log.d(TAG, "continueLoadAllArticles :: onSuccess: called")
+                    Log.d(TAG, "continueLoadAllArticlesAndSaveToLocal :: onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e(TAG, "continueLoadAllArticles :: onError: ${e.printStackTrace()}")
+                    Log.e(
+                        TAG,
+                        "continueLoadAllArticlesAndSaveToLocal :: onError: ${e.printStackTrace()}"
+                    )
                 }
             }
         )
@@ -118,8 +120,8 @@ class ArticleListViewModel @Inject constructor(
         super.onCleared()
         loadArticlesByFeed.dispose()
         continueLoadArticlesByFeed.dispose()
-        loadAllArticles.dispose()
-        continueLoadAllArticles.dispose()
+        loadAllArticlesAndSaveToLocal.dispose()
+        continueLoadAllArticlesAndSaveToLocal.dispose()
     }
 
     private fun onArticleLoaded(newlyLoadedArticles: List<ArticleEntity>) {

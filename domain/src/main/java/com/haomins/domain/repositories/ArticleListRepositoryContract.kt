@@ -10,13 +10,12 @@ interface ArticleListRepositoryContract {
 
     fun continueLoadArticleItems(feedId: String): Single<List<ArticleEntity>>
 
-    fun continueLoadAllArticleItems(): Single<List<ArticleEntity>>
+    fun loadAllArticleItems(): Single<List<ArticleResponseModel>>
 
-    fun loadAllArticleItems(): Single<List<ArticleEntity>>
+    fun continueLoadAllArticleItems(): Single<List<ArticleResponseModel>>
 
-    fun loadAllArticleItemsV2(): Single<List<ArticleResponseModel>>
-
-    fun continueLoadAllArticleItemsV2(): Single<List<ArticleResponseModel>>
     fun continueLoadAllArticleItemsV2(feedId: String): Single<List<ArticleResponseModel>>
+
     fun loadArticleAllItemsV2(feedId: String): Single<List<ArticleResponseModel>>
+
 }

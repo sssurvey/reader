@@ -19,7 +19,7 @@ class ContinueLoadAllArticlesFromRemote @Inject constructor(
 
     override fun buildUseCaseSingle(params: Unit?): Single<List<ArticleResponseModel>> {
         return articleListRepositoryContract
-            .continueLoadAllArticleItemsV2()
+            .continueLoadAllArticleItems()
     }
 
 }

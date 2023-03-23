@@ -4,8 +4,8 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.data.util.extractImageFromImgTags
 import com.haomins.data.util.getString
+import com.haomins.domain.common.HtmlUtil
 import com.haomins.domain.repositories.ArticleListRepositoryContract
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.entity.ArticleEntity
@@ -18,6 +18,7 @@ class ArticleListRepository @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
     private val articleDao: ArticleDao,
     private val sharedPreferences: SharedPreferences,
+    private val htmlUtil: HtmlUtil
 ) : ArticleListRepositoryContract {
 
     companion object {
@@ -30,15 +31,12 @@ class ArticleListRepository @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
-
-    //TODO: new
-    override fun loadAllArticleItemsV2(): Single<List<ArticleResponseModel>> {
-        return loadAllArticleItemsFromRemoteV2()
+    override fun loadAllArticleItems(): Single<List<ArticleResponseModel>> {
+        return loadAllArticleItemsFromRemote()
     }
 
-    //TODO: new
-    override fun continueLoadAllArticleItemsV2(): Single<List<ArticleResponseModel>> {
-        return loadAllArticleItemsFromRemoteV2(true)
+    override fun continueLoadAllArticleItems(): Single<List<ArticleResponseModel>> {
+        return loadAllArticleItemsFromRemote(true)
     }
 
     //TODO: new
@@ -51,16 +49,6 @@ class ArticleListRepository @Inject constructor(
         return loadAllArticleItemsFromRemoteByFeedIdV2(feedId, true)
     }
 
-    @Deprecated(message = "replaced with V2", replaceWith = ReplaceWith(""))
-    override fun loadAllArticleItems(): Single<List<ArticleEntity>> {
-        return loadAllArticleItemsFromRemote()
-    }
-
-    @Deprecated(message = "replaced with V2", replaceWith = ReplaceWith(""))
-    override fun continueLoadAllArticleItems(): Single<List<ArticleEntity>> {
-        return loadAllArticleItemsFromRemote(true)
-    }
-
     @Deprecated(message = "TO BE replaced with V2", replaceWith = ReplaceWith(""))
     override fun loadArticleItems(feedId: String): Single<List<ArticleEntity>> {
         return loadAllArticleItemsFromRemoteByFeedId(feedId)
@@ -71,6 +59,7 @@ class ArticleListRepository @Inject constructor(
         return loadAllArticleItemsFromRemoteByFeedId(feedId, true)
     }
 
+    @Deprecated(message = "TO BE replaced with V2", replaceWith = ReplaceWith(""))
     private fun loadAllArticleItemsFromRemoteByFeedId(
         feedId: String,
         continueLoad: Boolean = false
@@ -141,8 +130,7 @@ class ArticleListRepository @Inject constructor(
             .toList()
     }
 
-    @Deprecated(message = "replaced with V2", replaceWith = ReplaceWith(""))
-    private fun loadAllArticleItemsFromRemoteV2(continueLoad: Boolean = false): Single<List<ArticleResponseModel>> {
+    private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<ArticleResponseModel>> {
         return if (continueLoad) {
             theOldReaderService.loadAllArticles(
                 headerAuthValue = headerAuthValue,
@@ -165,38 +153,6 @@ class ArticleListRepository @Inject constructor(
                     }
             }
             .toList()
-    }
-
-    @Deprecated(message = "replaced with V2", replaceWith = ReplaceWith(""))
-    private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<ArticleEntity>> {
-        return if (continueLoad) {
-            theOldReaderService.loadAllArticles(
-                headerAuthValue = headerAuthValue,
-                continueLoad = continueId
-            ).doOnSuccess {
-                continueId = it.continuation
-            }
-        } else {
-            theOldReaderService.loadAllArticles(headerAuthValue = headerAuthValue)
-        }
-            .doOnError(::onLoadError)
-            .flatMapObservable {
-                Observable
-                    .fromIterable(it.itemRefs)
-                    .flatMapSingle { itemRef ->
-                        theOldReaderService.loadArticleDetailsByRefId(
-                            headerAuthValue = headerAuthValue,
-                            refItemId = itemRef.id
-                        )
-                    }
-            }
-            .toList()
-            .map {
-                val articleEntities =
-                    it.map { articleResponseModel -> articleResponseModel.toArticleEntity() }
-                articleDao.insert(*articleEntities.toTypedArray())
-                articleEntities
-            }.onErrorResumeNext { articleDao.getAll() }
     }
 
     private fun ArticleResponseModel.toArticleEntity(): ArticleEntity {
@@ -209,7 +165,7 @@ class ArticleListRepository @Inject constructor(
             content = items.first().summary.content,
             feedId = id,
             href = alternate.herf,
-            previewImageUrl = extractImageFromImgTags(rawHtmlString = items.first().summary.content)
+            previewImageUrl = htmlUtil.extractImageFromImgTags(rawHtmlString = items.first().summary.content)
         )
     }
 

@@ -67,6 +67,11 @@ class SubscriptionListViewModel @Inject constructor(
         )
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        loadAndSaveSubscriptionList.dispose()
+    }
+
     private fun MutableList<SubscriptionListUi>.populateSourceListMenus() {
         add(
             SubscriptionListUi(
