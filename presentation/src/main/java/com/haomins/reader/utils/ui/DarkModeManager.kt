@@ -1,4 +1,4 @@
-package com.haomins.reader.utils
+package com.haomins.reader.utils.ui
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate

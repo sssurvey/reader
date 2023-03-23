@@ -1,7 +1,7 @@
 package com.haomins.reader.di
 
-import com.haomins.reader.utils.impl.GlideImageLoaderUtils
-import com.haomins.reader.utils.ImageLoaderUtils
+import com.haomins.reader.utils.image.GlideImageLoaderUtils
+import com.haomins.reader.utils.image.ImageLoaderUtils
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

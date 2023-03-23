@@ -14,7 +14,7 @@ import com.haomins.data.util.DateUtils
 import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.adapters.ArticleTitleListAdapter
 import com.haomins.reader.databinding.FragmentArticleListBinding
-import com.haomins.reader.utils.ImageLoaderUtils
+import com.haomins.reader.utils.image.ImageLoaderUtils
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

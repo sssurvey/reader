@@ -2,7 +2,7 @@ package com.haomins.reader
 
 //import com.haomins.www.model.di.DaggerDataComponent
 import android.app.Application
-import com.haomins.reader.utils.DarkModeManager
+import com.haomins.reader.utils.ui.DarkModeManager
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

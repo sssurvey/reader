@@ -1,4 +1,4 @@
-package com.haomins.reader.utils.impl
+package com.haomins.reader.utils.image
 
 import android.app.Application
 import android.content.Context
@@ -11,7 +11,6 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.engine.executor.GlideExecutor
 import com.bumptech.glide.module.AppGlideModule
 import com.haomins.data.R
-import com.haomins.reader.utils.ImageLoaderUtils
 import java.net.URL
 import javax.inject.Inject
 

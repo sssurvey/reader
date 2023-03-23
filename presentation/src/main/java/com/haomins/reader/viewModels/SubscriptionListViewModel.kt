@@ -10,7 +10,7 @@ import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.usecase.subscription.LoadAndSaveSubscriptionList
 import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.reader.R
-import com.haomins.reader.utils.ImageLoaderUtils
+import com.haomins.reader.utils.image.ImageLoaderUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject

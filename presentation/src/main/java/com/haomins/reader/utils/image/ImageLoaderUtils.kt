@@ -1,4 +1,4 @@
-package com.haomins.reader.utils
+package com.haomins.reader.utils.image
 
 import android.widget.ImageView
 

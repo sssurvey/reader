@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.haomins.data.util.DateUtils
 import com.haomins.domain.usecase.articledetails.LoadArticleData
 import com.haomins.model.entity.ArticleEntity
-import com.haomins.reader.utils.DarkModeManager
+import com.haomins.reader.utils.ui.DarkModeManager
 import com.haomins.reader.view.fragments.articles.ArticleDetailFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
