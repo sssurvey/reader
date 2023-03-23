@@ -11,7 +11,7 @@ class ArticleDetailLocalDataStore @Inject constructor(
 ) : ArticleDetailLocalRepository {
 
     companion object {
-        const val TAG = "ArticleDetailRepository"
+        const val TAG = "ArticleDetailLocalDataStore"
     }
 
     override fun loadArticleDetail(itemId: String): Single<ArticleEntity> {

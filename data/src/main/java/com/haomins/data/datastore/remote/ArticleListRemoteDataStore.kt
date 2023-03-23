@@ -17,7 +17,7 @@ class ArticleListRemoteDataStore @Inject constructor(
 ) : ArticleListRemoteRepository {
 
     companion object {
-        const val TAG = "ArticleListRepository"
+        const val TAG = "ArticleListRemoteDataStore"
     }
 
     private var continueId = ""

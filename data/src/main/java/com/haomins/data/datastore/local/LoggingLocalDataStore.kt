@@ -16,7 +16,7 @@ class LoggingLocalDataStore @Inject constructor(
 ) : LoggingLocalRepository {
 
     companion object {
-        private const val TAG = "LoggingRepository"
+        private const val TAG = "LoggingLocalDataStore"
         private const val APP_LOG_NAME = "_reader_log"
         private const val CLEAN_UP_LOG_COMMAND = "logcat -c"
         private const val LOGGING_COMMAND = "logcat -d -v threadtime *:*"

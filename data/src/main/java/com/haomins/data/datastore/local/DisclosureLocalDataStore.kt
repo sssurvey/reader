@@ -13,7 +13,7 @@ class DisclosureLocalDataStore @Inject constructor(
 ) : DisclosureLocalRepository {
 
     companion object {
-        private const val TAG = "DisclosureRepository"
+        private const val TAG = "DisclosureLocalDataStore"
         private const val ASSET_LOADING_ERROR = "Failed to load disclosure"
         private const val DISCLOSURE_FILENAME = "news_disclosures.txt"
     }
