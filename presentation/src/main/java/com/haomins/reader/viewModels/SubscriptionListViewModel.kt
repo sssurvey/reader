@@ -10,16 +10,15 @@ import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.usecase.subscription.LoadAndSaveSubscriptionList
 import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.reader.R
-import com.haomins.reader.utils.GlideUtils
+import com.haomins.reader.utils.ImageLoaderUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
-import java.net.URL
 import javax.inject.Inject
 
 @HiltViewModel
 class SubscriptionListViewModel @Inject constructor(
     private val loadAndSaveSubscriptionList: LoadAndSaveSubscriptionList,
-    private val glideUtils: GlideUtils,
+    private val imageLoaderUtils: ImageLoaderUtils,
     private val application: Application,
 ) : ViewModel() {
 
@@ -37,7 +36,7 @@ class SubscriptionListViewModel @Inject constructor(
 
     data class SubscriptionListUi(
         val name: String,
-        val sourceIconUrl: URL? = null,
+        val sourceIconUrl: String? = null,
         val id: String,
         val type: TYPE,
     )
@@ -48,8 +47,8 @@ class SubscriptionListViewModel @Inject constructor(
 
     val subscriptionListUiDataSet: LiveData<List<SubscriptionListUi>> = _subscriptionListUiDataSet
 
-    fun loadImageIcon(imageView: ImageView, url: URL) {
-        glideUtils.loadIconImage(imageView, url)
+    fun loadImageIcon(imageView: ImageView, url: String) {
+        imageLoaderUtils.loadIconImage(imageView, url)
     }
 
     fun loadSubscriptionList() {
@@ -107,7 +106,7 @@ class SubscriptionListViewModel @Inject constructor(
                 add(
                     SubscriptionListUi(
                         name = it.title,
-                        sourceIconUrl = URL(TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl),
+                        sourceIconUrl = TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl,
                         id = it.id,
                         type = TYPE.RSS_SOURCE,
                     )

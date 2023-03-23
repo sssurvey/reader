@@ -1,4 +1,4 @@
-package com.haomins.reader.utils
+package com.haomins.reader.utils.impl
 
 import android.app.Application
 import android.content.Context
@@ -11,9 +11,9 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.engine.executor.GlideExecutor
 import com.bumptech.glide.module.AppGlideModule
 import com.haomins.data.R
+import com.haomins.reader.utils.ImageLoaderUtils
 import java.net.URL
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @GlideModule
 class ReaderGlideModule : AppGlideModule() {
@@ -21,7 +21,7 @@ class ReaderGlideModule : AppGlideModule() {
     private fun getCustomGlideExecutor(): GlideExecutor {
         return GlideExecutor
             .newSourceBuilder()
-            .setThreadCount(GlideUtils.THREAD_COUNT)
+            .setThreadCount(GlideImageLoaderUtils.THREAD_COUNT)
             .build()
     }
 
@@ -32,25 +32,24 @@ class ReaderGlideModule : AppGlideModule() {
     }
 }
 
-@Singleton
-class GlideUtils @Inject constructor(
+class GlideImageLoaderUtils @Inject constructor(
     private val application: Application
-) {
+) : ImageLoaderUtils {
 
     private val glide by lazy {
         Glide.with(application)
     }
 
-    fun loadIconImage(imageView: ImageView, href: String) {
+    override fun loadIconImage(imageView: ImageView, href: String) {
         glide
             .asDrawable()
             .centerCrop()
-            .load(Uri.parse(URL("$ICON_LOADING_URL$href").toURI().toString()))
+            .load(Uri.parse(URL(href).toURI().toString()))
             .error(R.drawable.ic_broken_image)
             .into(imageView)
     }
 
-    fun loadPreviewImage(imageView: ImageView, urlString: String) {
+    override fun loadPreviewImage(imageView: ImageView, urlString: String) {
         glide
             .asDrawable()
             .let {
@@ -64,22 +63,8 @@ class GlideUtils @Inject constructor(
             .into(imageView)
     }
 
-    @Deprecated(
-        message = "Out of date, creating URL in method now.",
-        replaceWith = ReplaceWith("loadIconImage")
-    )
-    fun loadIconImage(imageView: ImageView, url: URL) {
-        glide
-            .asDrawable()
-            .centerCrop()
-            .load(Uri.parse(url.toURI().toString()))
-            .error(R.drawable.ic_broken_image)
-            .into(imageView)
-    }
-
     companion object {
         internal const val THREAD_COUNT = 1
-        private const val ICON_LOADING_URL = "https://www.google.com/s2/favicons?sz=64&domain_url="
     }
 
 }

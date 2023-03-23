@@ -29,7 +29,7 @@ class SubscriptionListFragment : Fragment() {
     private val subscriptionListAdapter by lazy {
         SubscriptionListAdapter(
             subscriptionDisplayItems = subscriptionListDisplayDataList,
-            subscriptionListViewModel = subscriptionListViewModel,
+            iconImageLoader = subscriptionListViewModel::loadImageIcon,
             onRowItemClicked = ::sourceListRecyclerViewItemClickedAt,
             application = activity?.application!!
         )

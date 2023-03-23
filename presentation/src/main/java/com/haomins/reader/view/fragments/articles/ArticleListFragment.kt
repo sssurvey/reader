@@ -14,7 +14,7 @@ import com.haomins.data.util.DateUtils
 import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.adapters.ArticleTitleListAdapter
 import com.haomins.reader.databinding.FragmentArticleListBinding
-import com.haomins.reader.utils.GlideUtils
+import com.haomins.reader.utils.ImageLoaderUtils
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -40,7 +40,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     }
 
     @Inject
-    lateinit var glideUtils: GlideUtils
+    lateinit var imageLoaderUtils: ImageLoaderUtils
     @Inject
     lateinit var dateUtils: DateUtils
 
@@ -99,7 +99,7 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
             setHasFixedSize(true)
             adapter = ArticleTitleListAdapter(
                 articleTitleUiItems,
-                glideUtils,
+                imageLoaderUtils::loadPreviewImage,
                 dateUtils,
                 this@ArticleListFragment
             )
@@ -121,21 +121,6 @@ class ArticleListFragment : Fragment(), ArticleTitleListAdapter.ArticleTitleList
     override fun onDestroyView() {
         super.onDestroyView()
         handler.removeCallbacksAndMessages(null)
-    }
-
-    //TODO: infinite load feature
-    override fun onLoadMoreArticlesBasedOnPosition(position: Int) {
-        //        var loadMoreArticleThreshold = (DEFAULT_ARTICLE_AMOUNT * LOAD_MORE_OFFSET_SCALE).toInt()
-        //        if (position >= loadMoreArticleThreshold) {
-        //        if (position == article_title_recycler_view.adapter?.itemCount) {
-        //            when (currentArticleListViewMode) {
-        //                ArticleListViewMode.LOAD_BY_FEED_ID -> articleListViewModel.continueLoadArticles(
-        //                    feedId
-        //                )
-        //                ArticleListViewMode.LOAD_ALL -> articleListViewModel.continueLoadAllArticles()
-        //            }
-        //            loadMoreArticleThreshold += loadMoreArticleThreshold
-        //        }
     }
 
     private fun hideProgressBar() {

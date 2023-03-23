@@ -4,15 +4,15 @@ import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.reader.R
 import com.haomins.reader.databinding.SubscriptionRecyclerViewItemBinding
 import com.haomins.reader.viewModels.SubscriptionListViewModel
-import java.net.URL
 
 class SubscriptionListAdapter(
     private val subscriptionDisplayItems: List<SubscriptionListViewModel.SubscriptionListUi>,
-    private val subscriptionListViewModel: SubscriptionListViewModel,
+    private val iconImageLoader: (ImageView, String) -> Unit,
     private val onRowItemClicked: (type: SubscriptionListViewModel.TYPE, id: String) -> Unit,
     private val application: Application
 ) : RecyclerView.Adapter<SubscriptionListAdapter.CustomViewHolder>() {
@@ -44,7 +44,9 @@ class SubscriptionListAdapter(
              */
             SubscriptionListViewModel.TYPE.RSS_SOURCE -> {
                 holder.binding.subscriptionTitleTextView.text = name
-                sourceIconUrl?.let { loadIconImage(holder, it) }
+                sourceIconUrl?.let {
+                    iconImageLoader.invoke(holder.binding.subscriptionIconImageView, it)
+                }
                 setOnClick(holder, type, id)
             }
             /*
@@ -103,13 +105,6 @@ class SubscriptionListAdapter(
         holder.binding.root.setOnClickListener {
             subscriptionListRecyclerViewItemClickedAt(type, id)
         }
-    }
-
-    private fun loadIconImage(holder: CustomViewHolder, url: URL) {
-        subscriptionListViewModel.loadImageIcon(
-            imageView = holder.binding.subscriptionIconImageView,
-            url = url
-        )
     }
 
     private fun subscriptionListRecyclerViewItemClickedAt(

@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.haomins.data.util.DateUtils
 import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.databinding.ArticleTitleRecyclerViewItemBinding
-import com.haomins.reader.utils.GlideUtils
 
 class ArticleTitleListAdapter(
     private val articleTitleListUiItems: List<ArticleEntity>,
-    private val glideUtils: GlideUtils,
+    private val previewImageLoader: (ImageView, String) -> Unit,
     private val dateUtils: DateUtils,
     private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
 ) :
@@ -22,8 +21,6 @@ class ArticleTitleListAdapter(
     interface ArticleTitleListOnClickListener {
 
         fun onArticleClicked(articleItemId: String)
-
-        fun onLoadMoreArticlesBasedOnPosition(position: Int)
 
     }
 
@@ -45,7 +42,6 @@ class ArticleTitleListAdapter(
 
     override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
         holder.bind(articleTitleListUiItems[position])
-        articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
     }
 
     inner class CustomViewHolder(val binding: ArticleTitleRecyclerViewItemBinding) :
@@ -67,7 +63,7 @@ class ArticleTitleListAdapter(
             with(articleEntity) {
                 articleTitleTextView.text = itemTitle
                 articlePostedTimeTextView.text = dateUtils.howLongAgo(itemPublishedMillisecond)
-                glideUtils.loadPreviewImage(
+                previewImageLoader.invoke(
                     articlePreviewImageView,
                     previewImageUrl
                 )
