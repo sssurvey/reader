@@ -1,9 +1,8 @@
-package com.haomins.domain.usecase.subscription
+package com.haomins.domain.usecase.subscription.local
 
 import com.haomins.domain.MockGenerator
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.repositories.local.SubscriptionLocalRepository
-import com.haomins.domain.usecase.subscription.local.SaveSubscriptionListToLocal
 import io.reactivex.Completable
 import org.junit.After
 import org.junit.Assert.assertTrue

@@ -1,8 +1,7 @@
-package com.haomins.domain.usecase.subscription
+package com.haomins.domain.usecase.subscription.remote
 
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
-import com.haomins.domain.usecase.subscription.remote.LoadSubscriptionListFromRemote
 import com.haomins.model.remote.subscription.SubscriptionItemModel
 import com.haomins.model.remote.subscription.SubscriptionListResponseModel
 import io.reactivex.Single
