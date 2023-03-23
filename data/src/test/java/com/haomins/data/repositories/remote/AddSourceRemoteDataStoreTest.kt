@@ -1,7 +1,6 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.remote
 
 import android.content.SharedPreferences
-import com.haomins.data.repositories.remote.AddSourceRemoteDataStore
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.subscription.AddSourceResponseModel
@@ -16,7 +15,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
 
-class AddSourceRepositoryTest {
+class AddSourceRemoteDataStoreTest {
 
     @Mock
     lateinit var mockSharedPreferences: SharedPreferences

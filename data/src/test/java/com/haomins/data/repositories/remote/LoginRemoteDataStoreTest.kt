@@ -1,7 +1,6 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.remote
 
 import android.content.SharedPreferences
-import com.haomins.data.repositories.remote.LoginRemoteDataStore
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.user.UserAuthResponseModel
@@ -21,7 +20,7 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import java.util.concurrent.TimeUnit
 
-class LoginRepositoryTest {
+class LoginRemoteDataStoreTest {
 
     @Mock
     lateinit var mockTheOldReaderService: TheOldReaderService

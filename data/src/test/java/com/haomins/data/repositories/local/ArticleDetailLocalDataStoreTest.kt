@@ -1,7 +1,6 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.local
 
 import com.haomins.data.db.dao.ArticleDao
-import com.haomins.data.repositories.local.ArticleDetailLocalDataStore
 import com.haomins.data.util.DateUtils
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single

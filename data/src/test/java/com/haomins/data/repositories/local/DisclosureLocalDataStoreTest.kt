@@ -1,6 +1,5 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.local
 
-import com.haomins.data.repositories.local.DisclosureLocalDataStore
 import com.haomins.data.service.AndroidService
 import io.reactivex.observers.TestObserver
 import org.junit.Assert.assertTrue

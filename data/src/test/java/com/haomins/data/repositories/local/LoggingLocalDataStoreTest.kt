@@ -1,6 +1,5 @@
-package com.haomins.data.repositories
+package com.haomins.data.repositories.local
 
-import com.haomins.data.repositories.local.LoggingLocalDataStore
 import com.haomins.data.service.AndroidService
 import com.haomins.data.util.DateUtils
 import org.junit.Before
@@ -15,7 +14,7 @@ import org.mockito.kotlin.verify
 import java.io.ByteArrayInputStream
 import java.io.File
 
-class LoggingRepositoryTest {
+class LoggingLocalDataStoreTest {
 
     @Mock
     lateinit var mockDateUtils: DateUtils
