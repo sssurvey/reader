@@ -1,10 +1,10 @@
 package com.haomins.data.di
 
-import com.haomins.data.repositories.*
-import com.haomins.data.repositories.remote.ArticleListRemoteDataStore
-import com.haomins.data.repositories.remote.AddSourceRemoteDataStore
-import com.haomins.data.repositories.remote.LoginRemoteDataStore
-import com.haomins.data.repositories.remote.SubscriptionRemoteDataStore
+import com.haomins.data.datastore.*
+import com.haomins.data.datastore.remote.ArticleListRemoteDataStore
+import com.haomins.data.datastore.remote.AddSourceRemoteDataStore
+import com.haomins.data.datastore.remote.LoginRemoteDataStore
+import com.haomins.data.datastore.remote.SubscriptionRemoteDataStore
 import com.haomins.domain.repositories.*
 import com.haomins.domain.repositories.remote.AddSourceRemoteRepository
 import com.haomins.domain.repositories.remote.ArticleListRemoteRepository

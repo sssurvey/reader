@@ -1,4 +1,4 @@
-package com.haomins.data.repositories.local
+package com.haomins.data.datastore.local
 
 import com.haomins.data.service.AndroidService
 import io.reactivex.observers.TestObserver

@@ -1,6 +1,6 @@
 package com.haomins.data.di
 
-import com.haomins.data.repositories.local.*
+import com.haomins.data.datastore.local.*
 import com.haomins.domain.repositories.local.*
 import dagger.Binds
 import dagger.Module

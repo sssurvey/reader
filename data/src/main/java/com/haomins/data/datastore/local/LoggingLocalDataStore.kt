@@ -1,4 +1,4 @@
-package com.haomins.data.repositories.local
+package com.haomins.data.datastore.local
 
 import android.util.Log
 import com.haomins.data.service.AndroidService

@@ -1,4 +1,4 @@
-package com.haomins.data.repositories.local
+package com.haomins.data.datastore.local
 
 import com.haomins.data.db.dao.SubscriptionDao
 import io.reactivex.Completable

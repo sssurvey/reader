@@ -1,4 +1,4 @@
-package com.haomins.data.repositories.remote
+package com.haomins.data.datastore.remote
 
 import android.content.SharedPreferences
 import android.util.Log
