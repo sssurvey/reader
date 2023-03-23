@@ -1,6 +1,6 @@
 package com.haomins.domain.usecase.logging
 
-import com.haomins.domain.repositories.LoggingRepositoryContract
+import com.haomins.domain.repositories.local.LoggingLocalRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
@@ -9,7 +9,7 @@ import java.io.File
 import javax.inject.Inject
 
 class GetLogFiles @Inject constructor(
-    private val loggingRepositoryContract: LoggingRepositoryContract,
+    private val loggingLocalRepository: LoggingLocalRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<Unit, File>(
@@ -19,7 +19,7 @@ class GetLogFiles @Inject constructor(
 
     override fun buildUseCaseSingle(params: Unit?): Single<File> {
         return Single.fromCallable {
-            loggingRepositoryContract.getLogFile()
+            loggingLocalRepository.getLogFile()
         }
     }
 }

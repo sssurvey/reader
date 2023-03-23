@@ -4,9 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.data.util.DateUtils
 import com.haomins.domain.usecase.articledetails.LoadArticleData
-import com.haomins.reader.utils.DarkModeManager
+import com.haomins.model.entity.ArticleEntity
+import com.haomins.reader.utils.ui.DarkModeManager
 import com.haomins.reader.view.fragments.articles.ArticleDetailFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ArticleDetailViewModel @Inject constructor(
     private val loadArticleData: LoadArticleData,
+    private val dateUtils: DateUtils,
     private val darkModeManager: DarkModeManager
 ) : ViewModel() {
 
@@ -56,7 +58,7 @@ class ArticleDetailViewModel @Inject constructor(
     private fun mapArticleEntityToUiItem(articleEntity: ArticleEntity): ArticleDetailFragment.ArticleDetailUiItem {
         return ArticleDetailFragment.ArticleDetailUiItem(
             title = articleEntity.itemTitle,
-            updateTime = articleEntity.updatedTime,
+            updateTime = dateUtils.to24HrString(articleEntity.itemUpdatedMillisecond),
             author = articleEntity.author,
             contentHtmlData = articleEntity.content
         )

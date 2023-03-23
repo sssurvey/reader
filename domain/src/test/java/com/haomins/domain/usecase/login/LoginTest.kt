@@ -1,8 +1,8 @@
 package com.haomins.domain.usecase.login
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.model.responses.UserAuthResponseModel
-import com.haomins.domain.repositories.LoginRepositoryContract
+import com.haomins.domain.repositories.remote.LoginRemoteRepository
+import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 class LoginTest {
 
     @Mock
-    lateinit var mockLoginRepositoryContract: LoginRepositoryContract
+    lateinit var mockLoginRemoteRepository: LoginRemoteRepository
 
     private val postExecutionScheduler = TestSchedulers.postExecutionScheduler()
     private val executionScheduler = TestSchedulers.executionScheduler()
@@ -28,7 +28,7 @@ class LoginTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         login = Login(
-            loginRepositoryContract = mockLoginRepositoryContract,
+            loginRemoteRepository = mockLoginRemoteRepository,
             executionScheduler = executionScheduler,
             postExecutionScheduler = postExecutionScheduler
         )
@@ -43,7 +43,7 @@ class LoginTest {
 
         fun mockBehavior() {
             `when`(
-                mockLoginRepositoryContract.login(
+                mockLoginRemoteRepository.login(
                     testUserName,
                     testUserPassword
                 )
@@ -92,7 +92,7 @@ class LoginTest {
 
         fun mockBehavior() {
             `when`(
-                mockLoginRepositoryContract.login(
+                mockLoginRemoteRepository.login(
                     testUserName,
                     testUserPassword
                 )

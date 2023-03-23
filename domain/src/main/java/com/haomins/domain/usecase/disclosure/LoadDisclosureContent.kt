@@ -1,8 +1,8 @@
 package com.haomins.domain.usecase.disclosure
 
-import com.haomins.domain.model.DisclosureInfo
-import com.haomins.domain.repositories.ContactInfoRepositoryContract
-import com.haomins.domain.repositories.DisclosureRepositoryContract
+import com.haomins.model.DisclosureInfo
+import com.haomins.domain.repositories.local.ContactInfoLocalRepository
+import com.haomins.domain.repositories.local.DisclosureLocalRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
@@ -10,8 +10,8 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class LoadDisclosureContent @Inject constructor(
-    private val disclosureRepositoryContract: DisclosureRepositoryContract,
-    private val contactInfoRepositoryContract: ContactInfoRepositoryContract,
+    private val disclosureLocalRepository: DisclosureLocalRepository,
+    private val contactInfoLocalRepository: ContactInfoLocalRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<Unit, DisclosureInfo>(
@@ -20,14 +20,14 @@ class LoadDisclosureContent @Inject constructor(
 ) {
 
     override fun buildUseCaseSingle(params: Unit?): Single<DisclosureInfo> {
-        return disclosureRepositoryContract
+        return disclosureLocalRepository
             .loadDisclosureContent()
             .flatMap {
                 Single.just(
                     DisclosureInfo(
                         disclosureContent = it,
-                        contactEmail = contactInfoRepositoryContract.getFeedbackEmail(),
-                        website = contactInfoRepositoryContract.getTheOldReaderSite()
+                        contactEmail = contactInfoLocalRepository.getFeedbackEmail(),
+                        website = contactInfoLocalRepository.getTheOldReaderSite()
                     )
                 )
             }

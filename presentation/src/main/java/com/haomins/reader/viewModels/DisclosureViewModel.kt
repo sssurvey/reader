@@ -3,8 +3,8 @@ package com.haomins.reader.viewModels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.model.DisclosureInfo
 import com.haomins.domain.usecase.disclosure.LoadDisclosureContent
+import com.haomins.model.DisclosureInfo
 import com.haomins.reader.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver

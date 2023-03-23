@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.login
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.LoginRepositoryContract
+import com.haomins.domain.repositories.remote.LoginRemoteRepository
 import io.reactivex.observers.TestObserver
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations
 class SignUpTest {
 
     @Mock
-    lateinit var mockLoginRepositoryContract: LoginRepositoryContract
+    lateinit var mockLoginRemoteRepository: LoginRemoteRepository
 
     private val postExecutionScheduler = TestSchedulers.postExecutionScheduler()
     private val executionScheduler = TestSchedulers.executionScheduler()
@@ -24,7 +24,7 @@ class SignUpTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         signUp = SignUp(
-            loginRepositoryContract = mockLoginRepositoryContract,
+            loginRemoteRepository = mockLoginRemoteRepository,
             postExecutionScheduler,
             executionScheduler
         )
@@ -34,7 +34,7 @@ class SignUpTest {
     fun `test buildUseCaseSingle$Reader_domain success`() {
 
         fun mockBehavior() {
-            `when`(mockLoginRepositoryContract.getSignUpUrlString()).thenReturn("test string")
+            `when`(mockLoginRemoteRepository.getSignUpUrlString()).thenReturn("test string")
         }
 
         val testObserver = TestObserver<String>()

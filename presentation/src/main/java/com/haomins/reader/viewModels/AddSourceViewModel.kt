@@ -4,8 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.model.responses.AddSourceResponseModel
 import com.haomins.domain.usecase.addsource.AddNewSource
+import com.haomins.model.remote.subscription.AddSourceResponseModel
 import com.haomins.reader.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
@@ -72,7 +72,7 @@ class AddSourceViewModel @Inject constructor(
     }
 
     private fun checkIfSuccess(addSourceResponseModel: AddSourceResponseModel) {
-        when (addSourceResponseModel.result) {
+        when (addSourceResponseModel.numResults) {
             1 -> isSourceAdded.postValue(
                 Pair(
                     AddSourceStatus.SUCCESS,

@@ -1,9 +1,9 @@
 package com.haomins.data
 
-import com.haomins.data.model.responses.article.*
-import com.haomins.data.model.responses.subscription.AddSourceResponseModel
-import com.haomins.data.model.responses.subscription.SubscriptionSourceListResponseModel
-import com.haomins.data.model.responses.user.UserAuthResponseModel
+import com.haomins.model.remote.article.*
+import com.haomins.model.remote.subscription.AddSourceResponseModel
+import com.haomins.model.remote.subscription.SubscriptionListResponseModel
+import com.haomins.model.remote.user.UserAuthResponseModel
 import com.haomins.data.service.TheOldReaderService
 import io.reactivex.Single
 
@@ -23,7 +23,7 @@ class MockTheOldReaderService : TheOldReaderService {
     override fun loadSubscriptionSourceList(
         headerAuthValue: String,
         output: String
-    ): Single<SubscriptionSourceListResponseModel> {
+    ): Single<SubscriptionListResponseModel> {
         TODO("Not yet implemented")
     }
 

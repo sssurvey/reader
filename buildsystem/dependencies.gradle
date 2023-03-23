@@ -51,7 +51,8 @@ ext {
     domainDependencies = [
             'javax.inject:javax.inject:1',
             "io.reactivex.rxjava2:rxjava:$rx_java_version",
-            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+            'org.jsoup:jsoup:1.14.3',
     ]
 
     dataDependencies = [
@@ -66,13 +67,18 @@ ext {
             'com.squareup.okhttp3:logging-interceptor:3.8.0',
             "androidx.room:room-runtime:$room_version",
             "androidx.room:room-rxjava2:$room_version",
-            'org.jsoup:jsoup:1.14.3',
             "com.google.dagger:hilt-android:$hilt_version"
     ]
 
     dataKaptDependencies = [
             "androidx.room:room-compiler:$room_version",
             "com.google.dagger:hilt-compiler:$hilt_version"
+    ]
+
+    dataModelDependencies = [
+            'com.google.code.gson:gson:2.8.5',
+            "androidx.room:room-common:$room_version",
+            'javax.inject:javax.inject:1',
     ]
 
     uiDependencies = [
@@ -109,5 +115,11 @@ ext {
             "androidx.test.ext:junit:$androidx_test_junit_version",
             "androidx.room:room-testing:$room_version",
             "junit:junit:$junit_version"
+    ]
+
+    dataModelTestDependencies = [
+            "junit:junit:$junit_version",
+            "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin2_version",
+            "org.mockito:mockito-inline:$mockito_version"
     ]
 }

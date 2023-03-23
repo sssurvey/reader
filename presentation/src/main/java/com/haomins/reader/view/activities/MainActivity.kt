@@ -13,7 +13,7 @@ import com.haomins.reader.view.fragments.articles.ArticleListFragment
 import com.haomins.reader.view.fragments.articles.ArticleListFragment.Companion.LOAD_MODE_KEY
 import com.haomins.reader.view.fragments.settings.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
-import com.haomins.reader.view.fragments.SourceTitleListFragment
+import com.haomins.reader.view.fragments.SubscriptionListFragment
 import com.haomins.reader.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,18 +75,18 @@ class MainActivity : AppCompatActivity() {
 
     fun showAfterUserLoggedInFragment() {
 
-        fun showSourceListFragment() {
+        fun showSubscriptionListFragment() {
             supportFragmentManager
                 .beginTransaction()
                 .replace(
                     R.id.main_activity_frame_layout,
-                    SourceTitleListFragment(),
-                    SourceTitleListFragment.TAG
+                    SubscriptionListFragment(),
+                    SubscriptionListFragment.TAG
                 )
                 .commit()
         }
 
-        showSourceListFragment()
+        showSubscriptionListFragment()
     }
 
     private fun inflateView() {

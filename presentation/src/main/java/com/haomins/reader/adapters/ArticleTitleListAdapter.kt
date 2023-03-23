@@ -6,13 +6,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.haomins.domain.model.entities.ArticleEntity
+import com.haomins.data.util.DateUtils
+import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.databinding.ArticleTitleRecyclerViewItemBinding
-import com.haomins.reader.utils.GlideUtils
 
 class ArticleTitleListAdapter(
     private val articleTitleListUiItems: List<ArticleEntity>,
-    private val glideUtils: GlideUtils,
+    private val previewImageLoader: (ImageView, String) -> Unit,
+    private val dateUtils: DateUtils,
     private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
 ) :
     RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
@@ -20,8 +21,6 @@ class ArticleTitleListAdapter(
     interface ArticleTitleListOnClickListener {
 
         fun onArticleClicked(articleItemId: String)
-
-        fun onLoadMoreArticlesBasedOnPosition(position: Int)
 
     }
 
@@ -42,8 +41,7 @@ class ArticleTitleListAdapter(
     }
 
     override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
-        holder.bind(articleTitleListUiItems[position], position)
-        articleTitleListOnClickListener.onLoadMoreArticlesBasedOnPosition(position)
+        holder.bind(articleTitleListUiItems[position])
     }
 
     inner class CustomViewHolder(val binding: ArticleTitleRecyclerViewItemBinding) :
@@ -61,11 +59,11 @@ class ArticleTitleListAdapter(
             itemRootView = binding.root
         }
 
-        fun bind(articleEntity: ArticleEntity, position: Int) {
+        fun bind(articleEntity: ArticleEntity) {
             with(articleEntity) {
                 articleTitleTextView.text = itemTitle
-                articlePostedTimeTextView.text = howLongAgo
-                glideUtils.loadPreviewImage(
+                articlePostedTimeTextView.text = dateUtils.howLongAgo(itemPublishedMillisecond)
+                previewImageLoader.invoke(
                     articlePreviewImageView,
                     previewImageUrl
                 )

@@ -1,8 +1,8 @@
 package com.haomins.domain.usecase.articledetails
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.model.entities.ArticleEntity
-import com.haomins.domain.repositories.ArticleDetailRepositoryContract
+import com.haomins.domain.repositories.local.ArticleDetailLocalRepository
+import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 class LoadArticleDataTest {
 
     @Mock
-    lateinit var mockArticleDetailRepositoryContract: ArticleDetailRepositoryContract
+    lateinit var mockArticleDetailLocalRepository: ArticleDetailLocalRepository
 
     private lateinit var loadArticleData: LoadArticleData
     private val postExecutionScheduler = TestSchedulers.postExecutionScheduler()
@@ -27,7 +27,7 @@ class LoadArticleDataTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         loadArticleData = LoadArticleData(
-            articleDetailRepositoryContract = mockArticleDetailRepositoryContract,
+            articleDetailLocalRepository = mockArticleDetailLocalRepository,
             postExecutionScheduler = postExecutionScheduler,
             executionScheduler = executionScheduler
         )
@@ -44,16 +44,15 @@ class LoadArticleDataTest {
             itemId = testId,
             author = "test author",
             content = "test content",
-            howLongAgo = "1",
-            updatedTime = "1",
             itemPublishedMillisecond = 1,
             itemUpdatedMillisecond = 1,
             href = "www.test.com",
-            previewImageUrl = "www.test.com/test.png"
+            previewImageUrl = "www.test.com/test.png",
+            feedId = "test feed id"
         )
 
         fun mockBehavior() {
-            `when`(mockArticleDetailRepositoryContract.loadArticleDetail(testId))
+            `when`(mockArticleDetailLocalRepository.loadArticleDetail(testId))
                 .thenReturn(
                     Single
                         .timer(1, TimeUnit.SECONDS, testExecutionScheduler)
@@ -88,7 +87,7 @@ class LoadArticleDataTest {
         val testException = Exception("test exception")
 
         fun mockBehavior() {
-            `when`(mockArticleDetailRepositoryContract.loadArticleDetail(testId))
+            `when`(mockArticleDetailLocalRepository.loadArticleDetail(testId))
                 .thenReturn(
                     Single
                         .timer(1, TimeUnit.SECONDS, testExecutionScheduler)

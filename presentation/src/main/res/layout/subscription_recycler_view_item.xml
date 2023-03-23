@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <!-- Material Card View has no ripple bug-->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/subscription_title_recycler_view_item"
+        style="@style/ReaderCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/cardViewMargin"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/cardViewRadius"
+        app:cardElevation="@dimen/cardViewElevation">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/subscription_icon_image_view"
+                android:layout_width="@dimen/imageIconViewHeight"
+                android:layout_height="@dimen/imageIconViewHeight"
+                android:padding="@dimen/imageIconViewPadding"
+                android:scaleType="fitCenter"
+                tools:src="@mipmap/ic_launcher" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/subscription_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/subscription_icon_image_view"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/subscription_icon_image_view"
+                android:height="@dimen/imageIconViewHeight"
+                android:gravity="center_vertical"
+                android:maxLines="@integer/textViewDefaultLineRestriction"
+                android:paddingStart="@dimen/textViewPadding"
+                android:paddingEnd="@dimen/textViewPadding"
+                android:textAlignment="gravity"
+                android:textColor="@color/default_text"
+                android:textSize="@dimen/reader_article_item_title_font_size"
+                app:fontFamily="@font/font_bold"
+                tools:maxLines="1"
+                tools:text="The Old Reader is a reader for the old people" />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>

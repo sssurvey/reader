@@ -6,10 +6,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.model.responses.UserAuthResponseModel
 import com.haomins.domain.usecase.login.ForgetPassword
 import com.haomins.domain.usecase.login.Login
 import com.haomins.domain.usecase.login.SignUp
+import com.haomins.model.remote.user.UserAuthResponseModel
 import com.haomins.reader.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
