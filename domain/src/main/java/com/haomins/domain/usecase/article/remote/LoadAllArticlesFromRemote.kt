@@ -1,6 +1,6 @@
 package com.haomins.domain.usecase.article.remote
 
-import com.haomins.domain.repositories.ArticleListRepositoryContract
+import com.haomins.domain.repositories.remote.ArticleListRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
@@ -9,7 +9,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class LoadAllArticlesFromRemote @Inject constructor(
-    private val articleListRepositoryContract: ArticleListRepositoryContract,
+    private val articleListRemoteRepository: ArticleListRemoteRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<Unit, List<ArticleResponseModel>>(
@@ -18,7 +18,7 @@ class LoadAllArticlesFromRemote @Inject constructor(
 ) {
 
     override fun buildUseCaseSingle(params: Unit?): Single<List<ArticleResponseModel>> {
-        return articleListRepositoryContract
+        return articleListRemoteRepository
             .loadAllArticleItems()
     }
 

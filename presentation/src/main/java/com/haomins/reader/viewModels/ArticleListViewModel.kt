@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haomins.domain.usecase.article.ContinueLoadAllArticlesAndSaveToLocal
-import com.haomins.domain.usecase.article.ContinueLoadArticlesByFeed
+import com.haomins.domain.usecase.article.ContinueLoadAllArticlesByFeedAndSaveToLocal
 import com.haomins.domain.usecase.article.LoadAllArticlesAndSaveToLocal
-import com.haomins.domain.usecase.article.LoadArticlesByFeed
+import com.haomins.domain.usecase.article.LoadAllArticlesByFeedAndSaveToLocal
 import com.haomins.model.entity.ArticleEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArticleListViewModel @Inject constructor(
-    private val loadArticlesByFeed: LoadArticlesByFeed,
-    private val continueLoadArticlesByFeed: ContinueLoadArticlesByFeed,
+    private val loadAllArticlesByFeedAndSaveToLocal: LoadAllArticlesByFeedAndSaveToLocal,
+    private val continueLoadAllArticlesByFeedAndSaveToLocal: ContinueLoadAllArticlesByFeedAndSaveToLocal,
     private val loadAllArticlesAndSaveToLocal: LoadAllArticlesAndSaveToLocal,
     private val continueLoadAllArticlesAndSaveToLocal: ContinueLoadAllArticlesAndSaveToLocal
 ) : ViewModel() {
@@ -35,18 +35,23 @@ class ArticleListViewModel @Inject constructor(
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
         Log.d(TAG, "loadArticles called")
-        loadArticlesByFeed.execute(
+        loadAllArticlesByFeedAndSaveToLocal.execute(
             observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
                 override fun onSuccess(t: List<ArticleEntity>) {
                     onArticleLoaded(t)
-                    Log.d(TAG, "loadArticlesByFeed :: onSuccess: called")
+                    Log.d(TAG, "loadAllArticlesByFeedAndSaveToLocal :: onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e(TAG, "onError: ${e.printStackTrace()}")
+                    Log.e(
+                        TAG,
+                        "loadAllArticlesByFeedAndSaveToLocal :: onError: ${e.printStackTrace()}"
+                    )
                 }
             },
-            params = LoadArticlesByFeed.forLoadArticlesByFeed(feedId)
+            params = LoadAllArticlesByFeedAndSaveToLocal.forLoadAllArticlesByFeedAndSaveToLocal(
+                feedId
+            )
         )
     }
 
@@ -95,7 +100,7 @@ class ArticleListViewModel @Inject constructor(
 
     fun continueLoadArticles(feedId: String) {
         Log.d(TAG, "continueLoadArticles called")
-        continueLoadArticlesByFeed.execute(
+        continueLoadAllArticlesByFeedAndSaveToLocal.execute(
             observer = object : DisposableSingleObserver<List<ArticleEntity>>() {
                 override fun onStart() {
                     super.onStart()
@@ -105,23 +110,28 @@ class ArticleListViewModel @Inject constructor(
                 override fun onSuccess(t: List<ArticleEntity>) {
                     onArticleLoaded(t)
                     isLoading.postValue(false)
-                    Log.d(TAG, "continueLoadArticles :: onSuccess: called")
+                    Log.d(TAG, "continueLoadAllArticlesByFeedAndSaveToLocal :: onSuccess: called")
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e(TAG, "continueLoadArticles :: onError: ${e.printStackTrace()}")
+                    Log.e(
+                        TAG,
+                        "continueLoadAllArticlesByFeedAndSaveToLocal :: onError: ${e.printStackTrace()}"
+                    )
                 }
             },
-            params = ContinueLoadArticlesByFeed.forContinueLoadArticlesByFeed(feedId)
+            params = ContinueLoadAllArticlesByFeedAndSaveToLocal.forContinueLoadAllArticlesByFeedAndSaveToLocal(
+                feedId
+            )
         )
     }
 
     override fun onCleared() {
         super.onCleared()
-        loadArticlesByFeed.dispose()
-        continueLoadArticlesByFeed.dispose()
         loadAllArticlesAndSaveToLocal.dispose()
         continueLoadAllArticlesAndSaveToLocal.dispose()
+        loadAllArticlesByFeedAndSaveToLocal.dispose()
+        continueLoadAllArticlesByFeedAndSaveToLocal.dispose()
     }
 
     private fun onArticleLoaded(newlyLoadedArticles: List<ArticleEntity>) {

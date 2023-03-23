@@ -1,11 +1,13 @@
 package com.haomins.data.di
 
 import com.haomins.data.repositories.*
+import com.haomins.data.repositories.remote.ArticleListRemoteDataStore
 import com.haomins.data.repositories.remote.AddSourceRemoteDataStore
 import com.haomins.data.repositories.remote.LoginRemoteDataStore
 import com.haomins.data.repositories.remote.SubscriptionRemoteDataStore
 import com.haomins.domain.repositories.*
 import com.haomins.domain.repositories.remote.AddSourceRemoteRepository
+import com.haomins.domain.repositories.remote.ArticleListRemoteRepository
 import com.haomins.domain.repositories.remote.LoginRemoteRepository
 import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
 import dagger.Binds
@@ -35,7 +37,7 @@ interface RemoteRepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindArticleListRepository(articleListRepository: ArticleListRepository):
-            ArticleListRepositoryContract
+    fun bindArticleListRemoteRepository(articleListRemoteDataStore: ArticleListRemoteDataStore):
+            ArticleListRemoteRepository
 
 }

@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.article
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.ArticleListRepositoryContract
+import com.haomins.domain.repositories.remote.ArticleListRemoteRepository
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 class ContinueLoadArticlesByFeedTest {
 
     @Mock
-    lateinit var mockArticleListRepositoryContract: ArticleListRepositoryContract
+    lateinit var mockArticleListRemoteRepository: ArticleListRemoteRepository
 
     private lateinit var continueLoadArticlesByFeed: ContinueLoadArticlesByFeed
 
@@ -30,7 +30,7 @@ class ContinueLoadArticlesByFeedTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         continueLoadArticlesByFeed = ContinueLoadArticlesByFeed(
-            mockArticleListRepositoryContract,
+            mockArticleListRemoteRepository,
             executionScheduler,
             postExecutionScheduler
         )
@@ -65,7 +65,7 @@ class ContinueLoadArticlesByFeedTest {
         )
 
         fun mock() {
-            Mockito.`when`(mockArticleListRepositoryContract.continueLoadArticleItems(any()))
+            Mockito.`when`(mockArticleListRemoteRepository.continueLoadArticleItems(any()))
                 .thenReturn(
                     Single.just(
                         testArticleEntityList
@@ -92,7 +92,7 @@ class ContinueLoadArticlesByFeedTest {
         testExecutionScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         testPostExecutionScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
 
-        verify(mockArticleListRepositoryContract, times(1))
+        verify(mockArticleListRemoteRepository, times(1))
             .continueLoadArticleItems("123")
 
         testObserver.assertComplete()

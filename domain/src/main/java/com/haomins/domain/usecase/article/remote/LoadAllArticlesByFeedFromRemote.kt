@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.article.remote
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.repositories.ArticleListRepositoryContract
+import com.haomins.domain.repositories.remote.ArticleListRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
@@ -10,7 +10,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class LoadAllArticlesByFeedFromRemote @Inject constructor(
-    private val articleListRepositoryContract: ArticleListRepositoryContract,
+    private val articleListRemoteRepository: ArticleListRemoteRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<LoadAllArticlesByFeedFromRemote.Companion.Params, List<ArticleResponseModel>>(
@@ -20,7 +20,7 @@ class LoadAllArticlesByFeedFromRemote @Inject constructor(
 
     override fun buildUseCaseSingle(params: Params?): Single<List<ArticleResponseModel>> {
         if (params == null) throw ParamsShouldNotBeNullException()
-        return articleListRepositoryContract.loadArticleAllItemsV2(params.feedId)
+        return articleListRemoteRepository.loadArticleAllItems(params.feedId)
     }
 
     companion object {
