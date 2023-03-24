@@ -1,5 +1,6 @@
 package com.haomins.data.datastore.local
 
+import androidx.paging.PagingSource
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.domain.repositories.local.ArticleListLocalRepository
 import com.haomins.model.entity.ArticleEntity
@@ -24,6 +25,10 @@ class ArticleListLocalDataStore @Inject constructor(
 
     override fun loadAllArticles(): Single<List<ArticleEntity>> {
         return articleDao.getAll()
+    }
+
+    override fun loadAllArticlesV2(): PagingSource<Int, ArticleEntity> {
+        return articleDao.getAllV2()
     }
 
 }

@@ -1,5 +1,6 @@
 package com.haomins.data.db.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -31,5 +32,8 @@ interface ArticleDao {
 
     @Query("DELETE FROM article_entity")
     fun clearTableV2(): Completable
+
+    @Query("SELECT * FROM article_entity")
+    fun getAllV2(): PagingSource<Int, ArticleEntity>
 
 }
