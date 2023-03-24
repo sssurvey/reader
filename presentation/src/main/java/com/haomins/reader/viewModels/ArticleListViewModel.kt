@@ -4,13 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.usecase.article.ContinueLoadAllArticlesAndSaveToLocal
-import com.haomins.domain.usecase.article.ContinueLoadAllArticlesByFeedAndSaveToLocal
-import com.haomins.domain.usecase.article.LoadAllArticlesAndSaveToLocal
-import com.haomins.domain.usecase.article.LoadAllArticlesByFeedAndSaveToLocal
+import androidx.paging.PagingData
+import com.haomins.domain.usecase.article.*
 import com.haomins.model.entity.ArticleEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.subscribers.DisposableSubscriber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +17,8 @@ class ArticleListViewModel @Inject constructor(
     private val loadAllArticlesByFeedAndSaveToLocal: LoadAllArticlesByFeedAndSaveToLocal,
     private val continueLoadAllArticlesByFeedAndSaveToLocal: ContinueLoadAllArticlesByFeedAndSaveToLocal,
     private val loadAllArticlesAndSaveToLocal: LoadAllArticlesAndSaveToLocal,
-    private val continueLoadAllArticlesAndSaveToLocal: ContinueLoadAllArticlesAndSaveToLocal
+    private val continueLoadAllArticlesAndSaveToLocal: ContinueLoadAllArticlesAndSaveToLocal,
+    private val loadAllArticlesPaged: LoadAllArticlesPaged,
 ) : ViewModel() {
 
     companion object {
@@ -32,6 +32,24 @@ class ArticleListViewModel @Inject constructor(
         _articleTitleUiItemsLiveData
     val isLoading by lazy { MutableLiveData(false) }
 
+    //TODO: 143 double check later
+    fun test(onArticleUpdated: (PagingData<ArticleEntity>) -> Unit) {
+        loadAllArticlesPaged.execute(
+            object : DisposableSubscriber<PagingData<ArticleEntity>>() {
+                override fun onNext(t: PagingData<ArticleEntity>?) {
+                    t?.let { onArticleUpdated.invoke(it) }
+                }
+
+                override fun onError(t: Throwable?) {
+                    Log.e(TAG, "onError: ${t?.message}")
+                }
+
+                override fun onComplete() {
+                    Log.d(TAG, "onComplete")
+                }
+            }
+        )
+    }
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
         Log.d(TAG, "loadArticles called")
@@ -132,6 +150,7 @@ class ArticleListViewModel @Inject constructor(
         continueLoadAllArticlesAndSaveToLocal.dispose()
         loadAllArticlesByFeedAndSaveToLocal.dispose()
         continueLoadAllArticlesByFeedAndSaveToLocal.dispose()
+        loadAllArticlesPaged.dispose()
     }
 
     private fun onArticleLoaded(newlyLoadedArticles: List<ArticleEntity>) {

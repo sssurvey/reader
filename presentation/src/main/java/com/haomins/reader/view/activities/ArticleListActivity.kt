@@ -10,6 +10,7 @@ import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.articles.ArticleListFragment
 import com.haomins.reader.view.fragments.articles.ArticleListFragment.Companion.LOAD_MODE_KEY
+import com.haomins.reader.view.fragments.articles.LoadAllArticleListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,11 +48,25 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
         startActivity(intent)
     }
 
+    //TODO: 143 double check later
     private fun checkIntent() {
         when (intent.getSerializableExtra(LOAD_MODE_KEY)) {
             ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID -> showArticleListFragment()
-            ArticleListFragment.ArticleListViewMode.LOAD_ALL -> showArticleListFragmentForAllItems()
+//            ArticleListFragment.ArticleListViewMode.LOAD_ALL -> showArticleListFragmentForAllItems()
+            ArticleListFragment.ArticleListViewMode.LOAD_ALL -> test()
         }
+    }
+
+    //TODO: 143 double check later
+    private fun test() {
+        Log.d(TAG, "::showArticleListFragmentForAllItems")
+        val bundle = Bundle()
+        val loadAllArticleListFragment = LoadAllArticleListFragment()
+        loadAllArticleListFragment.arguments = bundle
+        supportFragmentManager.beginTransaction().replace(
+            R.id.article_list_activity_frame_layout,
+            loadAllArticleListFragment, LoadAllArticleListFragment.TAG
+        ).commit()
     }
 
     private fun showArticleListFragmentForAllItems() {

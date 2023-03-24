@@ -40,4 +40,8 @@ interface RemoteRepositoryModule {
     fun bindArticleListRemoteRepository(articleListRemoteDataStore: ArticleListRemoteDataStore):
             ArticleListRemoteRepository
 
+    @Binds
+    @ViewModelScoped
+    fun bindArticleListPagingRepository(articleListPagingDataStore: ArticleListPagingDataStore):
+            ArticleListPagingRepository
 }

@@ -42,6 +42,27 @@ class ArticleListRemoteDataStore @Inject constructor(
         return loadAllArticleItemsFromRemoteByFeedId(feedId, true)
     }
 
+    //TODO: 143 double check later
+    fun loadAllArticleItemsFromRemote(continueId: String): Single<List<Pair<String, ArticleResponseModel>>> {
+        return theOldReaderService.loadAllArticles(
+            headerAuthValue = headerAuthValue,
+            continueLoad = continueId
+        ).flatMapObservable { itemRefListResponse ->
+            Observable
+                .fromIterable(itemRefListResponse.itemRefs)
+                .flatMapSingle { itemRef ->
+                    //TODO: 143 TO TAXING on the SYSTEM??? consider single thread for this?
+                    theOldReaderService.loadArticleDetailsByRefId(
+                        headerAuthValue = headerAuthValue,
+                        refItemId = itemRef.id
+                    ).map {
+                        itemRefListResponse.continuation to it
+                    }
+                }
+        }
+            .toList()
+    }
+
     private fun loadAllArticleItemsFromRemoteByFeedId(
         feedId: String,
         continueLoad: Boolean = false
