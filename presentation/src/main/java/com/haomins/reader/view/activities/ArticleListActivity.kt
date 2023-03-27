@@ -11,6 +11,8 @@ import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.articles.ArticleListFragment
 import com.haomins.reader.view.fragments.articles.ArticleListFragment.Companion.LOAD_MODE_KEY
 import com.haomins.reader.view.fragments.articles.LoadAllArticleListFragment
+import com.haomins.reader.view.fragments.articles.LoadArticleListFragment
+import com.haomins.reader.view.fragments.articles.LoadArticleListFragment.Companion.LOAD_BY_FEED_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,8 +53,9 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
     //TODO: 143 double check later
     private fun checkIntent() {
         when (intent.getSerializableExtra(LOAD_MODE_KEY)) {
-            ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID -> showArticleListFragment()
+//            ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID -> showArticleListFragment()
 //            ArticleListFragment.ArticleListViewMode.LOAD_ALL -> showArticleListFragmentForAllItems()
+            ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID -> testFeed()
             ArticleListFragment.ArticleListViewMode.LOAD_ALL -> test()
         }
     }
@@ -66,6 +69,22 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
         supportFragmentManager.beginTransaction().replace(
             R.id.article_list_activity_frame_layout,
             loadAllArticleListFragment, LoadAllArticleListFragment.TAG
+        ).commit()
+    }
+
+    //TODO: 143 double check later
+    private fun testFeed() {
+        Log.d(TAG, "::showArticleListFragment")
+        val bundle = Bundle()
+        val loadArticleListFragment = LoadArticleListFragment()
+        bundle.putString(
+            LOAD_BY_FEED_ID,
+            intent.getStringExtra(ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID.key)
+        )
+        loadArticleListFragment.arguments = bundle
+        supportFragmentManager.beginTransaction().replace(
+            R.id.article_list_activity_frame_layout,
+            loadArticleListFragment, ArticleListFragment.TAG
         ).commit()
     }
 

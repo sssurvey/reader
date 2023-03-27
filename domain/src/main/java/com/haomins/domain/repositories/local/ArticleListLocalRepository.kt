@@ -14,4 +14,5 @@ interface ArticleListLocalRepository {
     fun saveAllArticles(articleEntities: List<ArticleEntity>): Completable
 
     fun loadAllArticlesV2(): PagingSource<Int, ArticleEntity>
+    fun loadAllArticlesV2WithFeed(feedId: String): PagingSource<Int, ArticleEntity>
 }

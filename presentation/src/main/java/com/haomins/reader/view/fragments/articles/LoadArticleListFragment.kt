@@ -24,7 +24,7 @@ class LoadArticleListFragment :
 
     companion object {
         const val TAG = "LoadArticleListFragment"
-        private const val LOAD_BY_FEED_ID = "LOAD_BY_FEED_ID"
+        const val LOAD_BY_FEED_ID = "LOAD_BY_FEED_ID"
     }
 
     @Inject

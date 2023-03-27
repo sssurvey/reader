@@ -36,4 +36,6 @@ interface ArticleDao {
     @Query("SELECT * FROM article_entity")
     fun getAllV2(): PagingSource<Int, ArticleEntity>
 
+    @Query("SELECT * FROM article_entity WHERE feed_id == :feedId")
+    fun getAllV2WithFeed(feedId: String): PagingSource<Int, ArticleEntity>
 }

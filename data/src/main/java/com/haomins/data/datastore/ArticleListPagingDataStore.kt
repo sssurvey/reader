@@ -44,7 +44,7 @@ class ArticleListPagingDataStore @Inject constructor(
                 initialLoadSize = TheOldReaderService.DEFAULT_LOAD_SOURCE_ARTICLE_COUNT
             ),
             remoteMediator = articleListRemoteMediator,
-            pagingSourceFactory = { articleListLocalDataStore.loadAllArticlesV2() }
+            pagingSourceFactory = { articleListLocalDataStore.loadAllArticlesV2WithFeed(feedId) }
         ).flowable
     }
 

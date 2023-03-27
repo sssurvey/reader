@@ -13,13 +13,26 @@ class LoadAllArticlesPaged @Inject constructor(
     private val articleListPagingRepository: ArticleListPagingRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
-) : FlowableUseCase<Unit, PagingData<ArticleEntity>>(
+) : FlowableUseCase<LoadAllArticlesPaged.Companion.Params, PagingData<ArticleEntity>>(
     executionScheduler,
     postExecutionScheduler
 ) {
 
-    override fun buildUseCaseFlowable(params: Unit?): Flowable<PagingData<ArticleEntity>> {
-        return articleListPagingRepository.getArticleListStream()
+    override fun buildUseCaseFlowable(params: Params?): Flowable<PagingData<ArticleEntity>> {
+        return if (params == null) {
+            articleListPagingRepository.getArticleListStream()
+        } else {
+            articleListPagingRepository.getArticleListStream(params.feedId)
+        }
     }
 
+    companion object {
+        data class Params(
+            val feedId: String
+        )
+
+        fun forLoadAllArticlesPaged(feedId: String): Params {
+            return Params(feedId)
+        }
+    }
 }

@@ -31,4 +31,7 @@ class ArticleListLocalDataStore @Inject constructor(
         return articleDao.getAllV2()
     }
 
+    override fun loadAllArticlesV2WithFeed(feedId: String): PagingSource<Int, ArticleEntity> {
+        return articleDao.getAllV2WithFeed(feedId)
+    }
 }

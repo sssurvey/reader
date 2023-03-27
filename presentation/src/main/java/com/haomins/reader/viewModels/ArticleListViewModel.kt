@@ -50,6 +50,26 @@ class ArticleListViewModel @Inject constructor(
             }
         )
     }
+
+    fun testWithFeed(feedId: String, onArticleUpdated: (PagingData<ArticleEntity>) -> Unit) {
+        loadAllArticlesPaged.execute(
+            object : DisposableSubscriber<PagingData<ArticleEntity>>() {
+                override fun onNext(t: PagingData<ArticleEntity>?) {
+                    t?.let { onArticleUpdated.invoke(it) }
+                }
+
+                override fun onError(t: Throwable?) {
+                    Log.e(TAG, "onError: ${t?.message}")
+                }
+
+                override fun onComplete() {
+                    Log.d(TAG, "onComplete")
+                }
+            },
+            params = LoadAllArticlesPaged.forLoadAllArticlesPaged(feedId)
+        )
+    }
+
     fun loadArticles(feedId: String) {
         isLoading.postValue(true)
         Log.d(TAG, "loadArticles called")
