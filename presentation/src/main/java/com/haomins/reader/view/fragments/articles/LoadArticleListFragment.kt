@@ -64,7 +64,7 @@ class LoadArticleListFragment :
         if (activity is HasClickableArticleList) {
             activity.startArticleDetailActivity(
                 articleItemId,
-                emptyArray() //TODO: need some kind of snap shot, so view pager works
+                articleTitleListPagingAdapter.snapshot().items.map { it.itemId }.toTypedArray()
             )
         }
     }
