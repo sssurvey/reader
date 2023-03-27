@@ -14,15 +14,8 @@ class ReaderApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        initAppComponent()
         initDarkMode()
     }
-
-//    private fun initAppComponent(): AppComponent {
-//        appComponent = DaggerAppComponent.builder().application(this).build()
-//        appComponent.inject(this)
-//        return appComponent
-//    }
 
     private fun initDarkMode() {
         darkModeManager.initialize()

@@ -59,7 +59,15 @@ class LoadArticleListFragment :
         initializeRecyclerView()
     }
 
-    override fun onArticleClicked(articleItemId: String) {}
+    override fun onArticleClicked(articleItemId: String) {
+        val activity = requireActivity()
+        if (activity is HasClickableArticleList) {
+            activity.startArticleDetailActivity(
+                articleItemId,
+                emptyArray() //TODO: need some kind of snap shot, so view pager works
+            )
+        }
+    }
 
     private fun initializeRecyclerView() {
         binding.articleTitleRecyclerView.apply {
@@ -85,11 +93,11 @@ class LoadArticleListFragment :
                 else binding.bottomProgressBar.visibility = View.INVISIBLE
             }
         }
-        test()
+        startLoading()
     }
 
-    private fun test() {
-        articleListViewModel.testWithFeed(feedId) {
+    private fun startLoading() {
+        articleListViewModel.loadAllArticlesFromFeed(feedId) {
             articleTitleListPagingAdapter.submitData(
                 lifecycle,
                 it

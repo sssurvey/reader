@@ -7,12 +7,10 @@ import io.reactivex.Single
 
 interface ArticleListLocalRepository {
 
-    fun loadAllArticles(): Single<List<ArticleEntity>>
-
-    fun loadArticlesFromFeed(feedId: String): Single<List<ArticleEntity>>
-
     fun saveAllArticles(articleEntities: List<ArticleEntity>): Completable
 
-    fun loadAllArticlesV2(): PagingSource<Int, ArticleEntity>
-    fun loadAllArticlesV2WithFeed(feedId: String): PagingSource<Int, ArticleEntity>
+    fun loadAllArticles(): PagingSource<Int, ArticleEntity>
+
+    fun loadAllArticlesFromFeed(feedId: String): PagingSource<Int, ArticleEntity>
+
 }

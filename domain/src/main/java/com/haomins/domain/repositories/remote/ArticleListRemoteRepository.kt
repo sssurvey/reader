@@ -5,12 +5,11 @@ import io.reactivex.Single
 
 interface ArticleListRemoteRepository {
 
-    fun loadAllArticleItems(): Single<List<ArticleResponseModel>>
+    fun loadAllArticleItemsFromRemote(continueId: String): Single<List<Pair<String, ArticleResponseModel>>>
 
-    fun continueLoadAllArticleItems(): Single<List<ArticleResponseModel>>
-
-    fun continueLoadAllArticleItems(feedId: String): Single<List<ArticleResponseModel>>
-
-    fun loadArticleAllItems(feedId: String): Single<List<ArticleResponseModel>>
+    fun loadAllArticleItemsFromRemoteWithFeed(
+        feedId: String,
+        continueId: String
+    ): Single<List<Pair<String, ArticleResponseModel>>>
 
 }
