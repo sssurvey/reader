@@ -6,7 +6,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.haomins.data.datastore.local.ArticleListLocalDataStore
-import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.repositories.ArticleListPagingRepository
 import com.haomins.model.entity.ArticleEntity
@@ -21,6 +20,7 @@ class ArticleListPagingDataStore @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getArticleListStream(): Flowable<PagingData<ArticleEntity>> {
+        articleListRemoteMediator.feedId = ALL_FEED_NO_FILTER
         return Pager(
             config = PagingConfig(
                 pageSize = TheOldReaderService.DEFAULT_LOAD_SOURCE_ARTICLE_COUNT,
@@ -33,4 +33,22 @@ class ArticleListPagingDataStore @Inject constructor(
         ).flowable
     }
 
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getArticleListStream(feedId: String): Flowable<PagingData<ArticleEntity>> {
+        articleListRemoteMediator.feedId = feedId
+        return Pager(
+            config = PagingConfig(
+                pageSize = TheOldReaderService.DEFAULT_LOAD_SOURCE_ARTICLE_COUNT,
+                enablePlaceholders = true,
+                prefetchDistance = TheOldReaderService.DEFAULT_LOAD_SOURCE_ARTICLE_COUNT,
+                initialLoadSize = TheOldReaderService.DEFAULT_LOAD_SOURCE_ARTICLE_COUNT
+            ),
+            remoteMediator = articleListRemoteMediator,
+            pagingSourceFactory = { articleListLocalDataStore.loadAllArticlesV2() }
+        ).flowable
+    }
+
+    companion object {
+        private const val ALL_FEED_NO_FILTER = ""
+    }
 }

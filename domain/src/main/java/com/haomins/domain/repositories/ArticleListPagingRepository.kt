@@ -8,4 +8,6 @@ interface ArticleListPagingRepository {
 
     fun getArticleListStream(): Flowable<PagingData<ArticleEntity>>
 
+    fun getArticleListStream(feedId: String): Flowable<PagingData<ArticleEntity>>
+
 }

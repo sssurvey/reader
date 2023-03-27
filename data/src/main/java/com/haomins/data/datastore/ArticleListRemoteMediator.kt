@@ -25,6 +25,8 @@ class ArticleListRemoteMediator @Inject constructor(
     private val pageToContinueIdMap = mutableMapOf(0 to INITIAL_CONTINUE_ID)
     private var pageCounter = 0
 
+    var feedId = ""
+
     override fun loadSingle(
         loadType: LoadType,
         state: PagingState<Int, ArticleEntity>
@@ -53,8 +55,14 @@ class ArticleListRemoteMediator @Inject constructor(
 
                 val continueId = if (it < 0) TheOldReaderService.EMPTY else it.toString()
 
-                articleListRemoteDataStore
-                    .loadAllArticleItemsFromRemote(continueId = continueId)
+                if (feedId.isEmpty()) {
+                    articleListRemoteDataStore
+                        .loadAllArticleItemsFromRemote(continueId = continueId)
+                } else {
+                    articleListRemoteDataStore
+                        .loadAllArticleItemsFromRemoteWithFeed(feedId, continueId = continueId)
+                }
+
             }.flatMap { list ->
 
                 val continueId = list.last().first.toInt()
