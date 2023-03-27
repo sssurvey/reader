@@ -12,7 +12,6 @@ import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-//TODO: 143 double check later
 class ArticleListPagingDataStore @Inject constructor(
     private val articleListRemoteMediator: ArticleListRemoteMediator,
     private val articleListLocalDataStore: ArticleListLocalDataStore

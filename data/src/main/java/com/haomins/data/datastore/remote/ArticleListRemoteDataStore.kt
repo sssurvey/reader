@@ -24,7 +24,6 @@ class ArticleListRemoteDataStore @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
-    //TODO: 143 double check later
     override fun loadAllArticleItemsFromRemote(continueId: String): Single<List<Pair<String, ArticleResponseModel>>> {
         return theOldReaderService.loadAllArticles(
             headerAuthValue = headerAuthValue,
@@ -33,7 +32,6 @@ class ArticleListRemoteDataStore @Inject constructor(
             Observable
                 .fromIterable(itemRefListResponse.itemRefs)
                 .flatMapSingle { itemRef ->
-                    //TODO: 143 TO TAXING on the SYSTEM??? consider single thread for this?
                     theOldReaderService.loadArticleDetailsByRefId(
                         headerAuthValue = headerAuthValue,
                         refItemId = itemRef.id
@@ -57,7 +55,6 @@ class ArticleListRemoteDataStore @Inject constructor(
             Observable
                 .fromIterable(itemRefListResponse.itemRefs)
                 .flatMapSingle { itemRef ->
-                    //TODO: 143 TO TAXING on the SYSTEM??? consider single thread for this?
                     theOldReaderService.loadArticleDetailsByRefId(
                         headerAuthValue = headerAuthValue,
                         refItemId = itemRef.id
