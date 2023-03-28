@@ -21,7 +21,7 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(articleEntities: List<ArticleEntity>): Completable
 
-    @Query("SELECT * FROM article_entity")
+    @Query("SELECT * FROM article_entity ORDER BY published DESC")
     fun getAll(): PagingSource<Int, ArticleEntity>
 
     @Query("SELECT * FROM article_entity WHERE feed_id == :feedId ORDER BY published DESC")
