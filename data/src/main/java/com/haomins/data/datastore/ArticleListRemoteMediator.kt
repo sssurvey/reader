@@ -35,26 +35,23 @@ class ArticleListRemoteMediator @Inject constructor(
         val remoteKey: Single<Int>
 
         when (loadType) {
+            // reset
             LoadType.REFRESH -> {
-                // reset
                 pageCounter = 0
                 remoteKey = Single.just(pageToContinueIdMap[0])
             }
             LoadType.APPEND -> {
                 remoteKey = Single.just(pageToContinueIdMap[pageCounter])
             }
+            // Ignore
             LoadType.PREPEND -> {
                 return Single.just(MediatorResult.Success(true))
             }
         }
 
-        pageCounter += 1
-
         return remoteKey
             .flatMap {
-
-                val continueId = if (it < 0) TheOldReaderService.EMPTY else it.toString()
-
+                val continueId = if (it <= 0) TheOldReaderService.EMPTY else it.toString()
                 if (feedId.isEmpty()) {
                     articleListRemoteDataStore
                         .loadAllArticleItemsFromRemote(continueId = continueId)
@@ -65,14 +62,19 @@ class ArticleListRemoteMediator @Inject constructor(
 
             }.flatMap { list ->
 
-                val continueId = list.last().first.toInt()
-                val content = list.map { it.second }
+                // keep track of page in the case of APPEND
+                if (loadType == LoadType.APPEND) {
+                    pageCounter += 1
 
-                // keep track of page
-                run {
-                    continueIdToPageMap[continueId] = pageCounter
-                    pageToContinueIdMap[pageCounter] = continueId
+                    val continueId = list.last().first.toInt()
+
+                    run {
+                        continueIdToPageMap[continueId] = pageCounter
+                        pageToContinueIdMap[pageCounter] = continueId
+                    }
                 }
+
+                val content = list.map { it.second }
 
                 articleListLocalDataStore.saveAllArticles(
                     content.map { mapper.toArticleEntity(it) }
