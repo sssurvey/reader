@@ -1,6 +1,7 @@
 package com.haomins.reader.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -64,10 +65,19 @@ class ArticleTitleListPagingAdapter(
             with(articleEntity) {
                 articleTitleTextView.text = itemTitle
                 articlePostedTimeTextView.text = dateUtils.howLongAgo(itemPublishedMillisecond)
-                previewImageLoader.invoke(
-                    articlePreviewImageView,
-                    previewImageUrl
-                )
+
+                // config image view
+                run {
+                    if (previewImageUrl.isNotEmpty()) {
+                        previewImageLoader.invoke(
+                            articlePreviewImageView,
+                            previewImageUrl
+                        )
+                    } else {
+                        articlePreviewImageView.visibility = View.INVISIBLE
+                    }
+                }
+
                 itemRootView.setOnClickListener {
                     articleTitleListOnClickListener.onArticleClicked(itemId)
                 }
