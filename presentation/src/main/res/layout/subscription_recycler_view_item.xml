@@ -40,7 +40,7 @@
                 android:layout_toEndOf="@id/subscription_icon_image_view"
                 android:height="@dimen/imageIconViewHeight"
                 android:gravity="center_vertical"
-                android:maxLines="@integer/textViewDefaultLineRestriction"
+                android:maxLines="@integer/subscriptionTitleMaxLines"
                 android:paddingStart="@dimen/textViewPadding"
                 android:paddingEnd="@dimen/textViewPadding"
                 android:textAlignment="gravity"
