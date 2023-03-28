@@ -17,11 +17,8 @@ import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-//TODO: 143 double check later
 @AndroidEntryPoint
-class LoadAllArticleListFragment :
-    Fragment(),
-    ArticleTitleListPagingAdapter.ArticleTitleListOnClickListener {
+class LoadAllArticleListFragment : Fragment() {
 
     companion object {
         const val TAG = "LoadAllArticleListFragment"
@@ -39,8 +36,8 @@ class LoadAllArticleListFragment :
     private val articleTitleListPagingAdapter by lazy {
         ArticleTitleListPagingAdapter(
             imageLoaderUtils::loadPreviewImage,
-            dateUtils,
-            this
+            this::onArticleLicked,
+            dateUtils
         )
     }
 
@@ -58,7 +55,7 @@ class LoadAllArticleListFragment :
         initializeRecyclerView()
     }
 
-    override fun onArticleClicked(articleItemId: String) {
+    private fun onArticleLicked(articleItemId: String) {
         val activity = requireActivity()
         if (activity is HasClickableArticleList) {
             activity.startArticleDetailActivity(

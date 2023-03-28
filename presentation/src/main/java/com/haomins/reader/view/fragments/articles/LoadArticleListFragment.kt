@@ -18,9 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoadArticleListFragment :
-    Fragment(),
-    ArticleTitleListPagingAdapter.ArticleTitleListOnClickListener {
+class LoadArticleListFragment : Fragment() {
 
     companion object {
         const val TAG = "LoadArticleListFragment"
@@ -40,8 +38,8 @@ class LoadArticleListFragment :
     private val articleTitleListPagingAdapter by lazy {
         ArticleTitleListPagingAdapter(
             imageLoaderUtils::loadPreviewImage,
-            dateUtils,
-            this
+            this::onArticleClicked,
+            dateUtils
         )
     }
 
@@ -59,7 +57,7 @@ class LoadArticleListFragment :
         initializeRecyclerView()
     }
 
-    override fun onArticleClicked(articleItemId: String) {
+    private fun onArticleClicked(articleItemId: String) {
         val activity = requireActivity()
         if (activity is HasClickableArticleList) {
             activity.startArticleDetailActivity(

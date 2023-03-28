@@ -16,17 +16,11 @@ import com.haomins.reader.databinding.ArticleTitleRecyclerViewItemBinding
 //TODO: 143 double check later
 class ArticleTitleListPagingAdapter(
     private val previewImageLoader: (ImageView, String) -> Unit,
+    private val onArticleClicked: (String) -> Unit,
     private val dateUtils: DateUtils,
-    private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
 ) : PagingDataAdapter<ArticleEntity, ArticleTitleListPagingAdapter.CustomViewHolder>(
     diffCallback = ARTICLE_ENTITY_COMPARATOR
 ) {
-
-    interface ArticleTitleListOnClickListener {
-
-        fun onArticleClicked(articleItemId: String)
-
-    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -79,7 +73,7 @@ class ArticleTitleListPagingAdapter(
                 }
 
                 itemRootView.setOnClickListener {
-                    articleTitleListOnClickListener.onArticleClicked(itemId)
+                    onArticleClicked.invoke(itemId)
                 }
             }
         }
