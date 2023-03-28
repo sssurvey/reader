@@ -1,6 +1,7 @@
 package com.haomins.data.di
 
 import com.haomins.data.datastore.*
+import com.haomins.data.datastore.paging.ArticleListPagingDataStore
 import com.haomins.data.datastore.remote.ArticleListRemoteDataStore
 import com.haomins.data.datastore.remote.AddSourceRemoteDataStore
 import com.haomins.data.datastore.remote.LoginRemoteDataStore

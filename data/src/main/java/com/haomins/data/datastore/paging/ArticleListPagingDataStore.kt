@@ -1,4 +1,4 @@
-package com.haomins.data.datastore
+package com.haomins.data.datastore.paging
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
