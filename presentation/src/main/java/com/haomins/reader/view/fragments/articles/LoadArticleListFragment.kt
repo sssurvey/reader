@@ -25,7 +25,16 @@ class LoadArticleListFragment : Fragment() {
 
     companion object {
         const val TAG = "LoadArticleListFragment"
-        const val LOAD_BY_FEED_ID = "LOAD_BY_FEED_ID"
+        private const val FEED_ID_KEY = "FEED_ID_KEY"
+
+        fun getInstance(feedId: String): LoadArticleListFragment {
+            val args = Bundle().apply {
+                putString(FEED_ID_KEY, feedId)
+            }
+            return LoadArticleListFragment().apply {
+                arguments = args
+            }
+        }
     }
 
     @Inject
@@ -37,7 +46,7 @@ class LoadArticleListFragment : Fragment() {
     private lateinit var binding: FragmentArticleListBinding
     private val articleListViewModel by viewModels<ArticleListViewModel>()
     private val recyclerLayoutManager by lazy { LinearLayoutManager(context) }
-    private val feedId by lazy { arguments?.getString(LOAD_BY_FEED_ID).toString() }
+    private val feedId by lazy { arguments?.getString(FEED_ID_KEY).toString() }
     private val articleTitleListPagingAdapter by lazy {
         ArticleTitleListPagingAdapter(
             imageLoaderUtils::loadPreviewImage,
