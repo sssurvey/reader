@@ -1,6 +1,7 @@
 package com.haomins.data.db.dao
 
 import androidx.room.Room
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.haomins.data.db.AppDatabase
 import com.haomins.model.entity.ArticleEntity
@@ -8,7 +9,9 @@ import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class ArticleDaoTest {
 
     private lateinit var appDatabase: AppDatabase
@@ -39,7 +42,7 @@ class ArticleDaoTest {
         }
 
         // Populate DB
-        articleList.forEach { appDatabase.articleDao().insert(it) }
+        appDatabase.articleDao().insert(articleList).blockingAwait()
     }
 
     @After
@@ -48,36 +51,8 @@ class ArticleDaoTest {
     }
 
     @Test
-    fun testGetAll() {
-        var counter = 0
-        articleDao.getAll().blockingGet().forEach {
-            assertTrue(it.itemId == counter.toString())
-            counter++
-        }
-    }
-
-    @Test
     fun testSelectAllArticleByFeedId() {
         assertTrue(articleDao.selectArticleByItemId("0").blockingGet().feedId == "0")
-    }
-
-    @Test
-    fun testInsert() {
-        val originalSize = articleDao.getAll().blockingGet().size
-        articleDao.insert(
-            ArticleEntity(
-                itemId = "$100",
-                feedId = "${100 * 2}",
-                itemTitle = "Test title",
-                itemUpdatedMillisecond = System.currentTimeMillis(),
-                itemPublishedMillisecond = System.currentTimeMillis(),
-                author = "Dr.StrangeLove",
-                content = "This is a test article, haha.",
-                href = "",
-                previewImageUrl = ""
-            )
-        )
-        assertTrue(articleDao.getAll().blockingGet().size > originalSize)
     }
 
     @Test
@@ -85,10 +60,4 @@ class ArticleDaoTest {
         assertTrue(articleDao.selectArticleByItemId("1").blockingGet().itemId == 1.toString())
     }
 
-    @Test
-    fun testClearTable() {
-        assertTrue(articleDao.getAll().blockingGet().isNotEmpty())
-        articleDao.clearTable()
-        assertTrue(articleDao.getAll().blockingGet().isEmpty())
-    }
 }

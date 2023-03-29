@@ -73,7 +73,9 @@ ext {
             "com.google.dagger:hilt-android:$hilt_version",
             "androidx.paging:paging-runtime:$paging_version",
             "androidx.paging:paging-rxjava2:$paging_version",
-            "androidx.room:room-paging:$room_version"
+            "androidx.room:room-paging:$room_version",
+            // added for dependency resolution
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle",
     ]
 
     dataKaptDependencies = [
@@ -119,6 +121,7 @@ ext {
 
     dataAndroidTestImplementation = [
             "androidx.test.ext:junit:$androidx_test_junit_version",
+            "androidx.test:runner:1.5.2",
             "androidx.room:room-testing:$room_version",
             "junit:junit:$junit_version"
     ]
