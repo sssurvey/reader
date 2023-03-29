@@ -72,6 +72,7 @@ class LoadAllArticleListFragment : Fragment() {
             adapter = articleTitleListPagingAdapter
             layoutManager = recyclerLayoutManager
         }
+        // reset recycler view position when latest item is loaded from remote
         articleTitleListPagingAdapter.registerAdapterDataObserver(
             object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
