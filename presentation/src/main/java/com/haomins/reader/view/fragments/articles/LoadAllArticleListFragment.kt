@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.haomins.data.util.DateUtils
 import com.haomins.reader.adapters.ArticleTitleListPagingAdapter
 import com.haomins.reader.databinding.FragmentArticleListBinding
@@ -71,6 +72,13 @@ class LoadAllArticleListFragment : Fragment() {
             adapter = articleTitleListPagingAdapter
             layoutManager = recyclerLayoutManager
         }
+        articleTitleListPagingAdapter.registerAdapterDataObserver(
+            object : RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    if (positionStart == 0) recyclerLayoutManager.scrollToPosition(0)
+                }
+            }
+        )
         articleTitleListPagingAdapter.addLoadStateListener { loadState ->
             // Config error UI behavior
             run {
