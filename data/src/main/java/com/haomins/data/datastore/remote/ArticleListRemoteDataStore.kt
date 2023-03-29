@@ -25,6 +25,7 @@ class ArticleListRemoteDataStore @Inject constructor(
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
+    //TODO: API Single<Pair<ID, List<Items>>> is better than this
     override fun loadAllArticleItemsFromRemote(continueId: String): Single<List<Pair<String, ArticleResponseModel>>> {
         return theOldReaderService.loadAllArticles(
             headerAuthValue = headerAuthValue,
@@ -45,6 +46,7 @@ class ArticleListRemoteDataStore @Inject constructor(
             .toList()
     }
 
+    //TODO: API Single<Pair<ID, List<Items>>> is better than this
     override fun loadAllArticleItemsFromRemoteWithFeed(
         feedId: String,
         continueId: String
