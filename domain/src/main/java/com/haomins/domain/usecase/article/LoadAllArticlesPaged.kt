@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.article
 
 import androidx.paging.PagingData
-import com.haomins.domain.repositories.ArticleListPagingRepository
+import com.haomins.domain.repositories.ArticleListPagerRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.FlowableUseCase
@@ -10,7 +10,7 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class LoadAllArticlesPaged @Inject constructor(
-    private val articleListPagingRepository: ArticleListPagingRepository,
+    private val articleListPagerRepository: ArticleListPagerRepository,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : FlowableUseCase<LoadAllArticlesPaged.Companion.Params, PagingData<ArticleEntity>>(
@@ -20,9 +20,9 @@ class LoadAllArticlesPaged @Inject constructor(
 
     override fun buildUseCaseFlowable(params: Params?): Flowable<PagingData<ArticleEntity>> {
         return if (params == null) {
-            articleListPagingRepository.getArticleListStream()
+            articleListPagerRepository.getArticleListStream()
         } else {
-            articleListPagingRepository.getArticleListStream(params.feedId)
+            articleListPagerRepository.getArticleListStream(params.feedId)
         }
     }
 

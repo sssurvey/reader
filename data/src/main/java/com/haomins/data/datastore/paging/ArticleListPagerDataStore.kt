@@ -7,15 +7,15 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.haomins.data.datastore.local.ArticleListLocalDataStore
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.repositories.ArticleListPagingRepository
+import com.haomins.domain.repositories.ArticleListPagerRepository
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class ArticleListPagingDataStore @Inject constructor(
+class ArticleListPagerDataStore @Inject constructor(
     private val articleListRemoteMediator: ArticleListRemoteMediator,
     private val articleListLocalDataStore: ArticleListLocalDataStore
-): ArticleListPagingRepository {
+): ArticleListPagerRepository {
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getArticleListStream(): Flowable<PagingData<ArticleEntity>> {

@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Flowable
 
-interface ArticleListPagingRepository {
+interface ArticleListPagerRepository {
 
     fun getArticleListStream(): Flowable<PagingData<ArticleEntity>>
 
