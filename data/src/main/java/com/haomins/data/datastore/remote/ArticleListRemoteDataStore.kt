@@ -1,6 +1,7 @@
 package com.haomins.data.datastore.remote
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.getString
 import com.haomins.domain.repositories.remote.ArticleListRemoteRepository
@@ -36,7 +37,8 @@ class ArticleListRemoteDataStore @Inject constructor(
                         headerAuthValue = headerAuthValue,
                         refItemId = itemRef.id
                     ).map {
-                        itemRefListResponse.continuation to it
+                        val newContinueId = itemRefListResponse.continuation ?: ""
+                        newContinueId to it
                     }
                 }
         }
@@ -59,7 +61,8 @@ class ArticleListRemoteDataStore @Inject constructor(
                         headerAuthValue = headerAuthValue,
                         refItemId = itemRef.id
                     ).map {
-                        itemRefListResponse.continuation to it
+                        val newContinueId = itemRefListResponse.continuation ?: ""
+                        newContinueId to it
                     }
                 }
         }

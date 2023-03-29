@@ -8,7 +8,7 @@ data class ItemRefListResponseModel(
     val itemRefs: List<RefItemModel>,
 
     @SerializedName("continuation")
-    val continuation: String
+    val continuation: String?
 
 )
 

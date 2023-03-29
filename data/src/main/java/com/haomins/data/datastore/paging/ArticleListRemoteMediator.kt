@@ -59,30 +59,33 @@ class ArticleListRemoteMediator @Inject constructor(
                     articleListRemoteDataStore
                         .loadAllArticleItemsFromRemoteWithFeed(feedId, continueId = continueId)
                 }
-
             }.flatMap { list ->
 
+                val content = list.map { it.second }
+                val newContinueID = list.last().first
+
                 // keep track of page in the case of APPEND
-                if (loadType == LoadType.APPEND) {
+                if (loadType == LoadType.APPEND && newContinueID.isNotEmpty()) {
                     pageCounter += 1
-
-                    val continueId = list.last().first.toInt()
-
                     run {
-                        continueIdToPageMap[continueId] = pageCounter
-                        pageToContinueIdMap[pageCounter] = continueId
+                        continueIdToPageMap[newContinueID.toInt()] = pageCounter
+                        pageToContinueIdMap[pageCounter] = newContinueID.toInt()
                     }
                 }
 
-                val content = list.map { it.second }
-
+                // cache articles to DB
                 articleListLocalDataStore.saveAllArticles(
                     content.map { mapper.toArticleEntity(it) }
-                ).andThen(Single.just(list.last().first.isBlank()))
+                ).andThen(
+                    Single.just(newContinueID.isEmpty())
+                )
 
             }
             .flatMap {
-                Single.just(MediatorResult.Success(it) as MediatorResult)
+                Single
+                    .just(
+                        MediatorResult.Success(endOfPaginationReached = it) as MediatorResult
+                    )
             }
             .onErrorResumeNext {
                 when (it) {
