@@ -19,10 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoadAllArticleListFragment : Fragment() {
+class AllArticleListFragment : Fragment() {
 
     companion object {
         const val TAG = "LoadAllArticleListFragment"
+
+        fun getInstance(): AllArticleListFragment {
+            return AllArticleListFragment()
+        }
     }
 
     @Inject

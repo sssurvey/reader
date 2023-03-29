@@ -13,7 +13,6 @@ import com.haomins.data.util.DateUtils
 import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.databinding.ArticleTitleRecyclerViewItemBinding
 
-//TODO: 143 double check later
 class ArticleTitleListPagingAdapter(
     private val previewImageLoader: (ImageView, String) -> Unit,
     private val onArticleClicked: (String) -> Unit,

@@ -18,7 +18,6 @@ class ArticleListViewModel @Inject constructor(
         const val TAG = "ArticleListViewModel"
     }
 
-    //TODO: 143 double check later
     fun loadAllArticles(onArticleUpdated: (PagingData<ArticleEntity>) -> Unit) {
         loadAllArticlesPaged.execute(
             object : DisposableSubscriber<PagingData<ArticleEntity>>() {

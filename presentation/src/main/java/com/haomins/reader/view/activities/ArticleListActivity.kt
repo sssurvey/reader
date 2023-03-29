@@ -10,8 +10,8 @@ import com.haomins.reader.databinding.ActivityArticleListBinding
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
 import com.haomins.reader.view.fragments.articles.HasClickableArticleList
-import com.haomins.reader.view.fragments.articles.LoadAllArticleListFragment
-import com.haomins.reader.view.fragments.articles.LoadArticleListFragment
+import com.haomins.reader.view.fragments.articles.AllArticleListFragment
+import com.haomins.reader.view.fragments.articles.FeedArticleListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,7 +54,6 @@ class ArticleListActivity : AppCompatActivity(), HasClickableArticleList {
         startActivity(intent)
     }
 
-    //TODO: 143 double check later
     private fun checkIntent() {
         when (intent.getSerializableExtra(LOAD_MODE_KEY)) {
             LoadMode.LOAD_BY_FEED -> loadAllArticlesFromFeed()
@@ -62,16 +61,15 @@ class ArticleListActivity : AppCompatActivity(), HasClickableArticleList {
         }
     }
 
-    //TODO: 143 double check later
     private fun loadAllArticles() {
         Log.d(TAG, "::showLoadAllArticleListFragment")
-        val bundle = Bundle()
-        val loadAllArticleListFragment = LoadAllArticleListFragment()
-        loadAllArticleListFragment.arguments = bundle
-        supportFragmentManager.beginTransaction().replace(
-            R.id.article_list_activity_frame_layout,
-            loadAllArticleListFragment, LoadAllArticleListFragment.TAG
-        ).commit()
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(
+                R.id.article_list_activity_frame_layout,
+                AllArticleListFragment.getInstance()
+            )
+        }
     }
 
     private fun loadAllArticlesFromFeed() {
@@ -81,7 +79,7 @@ class ArticleListActivity : AppCompatActivity(), HasClickableArticleList {
                 setReorderingAllowed(true)
                 replace(
                     R.id.article_list_activity_frame_layout,
-                    LoadArticleListFragment.getInstance(it)
+                    FeedArticleListFragment.getInstance(it)
                 )
             }
         }

@@ -21,17 +21,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoadArticleListFragment : Fragment() {
+class FeedArticleListFragment : Fragment() {
 
     companion object {
         const val TAG = "LoadArticleListFragment"
         private const val FEED_ID_KEY = "FEED_ID_KEY"
 
-        fun getInstance(feedId: String): LoadArticleListFragment {
+        fun getInstance(feedId: String): FeedArticleListFragment {
             val args = Bundle().apply {
                 putString(FEED_ID_KEY, feedId)
             }
-            return LoadArticleListFragment().apply {
+            return FeedArticleListFragment().apply {
                 arguments = args
             }
         }
