@@ -21,9 +21,7 @@ class ArticleListRemoteMediator @Inject constructor(
     private val mapper: ModelToEntityMapper
 ) : RxRemoteMediator<Int, ArticleEntity>() {
 
-    private val continueIdToPageMap = mutableMapOf(INITIAL_CONTINUE_ID to 0)
-    private val pageToContinueIdMap = mutableMapOf(0 to INITIAL_CONTINUE_ID)
-    private var pageCounter = 0
+    private var continueId = TheOldReaderService.EMPTY
 
     var feedId = ""
 
@@ -32,16 +30,16 @@ class ArticleListRemoteMediator @Inject constructor(
         state: PagingState<Int, ArticleEntity>
     ): Single<MediatorResult> {
 
-        val remoteKey: Single<Int>
+        val remoteKey: Single<String>
 
         when (loadType) {
             // reset
             LoadType.REFRESH -> {
-                pageCounter = 0
-                remoteKey = Single.just(pageToContinueIdMap[0])
+                continueId = TheOldReaderService.EMPTY
+                remoteKey = Single.just(continueId)
             }
             LoadType.APPEND -> {
-                remoteKey = Single.just(pageToContinueIdMap[pageCounter])
+                remoteKey = Single.just(continueId)
             }
             // Ignore
             LoadType.PREPEND -> {
@@ -51,27 +49,20 @@ class ArticleListRemoteMediator @Inject constructor(
 
         return remoteKey
             .flatMap {
-                val continueId = if (it <= 0) TheOldReaderService.EMPTY else it.toString()
                 if (feedId.isEmpty()) {
                     articleListRemoteDataStore
-                        .loadAllArticleItemsFromRemote(continueId = continueId)
+                        .loadAllArticleItemsFromRemote(continueId = it)
                 } else {
                     articleListRemoteDataStore
-                        .loadAllArticleItemsFromRemoteWithFeed(feedId, continueId = continueId)
+                        .loadAllArticleItemsFromRemoteWithFeed(feedId, continueId = it)
                 }
             }.flatMap { list ->
 
                 val content = list.map { it.second }
                 val newContinueID = list.last().first
 
-                // keep track of page in the case of APPEND
-                if (loadType == LoadType.APPEND && newContinueID.isNotEmpty()) {
-                    pageCounter += 1
-                    run {
-                        continueIdToPageMap[newContinueID.toInt()] = pageCounter
-                        pageToContinueIdMap[pageCounter] = newContinueID.toInt()
-                    }
-                }
+                // keep track of continue id for next page
+                continueId = newContinueID
 
                 // cache articles to DB
                 articleListLocalDataStore.saveAllArticles(
@@ -95,8 +86,5 @@ class ArticleListRemoteMediator @Inject constructor(
                 }
             }
     }
-
-    companion object {
-        private const val INITIAL_CONTINUE_ID = -1
-    }
+    
 }
