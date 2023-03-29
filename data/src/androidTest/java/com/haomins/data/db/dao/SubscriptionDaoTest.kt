@@ -9,7 +9,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-//TODO: Work on this later
 class SubscriptionDaoTest {
 
     private lateinit var appDatabase: AppDatabase
@@ -97,7 +96,7 @@ class SubscriptionDaoTest {
 
     @Test
     fun testClearTable() {
-        subscriptionDao.clearTable()
+        subscriptionDao.clearTable().subscribe()
         assertTrue(subscriptionDao.getAll().blockingGet().isEmpty())
     }
 }
