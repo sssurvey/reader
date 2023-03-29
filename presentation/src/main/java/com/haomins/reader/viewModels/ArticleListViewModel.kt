@@ -39,7 +39,8 @@ class ArticleListViewModel @Inject constructor(
 
     fun loadAllArticlesFromFeed(
         feedId: String,
-        onArticleUpdated: (PagingData<ArticleEntity>) -> Unit
+        onArticleUpdated: (PagingData<ArticleEntity>) -> Unit,
+        onError: (Throwable) -> Unit = {}
     ) {
         loadAllArticlesPaged.execute(
             object : DisposableSubscriber<PagingData<ArticleEntity>>() {
@@ -49,6 +50,7 @@ class ArticleListViewModel @Inject constructor(
 
                 override fun onError(t: Throwable?) {
                     Log.e(TAG, "onError: ${t?.message}")
+                    t?.let(onError)
                 }
 
                 override fun onComplete() {

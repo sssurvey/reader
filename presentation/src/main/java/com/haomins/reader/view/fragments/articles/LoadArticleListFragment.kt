@@ -10,9 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.haomins.data.util.DateUtils
+import com.haomins.reader.R
 import com.haomins.reader.adapters.ArticleTitleListPagingAdapter
 import com.haomins.reader.databinding.FragmentArticleListBinding
 import com.haomins.reader.utils.image.ImageLoaderUtils
+import com.haomins.reader.utils.showSnackbar
 import com.haomins.reader.viewModels.ArticleListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -55,6 +57,7 @@ class LoadArticleListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
+        startLoading()
     }
 
     private fun onArticleClicked(articleItemId: String) {
@@ -91,15 +94,23 @@ class LoadArticleListFragment : Fragment() {
                 else binding.bottomProgressBar.visibility = View.INVISIBLE
             }
         }
-        startLoading()
     }
 
     private fun startLoading() {
-        articleListViewModel.loadAllArticlesFromFeed(feedId) {
-            articleTitleListPagingAdapter.submitData(
-                lifecycle,
-                it
-            )
-        }
+        articleListViewModel.loadAllArticlesFromFeed(
+            feedId,
+            {
+                articleTitleListPagingAdapter.submitData(
+                    lifecycle,
+                    it,
+                )
+            },
+            {
+                binding.bottomProgressBar.visibility = View.INVISIBLE
+                showSnackbar(
+                    it.message ?: resources.getString(R.string.warning_message_unknown_exception)
+                )
+            }
+        )
     }
 }

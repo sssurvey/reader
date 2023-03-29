@@ -53,6 +53,7 @@ class LoadAllArticleListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
+        startLoading()
     }
 
     private fun onArticleLicked(articleItemId: String) {
@@ -89,15 +90,16 @@ class LoadAllArticleListFragment : Fragment() {
                 else binding.bottomProgressBar.visibility = View.INVISIBLE
             }
         }
-        startLoading()
     }
 
     private fun startLoading() {
-        articleListViewModel.loadAllArticles {
-            articleTitleListPagingAdapter.submitData(
-                lifecycle,
-                it
-            )
-        }
+        articleListViewModel.loadAllArticles(
+            {
+                articleTitleListPagingAdapter.submitData(
+                    lifecycle,
+                    it
+                )
+            }
+        )
     }
 }
