@@ -8,6 +8,7 @@ import com.haomins.data.datastore.local.ArticleListLocalDataStore
 import com.haomins.data.datastore.remote.ArticleListRemoteDataStore
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.common.ModelToEntityMapper
+import com.haomins.domain.exception.SourceEmptyException
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import retrofit2.HttpException
@@ -56,10 +57,14 @@ class ArticleListRemoteMediator @Inject constructor(
                     articleListRemoteDataStore
                         .loadAllArticleItemsFromRemoteWithFeed(feedId, continueId = it)
                 }
-            }.flatMap { list ->
+            }.flatMap { pair ->
 
-                val content = list.map { it.second }
-                val newContinueID = list.last().first
+                val (newContinueID, content) = pair
+
+                // business logic
+                run {
+                    content.ifEmpty { throw SourceEmptyException() }
+                }
 
                 // keep track of continue id for next page
                 continueId = newContinueID
@@ -86,5 +91,5 @@ class ArticleListRemoteMediator @Inject constructor(
                 }
             }
     }
-    
+
 }

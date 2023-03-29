@@ -93,13 +93,11 @@ class LoadAllArticleListFragment : Fragment() {
     }
 
     private fun startLoading() {
-        articleListViewModel.loadAllArticles(
-            {
-                articleTitleListPagingAdapter.submitData(
-                    lifecycle,
-                    it
-                )
-            }
-        )
+        articleListViewModel.loadAllArticles {
+            articleTitleListPagingAdapter.submitData(
+                lifecycle,
+                it
+            )
+        }
     }
 }

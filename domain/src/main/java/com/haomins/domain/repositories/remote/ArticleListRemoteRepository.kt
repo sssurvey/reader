@@ -8,18 +8,16 @@ interface ArticleListRemoteRepository {
     /**
      * Load article items from remote source.
      *
-     * Since the implementation of paging from remote is based on the [continueId], therefore
-     * if [loadAllArticleItemsFromRemote] is called with empty [continueId], then first page is of
-     * items are requested, the return [Single] will contain a list of [Pair] where [Pair.first] is
-     * the [continueId] we can use to call the next page, and [Pair.second] is the content of article.
+     * This API call will return a [Single] with [Pair], [Pair.first] being [continueId]
+     * [Pair.second] being [List] of [ArticleResponseModel]
      *
      * @param continueId Empty string for getting the first page, new [continueId] will be returned
      * via each request.
      *
-     * @return [Single] that contains a [List] of [Pair], with [Pair.first] being the [continueId]
+     * @return [Single] that contains a [Pair], with [Pair.first] being the [continueId]
      * for next page, and [Pair.second] as the content of the [ArticleResponseModel].
      */
-    fun loadAllArticleItemsFromRemote(continueId: String): Single<List<Pair<String, ArticleResponseModel>>>
+    fun loadAllArticleItemsFromRemote(continueId: String): Single<Pair<String, List<ArticleResponseModel>>>
 
     /**
      * Load article items from remote source limited by feed.
@@ -30,12 +28,12 @@ interface ArticleListRemoteRepository {
      * @param continueId Empty string for getting the first page, new [continueId] will be returned
      * via each request.
      *
-     * @return [Single] that contains a [List] of [Pair], with [Pair.first] being the [continueId]
+     * @return [Single] that contains a [Pair], with [Pair.first] being the [continueId]
      * for next page, and [Pair.second] as the content of the [ArticleResponseModel].
      */
     fun loadAllArticleItemsFromRemoteWithFeed(
         feedId: String,
         continueId: String
-    ): Single<List<Pair<String, ArticleResponseModel>>>
+    ): Single<Pair<String, List<ArticleResponseModel>>>
 
 }
