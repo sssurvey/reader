@@ -1,22 +1,22 @@
 package com.haomins.domain.usecase.addsource
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.model.responses.AddSourceResponseModel
-import com.haomins.domain.repositories.AddSourceRepositoryContract
+import com.haomins.domain.repositories.remote.AddSourceRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
 import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
+import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
 import javax.inject.Inject
 
 class AddNewSource @Inject constructor(
-        private val addSourceRepositoryContract: AddSourceRepositoryContract,
-        executionScheduler: ExecutionScheduler,
-        postExecutionScheduler: PostExecutionScheduler
+    private val addSourceRemoteRepository: AddSourceRemoteRepository,
+    executionScheduler: ExecutionScheduler,
+    postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<AddNewSource.Companion.Param, AddSourceResponseModel>(
-        executionScheduler,
-        postExecutionScheduler
+    executionScheduler,
+    postExecutionScheduler
 ) {
 
     /**
@@ -34,15 +34,15 @@ class AddNewSource @Inject constructor(
     override fun buildUseCaseSingle(params: Param?): Single<AddSourceResponseModel> {
         if (params == null) throw ParamsShouldNotBeNullException()
         else {
-            return addSourceRepositoryContract
-                    .addSource(params.source)
+            return addSourceRemoteRepository
+                .addSource(params.source)
         }
     }
 
     companion object {
 
         data class Param(
-                val source: String
+            val source: String
         )
 
         /**

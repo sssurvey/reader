@@ -1,6 +1,6 @@
 package com.haomins.domain.usecase.login
 
-import com.haomins.domain.repositories.LoginRepositoryContract
+import com.haomins.domain.repositories.remote.LoginRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
@@ -8,7 +8,7 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class ForgetPassword @Inject constructor(
-    private val loginRepositoryContract: LoginRepositoryContract,
+    private val loginRemoteRepository: LoginRemoteRepository,
     postExecutionScheduler: PostExecutionScheduler,
     executionScheduler: ExecutionScheduler
 ) : SingleUseCase<Unit, String>(
@@ -25,7 +25,7 @@ class ForgetPassword @Inject constructor(
      */
     override fun buildUseCaseSingle(params: Unit?): Single<String> {
         return Single.fromCallable {
-            loginRepositoryContract.getForgetPasswordUrlString()
+            loginRemoteRepository.getForgetPasswordUrlString()
         }
     }
 

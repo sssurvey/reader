@@ -1,8 +1,8 @@
 package com.haomins.domain.usecase.login
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.model.responses.UserAuthResponseModel
-import com.haomins.domain.repositories.LoginRepositoryContract
+import com.haomins.domain.repositories.remote.LoginRemoteRepository
+import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 class LoginTest {
 
     @Mock
-    lateinit var mockLoginRepositoryContract: LoginRepositoryContract
+    lateinit var mockLoginRemoteRepository: LoginRemoteRepository
 
     private val postExecutionScheduler = TestSchedulers.postExecutionScheduler()
     private val executionScheduler = TestSchedulers.executionScheduler()
@@ -28,9 +28,9 @@ class LoginTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         login = Login(
-                loginRepositoryContract = mockLoginRepositoryContract,
-                executionScheduler = executionScheduler,
-                postExecutionScheduler = postExecutionScheduler
+            loginRemoteRepository = mockLoginRemoteRepository,
+            executionScheduler = executionScheduler,
+            postExecutionScheduler = postExecutionScheduler
         )
     }
 
@@ -43,16 +43,16 @@ class LoginTest {
 
         fun mockBehavior() {
             `when`(
-                    mockLoginRepositoryContract.login(
-                            testUserName,
-                            testUserPassword
-                    )
+                mockLoginRemoteRepository.login(
+                    testUserName,
+                    testUserPassword
+                )
             ).thenReturn(
-                    Single
-                            .timer(500, TimeUnit.MILLISECONDS, executionScheduler.scheduler)
-                            .flatMap {
-                                Single.just(UserAuthResponseModel(auth = testAuth))
-                            }
+                Single
+                    .timer(500, TimeUnit.MILLISECONDS, executionScheduler.scheduler)
+                    .flatMap {
+                        Single.just(UserAuthResponseModel(auth = testAuth))
+                    }
             )
         }
 
@@ -62,17 +62,20 @@ class LoginTest {
         mockBehavior()
 
         login
-                .buildUseCaseSingle(
-                        Login.forUserLogin(
-                                userName = testUserName,
-                                userPassword = testUserPassword
-                        )
+            .buildUseCaseSingle(
+                Login.forUserLogin(
+                    userName = testUserName,
+                    userPassword = testUserPassword
                 )
-                .subscribeWith(testObserver)
+            )
+            .subscribeWith(testObserver)
 
         testObserver.assertSubscribed()
 
-        (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1000, TimeUnit.MILLISECONDS)
+        (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(
+            1000,
+            TimeUnit.MILLISECONDS
+        )
         (executionScheduler.scheduler as TestScheduler).advanceTimeBy(1000, TimeUnit.MILLISECONDS)
 
         testObserver.assertComplete()
@@ -89,16 +92,16 @@ class LoginTest {
 
         fun mockBehavior() {
             `when`(
-                    mockLoginRepositoryContract.login(
-                            testUserName,
-                            testUserPassword
-                    )
+                mockLoginRemoteRepository.login(
+                    testUserName,
+                    testUserPassword
+                )
             ).thenReturn(
-                    Single
-                            .timer(500, TimeUnit.MILLISECONDS, executionScheduler.scheduler)
-                            .flatMap {
-                                Single.error(testException)
-                            }
+                Single
+                    .timer(500, TimeUnit.MILLISECONDS, executionScheduler.scheduler)
+                    .flatMap {
+                        Single.error(testException)
+                    }
             )
         }
 
@@ -108,17 +111,20 @@ class LoginTest {
         mockBehavior()
 
         login
-                .buildUseCaseSingle(
-                        Login.forUserLogin(
-                                userName = testUserName,
-                                userPassword = testUserPassword
-                        )
+            .buildUseCaseSingle(
+                Login.forUserLogin(
+                    userName = testUserName,
+                    userPassword = testUserPassword
                 )
-                .subscribeWith(testObserver)
+            )
+            .subscribeWith(testObserver)
 
         testObserver.assertSubscribed()
 
-        (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1000, TimeUnit.MILLISECONDS)
+        (postExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(
+            1000,
+            TimeUnit.MILLISECONDS
+        )
         (executionScheduler.scheduler as TestScheduler).advanceTimeBy(1000, TimeUnit.MILLISECONDS)
 
         testObserver.assertError(testException)

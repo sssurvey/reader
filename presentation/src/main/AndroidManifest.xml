@@ -6,6 +6,7 @@
     <!-- PERMISSIONS -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- APPLICATION -->
     <application
@@ -20,17 +21,26 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <!-- ACTIVITIES -->
-        <activity android:name="com.haomins.reader.view.activities.MainActivity"
+        <activity
+            android:name="com.haomins.reader.view.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.haomins.reader.view.activities.ArticleListActivity" />
-        <activity android:name="com.haomins.reader.view.activities.ArticleDetailActivity" />
-        <activity android:name="com.haomins.reader.view.activities.SettingsActivity" />
-        <activity android:name="com.haomins.reader.view.activities.AddSourceActivity" />
+        <activity
+            android:name="com.haomins.reader.view.activities.ArticleListActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.haomins.reader.view.activities.ArticleDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.haomins.reader.view.activities.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.haomins.reader.view.activities.AddSourceActivity"
+            android:exported="false" />
 
         <!-- Providers -->
         <provider

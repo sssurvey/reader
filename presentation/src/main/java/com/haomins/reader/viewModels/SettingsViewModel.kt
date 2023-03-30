@@ -6,11 +6,13 @@ import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import com.haomins.domain.usecase.logging.GetLogFiles
-import com.haomins.reader.utils.DarkModeManager
+import com.haomins.reader.utils.ui.DarkModeManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
 import java.io.File
 import javax.inject.Inject
 
+@HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val darkModeManager: DarkModeManager,
     private val getLogFiles: GetLogFiles,

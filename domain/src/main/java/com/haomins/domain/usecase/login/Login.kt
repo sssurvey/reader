@@ -1,21 +1,21 @@
 package com.haomins.domain.usecase.login
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.model.responses.UserAuthResponseModel
-import com.haomins.domain.repositories.LoginRepositoryContract
+import com.haomins.domain.repositories.remote.LoginRemoteRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
+import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import javax.inject.Inject
 
 class Login @Inject constructor(
-        private val loginRepositoryContract: LoginRepositoryContract,
-        executionScheduler: ExecutionScheduler,
-        postExecutionScheduler: PostExecutionScheduler
+    private val loginRemoteRepository: LoginRemoteRepository,
+    executionScheduler: ExecutionScheduler,
+    postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<Login.Companion.Param, UserAuthResponseModel>(
-        executionScheduler = executionScheduler,
-        postExecutionScheduler = postExecutionScheduler
+    executionScheduler = executionScheduler,
+    postExecutionScheduler = postExecutionScheduler
 ) {
 
     /**
@@ -30,18 +30,18 @@ class Login @Inject constructor(
      */
     override fun buildUseCaseSingle(params: Param?): Single<UserAuthResponseModel> {
         if (params == null) throw ParamsShouldNotBeNullException()
-        return loginRepositoryContract
-                .login(
-                        params.userName,
-                        params.userPassword
-                )
+        return loginRemoteRepository
+            .login(
+                params.userName,
+                params.userPassword
+            )
     }
 
     companion object {
 
         data class Param(
-                val userName: String,
-                val userPassword: String
+            val userName: String,
+            val userPassword: String
         )
 
         /**
@@ -53,8 +53,8 @@ class Login @Inject constructor(
          */
         fun forUserLogin(userName: String, userPassword: String): Param {
             return Param(
-                    userName = userName,
-                    userPassword = userPassword
+                userName = userName,
+                userPassword = userPassword
             )
         }
 

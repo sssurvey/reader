@@ -8,8 +8,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 
 abstract class SingleUseCase<in Params, T> constructor(
-        private val executionScheduler: ExecutionScheduler,
-        private val postExecutionScheduler: PostExecutionScheduler
+    private val executionScheduler: ExecutionScheduler,
+    private val postExecutionScheduler: PostExecutionScheduler
 ) {
 
     private val compositeDisposable = CompositeDisposable()
@@ -18,13 +18,13 @@ abstract class SingleUseCase<in Params, T> constructor(
 
     open fun execute(observer: DisposableSingleObserver<T>, params: Params? = null) {
         this
-                .buildUseCaseSingle(params)
-                .subscribeOn(executionScheduler.scheduler)
-                .observeOn(postExecutionScheduler.scheduler)
-                .subscribeWith(observer)
-                .also {
-                    compositeDisposable.add(it)
-                }
+            .buildUseCaseSingle(params)
+            .subscribeOn(executionScheduler.scheduler)
+            .observeOn(postExecutionScheduler.scheduler)
+            .subscribeWith(observer)
+            .also {
+                compositeDisposable.add(it)
+            }
     }
 
     fun dispose() {

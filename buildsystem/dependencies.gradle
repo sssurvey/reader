@@ -1,14 +1,10 @@
 ext {
 
-    project.ext.compiledSdkVersion = 31
-    project.ext.kotlin_version = "1.5.31"
-    project.ext.gradle_build_tool_version = '7.0.4'
-
-    def androidx_lifecycle = "2.2.0"
-    def dagger_version = "2.36"
+    def kotlin_version = "1.8.10"
+    def androidx_lifecycle = "2.5.1"
     def android_arch_lifecycle_version = "1.1.1"
     def com_square_up_retrofit2_version = "2.4.0"
-    def room_version = "2.2.3"
+    def room_version = "2.5.1"
     def glide_version = "4.11.0"
     def rx_java_version = "2.2.6"
     def mockito_kotlin2_version = "3.2.0"
@@ -18,6 +14,10 @@ ext {
     def ktx_version = "1.7.0"
     def app_compat_version = "1.4.0"
     def constraint_layout_version = "2.1.2"
+    def espresso_version = "3.4.0"
+    def hilt_version = "2.45"
+    def androidx_test_junit_version = "1.1.5"
+    def paging_version = "3.1.1"
 
     appDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
@@ -27,31 +27,34 @@ ext {
             "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
             "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle",
             "androidx.lifecycle:lifecycle-livedata-ktx:$androidx_lifecycle",
+            "androidx.navigation:navigation-fragment-ktx:$androidx_lifecycle",
             "io.reactivex.rxjava2:rxjava:$rx_java_version",
             'io.reactivex.rxjava2:rxandroid:2.1.1',
             "android.arch.lifecycle:extensions:$android_arch_lifecycle_version",
             "androidx.preference:preference-ktx:$android_arch_lifecycle_version",
-            "com.google.dagger:dagger:$dagger_version",
             "androidx.recyclerview:recyclerview:1.1.0",
-            "androidx.webkit:webkit:1.2.0",
-            "androidx.cardview:cardview:1.0.0",
+            "androidx.webkit:webkit:1.6.1",
             "androidx.cardview:cardview:1.0.0",
             "androidx.viewpager2:viewpager2:1.0.0",
             "com.google.android.material:material:$material_version",
             "com.github.bumptech.glide:glide:$glide_version",
-            "com.github.bumptech.glide:annotations:$glide_version"
+            "com.github.bumptech.glide:annotations:$glide_version",
+            "com.google.dagger:hilt-android:$hilt_version",
+            "androidx.paging:paging-runtime:$paging_version"
     ]
 
     appKaptDependencies = [
             "android.arch.lifecycle:compiler:$android_arch_lifecycle_version",
-            "com.google.dagger:dagger-compiler:$dagger_version",
-            "com.github.bumptech.glide:compiler:$glide_version"
+            "com.github.bumptech.glide:compiler:$glide_version",
+            "com.google.dagger:hilt-compiler:$hilt_version"
     ]
 
     domainDependencies = [
             'javax.inject:javax.inject:1',
             "io.reactivex.rxjava2:rxjava:$rx_java_version",
-            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+            "androidx.paging:paging-common-ktx:$paging_version",
+            'org.jsoup:jsoup:1.14.3',
     ]
 
     dataDependencies = [
@@ -64,15 +67,25 @@ ext {
             'io.reactivex.rxjava2:rxandroid:2.1.1',
             'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0',
             'com.squareup.okhttp3:logging-interceptor:3.8.0',
-            "com.google.dagger:dagger:$dagger_version",
             "androidx.room:room-runtime:$room_version",
             "androidx.room:room-rxjava2:$room_version",
-            'org.jsoup:jsoup:1.14.3'
+            "com.google.dagger:hilt-android:$hilt_version",
+            "androidx.paging:paging-runtime:$paging_version",
+            "androidx.paging:paging-rxjava2:$paging_version",
+            "androidx.room:room-paging:$room_version",
+            // added for dependency resolution
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle",
     ]
 
     dataKaptDependencies = [
-            "com.google.dagger:dagger-compiler:$dagger_version",
-            "androidx.room:room-compiler:$room_version"
+            "androidx.room:room-compiler:$room_version",
+            "com.google.dagger:hilt-compiler:$hilt_version"
+    ]
+
+    dataModelDependencies = [
+            'com.google.code.gson:gson:2.8.5',
+            "androidx.room:room-common:$room_version",
+            'javax.inject:javax.inject:1',
     ]
 
     uiDependencies = [
@@ -93,8 +106,10 @@ ext {
     ]
 
     appAndroidTestImplementation = [
-        //            'androidx.test.ext:junit:1.1.1',
-        //            'androidx.test.espresso:espresso-core:3.2.0'
+            "androidx.test.ext:junit:$androidx_test_junit_version",
+            "androidx.test.espresso:espresso-core:$espresso_version",
+            "androidx.test.espresso:espresso-contrib:$espresso_version",
+            'org.junit.jupiter:junit-jupiter-api:5.8.2'
     ]
 
     dataTestImplementation = [
@@ -104,7 +119,15 @@ ext {
     ]
 
     dataAndroidTestImplementation = [
-            //            'androidx.test.ext:junit:1.1.1',
-            //            'androidx.test.espresso:espresso-core:3.2.0'
+            "androidx.test.ext:junit:$androidx_test_junit_version",
+            "androidx.test:runner:1.5.2",
+            "androidx.room:room-testing:$room_version",
+            "junit:junit:$junit_version"
+    ]
+
+    dataModelTestDependencies = [
+            "junit:junit:$junit_version",
+            "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin2_version",
+            "org.mockito:mockito-inline:$mockito_version"
     ]
 }

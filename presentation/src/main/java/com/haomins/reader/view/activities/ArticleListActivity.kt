@@ -4,26 +4,38 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import com.haomins.reader.R
+import com.haomins.reader.databinding.ActivityArticleListBinding
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
-import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
+import com.haomins.reader.view.fragments.articles.HasClickableArticleList
+import com.haomins.reader.view.fragments.articles.AllArticleListFragment
+import com.haomins.reader.view.fragments.articles.FeedArticleListFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickableArticleList {
+@AndroidEntryPoint
+class ArticleListActivity : AppCompatActivity(), HasClickableArticleList {
 
     companion object {
         const val ARTICLE_ITEM_ID = "ARTICLE_ITEM_ID"
         const val ARTICLE_ITEM_ID_ARRAY = "ARTICLE_ITEM_ID_ARRAY"
-
+        const val LOAD_MODE_KEY = "LOAD_MODE_KEY"
         private const val TAG = "ArticleListActivity"
     }
+
+    enum class LoadMode(val key: String) {
+        LOAD_ALL("LOAD_ALL"),
+        LOAD_BY_FEED("LOAD_BY_FEED")
+    }
+
+    private lateinit var binding: ActivityArticleListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "::onCreate")
+        inflateView()
         slideInAnimation()
-        setContentView(R.layout.activity_article_list)
         checkIntent()
     }
 
@@ -32,7 +44,10 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
         slideOutAnimation()
     }
 
-    override fun startArticleDetailActivity(articleItemId: String, articleItemIdArray: Array<String>) {
+    override fun startArticleDetailActivity(
+        articleItemId: String,
+        articleItemIdArray: Array<String>
+    ) {
         val intent = Intent(this, ArticleDetailActivity::class.java)
         intent.putExtra(ARTICLE_ITEM_ID, articleItemId)
         intent.putExtra(ARTICLE_ITEM_ID_ARRAY, articleItemIdArray)
@@ -41,42 +56,38 @@ class ArticleListActivity : AppCompatActivity(), ArticleListFragment.HasClickabl
 
     private fun checkIntent() {
         when (intent.getSerializableExtra(LOAD_MODE_KEY)) {
-            ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID -> showArticleListFragment()
-            ArticleListFragment.ArticleListViewMode.LOAD_ALL -> showArticleListFragmentForAllItems()
+            LoadMode.LOAD_BY_FEED -> loadAllArticlesFromFeed()
+            LoadMode.LOAD_ALL -> loadAllArticles()
         }
     }
 
-    private fun showArticleListFragmentForAllItems() {
-        Log.d(TAG, "::showArticleListFragmentForAllItems")
-        val bundle = Bundle()
-        val articleListFragment = ArticleListFragment()
-        bundle.putSerializable(LOAD_MODE_KEY, intent.getSerializableExtra(LOAD_MODE_KEY))
-        bundle.putBoolean(
-            ArticleListFragment.ArticleListViewMode.LOAD_ALL.key,
-            intent.getBooleanExtra(ArticleListFragment.ArticleListViewMode.LOAD_ALL.key, true)
-        )
-        articleListFragment.arguments = bundle
-        supportFragmentManager.beginTransaction().replace(
-            R.id.article_list_activity_frame_layout,
-            articleListFragment, ArticleListFragment.TAG
-        ).commit()
+    private fun loadAllArticles() {
+        Log.d(TAG, "::showLoadAllArticleListFragment")
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(
+                R.id.article_list_activity_frame_layout,
+                AllArticleListFragment.getInstance()
+            )
+        }
     }
 
-    private fun showArticleListFragment() {
-        Log.d(TAG, "::showArticleListFragment")
-        val bundle = Bundle()
-        val articleListFragment = ArticleListFragment()
-        bundle.putSerializable(LOAD_MODE_KEY, intent.getSerializableExtra(LOAD_MODE_KEY))
-        bundle.putString(
-            ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID.key,
-            intent.getStringExtra(ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID.key)
-        )
-        articleListFragment.arguments = bundle
-        supportFragmentManager.beginTransaction().replace(
-            R.id.article_list_activity_frame_layout,
-            articleListFragment, ArticleListFragment.TAG
-        ).commit()
+    private fun loadAllArticlesFromFeed() {
+        Log.d(TAG, "::showLoadArticleListFragment")
+        supportFragmentManager.commit {
+            intent.getStringExtra(LoadMode.LOAD_BY_FEED.key)?.let {
+                setReorderingAllowed(true)
+                replace(
+                    R.id.article_list_activity_frame_layout,
+                    FeedArticleListFragment.getInstance(it)
+                )
+            }
+        }
     }
 
+    private fun inflateView() {
+        binding = ActivityArticleListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
 
 }

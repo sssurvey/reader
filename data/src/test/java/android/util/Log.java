@@ -1,8 +1,8 @@
 package android.util;
 
 /*
-* Test Log class for unit testing purpose.
-* */
+ * Test Log class for unit testing purpose.
+ * */
 public class Log {
 
     public static int d(String tag, String msg) {

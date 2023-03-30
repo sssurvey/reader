@@ -4,16 +4,19 @@ import android.content.Context
 import android.content.res.Configuration
 import android.util.AttributeSet
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.haomins.ui.R
-import kotlinx.android.synthetic.main.reader_toolbar.view.*
+import com.haomins.ui.databinding.ReaderToolbarBinding
 
 class ReaderToolbar : MaterialToolbar {
 
+    private val binding: ReaderToolbarBinding =
+        ReaderToolbarBinding.inflate(LayoutInflater.from(context))
+
     init {
-        inflate(context, R.layout.reader_toolbar, this)
         initializeButton1().also { highlightSelectedButtons(isButtonOneSelected = true) }
         initializeButton2()
     }
@@ -32,9 +35,9 @@ class ReaderToolbar : MaterialToolbar {
         text: String = "Button 1",
         onClick: () -> Unit = { Log.d(TAG, "Button 1 :: onClick") }
     ) {
-        with(button_1) {
+        with(binding.button1) {
             setText(text)
-            if (button_1.hasOnClickListeners()) button_1.setOnClickListener(null)
+            if (hasOnClickListeners()) setOnClickListener(null)
             setOnClickListener {
                 onClick.invoke()
                 highlightSelectedButtons(true)
@@ -46,9 +49,9 @@ class ReaderToolbar : MaterialToolbar {
         text: String = "Button 2",
         onClick: () -> Unit = { Log.d(TAG, "Button 2 :: onClick") }
     ) {
-        with(button_2) {
+        with(binding.button2) {
             setText(text)
-            if (button_2.hasOnClickListeners()) button_2.setOnClickListener(null)
+            if (hasOnClickListeners()) setOnClickListener(null)
             setOnClickListener {
                 onClick.invoke()
                 highlightSelectedButtons(false)
@@ -64,13 +67,13 @@ class ReaderToolbar : MaterialToolbar {
     private fun configUiForDarkMode() {
         when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
-                toolbar_layout.background.setTint(
-                        ResourcesCompat.getColor(
-                            resources,
-                            R.color.reader_toolbar_background_tint_dark_mode,
-                            null
-                        )
+                binding.toolbarLayout.background.setTint(
+                    ResourcesCompat.getColor(
+                        resources,
+                        R.color.reader_toolbar_background_tint_dark_mode,
+                        null
                     )
+                )
             }
             else -> {
             }
@@ -79,11 +82,11 @@ class ReaderToolbar : MaterialToolbar {
 
     private fun highlightSelectedButtons(isButtonOneSelected: Boolean) {
         if (isButtonOneSelected) {
-            this@ReaderToolbar.button_1_selected_effect.visibility = View.VISIBLE
-            this@ReaderToolbar.button_2_selected_effect.visibility = View.INVISIBLE
+            this@ReaderToolbar.binding.button1SelectedEffect.visibility = View.VISIBLE
+            this@ReaderToolbar.binding.button2SelectedEffect.visibility = View.INVISIBLE
         } else {
-            this@ReaderToolbar.button_1_selected_effect.visibility = View.INVISIBLE
-            this@ReaderToolbar.button_2_selected_effect.visibility = View.VISIBLE
+            this@ReaderToolbar.binding.button1SelectedEffect.visibility = View.INVISIBLE
+            this@ReaderToolbar.binding.button2SelectedEffect.visibility = View.VISIBLE
         }
     }
 

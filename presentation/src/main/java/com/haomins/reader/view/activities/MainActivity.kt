@@ -6,29 +6,25 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
 import com.haomins.reader.R
-import com.haomins.reader.ReaderApplication
+import com.haomins.reader.databinding.ActivityMainBinding
 import com.haomins.reader.utils.delayedUiOperation
-import com.haomins.reader.view.fragments.ArticleListFragment
-import com.haomins.reader.view.fragments.ArticleListFragment.Companion.LOAD_MODE_KEY
-import com.haomins.reader.view.fragments.DisclosureFragment
+import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_MODE_KEY
+import com.haomins.reader.view.fragments.settings.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
-import com.haomins.reader.view.fragments.SourceTitleListFragment
+import com.haomins.reader.view.fragments.SubscriptionListFragment
 import com.haomins.reader.viewModels.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val mainViewModel by viewModels<MainViewModel> { viewModelFactory }
+    private lateinit var binding: ActivityMainBinding
+    private val mainViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as ReaderApplication).appComponent.viewModelComponent().build().inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        inflateView()
         showSplashArt()
         handleLoginFragment()
     }
@@ -42,8 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     fun startArticleListActivity(feedId: String) {
         Intent(this, ArticleListActivity::class.java).apply {
-            putExtra(LOAD_MODE_KEY, ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID)
-            putExtra(ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID.key, feedId)
+            putExtra(LOAD_MODE_KEY, ArticleListActivity.LoadMode.LOAD_BY_FEED)
+            putExtra(ArticleListActivity.LoadMode.LOAD_BY_FEED.key, feedId)
         }.let {
             startActivity(it)
         }
@@ -55,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     fun startArticleListActivityForAllItems() {
         val intent = Intent(this, ArticleListActivity::class.java).apply {
-            putExtra(LOAD_MODE_KEY, ArticleListFragment.ArticleListViewMode.LOAD_ALL)
+            putExtra(LOAD_MODE_KEY, ArticleListActivity.LoadMode.LOAD_ALL)
         }
         startActivity(intent)
     }
@@ -78,24 +74,29 @@ class MainActivity : AppCompatActivity() {
 
     fun showAfterUserLoggedInFragment() {
 
-        fun showSourceListFragment() {
+        fun showSubscriptionListFragment() {
             supportFragmentManager
                 .beginTransaction()
                 .replace(
                     R.id.main_activity_frame_layout,
-                    SourceTitleListFragment(),
-                    SourceTitleListFragment.TAG
+                    SubscriptionListFragment(),
+                    SubscriptionListFragment.TAG
                 )
                 .commit()
         }
 
-        showSourceListFragment()
+        showSubscriptionListFragment()
+    }
+
+    private fun inflateView() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     private fun showSplashArt() {
         delayedUiOperation(
             seconds = SPLASH_ART_COUNTDOWN_TIMER_SECONDS,
-            doAfterDelay = { splash_screen.visibility = View.GONE }
+            doAfterDelay = { binding.splashScreen.visibility = View.GONE }
         )
     }
 
@@ -121,6 +122,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val SPLASH_ART_COUNTDOWN_TIMER_SECONDS = 2L
-//        private const val TAG = "MainActivity"
     }
 }

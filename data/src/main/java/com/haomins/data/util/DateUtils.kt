@@ -24,8 +24,7 @@ class DateUtils @Inject constructor(
         val formatter =
             SimpleDateFormat(DEFAULT_TIME_FORMAT, application.resources.configuration.locales[0])
         formatter.timeZone = calendar.timeZone
-        return formatter.format(unixTimeStamp * ONE_THOUSAND_MILLISECOND)
-
+        return formatter.format(unixTimeStamp * ONE_THOUSAND_MILLISECOND).trimEnd()
     }
 
     fun howLongAgo(unixTimeStamp: Long): String {
@@ -33,12 +32,12 @@ class DateUtils @Inject constructor(
             unixTimeStamp * ONE_THOUSAND_MILLISECOND,
             Calendar.getInstance().timeInMillis,
             DateUtils.MINUTE_IN_MILLIS
-        ).toString()
+        ).toString().trimEnd()
     }
 
     fun getCurrentDate(): String {
         val formatter =
             SimpleDateFormat(DEFAULT_DATE_FORMAT, application.resources.configuration.locales[0])
-        return formatter.format(calendar.time)
+        return formatter.format(calendar.time).trimEnd()
     }
 }

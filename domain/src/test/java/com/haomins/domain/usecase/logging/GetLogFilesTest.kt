@@ -1,7 +1,7 @@
 package com.haomins.domain.usecase.logging
 
 import com.haomins.domain.TestSchedulers
-import com.haomins.domain.repositories.LoggingRepositoryContract
+import com.haomins.domain.repositories.local.LoggingLocalRepository
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 class GetLogFilesTest {
 
     @Mock
-    lateinit var mockLoggingRepositoryContract: LoggingRepositoryContract
+    lateinit var mockLoggingLocalRepository: LoggingLocalRepository
 
     private val executionScheduler = TestSchedulers.executionScheduler()
     private val postExecutionScheduler = TestSchedulers.postExecutionScheduler()
@@ -26,7 +26,7 @@ class GetLogFilesTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         getLogFiles = GetLogFiles(
-            mockLoggingRepositoryContract,
+            mockLoggingLocalRepository,
             executionScheduler,
             postExecutionScheduler
         )
@@ -38,7 +38,7 @@ class GetLogFilesTest {
         val tempFile = File.createTempFile("test data", "")
 
         fun mock() {
-            `when`(mockLoggingRepositoryContract.getLogFile()).thenReturn(tempFile)
+            `when`(mockLoggingLocalRepository.getLogFile()).thenReturn(tempFile)
         }
 
         mock()

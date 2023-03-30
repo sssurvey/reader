@@ -8,8 +8,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 
 abstract class ObservableUseCase<in Params, T> constructor(
-        private val executionScheduler: ExecutionScheduler,
-        private val postExecutionScheduler: PostExecutionScheduler
+    private val executionScheduler: ExecutionScheduler,
+    private val postExecutionScheduler: PostExecutionScheduler
 ) {
 
     private val compositeDisposable = CompositeDisposable()
@@ -18,13 +18,13 @@ abstract class ObservableUseCase<in Params, T> constructor(
 
     open fun execute(observer: DisposableObserver<T>, params: Params? = null) {
         this
-                .buildUseCaseObservable(params)
-                .subscribeOn(executionScheduler.scheduler)
-                .observeOn(postExecutionScheduler.scheduler)
-                .subscribeWith(observer)
-                .also {
-                    compositeDisposable.add(it)
-                }
+            .buildUseCaseObservable(params)
+            .subscribeOn(executionScheduler.scheduler)
+            .observeOn(postExecutionScheduler.scheduler)
+            .subscribeWith(observer)
+            .also {
+                compositeDisposable.add(it)
+            }
     }
 
     fun dispose() {

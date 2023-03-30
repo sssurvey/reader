@@ -1,21 +1,21 @@
 package com.haomins.domain.usecase.articledetails
 
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.model.entities.ArticleEntity
-import com.haomins.domain.repositories.ArticleDetailRepositoryContract
+import com.haomins.domain.repositories.local.ArticleDetailLocalRepository
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler
 import com.haomins.domain.usecase.SingleUseCase
+import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import javax.inject.Inject
 
 class LoadArticleData @Inject constructor(
-        private val articleDetailRepositoryContract: ArticleDetailRepositoryContract,
-        executionScheduler: ExecutionScheduler,
-        postExecutionScheduler: PostExecutionScheduler
+    private val articleDetailLocalRepository: ArticleDetailLocalRepository,
+    executionScheduler: ExecutionScheduler,
+    postExecutionScheduler: PostExecutionScheduler
 ) : SingleUseCase<LoadArticleData.Companion.Param, ArticleEntity>(
-        executionScheduler = executionScheduler,
-        postExecutionScheduler = postExecutionScheduler
+    executionScheduler = executionScheduler,
+    postExecutionScheduler = postExecutionScheduler
 ) {
 
     /**
@@ -28,14 +28,14 @@ class LoadArticleData @Inject constructor(
      */
     override fun buildUseCaseSingle(params: Param?): Single<ArticleEntity> {
         if (params == null) throw ParamsShouldNotBeNullException()
-        return articleDetailRepositoryContract
-                .loadArticleDetail(params.articleId)
+        return articleDetailLocalRepository
+            .loadArticleDetail(params.articleId)
     }
 
     companion object {
 
         data class Param(
-                val articleId: String
+            val articleId: String
         )
 
         /**
@@ -46,7 +46,7 @@ class LoadArticleData @Inject constructor(
          */
         fun forLoadArticleContent(articleId: String): Param {
             return Param(
-                    articleId = articleId
+                articleId = articleId
             )
         }
 

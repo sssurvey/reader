@@ -1,10 +1,10 @@
 package com.haomins.data.service
 
-import com.haomins.data.model.responses.article.ArticleResponseModel
-import com.haomins.data.model.responses.article.ItemRefListResponseModel
-import com.haomins.data.model.responses.subscription.AddSourceResponseModel
-import com.haomins.data.model.responses.subscription.SubscriptionSourceListResponseModel
-import com.haomins.data.model.responses.user.UserAuthResponseModel
+import com.haomins.model.remote.article.ArticleResponseModel
+import com.haomins.model.remote.article.ItemRefListResponseModel
+import com.haomins.model.remote.subscription.AddSourceResponseModel
+import com.haomins.model.remote.subscription.SubscriptionListResponseModel
+import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -43,12 +43,12 @@ interface TheOldReaderService {
      */
     @POST("accounts/ClientLogin")
     fun loginUser(
-            @Query("Email") userEmail: String,
-            @Query("Passwd") userPassword: String,
-            @Query("output") output: String = DEFAULT_OUTPUT_FORMAT,
-            @Query("service") service: String = DEFAULT_SERVICE_NAME,
-            @Query("accountType") accountType: String = DEFAULT_ACCOUNT_TYPE,
-            @Query("client") client: String = DEFAULT_CLIENT_NAME
+        @Query("Email") userEmail: String,
+        @Query("Passwd") userPassword: String,
+        @Query("output") output: String = DEFAULT_OUTPUT_FORMAT,
+        @Query("service") service: String = DEFAULT_SERVICE_NAME,
+        @Query("accountType") accountType: String = DEFAULT_ACCOUNT_TYPE,
+        @Query("client") client: String = DEFAULT_CLIENT_NAME
     ): Single<UserAuthResponseModel>
 
     /**
@@ -63,9 +63,9 @@ interface TheOldReaderService {
      */
     @GET(BASE_API + "subscription/list")
     fun loadSubscriptionSourceList(
-            @Header("Authorization") headerAuthValue: String,
-            @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
-    ): Single<SubscriptionSourceListResponseModel>
+        @Header("Authorization") headerAuthValue: String,
+        @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
+    ): Single<SubscriptionListResponseModel>
 
     /**
      * Get article refs based on feed (id)
@@ -105,9 +105,9 @@ interface TheOldReaderService {
         @Query("n") articleAmount: String = DEFAULT_LOAD_ALL_ARTICLE_COUNT.toString(),
         @Query("c") continueLoad: String = EMPTY,
         @Query(
-                    encoded = true,
-                    value = "s"
-            ) allItemQuery: String = "user/-/state/com.google/reading-list",
+            encoded = true,
+            value = "s"
+        ) allItemQuery: String = "user/-/state/com.google/reading-list",
         @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ItemRefListResponseModel>
 
@@ -124,9 +124,9 @@ interface TheOldReaderService {
      */
     @GET(BASE_API + "stream/items/contents")
     fun loadArticleDetailsByRefId(
-            @Header("Authorization") headerAuthValue: String,
-            @Query("i") refItemId: String,
-            @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
+        @Header("Authorization") headerAuthValue: String,
+        @Query("i") refItemId: String,
+        @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<ArticleResponseModel>
 
     /**
@@ -141,8 +141,8 @@ interface TheOldReaderService {
      */
     @POST(BASE_API + "subscription/quickadd")
     fun addSubscription(
-            @Header("Authorization") headerAuthValue: String,
-            @Query("quickadd") quickAddSubscription: String,
-            @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
+        @Header("Authorization") headerAuthValue: String,
+        @Query("quickadd") quickAddSubscription: String,
+        @Query("output") output: String = DEFAULT_OUTPUT_FORMAT
     ): Single<AddSourceResponseModel>
 }

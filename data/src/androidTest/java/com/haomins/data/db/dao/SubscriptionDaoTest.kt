@@ -3,7 +3,7 @@ package com.haomins.data.db.dao
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import com.haomins.data.db.AppDatabase
-import com.haomins.data.model.entities.SubscriptionEntity
+import com.haomins.model.entity.SubscriptionEntity
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -24,20 +24,20 @@ class SubscriptionDaoTest {
         // Create dummy source list
         for (counter in 0 until 100) {
             subscriptionList.add(
-                    SubscriptionEntity(
-                            id = counter.toString(),
-                            title = (counter * 2).toString(),
-                            sortId = "sortId: $counter",
-                            firstItemMilSec = System.currentTimeMillis().toString(),
-                            url = "rss.$counter.com",
-                            htmlUrl = "www.$counter.com",
-                            iconUrl = "www.$counter.com/pic"
-                    )
+                SubscriptionEntity(
+                    id = counter.toString(),
+                    title = (counter * 2).toString(),
+                    sortId = "sortId: $counter",
+                    firstItemMilSec = System.currentTimeMillis().toString(),
+                    url = "rss.$counter.com",
+                    htmlUrl = "www.$counter.com",
+                    iconUrl = "www.$counter.com/pic"
+                )
             )
         }
 
         // Populate DB
-        appDatabase.subscriptionDao().insertAll(*subscriptionList.toTypedArray())
+        appDatabase.subscriptionDao().insertAll(subscriptionList).blockingAwait()
     }
 
     @After
@@ -49,16 +49,18 @@ class SubscriptionDaoTest {
     fun testInsertAll() {
         val originalSize = subscriptionDao.getAll().blockingGet().size
         subscriptionDao.insertAll(
+            listOf(
                 SubscriptionEntity(
-                        id = "100",
-                        title = (100 * 2).toString(),
-                        sortId = "sortId: 100",
-                        firstItemMilSec = System.currentTimeMillis().toString(),
-                        url = "rss.100.com",
-                        htmlUrl = "www.100.com",
-                        iconUrl = "www.100.com/pic"
+                    id = "100",
+                    title = (100 * 2).toString(),
+                    sortId = "sortId: 100",
+                    firstItemMilSec = System.currentTimeMillis().toString(),
+                    url = "rss.100.com",
+                    htmlUrl = "www.100.com",
+                    iconUrl = "www.100.com/pic"
                 )
-        )
+            )
+        ).blockingAwait()
         assertTrue(subscriptionDao.getAll().blockingGet().size > originalSize)
     }
 
@@ -66,17 +68,18 @@ class SubscriptionDaoTest {
     fun testInsertAllReplace() {
         val originalSize = subscriptionDao.getAll().blockingGet().size
         subscriptionDao.insertAll(
+            listOf(
                 SubscriptionEntity(
-                        id = "0",
-                        title = (99).toString(),
-                        sortId = "sortId: 99",
-                        firstItemMilSec = System.currentTimeMillis().toString(),
-                        url = "rss.99.com",
-                        htmlUrl = "www.99.com",
-                        iconUrl = "www.99.com/pic"
+                    id = "0",
+                    title = (99).toString(),
+                    sortId = "sortId: 99",
+                    firstItemMilSec = System.currentTimeMillis().toString(),
+                    url = "rss.99.com",
+                    htmlUrl = "www.99.com",
+                    iconUrl = "www.99.com/pic"
                 )
-        )
-
+            )
+        ).blockingAwait()
         // If after insert, the size is still the same, means replaced
         assertTrue(subscriptionDao.getAll().blockingGet().size == originalSize)
 
@@ -93,7 +96,7 @@ class SubscriptionDaoTest {
 
     @Test
     fun testClearTable() {
-        subscriptionDao.clearTable()
+        subscriptionDao.clearTable().subscribe()
         assertTrue(subscriptionDao.getAll().blockingGet().isEmpty())
     }
 }

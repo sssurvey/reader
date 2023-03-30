@@ -1,18 +1,24 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    id "kotlin-android-extensions"
     id "kotlin-kapt"
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
-    compileSdkVersion compiledSdkVersion
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
+    }
+
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.haomins.reader2"
         minSdkVersion 26
-        targetSdkVersion compiledSdkVersion
-        versionCode 12
-        versionName "0.3.2"
+        targetSdkVersion 33
+        versionCode 15
+        versionName "0.4.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -33,12 +39,15 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
 
     implementation project(':data')
-    implementation project(':domain')
     implementation project(':ui')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation appDependencies

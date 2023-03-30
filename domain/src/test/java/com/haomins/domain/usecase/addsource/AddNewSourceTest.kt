@@ -2,9 +2,9 @@ package com.haomins.domain.usecase.addsource
 
 import com.haomins.domain.TestSchedulers
 import com.haomins.domain.exception.ParamsShouldNotBeNullException
-import com.haomins.domain.model.responses.AddSourceResponseModel
-import com.haomins.domain.repositories.AddSourceRepositoryContract
+import com.haomins.domain.repositories.remote.AddSourceRemoteRepository
 import com.haomins.domain.usecase.UseCaseConstants.MEDIUM_RSS_FEED_BASE
+import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 class AddNewSourceTest {
 
     @Mock
-    lateinit var mockAddSourceRepositoryContract: AddSourceRepositoryContract
+    lateinit var mockAddSourceRemoteRepository: AddSourceRemoteRepository
 
     private val testExecutionScheduler = TestSchedulers.executionScheduler()
     private val testPostExecutionScheduler = TestSchedulers.postExecutionScheduler()
@@ -33,7 +33,7 @@ class AddNewSourceTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         addNewSource = AddNewSource(
-            addSourceRepositoryContract = mockAddSourceRepositoryContract,
+            addSourceRemoteRepository = mockAddSourceRemoteRepository,
             executionScheduler = testExecutionScheduler,
             postExecutionScheduler = testPostExecutionScheduler
         )
@@ -63,12 +63,14 @@ class AddNewSourceTest {
         val testSourceString = "123"
         val testAddSourceReturn = Single.just(
             AddSourceResponseModel(
-                result = 1,
+                query = "",
+                streamId = "",
+                numResults = 1,
                 error = "test error"
             )
         )
 
-        `when`(mockAddSourceRepositoryContract.addSource(testSourceString))
+        `when`(mockAddSourceRemoteRepository.addSource(testSourceString))
             .thenReturn(testAddSourceReturn)
 
         addNewSource
@@ -80,7 +82,7 @@ class AddNewSourceTest {
         (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
         (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
 
-        verify(mockAddSourceRepositoryContract, Times(1)).addSource(testSourceString)
+        verify(mockAddSourceRemoteRepository, Times(1)).addSource(testSourceString)
 
         testObserver.assertComplete()
         assertTrue(
@@ -97,12 +99,14 @@ class AddNewSourceTest {
         val mediumSourceValidator = MEDIUM_RSS_FEED_BASE + testSourceString
         val testAddSourceReturn = Single.just(
             AddSourceResponseModel(
-                result = 1,
+                query = "",
+                streamId = "",
+                numResults = 1,
                 error = "test error"
             )
         )
 
-        `when`(mockAddSourceRepositoryContract.addSource(mediumSourceValidator))
+        `when`(mockAddSourceRemoteRepository.addSource(mediumSourceValidator))
             .thenReturn(testAddSourceReturn)
 
         addNewSource
@@ -114,7 +118,7 @@ class AddNewSourceTest {
         (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
         (testPostExecutionScheduler.scheduler as TestScheduler).advanceTimeBy(1, TimeUnit.SECONDS)
 
-        verify(mockAddSourceRepositoryContract, Times(1)).addSource(mediumSourceValidator)
+        verify(mockAddSourceRemoteRepository, Times(1)).addSource(mediumSourceValidator)
 
         testObserver.assertComplete()
         assertTrue(
