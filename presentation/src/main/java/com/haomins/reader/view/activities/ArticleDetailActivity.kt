@@ -6,6 +6,7 @@ import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.haomins.reader.databinding.ActivityArticleDetailBinding
 import com.haomins.reader.utils.slideInAnimation
 import com.haomins.reader.utils.slideOutAnimation
@@ -70,6 +71,15 @@ class ArticleDetailActivity : AppCompatActivity() {
             )
             binding.articleDetailViewPager.adapter = adapter
             binding.articleDetailViewPager.setCurrentItem(currentPosition, false)
+            binding.articleDetailViewPager.registerOnPageChangeCallback(
+                object : OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        currentPosition = position
+                        Log.d(TAG, "current position is $currentPosition")
+                        super.onPageSelected(position)
+                    }
+                }
+            )
         }
     }
 
