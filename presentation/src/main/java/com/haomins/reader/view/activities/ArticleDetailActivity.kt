@@ -1,6 +1,8 @@
 package com.haomins.reader.view.activities
 
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -15,8 +17,16 @@ class ArticleDetailActivity : AppCompatActivity() {
 
     companion object {
         const val ARTICLE_ITEM_ID = "ARTICLE_ITEM_ID"
+        private const val TAG = "ArticleDetailActivity"
     }
 
+    private var currentPosition: Int = -1
+    private val articleIdArray by lazy {
+        intent.getStringArrayExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
+    }
+    private val articleId by lazy {
+        intent.getStringExtra(ArticleListActivity.ARTICLE_ITEM_ID)
+    }
     private lateinit var binding: ActivityArticleDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +41,29 @@ class ArticleDetailActivity : AppCompatActivity() {
         slideOutAnimation()
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        Log.d(TAG, "onKeyDown :: keyCode is $keyCode, view pager position is $currentPosition")
+        when (keyCode) {
+            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                currentPosition += 1
+                binding.articleDetailViewPager.setCurrentItem(currentPosition, true)
+            }
+            KeyEvent.KEYCODE_VOLUME_UP -> {
+                if (currentPosition > 0) {
+                    currentPosition -= 1
+                    binding.articleDetailViewPager.setCurrentItem(currentPosition, true)
+                }
+            }
+            else -> {
+                super.onKeyDown(keyCode, event)
+            }
+        }
+        return true
+    }
+
     private fun initViewPager() {
-        val articleId = intent.getStringExtra(ArticleListActivity.ARTICLE_ITEM_ID)
-        val articleIdArray = intent.getStringArrayExtra(ArticleListActivity.ARTICLE_ITEM_ID_ARRAY)
         articleIdArray?.let {
-            val currentPosition = articleIdArray.indexOf(articleId)
+            currentPosition = it.indexOf(articleId)
             val adapter = ArticleDetailFragmentAdapter(
                 this,
                 it
