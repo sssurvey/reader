@@ -119,15 +119,15 @@ class ArticleDetailFragment : Fragment() {
     }
 
     private fun checkDarkModeSupport() {
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)
             && articleDetailViewModel.isDarkModeEnabled()
         ) {
             context?.getColor(R.color.default_background)?.let {
                 binding.articleDetailWebView.setBackgroundColor(it)
             }
-            WebSettingsCompat.setForceDark(
+            WebSettingsCompat.setAlgorithmicDarkeningAllowed(
                 binding.articleDetailWebView.settings,
-                WebSettingsCompat.FORCE_DARK_ON
+                true
             )
         }
     }
