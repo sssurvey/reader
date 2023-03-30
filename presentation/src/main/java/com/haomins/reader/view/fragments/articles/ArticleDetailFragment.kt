@@ -12,6 +12,7 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.webkit.ServiceWorkerWebSettingsCompat.CacheMode
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.haomins.reader.R
@@ -111,7 +112,7 @@ class ArticleDetailFragment : Fragment() {
             articleDetailWebView.settings.apply {
                 domStorageEnabled = true
                 loadsImagesAutomatically = true
-                setAppCacheEnabled(true)
+                cacheMode = WebSettings.LOAD_DEFAULT
                 mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             }
         }

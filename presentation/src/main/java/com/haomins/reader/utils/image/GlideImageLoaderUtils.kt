@@ -63,7 +63,7 @@ class GlideImageLoaderUtils @Inject constructor(
     }
 
     companion object {
-        internal const val THREAD_COUNT = 1
+        internal const val THREAD_COUNT = 4
     }
 
 }

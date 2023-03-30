@@ -9,8 +9,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
 import com.haomins.reader.databinding.ActivityMainBinding
 import com.haomins.reader.utils.delayedUiOperation
-import com.haomins.reader.view.fragments.articles.ArticleListFragment
-import com.haomins.reader.view.fragments.articles.ArticleListFragment.Companion.LOAD_MODE_KEY
+import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_MODE_KEY
 import com.haomins.reader.view.fragments.settings.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SubscriptionListFragment
@@ -39,8 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     fun startArticleListActivity(feedId: String) {
         Intent(this, ArticleListActivity::class.java).apply {
-            putExtra(LOAD_MODE_KEY, ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID)
-            putExtra(ArticleListFragment.ArticleListViewMode.LOAD_BY_FEED_ID.key, feedId)
+            putExtra(LOAD_MODE_KEY, ArticleListActivity.LoadMode.LOAD_BY_FEED)
+            putExtra(ArticleListActivity.LoadMode.LOAD_BY_FEED.key, feedId)
         }.let {
             startActivity(it)
         }
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     fun startArticleListActivityForAllItems() {
         val intent = Intent(this, ArticleListActivity::class.java).apply {
-            putExtra(LOAD_MODE_KEY, ArticleListFragment.ArticleListViewMode.LOAD_ALL)
+            putExtra(LOAD_MODE_KEY, ArticleListActivity.LoadMode.LOAD_ALL)
         }
         startActivity(intent)
     }

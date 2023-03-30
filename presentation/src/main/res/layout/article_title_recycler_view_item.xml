@@ -35,6 +35,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_layout_margin"
+        android:lines="@integer/articleTitleMaxLines"
+        android:maxLines="@integer/articleTitleMaxLines"
         android:textSize="@dimen/reader_article_item_title_font_size"
         app:layout_constraintBottom_toTopOf="@id/article_posted_time"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,10 +49,11 @@
         style="@style/ReaderArticlePostTimeTextViewStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_layout_margin"
+        android:textAlignment="viewEnd"
         android:textSize="@dimen/footnote_font_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/article_title"
         app:layout_constraintTop_toBottomOf="@+id/article_title"
         tools:text="2 hours" />
 

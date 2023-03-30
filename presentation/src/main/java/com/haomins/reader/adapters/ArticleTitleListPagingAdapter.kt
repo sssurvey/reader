@@ -1,33 +1,30 @@
 package com.haomins.reader.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.haomins.data.util.DateUtils
 import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.databinding.ArticleTitleRecyclerViewItemBinding
 
-class ArticleTitleListAdapter(
-    private val articleTitleListUiItems: List<ArticleEntity>,
+class ArticleTitleListPagingAdapter(
     private val previewImageLoader: (ImageView, String) -> Unit,
+    private val onArticleClicked: (String) -> Unit,
     private val dateUtils: DateUtils,
-    private val articleTitleListOnClickListener: ArticleTitleListOnClickListener
-) :
-    RecyclerView.Adapter<ArticleTitleListAdapter.CustomViewHolder>() {
-
-    interface ArticleTitleListOnClickListener {
-
-        fun onArticleClicked(articleItemId: String)
-
-    }
+) : PagingDataAdapter<ArticleEntity, ArticleTitleListPagingAdapter.CustomViewHolder>(
+    diffCallback = ARTICLE_ENTITY_COMPARATOR
+) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ArticleTitleListAdapter.CustomViewHolder {
+    ): CustomViewHolder {
         val itemBinding = ArticleTitleRecyclerViewItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -36,12 +33,10 @@ class ArticleTitleListAdapter(
         return CustomViewHolder(itemBinding)
     }
 
-    override fun getItemCount(): Int {
-        return articleTitleListUiItems.size
-    }
-
-    override fun onBindViewHolder(holder: ArticleTitleListAdapter.CustomViewHolder, position: Int) {
-        holder.bind(articleTitleListUiItems[position])
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
 
     inner class CustomViewHolder(val binding: ArticleTitleRecyclerViewItemBinding) :
@@ -63,15 +58,33 @@ class ArticleTitleListAdapter(
             with(articleEntity) {
                 articleTitleTextView.text = itemTitle
                 articlePostedTimeTextView.text = dateUtils.howLongAgo(itemPublishedMillisecond)
-                previewImageLoader.invoke(
-                    articlePreviewImageView,
-                    previewImageUrl
-                )
+
+                // config image view
+                run {
+                    if (previewImageUrl.isNotEmpty()) {
+                        previewImageLoader.invoke(
+                            articlePreviewImageView,
+                            previewImageUrl
+                        )
+                    } else {
+                        articlePreviewImageView.visibility = View.INVISIBLE
+                    }
+                }
+
                 itemRootView.setOnClickListener {
-                    articleTitleListOnClickListener.onArticleClicked(itemId)
+                    onArticleClicked.invoke(itemId)
                 }
             }
         }
     }
 
+    companion object {
+        private val ARTICLE_ENTITY_COMPARATOR = object : DiffUtil.ItemCallback<ArticleEntity>() {
+            override fun areItemsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity) =
+                oldItem.itemId == newItem.itemId
+
+            override fun areContentsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity) =
+                oldItem == newItem
+        }
+    }
 }

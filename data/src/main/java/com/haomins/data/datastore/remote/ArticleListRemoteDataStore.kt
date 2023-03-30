@@ -1,7 +1,6 @@
 package com.haomins.data.datastore.remote
 
 import android.content.SharedPreferences
-import android.util.Log
 import com.haomins.data.service.TheOldReaderService
 import com.haomins.data.util.getString
 import com.haomins.domain.repositories.remote.ArticleListRemoteRepository
@@ -20,87 +19,61 @@ class ArticleListRemoteDataStore @Inject constructor(
         const val TAG = "ArticleListRemoteDataStore"
     }
 
-    private var continueId = ""
     private val headerAuthValue by lazy {
         (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
                 + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
-    override fun loadAllArticleItems(): Single<List<ArticleResponseModel>> {
-        return loadAllArticleItemsFromRemote()
+    override fun loadAllArticleItemsFromRemote(
+        continueId: String
+    ): Single<Pair<String, List<ArticleResponseModel>>> {
+        return theOldReaderService.loadAllArticles(
+            headerAuthValue = headerAuthValue,
+            continueLoad = continueId
+        ).flatMap { itemRefListResponse ->
+
+            val newContinueId = itemRefListResponse.continuation ?: ""
+
+            Observable
+                .fromIterable(itemRefListResponse.itemRefs)
+                .flatMapSingle { itemRef ->
+                    theOldReaderService.loadArticleDetailsByRefId(
+                        headerAuthValue = headerAuthValue,
+                        refItemId = itemRef.id
+                    )
+                }
+                .toList()
+                .flatMap {
+                    Single.just(newContinueId to it)
+                }
+        }
     }
 
-    override fun continueLoadAllArticleItems(): Single<List<ArticleResponseModel>> {
-        return loadAllArticleItemsFromRemote(true)
-    }
-
-    override fun loadArticleAllItems(feedId: String): Single<List<ArticleResponseModel>> {
-        return loadAllArticleItemsFromRemoteByFeedId(feedId)
-    }
-
-    override fun continueLoadAllArticleItems(feedId: String): Single<List<ArticleResponseModel>> {
-        return loadAllArticleItemsFromRemoteByFeedId(feedId, true)
-    }
-
-    private fun loadAllArticleItemsFromRemoteByFeedId(
+    override fun loadAllArticleItemsFromRemoteWithFeed(
         feedId: String,
-        continueLoad: Boolean = false
-    ): Single<List<ArticleResponseModel>> {
-        return if (continueLoad) {
-            theOldReaderService.loadArticleListByFeed(
-                headerAuthValue = headerAuthValue,
-                feedId = feedId,
-                continueLoad = continueId
-            ).doOnSuccess {
-                continueId = it.continuation
-            }
-        } else {
-            theOldReaderService.loadArticleListByFeed(
-                headerAuthValue = headerAuthValue,
-                feedId = feedId
-            )
-        }
-            .doOnError(::onLoadError)
-            .flatMapObservable {
-                Observable
-                    .fromIterable(it.itemRefs)
-                    .flatMapSingle { itemRef ->
-                        theOldReaderService.loadArticleDetailsByRefId(
-                            headerAuthValue = headerAuthValue,
-                            refItemId = itemRef.id
-                        )
-                    }
-            }
-            .toList()
-    }
+        continueId: String
+    ): Single<Pair<String, List<ArticleResponseModel>>> {
+        return theOldReaderService.loadArticleListByFeed(
+            headerAuthValue = headerAuthValue,
+            feedId = feedId,
+            continueLoad = continueId
+        ).flatMap { itemRefListResponse ->
 
-    private fun loadAllArticleItemsFromRemote(continueLoad: Boolean = false): Single<List<ArticleResponseModel>> {
-        return if (continueLoad) {
-            theOldReaderService.loadAllArticles(
-                headerAuthValue = headerAuthValue,
-                continueLoad = continueId
-            ).doOnSuccess {
-                continueId = it.continuation
-            }
-        } else {
-            theOldReaderService.loadAllArticles(headerAuthValue = headerAuthValue)
-        }
-            .doOnError(::onLoadError)
-            .flatMapObservable {
-                Observable
-                    .fromIterable(it.itemRefs)
-                    .flatMapSingle { itemRef ->
-                        theOldReaderService.loadArticleDetailsByRefId(
-                            headerAuthValue = headerAuthValue,
-                            refItemId = itemRef.id
-                        )
-                    }
-            }
-            .toList()
-    }
+            val newContinueId = itemRefListResponse.continuation ?: ""
 
-    private fun onLoadError(e: Throwable) {
-        Log.d(TAG, "onError :: ${e.printStackTrace()}")
+            Observable
+                .fromIterable(itemRefListResponse.itemRefs)
+                .flatMapSingle { itemRef ->
+                    theOldReaderService.loadArticleDetailsByRefId(
+                        headerAuthValue = headerAuthValue,
+                        refItemId = itemRef.id
+                    )
+                }
+                .toList()
+                .flatMap {
+                    Single.just(newContinueId to it)
+                }
+        }
     }
 
 }
