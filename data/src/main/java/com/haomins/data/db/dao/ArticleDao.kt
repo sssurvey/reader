@@ -13,7 +13,7 @@ import io.reactivex.Single
 interface ArticleDao {
 
     @Query("DELETE FROM article_entity")
-    fun clearTable()
+    fun clearTable(): Completable
 
     @Query("SELECT * FROM article_entity WHERE item_id == :itemId")
     fun selectArticleByItemId(itemId: String): Single<ArticleEntity>

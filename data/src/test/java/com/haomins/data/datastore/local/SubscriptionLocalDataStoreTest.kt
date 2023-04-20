@@ -44,6 +44,13 @@ class SubscriptionLocalDataStoreTest {
         assert(list.size == testList.size)
     }
 
+    @Test
+    fun `clearAllSubscriptions should invoke clearTable on dao`() {
+        `when`(subscriptionDao.clearTable()).thenReturn(Completable.complete())
+        subscriptionLocalDataStore.clearAllSubscriptions().blockingAwait()
+        verify(subscriptionDao, times(1)).clearTable()
+    }
+
     private fun generateSubscriptionListEntity(): List<com.haomins.model.entity.SubscriptionEntity> {
         val subscriptionEntityList =
             mutableListOf<com.haomins.model.entity.SubscriptionEntity>()

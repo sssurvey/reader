@@ -13,6 +13,10 @@ class SubscriptionLocalDataStore @Inject constructor(
     private val subscriptionDao: SubscriptionDao
 ) : SubscriptionLocalRepository {
 
+    override fun clearAllSubscriptions(): Completable {
+        return subscriptionDao.clearTable()
+    }
+
     override fun saveAllSubscriptionToLocal(sources: List<SubscriptionEntity>): Completable {
         return subscriptionDao.insertAll(sources)
     }

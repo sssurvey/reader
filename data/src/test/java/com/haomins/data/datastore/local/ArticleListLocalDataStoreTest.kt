@@ -36,6 +36,7 @@ class ArticleListLocalDataStoreTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         `when`(articleDao.insert(mockEntities)).thenReturn(Completable.complete())
+        `when`(articleDao.clearTable()).thenReturn(Completable.complete())
         articleListLocalDataStore = ArticleListLocalDataStore(
             articleDao
         )
@@ -62,5 +63,11 @@ class ArticleListLocalDataStoreTest {
     fun `loadAllArticlesFromFeed should invoke correct classes`() {
         articleListLocalDataStore.loadAllArticlesFromFeed("test")
         verify(articleDao, times(1)).getAllFromFeed("test")
+    }
+
+    @Test
+    fun `clear all articles should invoke clear table on Dao`() {
+        articleListLocalDataStore.clearAllArticles().blockingAwait()
+        verify(articleDao, times(1)).clearTable()
     }
 }
