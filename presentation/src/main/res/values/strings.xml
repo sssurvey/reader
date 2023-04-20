@@ -25,7 +25,8 @@
     <string name="dismiss">Dismiss</string>
     <string name="snackbar_feed_add_success">Successfully added feed</string>
     <string name="about_app_version_desc">Application version</string>
-    <string name="clear_cache_cache_size_desc">Current cache size</string>
+    <string name="clear_cache_cache_size_desc">Current database size</string>
+    <string name="clear_cache_clear_cache_desc">Clear database</string>
     <string name="email_feed_back_greet_body">Hi there, </string>
     <string name="email_feed_back_greet_subject">Reader: I would like to suggest some changes/bug to the app</string>
     <string name="email_client_choose">Send Feedback</string>

@@ -19,13 +19,21 @@ class ClearCacheFragment: PreferenceFragmentCompat() {
     }
 
     private fun configPreferences() {
-        clearCacheViewModel.getLocalDataSize {
-            findPreference<Preference>(CACHE_SIZE)?.summary = "$it MB"
+        refreshLocalDataSize()
+        findPreference<Preference>(CLEAR_CACHE)?.setOnPreferenceClickListener {
+            clearCacheViewModel.clearLocalData { refreshLocalDataSize() }
+            true
         }
+    }
+
+    private fun refreshLocalDataSize() {
+        clearCacheViewModel.getLocalDataSize { findPreference<Preference>(CACHE_SIZE)?.summary = "$it $DATA_UNIT" }
     }
 
     companion object {
         const val TAG = "ClearCacheFragment"
         private const val CACHE_SIZE = "cache_size"
+        private const val CLEAR_CACHE = "clear_cache"
+        private const val DATA_UNIT = "MB"
     }
 }

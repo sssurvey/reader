@@ -15,10 +15,8 @@ class AppCacheSizeDataStore @Inject constructor(
         return Single.fromCallable {
             var size = 0L
             context.filesDir.parentFile?.listFiles()?.forEach {
-                if (it.isDirectory) {
+                if (it.isDirectory && it.name.contains(DATABASE_FOLDER_NAME)) {
                     size += getDirSize(it)
-                } else {
-                    size += it.length()
                 }
             }
             size / (1024 * 1024)
@@ -34,6 +32,10 @@ class AppCacheSizeDataStore @Inject constructor(
         }
 
         return size
+    }
+
+    companion object {
+        private const val DATABASE_FOLDER_NAME = "database"
     }
 
 }
