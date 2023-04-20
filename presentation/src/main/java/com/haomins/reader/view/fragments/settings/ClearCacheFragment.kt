@@ -1,14 +1,17 @@
 package com.haomins.reader.view.fragments.settings
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.haomins.reader.R
+import com.haomins.reader.viewModels.ClearCacheViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-//TODO: complete feature
 @AndroidEntryPoint
 class ClearCacheFragment: PreferenceFragmentCompat() {
+
+    private val clearCacheViewModel by viewModels<ClearCacheViewModel>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.fragment_clear_cache, rootKey)
@@ -16,7 +19,9 @@ class ClearCacheFragment: PreferenceFragmentCompat() {
     }
 
     private fun configPreferences() {
-        findPreference<Preference>(CACHE_SIZE)?.summary = "2.5 MB"
+        clearCacheViewModel.getLocalDataSize {
+            findPreference<Preference>(CACHE_SIZE)?.summary = "$it MB"
+        }
     }
 
     companion object {
