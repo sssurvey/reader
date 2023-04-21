@@ -6,10 +6,11 @@
     android:layout_height="match_parent">
 
     <Preference
+        android:selectable="false"
         app:iconSpaceReserved="false"
         app:key="cache_size"
         app:title="@string/clear_cache_cache_size_desc"
-        tools:summary="20 MB"/>
+        tools:summary="20 MB" />
 
     <Preference
         app:iconSpaceReserved="false"

@@ -2,18 +2,17 @@ package com.haomins.reader.viewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.usecase.util.ClearLocalData
+import com.haomins.domain.usecase.util.ClearAndGetLocalDataSize
 import com.haomins.domain.usecase.util.GetLocalDataSize
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import javax.inject.Inject
 
 @HiltViewModel
 class ClearCacheViewModel @Inject constructor(
     private val getLocalDataSize: GetLocalDataSize,
-    private val clearLocalData: ClearLocalData
-): ViewModel() {
+    private val clearAndGetLocalDataSize: ClearAndGetLocalDataSize
+) : ViewModel() {
 
     fun getLocalDataSize(thenDo: (Long) -> Unit) {
         getLocalDataSize.execute(
@@ -30,23 +29,25 @@ class ClearCacheViewModel @Inject constructor(
         )
     }
 
-    fun clearLocalData(thenDo: () -> Unit) {
-        clearLocalData.execute(object : DisposableCompletableObserver() {
-            override fun onComplete() {
-                Log.d(TAG, "clearLocalData :: onComplete}")
-                thenDo.invoke()
-            }
+    fun clearLocalDataAndCalculateSize(thenDo: (Long) -> Unit) {
+        clearAndGetLocalDataSize.execute(
+            object : DisposableSingleObserver<Long>() {
+                override fun onSuccess(t: Long) {
+                    Log.d(TAG, "clearAndGetLocalDataSize :: onComplete}")
+                    thenDo.invoke(t)
+                }
 
-            override fun onError(e: Throwable) {
-                Log.e(TAG, "clearLocalData :: onError -> ${e.printStackTrace()}")
+                override fun onError(e: Throwable) {
+                    Log.e(TAG, "clearAndGetLocalDataSize :: onError -> ${e.printStackTrace()}")
+                }
             }
-        })
+        )
     }
 
     override fun onCleared() {
         super.onCleared()
         getLocalDataSize.dispose()
-        clearLocalData.dispose()
+        clearAndGetLocalDataSize.dispose()
     }
 
     companion object {
