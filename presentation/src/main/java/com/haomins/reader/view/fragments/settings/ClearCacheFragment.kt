@@ -19,13 +19,17 @@ class ClearCacheFragment: PreferenceFragmentCompat() {
     }
 
     private fun configPreferences() {
-        clearCacheViewModel.getLocalDataSize {
-            updateLocalDataSizeSummary(it)
-        }
+        configCurrentDatabaseSizePreference()
+        configClearCachePreference()
+    }
+
+    private fun configCurrentDatabaseSizePreference() {
+        clearCacheViewModel.getLocalDataSize { updateLocalDataSizeSummary(it) }
+    }
+
+    private fun configClearCachePreference() {
         findPreference<Preference>(CLEAR_CACHE)?.setOnPreferenceClickListener {
-            clearCacheViewModel.clearLocalDataAndCalculateSize {
-                updateLocalDataSizeSummary(it)
-            }
+            clearCacheViewModel.clearLocalDataAndCalculateSize { updateLocalDataSizeSummary(it) }
             true
         }
     }

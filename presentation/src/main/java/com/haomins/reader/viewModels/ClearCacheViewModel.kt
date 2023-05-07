@@ -33,7 +33,7 @@ class ClearCacheViewModel @Inject constructor(
         clearAndGetLocalDataSize.execute(
             object : DisposableSingleObserver<Long>() {
                 override fun onSuccess(t: Long) {
-                    Log.d(TAG, "clearAndGetLocalDataSize :: onComplete}")
+                    Log.d(TAG, "clearAndGetLocalDataSize :: onSuccess")
                     thenDo.invoke(t)
                 }
 

@@ -10,11 +10,12 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 @HighLevelUseCase(
-    uses = [ClearLocalArticles::class, ClearLocalSubscriptions::class]
+    uses = [ClearLocalArticles::class, ClearLocalSubscriptions::class, ClearCacheData::class]
 )
 class ClearLocalData @Inject constructor(
     private val clearLocalArticles: ClearLocalArticles,
     private val clearLocalSubscriptions: ClearLocalSubscriptions,
+    private val clearCacheData: ClearCacheData,
     executionScheduler: ExecutionScheduler,
     postExecutionScheduler: PostExecutionScheduler
 ) : CompletableUseCase<Unit>(
@@ -28,6 +29,7 @@ class ClearLocalData @Inject constructor(
             .andThen(
                 clearLocalSubscriptions.buildUseCaseCompletable(Unit)
             )
+            .andThen(clearCacheData.buildUseCaseCompletable(Unit))
     }
 
 }
