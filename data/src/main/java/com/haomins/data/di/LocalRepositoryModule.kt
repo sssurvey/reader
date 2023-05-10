@@ -43,4 +43,8 @@ interface LocalRepositoryModule {
     fun bindArticleListLocalRepository(articleListLocalDataStore: ArticleListLocalDataStore):
             ArticleListLocalRepository
 
+    @Binds
+    @ViewModelScoped
+    fun bindAppCacheSizeRepository(appCacheDataStore: AppCacheDataStore):
+            AppCacheSizeRepository
 }

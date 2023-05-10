@@ -20,6 +20,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         private const val PREFERENCE_ABOUT = "about"
         private const val PREFERENCE_FEEDBACK = "feedback"
         private const val PREFERENCE_DISCLOSURES = "disclosures"
+        private const val PREFERENCE_CLEAR_CACHE = "clear_cache"
         private const val INTENT_EMAIL_TYPE = "message/rfc822"
     }
 
@@ -40,6 +41,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             PREFERENCE_ABOUT -> showAboutFragment()
             PREFERENCE_DISCLOSURES -> showDisclosuresFragment()
             PREFERENCE_FEEDBACK -> showEmailApp()
+            PREFERENCE_CLEAR_CACHE -> showClearCacheFragment()
             else -> Unit
         }
         return super.onPreferenceTreeClick(preference)
@@ -51,6 +53,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun showDisclosuresFragment() {
         (activity as? SettingsActivity)?.showDisclosureFragment()
+    }
+
+    private fun showClearCacheFragment() {
+        (activity as? SettingsActivity)?.showClearCacheFragment()
     }
 
     private fun showEmailApp() {

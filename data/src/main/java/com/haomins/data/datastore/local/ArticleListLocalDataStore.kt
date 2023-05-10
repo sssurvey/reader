@@ -11,6 +11,10 @@ class ArticleListLocalDataStore @Inject constructor(
     private val articleDao: ArticleDao
 ) : ArticleListLocalRepository {
 
+    override fun clearAllArticles(): Completable {
+        return articleDao.clearTable()
+    }
+
     override fun saveAllArticles(articleEntities: List<ArticleEntity>): Completable {
         return articleDao.insert(
             articleEntities
