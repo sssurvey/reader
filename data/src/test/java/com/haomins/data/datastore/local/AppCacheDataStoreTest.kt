@@ -77,7 +77,7 @@ class AppCacheDataStoreTest {
     }
 
     @Test
-    fun clearCache() {
+    fun `should clearCache`() {
         `when`(mockContextUtils.getCacheDir()).thenReturn(
             cacheData
         )
