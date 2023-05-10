@@ -19,7 +19,7 @@ class AppCacheDataStore @Inject constructor(
                 size += if (it.isDirectory) getDirSize(it)
                 else it.length()
             }
-            size / (1024 * 1024)
+            size / MB_OFFSET
         }.doOnSuccess {
             Log.d(TAG, "current cache size is -> $it MB")
         }
@@ -57,5 +57,6 @@ class AppCacheDataStore @Inject constructor(
 
     companion object {
         private const val TAG = "AppCacheSizeDataStore"
+        private const val MB_OFFSET = 1024 * 1024
     }
 }
