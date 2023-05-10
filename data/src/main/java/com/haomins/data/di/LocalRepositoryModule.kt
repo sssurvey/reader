@@ -45,6 +45,6 @@ interface LocalRepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindAppCacheSizeRepository(appCacheSizeDataStore: AppCacheSizeDataStore):
+    fun bindAppCacheSizeRepository(appCacheDataStore: AppCacheDataStore):
             AppCacheSizeRepository
 }

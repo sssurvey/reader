@@ -9,7 +9,7 @@ import io.reactivex.Single
 import java.io.File
 import javax.inject.Inject
 
-class AppCacheSizeDataStore @Inject constructor(
+class AppCacheDataStore @Inject constructor(
     @ApplicationContext private val context: Context
 ) : AppCacheSizeRepository {
 

@@ -6,7 +6,7 @@ import org.junit.Before
 import org.junit.Test
 
 //TODO: 
-class AppCacheSizeDataStoreTest {
+class AppCacheDataStoreTest {
 
     @Before
     fun setUp() {
