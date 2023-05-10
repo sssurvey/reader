@@ -15,11 +15,8 @@ class AppCacheDataStore @Inject constructor(
     override fun getCurrentCacheSize(): Single<Long> {
         return Single.fromCallable {
             var size = 0L
-            contextUtils.getCacheDir().listFiles()?.forEach {
-                size += if (it.isDirectory) getDirSize(it)
-                else it.length()
-            }
-            size / MB_OFFSET
+            size += getDirSize(contextUtils.getCacheDir())
+            size / BYTES_IN_MEGABYTE
         }.doOnSuccess {
             Log.d(TAG, "current cache size is -> $it MB")
         }
@@ -27,18 +24,14 @@ class AppCacheDataStore @Inject constructor(
 
     override fun clearCache(): Completable {
         return Completable.fromCallable {
-            contextUtils.getCacheDir().listFiles()?.forEach {
-                if (it.isDirectory) deleteDir(it)
-                else deleteFile(it)
-            }
+            deleteDir(contextUtils.getCacheDir())
         }
     }
 
     private fun getDirSize(file: File): Long {
         var size = 0L
         file.listFiles()?.forEach {
-            size += if (it.isDirectory) getDirSize(it)
-            else it.length()
+            size += if (it.isDirectory) getDirSize(it) else it.length()
         }
         return size
     }
@@ -57,6 +50,6 @@ class AppCacheDataStore @Inject constructor(
 
     companion object {
         private const val TAG = "AppCacheSizeDataStore"
-        private const val MB_OFFSET = 1024 * 1024
+        private const val BYTES_IN_MEGABYTE = 1024 * 1024
     }
 }
