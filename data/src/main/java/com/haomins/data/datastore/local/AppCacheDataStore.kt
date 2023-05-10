@@ -1,22 +1,21 @@
 package com.haomins.data.datastore.local
 
-import android.content.Context
 import android.util.Log
+import com.haomins.data.util.ContextUtils
 import com.haomins.domain.repositories.local.AppCacheSizeRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.io.File
 import javax.inject.Inject
 
 class AppCacheDataStore @Inject constructor(
-    @ApplicationContext private val context: Context
+    private val contextUtils: ContextUtils
 ) : AppCacheSizeRepository {
 
     override fun getCurrentCacheSize(): Single<Long> {
         return Single.fromCallable {
             var size = 0L
-            context.cacheDir.listFiles()?.forEach {
+            contextUtils.getCacheDir().listFiles()?.forEach {
                 size += if (it.isDirectory) getDirSize(it)
                 else it.length()
             }
@@ -28,7 +27,7 @@ class AppCacheDataStore @Inject constructor(
 
     override fun clearCache(): Completable {
         return Completable.fromCallable {
-            context.cacheDir.listFiles()?.forEach {
+            contextUtils.getCacheDir().listFiles()?.forEach {
                 if (it.isDirectory) deleteDir(it)
                 else deleteFile(it)
             }
