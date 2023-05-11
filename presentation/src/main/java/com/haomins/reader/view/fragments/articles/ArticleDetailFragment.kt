@@ -1,11 +1,14 @@
 package com.haomins.reader.view.fragments.articles
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -80,6 +83,15 @@ class ArticleDetailFragment : Fragment() {
                 super.onPageFinished(view, url)
                 hideProgressBar()
             }
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                request: WebResourceRequest
+            ): Boolean {
+                launchExternalBrowser(request.url)
+                return true
+            }
+
         }
     }
 
@@ -162,6 +174,10 @@ class ArticleDetailFragment : Fragment() {
 
     private fun showProgressBar() {
         binding.topProgressBar.bottomLoadingProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun launchExternalBrowser(url: Uri) {
+        startActivity(Intent(Intent.ACTION_VIEW, url))
     }
 
 }
