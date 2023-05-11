@@ -24,6 +24,9 @@ class ClearLocalDataTest {
     @Mock
     lateinit var clearLocalSubscriptions: ClearLocalSubscriptions
 
+    @Mock
+    lateinit var clearCacheData: ClearCacheData
+
     private lateinit var clearLocalData: ClearLocalData
 
     @Before
@@ -32,6 +35,7 @@ class ClearLocalDataTest {
         clearLocalData = ClearLocalData(
             clearLocalArticles,
             clearLocalSubscriptions,
+            clearCacheData,
             object : ExecutionScheduler {
                 override val scheduler: Scheduler
                     get() = Schedulers.trampoline()
@@ -52,6 +56,7 @@ class ClearLocalDataTest {
     fun `clear data should clear all tables`() {
         `when`(clearLocalArticles.buildUseCaseCompletable(Unit)).thenReturn(Completable.complete())
         `when`(clearLocalSubscriptions.buildUseCaseCompletable(Unit)).thenReturn(Completable.complete())
+        `when`(clearCacheData.buildUseCaseCompletable(Unit)).thenReturn(Completable.complete())
         val testObserver = clearLocalData.buildUseCaseCompletable(Unit).test()
         testObserver.assertComplete()
         verify(clearLocalArticles, times(1)).buildUseCaseCompletable(Unit)
