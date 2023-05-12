@@ -1,3 +1,5 @@
+  GNU GENERAL PUBLIC LICENSE  
+
   The Reader App is an unofficial Android client application for the website www.theoldreader.com
   Copyright (C) 2023  Haomin Shi
 
