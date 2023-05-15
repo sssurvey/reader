@@ -11,14 +11,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/splash_screen"
-        style="@style/ReaderSplashArtStroke"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/imageViewDefaultPadding"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_the_old_reader_splash_art_logo"
-        android:visibility="visible"
-        tools:visibility="gone" />
 </FrameLayout>
