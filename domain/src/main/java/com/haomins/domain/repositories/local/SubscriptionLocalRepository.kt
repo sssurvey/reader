@@ -10,4 +10,5 @@ interface SubscriptionLocalRepository {
 
     fun loadAllSubscriptionFromLocal(): Single<List<SubscriptionEntity>>
 
+    fun clearAllSubscriptions(): Completable
 }

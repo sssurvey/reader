@@ -12,6 +12,7 @@
     <string name="desc_sign_up">By registering or signing in, you are agreeing to our Terms Of Service and Privacy Policy.</string>
     <string name="settings_option_dark_mode">Dark mode</string>
     <string name="settings_option_send_feedback">Send feedback</string>
+    <string name="settings_option_clear_cache">Clear cache</string>
     <string name="settings_option_about">About</string>
     <string name="medium_feed_input_hint">\@Author or Publications</string>
     <string name="add_medium_button">Add Medium</string>
@@ -24,10 +25,13 @@
     <string name="dismiss">Dismiss</string>
     <string name="snackbar_feed_add_success">Successfully added feed</string>
     <string name="about_app_version_desc">Application version</string>
+    <string name="clear_cache_cache_size_desc">Current database size</string>
+    <string name="clear_cache_clear_cache_desc">Clear cache</string>
     <string name="email_feed_back_greet_body">Hi there, </string>
     <string name="email_feed_back_greet_subject">Reader: I would like to suggest some changes/bug to the app</string>
     <string name="email_client_choose">Send Feedback</string>
     <string name="settings_option_send_feedback_summary">Report technical issues or suggest new features</string>
+    <string name="settings_option_clear_cache_summary">Clear local cache data for articles and subscriptions</string>
     <string name="settings_option_about_summary">See application version, build info, etc</string>
     <string name="settings_news_disclosures">DISCLOSURE</string>
     <string name="settings_news_disclosures_summary">News app category disclosures</string>

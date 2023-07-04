@@ -3,7 +3,6 @@ package com.haomins.domain.repositories.local
 import androidx.paging.PagingSource
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Completable
-import io.reactivex.Single
 
 interface ArticleListLocalRepository {
 
@@ -13,4 +12,5 @@ interface ArticleListLocalRepository {
 
     fun loadAllArticlesFromFeed(feedId: String): PagingSource<Int, ArticleEntity>
 
+    fun clearAllArticles(): Completable
 }

@@ -2,17 +2,15 @@ package com.haomins.reader.view.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.haomins.reader.R
 import com.haomins.reader.databinding.ActivityMainBinding
-import com.haomins.reader.utils.delayedUiOperation
 import com.haomins.reader.view.activities.ArticleListActivity.Companion.LOAD_MODE_KEY
-import com.haomins.reader.view.fragments.settings.DisclosureFragment
 import com.haomins.reader.view.fragments.LoginFragment
 import com.haomins.reader.view.fragments.SubscriptionListFragment
+import com.haomins.reader.view.fragments.settings.DisclosureFragment
 import com.haomins.reader.viewModels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         inflateView()
-        showSplashArt()
         handleLoginFragment()
     }
 
@@ -93,13 +90,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun showSplashArt() {
-        delayedUiOperation(
-            seconds = SPLASH_ART_COUNTDOWN_TIMER_SECONDS,
-            doAfterDelay = { binding.splashScreen.visibility = View.GONE }
-        )
-    }
-
     private fun handleOnBackPressed() {
         if (supportFragmentManager.backStackEntryCount >= 1) supportFragmentManager.popBackStack()
         else finish()
@@ -120,7 +110,4 @@ class MainActivity : AppCompatActivity() {
         ).commit()
     }
 
-    companion object {
-        private const val SPLASH_ART_COUNTDOWN_TIMER_SECONDS = 2L
-    }
 }
