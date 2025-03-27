@@ -12,18 +12,14 @@ android {
         exclude 'META-INF/LICENSE-notice.md'
     }
 
-    compileSdkVersion 33
+    compileSdk sharedTargetSdkVersion
     defaultConfig {
         applicationId "com.haomins.reader2"
-        minSdkVersion 26
-        targetSdkVersion 33
+        minSdkVersion sharedMinSdkVersion
+        targetSdkVersion sharedTargetSdkVersion
         versionCode 16
         versionName "0.4.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     buildTypes {
@@ -36,13 +32,18 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility sharedJavaVersion
+        targetCompatibility sharedJavaVersion
+    }
+
+    kotlinOptions {
+        jvmTarget = sharedJavaVersion.toString()
     }
 
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.haomins.reader'
 }
 
 dependencies {

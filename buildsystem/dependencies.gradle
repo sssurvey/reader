@@ -1,6 +1,6 @@
 ext {
 
-    def kotlin_version = "1.8.10"
+    def kotlin_version = "1.9.0"
     def androidx_lifecycle = "2.5.1"
     def android_arch_lifecycle_version = "1.1.1"
     def com_square_up_retrofit2_version = "2.4.0"
@@ -15,7 +15,7 @@ ext {
     def app_compat_version = "1.4.0"
     def constraint_layout_version = "2.1.2"
     def espresso_version = "3.4.0"
-    def hilt_version = "2.45"
+    def hilt_version = "2.50"
     def androidx_test_junit_version = "1.1.5"
     def paging_version = "3.1.1"
 
