@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk sharedTargetSdkVersion
     defaultConfig {
         applicationId "com.haomins.demo"
-        minSdkVersion 26
-        targetSdkVersion 33
+        minSdkVersion sharedMinSdkVersion
+        targetSdkVersion sharedTargetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -21,13 +21,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility sharedJavaVersion
+        targetCompatibility sharedJavaVersion
     }
+
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = sharedJavaVersion.toString()
     }
+
+    namespace 'com.haomins.demo'
 }
 
 dependencies {
