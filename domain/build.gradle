@@ -10,6 +10,6 @@ java {
 
 dependencies {
     implementation com.haomins.buildsrc.Dependencies.domainDependencies
-    api project(':model')
+    implementation project(':model')
     testImplementation com.haomins.buildsrc.Dependencies.domainTestImplementation
 }

@@ -47,9 +47,10 @@ android {
 }
 
 dependencies {
-
-    implementation project(':data')
     implementation project(':ui')
+    implementation project(':data')
+    implementation project(':model')
+    implementation project(':domain')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation com.haomins.buildsrc.Dependencies.appDependencies
     kapt com.haomins.buildsrc.Dependencies.appKaptDependencies
