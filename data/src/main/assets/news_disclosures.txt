@@ -10,12 +10,11 @@ Developer & Purpose:
 Reader App is developed and released by Haomin S. as a personal hobby project.
 It is provided as a free application under the Google Play Store News category.
 
-Privacy & Data Collection:
-	• Reader App does not collect, store, or use any personal user data.
-	• No logs or analytics are sent to the developer unless the user explicitly chooses to send feedback via email.
-	• The app does not access or store The Old Reader account credentials beyond what is necessary for functionality. User credentials are stored locally on the device via Shared Preferences and are never transmitted elsewhere.
+Privacy & Data Collection: [1] Reader App does not collect, store, or use any personal user
+ data. [2] No logs or analytics are sent to the developer unless the user explicitly chooses
+ to send feedback via email. [3] The app does not access or store The Old Reader account credentials
+ beyond what is necessary for functionality. User credentials are stored locally on the device via
+ Shared Preferences and are never transmitted elsewhere.
 
 For any questions or concerns, please visit the GitHub repository and open an issue under the Issues page.
- You can also email me at youngmobileachievers@gmail.com.
-
-updated on 2025.03.29
+ Updated on 2025.03.29
