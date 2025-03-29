@@ -5,32 +5,27 @@ import android.net.Uri
 import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
-import com.haomins.domain.usecase.logging.GetLogFiles
+import com.haomins.domain.usecase.logging.GetLogFilesThenSendEmail
+import com.haomins.model.LogReport
 import com.haomins.reader.utils.ui.DarkModeManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.observers.DisposableSingleObserver
-import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val darkModeManager: DarkModeManager,
-    private val getLogFiles: GetLogFiles,
+    private val getLogFilesThenSendEmail: GetLogFilesThenSendEmail,
     private val application: Application
 ) : ViewModel() {
 
     companion object {
         private const val TAG = "SettingsViewModel"
-        private const val FEEDBACK_EMAIL = "youngmobileachiever@gmail.com"
         private const val FILE_PROVIDER_AUTH = "com.haomins.fileprovider"
     }
 
     fun enableDarkMode() {
         darkModeManager.enableDarkMode()
-    }
-
-    fun getFeedbackEmail(): String {
-        return FEEDBACK_EMAIL
     }
 
     fun disableDarkMode() {
@@ -41,16 +36,17 @@ class SettingsViewModel @Inject constructor(
         return darkModeManager.checkIsCurrentDarkModeEnabled()
     }
 
-    fun getLogFileThenDo(action: (fileUri: Uri) -> Unit) {
-        getLogFiles.execute(
-            object : DisposableSingleObserver<File>() {
-                override fun onSuccess(t: File) {
-                    Log.d(TAG, "getLogFiles :: onSuccess")
-                    action.invoke(
+    fun getLogFileThenDo(action: (email: String, fileUri: Uri) -> Unit) {
+        getLogFilesThenSendEmail.execute(
+            object : DisposableSingleObserver<LogReport>() {
+                override fun onSuccess(t: LogReport) {
+                    Log.d(TAG, "getLogFilesThenSendEmail :: onSuccess")
+                    action(
+                        t.email,
                         FileProvider.getUriForFile(
                             application,
                             FILE_PROVIDER_AUTH,
-                            t
+                            t.file,
                         )
                     )
                 }

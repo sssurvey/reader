@@ -1,20 +1,19 @@
-Reader app is a 3rd party client application for The Old Reader. The Old Reader would be the provider of
- the news source. However, due to The Old Reader provides a Google Reader like RSS service, the user of The
- Old Reader is the sole decider of which news they see. Users decide which RSS source to subscribe to.
- Reader app does not promote or recommend any news. Reader app is not the publisher of any news, Reader
- app simply reroute the RSS sources user subscribed on The Old Reader website to their mobile devices.
+About Reader App:
+Reader App is a third-party client for The Old Reader, which serves as the provider
+ of news sources. Since The Old Reader offers an RSS service similar to Google Reader,
+ users have full control over the content they subscribe to. Reader App does not promote,
+ recommend, or curate any news—users decide which RSS feeds to follow. The app simply
+ fetches and displays the RSS content from the subscriptions users have set up on The
+ Old Reader website.
 
- Reader app is released by Haomin S. This page informs you of the policies regarding the collection, use
- and disclosure of Personal information we receive from users of the application.
+Developer & Purpose:
+Reader App is developed and released by Haomin S. as a personal hobby project.
+It is provided as a free application under the Google Play Store News category.
 
- Reader app currently do not collect, or use any user information. If you have any questions related to
- this you can visit the GitHub repository of the Reader app and create an issue under the issue page.
+Privacy & Data Collection:
+ [1] Reader App does not collect, store, or use any personal user data.
+ [2] No logs or analytics are sent to the developer unless the user explicitly chooses to send feedback via email.
+ [3] The app does not access or store The Old Reader account credentials beyond what is necessary for functionality. User credentials are stored locally on the device via Shared Preferences and are never transmitted elsewhere.
 
- Reader app also do not send any log data to the app developer unless you click the send feedback button
- and sent a email to the youngmobileachiever@gmail.com.
-
- Reader app do not collect or use the user name and user password of your www.theoldreader.com account, the
- Reader app simply save it at the shared preference (locally on your Android device, this is required
- for app to function).
-
- updated on 2021.07.19
+For any questions or concerns, please visit the GitHub repository and open an issue under the Issues page.
+ Updated on 2025.03.29

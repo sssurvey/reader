@@ -30,7 +30,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<SwitchPreferenceCompat>(DARK_MODE_OPTION)
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?
+    ) {
         setPreferencesFromResource(R.xml.fragment_settings, rootKey)
         configPreference()
         setOnclickListeners()
@@ -60,13 +63,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun showEmailApp() {
-        settingsViewModel.getLogFileThenDo {
+        settingsViewModel.getLogFileThenDo { email, fileUri ->
             val emailIntent = Intent(Intent.ACTION_SEND).apply {
                 type = INTENT_EMAIL_TYPE
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(settingsViewModel.getFeedbackEmail()))
-                putExtra(Intent.EXTRA_STREAM, it)
-                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_feed_back_greet_subject))
-                putExtra(Intent.EXTRA_TEXT, getString(R.string.email_feed_back_greet_body))
+                putExtra(Intent.EXTRA_EMAIL, email)
+                putExtra(Intent.EXTRA_STREAM, fileUri)
+                putExtra(
+                    Intent.EXTRA_SUBJECT,
+                    getString(R.string.email_feed_back_greet_subject)
+                )
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    getString(R.string.email_feed_back_greet_body)
+                )
             }
             startActivity(
                 Intent.createChooser(
@@ -78,7 +87,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun configPreference() {
-        darkModeSwitchPreferenceCompat?.isChecked = settingsViewModel.isDarkModeEnabled()
+        darkModeSwitchPreferenceCompat?.isChecked =
+            settingsViewModel.isDarkModeEnabled()
     }
 
     private fun setOnclickListeners() {
