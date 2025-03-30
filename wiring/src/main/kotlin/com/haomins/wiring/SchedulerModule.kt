@@ -1,4 +1,4 @@
-package com.haomins.data.di
+package com.haomins.wiring
 
 import com.haomins.domain.scheduler.ExecutionScheduler
 import com.haomins.domain.scheduler.PostExecutionScheduler

@@ -1,4 +1,4 @@
-package com.haomins.data.di
+package com.haomins.wiring
 
 import android.app.Application
 import android.content.Context
@@ -23,5 +23,4 @@ object PreferenceModule {
             Context.MODE_PRIVATE
         )
     }
-
 }

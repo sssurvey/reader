@@ -53,7 +53,11 @@ class LoadAndSaveSubscriptionList @Inject constructor(
                 firstItemMilSec = it.firstItemMilSec,
                 url = it.url,
                 htmlUrl = it.htmlUrl,
-                iconUrl = it.iconUrl
+                /*
+                 * For some reason this is missing from BE, we need to manually
+                 *  append it here.
+                 */
+                iconUrl = DEFAULT_HTTPS_PROTOCOL + it.iconUrl
             )
         }
     }
@@ -62,5 +66,9 @@ class LoadAndSaveSubscriptionList @Inject constructor(
     fun convertSubscriptionItemModelToEntityForTesting(subscriptions: ArrayList<SubscriptionItemModel>)
             : List<SubscriptionEntity> {
         return subscriptions.convertSubscriptionItemModelToEntity()
+    }
+
+    companion object {
+        private const val DEFAULT_HTTPS_PROTOCOL = "https:"
     }
 }

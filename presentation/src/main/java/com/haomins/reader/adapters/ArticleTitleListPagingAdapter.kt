@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.haomins.data.util.DateUtils
+import com.haomins.domain.common.DateUtils
 import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.databinding.ArticleTitleRecyclerViewItemBinding
 

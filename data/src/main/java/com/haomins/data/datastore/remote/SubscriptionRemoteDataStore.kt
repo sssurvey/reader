@@ -1,7 +1,7 @@
 package com.haomins.data.datastore.remote
 
-import android.content.SharedPreferences
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.domain.common.SharedPrefUtils
 import com.haomins.domain.repositories.remote.SubscriptionRemoteRepository
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.subscription.SubscriptionItemModel
@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class SubscriptionRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPrefUtils: SharedPrefUtils,
 ) : SubscriptionRemoteRepository {
 
     override fun loadSubscriptionList(): Single<List<SubscriptionItemModel>> {
@@ -21,7 +21,7 @@ class SubscriptionRemoteDataStore @Inject constructor(
 
     private fun loadHeaderAuthValue(): String {
         return (TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                + sharedPreferences.getString(SharedPreferenceKey.AUTH_CODE_KEY.string, ""))
+                + sharedPrefUtils.getString(SharedPreferenceKey.AUTH_CODE_KEY))
     }
 
 }

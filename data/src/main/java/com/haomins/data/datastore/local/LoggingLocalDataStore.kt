@@ -2,7 +2,7 @@ package com.haomins.data.datastore.local
 
 import android.util.Log
 import com.haomins.data.service.AndroidService
-import com.haomins.data.util.DateUtils
+import com.haomins.domain.common.DateUtils
 import com.haomins.domain.repositories.local.LoggingLocalRepository
 import java.io.BufferedReader
 import java.io.File

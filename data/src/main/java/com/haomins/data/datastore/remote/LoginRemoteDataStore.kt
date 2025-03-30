@@ -1,9 +1,7 @@
 package com.haomins.data.datastore.remote
 
-import android.content.SharedPreferences
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.data.util.putValue
-import com.haomins.data.util.removeValue
+import com.haomins.domain.common.SharedPrefUtils
 import com.haomins.domain.repositories.remote.LoginRemoteRepository
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.user.UserAuthResponseModel
@@ -12,17 +10,17 @@ import javax.inject.Inject
 
 class LoginRemoteDataStore @Inject constructor(
     private val theOldReaderService: TheOldReaderService,
-    private val sharedPreferences: SharedPreferences,
+    private val sharedPrefUtils: SharedPrefUtils,
 ) : LoginRemoteRepository {
 
     override fun login(userName: String, userPassword: String): Single<UserAuthResponseModel> {
         return theOldReaderService
             .loginUser(userName, userPassword)
             .doOnError {
-                sharedPreferences.removeValue(SharedPreferenceKey.AUTH_CODE_KEY)
+                sharedPrefUtils.removeValue(SharedPreferenceKey.AUTH_CODE_KEY)
             }
             .map {
-                sharedPreferences.putValue(SharedPreferenceKey.AUTH_CODE_KEY, it.auth)
+                sharedPrefUtils.putValue(SharedPreferenceKey.AUTH_CODE_KEY, it.auth)
                 it
             }
     }

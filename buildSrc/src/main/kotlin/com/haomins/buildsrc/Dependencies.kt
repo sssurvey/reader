@@ -68,22 +68,14 @@ object Dependencies {
     @JvmField
     val dataDependencies = listOf(
         "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$KOTLIN_VERSION",
-        "com.google.code.gson:gson:2.8.5",
         "com.squareup.retrofit2:retrofit:$RETROFIT_2_VERSION",
-        "com.squareup.retrofit2:converter-gson:$RETROFIT_2_VERSION",
-        "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_2_VERSION",
         "io.reactivex.rxjava2:rxjava:$RXJAVA_VERSION",
-        "io.reactivex.rxjava2:rxandroid:2.1.1",
-        "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0",
-        "com.squareup.okhttp3:logging-interceptor:3.8.0",
         "androidx.room:room-runtime:$ROOM_VERSION",
         "androidx.room:room-rxjava2:$ROOM_VERSION",
         "com.google.dagger:hilt-android:$HILT_VERSION",
         "androidx.paging:paging-runtime:$PAGING_VERSION",
         "androidx.paging:paging-rxjava2:$PAGING_VERSION",
         "androidx.room:room-paging:$ROOM_VERSION",
-        // added for dependency resolution
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:$ANDROIDX_LIFECYCLE_VERSION",
     )
 
     @JvmField
@@ -93,7 +85,7 @@ object Dependencies {
     )
 
     @JvmField
-    val dataModelDependencies = listOf(
+    val modelDependencies = listOf(
         "com.google.code.gson:gson:2.8.5",
         "androidx.room:room-common:$ROOM_VERSION",
         "javax.inject:javax.inject:1",
@@ -131,6 +123,7 @@ object Dependencies {
     val dataTestImplementation = listOf(
         "junit:junit:$JUNIT_VERSION",
         "org.mockito.kotlin:mockito-kotlin:$MOCKITO_KOTLIN_2_VERSION",
+        "org.mockito.kotlin:mockito-kotlin:$MOCKITO_KOTLIN_2_VERSION",
         "org.mockito:mockito-inline:$MOCKITO_INLINE_VERSION"
     )
 
@@ -147,6 +140,23 @@ object Dependencies {
         "junit:junit:$JUNIT_VERSION",
         "org.mockito.kotlin:mockito-kotlin:$MOCKITO_KOTLIN_2_VERSION",
         "org.mockito:mockito-inline:$MOCKITO_INLINE_VERSION"
+    )
+
+    val wiringDependencies = listOf(
+        "com.google.code.gson:gson:2.8.5",
+        "com.squareup.retrofit2:retrofit:$RETROFIT_2_VERSION",
+        "com.squareup.retrofit2:converter-gson:$RETROFIT_2_VERSION",
+        "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_2_VERSION",
+        "io.reactivex.rxjava2:rxjava:$RXJAVA_VERSION",
+        "io.reactivex.rxjava2:rxandroid:2.1.1",
+        "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0",
+        "com.squareup.okhttp3:logging-interceptor:3.8.0",
+        "androidx.room:room-runtime:$ROOM_VERSION",
+        "com.google.dagger:hilt-android:$HILT_VERSION",
+    )
+
+    val wiringKaptDependencies = listOf(
+        "com.google.dagger:hilt-compiler:$HILT_VERSION"
     )
 
 }

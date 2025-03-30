@@ -6,7 +6,6 @@ import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.data.service.TheOldReaderService
 import com.haomins.domain.usecase.subscription.LoadAndSaveSubscriptionList
 import com.haomins.model.entity.SubscriptionEntity
 import com.haomins.reader.R
@@ -106,7 +105,7 @@ class SubscriptionListViewModel @Inject constructor(
                 add(
                     SubscriptionListUi(
                         name = it.title,
-                        sourceIconUrl = TheOldReaderService.DEFAULT_PROTOCOL + it.iconUrl,
+                        sourceIconUrl = it.iconUrl,
                         id = it.id,
                         type = TYPE.RSS_SOURCE,
                     )
