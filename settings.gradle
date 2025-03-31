@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-include ':presentation', ':data', ':domain', ':ui', ':demo', ':model'
+include ':presentation', ':data', ':domain', ':ui', ':demo', ':model', ':wiring'
 rootProject.name='Reader'

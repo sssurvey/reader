@@ -1,7 +1,7 @@
 package com.haomins.data.datastore.remote
 
-import android.content.SharedPreferences
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.domain.common.SharedPrefUtils
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
@@ -18,7 +18,7 @@ import org.mockito.kotlin.verify
 class AddSourceRemoteDataStoreTest {
 
     @Mock
-    lateinit var mockSharedPreferences: SharedPreferences
+    lateinit var mockSharedPrefUtils: SharedPrefUtils
 
     @Mock
     lateinit var mockTheOldReaderService: TheOldReaderService
@@ -30,7 +30,7 @@ class AddSourceRemoteDataStoreTest {
         MockitoAnnotations.initMocks(this)
         addSourceRemoteDataStore = AddSourceRemoteDataStore(
             mockTheOldReaderService,
-            mockSharedPreferences
+            mockSharedPrefUtils,
         )
     }
 
@@ -50,10 +50,7 @@ class AddSourceRemoteDataStoreTest {
         )
 
         `when`(
-            mockSharedPreferences.getString(
-                SharedPreferenceKey.AUTH_CODE_KEY.string,
-                ""
-            )
+            mockSharedPrefUtils.getString(SharedPreferenceKey.AUTH_CODE_KEY)
         ).thenReturn(testAuthKey)
 
         `when`(
@@ -71,10 +68,8 @@ class AddSourceRemoteDataStoreTest {
 
         testObserver.assertSubscribed()
 
-        verify(mockSharedPreferences, times(1)).getString(
-            SharedPreferenceKey.AUTH_CODE_KEY.string,
-            ""
-        )
+        verify(mockSharedPrefUtils, times(1))
+            .getString(SharedPreferenceKey.AUTH_CODE_KEY)
 
         verify(mockTheOldReaderService, times(1)).addSubscription(
             headerAuthValue = TheOldReaderService.AUTH_HEADER_VALUE_PREFIX + testAuthKey,

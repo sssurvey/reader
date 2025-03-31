@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haomins.data.util.DateUtils
+import com.haomins.domain.common.DateUtils
 import com.haomins.domain.usecase.articledetails.LoadArticleData
 import com.haomins.model.entity.ArticleEntity
 import com.haomins.reader.utils.ui.DarkModeManager

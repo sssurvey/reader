@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.haomins.data.util.DateUtils
+import com.haomins.domain.common.DateUtils
 import com.haomins.reader.adapters.ArticleTitleListPagingAdapter
 import com.haomins.reader.databinding.FragmentArticleListBinding
 import com.haomins.reader.utils.image.ImageLoaderUtils

@@ -1,7 +1,7 @@
 package com.haomins.data.datastore.remote
 
-import android.content.SharedPreferences
 import com.haomins.data.MockTheOldReaderService
+import com.haomins.domain.common.SharedPrefUtils
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.article.ArticleResponseModel
 import io.reactivex.observers.TestObserver
@@ -25,14 +25,14 @@ class ArticleListRemoteDataStoreTest {
     val mockTheOldReaderService = MockTheOldReaderService()
 
     @Mock
-    lateinit var mockSharedPreferences: SharedPreferences
+    lateinit var mockSharedPrefUtils: SharedPrefUtils
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         articleListRemoteDataStore = ArticleListRemoteDataStore(
-            mockTheOldReaderService,
-            mockSharedPreferences,
+            theOldReaderService = mockTheOldReaderService,
+            sharedPrefUtils = mockSharedPrefUtils,
         )
         mockHelper()
     }
@@ -43,7 +43,8 @@ class ArticleListRemoteDataStoreTest {
 
     @Test
     fun `test loadAllArticleItemsFromRemote() should invoke correct classes`() {
-        val testObserver = TestObserver<Pair<String, List<ArticleResponseModel>>>()
+        val testObserver =
+            TestObserver<Pair<String, List<ArticleResponseModel>>>()
         articleListRemoteDataStore.loadAllArticleItemsFromRemote(
             ""
         ).subscribe(testObserver)
@@ -59,7 +60,8 @@ class ArticleListRemoteDataStoreTest {
 
     @Test
     fun `test loadAllArticleItemsFromRemoteWithFeed() should invoke correct classes`() {
-        val testObserver = TestObserver<Pair<String, List<ArticleResponseModel>>>()
+        val testObserver =
+            TestObserver<Pair<String, List<ArticleResponseModel>>>()
         articleListRemoteDataStore.loadAllArticleItemsFromRemoteWithFeed(
             "test_feed_id",
             ""
@@ -74,8 +76,8 @@ class ArticleListRemoteDataStoreTest {
 
     private fun mockHelper() {
         `when`(
-            mockSharedPreferences
-                .getString(SharedPreferenceKey.AUTH_CODE_KEY.string, "")
+            mockSharedPrefUtils
+                .getString(SharedPreferenceKey.AUTH_CODE_KEY)
         )
             .thenReturn("test_auth_code")
     }

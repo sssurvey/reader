@@ -9,6 +9,6 @@ java {
 }
 
 dependencies {
-    implementation com.haomins.buildsrc.Dependencies.dataModelDependencies
+    implementation com.haomins.buildsrc.Dependencies.modelDependencies
     testImplementation com.haomins.buildsrc.Dependencies.dataModelTestDependencies
 }

@@ -1,7 +1,7 @@
 package com.haomins.data.datastore.local
 
 import com.haomins.data.service.AndroidService
-import com.haomins.data.util.DateUtils
+import com.haomins.domain.common.DateUtils
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -45,8 +45,10 @@ class LoggingLocalDataStoreTest {
 
         fun mock() {
             `when`(mockDateUtils.getCurrentDate()).thenReturn("1984-1-1")
-            `when`(mockAndroidService.getInternalFileDir()).thenReturn(mockFileDir)
-            `when`(mockAndroidService.createFile(any(), any())).thenReturn(tempFile)
+            `when`(mockAndroidService.getInternalFileDir())
+                .thenReturn(mockFileDir)
+            `when`(mockAndroidService.createFile(any(), any()))
+                .thenReturn(tempFile)
             `when`(mockAndroidService.getProcessId()).thenReturn(mockPid)
             `when`(mockAndroidService.getSystemRuntime()).thenReturn(mockRuntime)
             `when`(mockRuntime.exec(any<String>())).thenReturn(mockProcess)
@@ -57,7 +59,8 @@ class LoggingLocalDataStoreTest {
 
         loggingLocalDataStore.getLogFile()
 
-        verify(mockRuntime, times(1)).exec(String.format("logcat -d -v threadtime *:*"))
+        verify(mockRuntime, times(1))
+            .exec(String.format("logcat -d -v threadtime *:*"))
         verify(mockRuntime, times(1)).exec("logcat -c")
     }
 }

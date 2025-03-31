@@ -1,18 +1,19 @@
 package com.haomins.reader.viewModels
 
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
-import com.haomins.data.util.getString
+import com.haomins.domain.common.SharedPrefUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val sharedPreferences: SharedPreferences,
+    private val sharedPrefUtils: SharedPrefUtils,
 ) : ViewModel() {
 
     fun hasAuthToken(): Boolean {
-        return sharedPreferences.getString(com.haomins.model.SharedPreferenceKey.AUTH_CODE_KEY).isNotEmpty()
+        return sharedPrefUtils
+            .getString(com.haomins.model.SharedPreferenceKey.AUTH_CODE_KEY)
+            .isNotEmpty()
     }
 
     companion object {
