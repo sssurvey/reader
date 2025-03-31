@@ -29,6 +29,12 @@ The application is written in 100% ```Kotlin``` and is utilizing the library:
 - Hilt: For dependency Injection
 - Room database: For offline reading
 
+# Setup
+
+You should run `./gradlew start` to config the project before developing.
+
+# More
+
 The Reader application will be made open source:
 
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)

@@ -1,3 +1,6 @@
+import com.haomins.buildsrc.tasks.SetupGitHooks
+import com.haomins.buildsrc.tasks.Start
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id("com.android.application") version com.haomins.buildsrc.Dependencies.ANDROID_PLUGIN_VERSION apply false
@@ -6,3 +9,6 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version com.haomins.buildsrc.Dependencies.KOTLIN_VERSION apply false
     id("com.google.dagger.hilt.android") version com.haomins.buildsrc.Dependencies.HILT_VERSION apply false
 }
+
+tasks.register<SetupGitHooks>("setupGitHooks")
+tasks.register<Start>("start")
