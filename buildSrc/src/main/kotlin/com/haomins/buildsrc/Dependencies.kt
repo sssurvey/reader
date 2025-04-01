@@ -8,7 +8,7 @@ object Dependencies {
 
     private const val ANDROIDX_LIFECYCLE_VERSION = "2.5.1"
     private const val ANDROID_ARCH_LIFECYCLE_VERSION = "1.1.1"
-    private const val RETROFIT_2_VERSION = "2.4.0"
+    private const val RETROFIT_2_VERSION = "2.11.0"
     private const val ROOM_VERSION = "2.5.1"
     private const val GLIDE_VERSION = "4.11.0"
     private const val RXJAVA_VERSION = "2.2.6"
@@ -22,6 +22,7 @@ object Dependencies {
     private const val ESPRESSO_VERSION = "3.4.0"
     private const val ANDROIDX_TEST_JUNIT_VERSION = "1.1.5"
     private const val PAGING_VERSION = "3.1.1"
+    private const val GSON_VERSION = "2.10.1"
 
     // TODO: [ISSUE-182] remove the JvmField once migrated to kts for all build scrips.
     @JvmField
@@ -86,7 +87,7 @@ object Dependencies {
 
     @JvmField
     val modelDependencies = listOf(
-        "com.google.code.gson:gson:2.8.5",
+        "com.google.code.gson:gson:$GSON_VERSION",
         "androidx.room:room-common:$ROOM_VERSION",
         "javax.inject:javax.inject:1",
     )
@@ -143,7 +144,7 @@ object Dependencies {
     )
 
     val wiringDependencies = listOf(
-        "com.google.code.gson:gson:2.8.5",
+        "com.google.code.gson:gson:$GSON_VERSION",
         "com.squareup.retrofit2:retrofit:$RETROFIT_2_VERSION",
         "com.squareup.retrofit2:converter-gson:$RETROFIT_2_VERSION",
         "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_2_VERSION",
