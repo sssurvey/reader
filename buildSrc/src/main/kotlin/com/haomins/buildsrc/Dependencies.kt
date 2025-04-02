@@ -2,8 +2,8 @@ package com.haomins.buildsrc
 
 object Dependencies {
 
-    const val KOTLIN_VERSION = "1.9.0"
-    const val HILT_VERSION = "2.50"
+    const val KOTLIN_VERSION = "2.1.20"
+    const val HILT_VERSION = "2.56.1"
     const val ANDROID_PLUGIN_VERSION = "8.9.1"
 
     private const val ANDROIDX_LIFECYCLE_VERSION = "2.5.1"
@@ -12,9 +12,8 @@ object Dependencies {
     private const val ROOM_VERSION = "2.5.1"
     private const val GLIDE_VERSION = "4.11.0"
     private const val RXJAVA_VERSION = "2.2.6"
-    private const val MOCKITO_KOTLIN_2_VERSION = "4.1.0"
+    private const val MOCKITO_KOTLIN_2_VERSION = "5.4.0"
     private const val JUNIT_VERSION = "4.12"
-    private const val MOCKITO_INLINE_VERSION = "5.2.0"
     private const val MATERIAL_VERSION = "1.1.0"
     private const val KTX_VERSION = "1.7.0"
     private const val APP_COMPAT_VERSION = "1.4.0"
@@ -109,7 +108,6 @@ object Dependencies {
     val domainTestImplementation = listOf(
         "junit:junit:$JUNIT_VERSION",
         "org.mockito.kotlin:mockito-kotlin:$MOCKITO_KOTLIN_2_VERSION",
-        "org.mockito:mockito-inline:$MOCKITO_INLINE_VERSION"
     )
 
     @JvmField
@@ -124,8 +122,6 @@ object Dependencies {
     val dataTestImplementation = listOf(
         "junit:junit:$JUNIT_VERSION",
         "org.mockito.kotlin:mockito-kotlin:$MOCKITO_KOTLIN_2_VERSION",
-        "org.mockito.kotlin:mockito-kotlin:$MOCKITO_KOTLIN_2_VERSION",
-        "org.mockito:mockito-inline:$MOCKITO_INLINE_VERSION"
     )
 
     @JvmField
@@ -140,7 +136,6 @@ object Dependencies {
     val dataModelTestDependencies = listOf(
         "junit:junit:$JUNIT_VERSION",
         "org.mockito.kotlin:mockito-kotlin:$MOCKITO_KOTLIN_2_VERSION",
-        "org.mockito:mockito-inline:$MOCKITO_INLINE_VERSION"
     )
 
     val wiringDependencies = listOf(
