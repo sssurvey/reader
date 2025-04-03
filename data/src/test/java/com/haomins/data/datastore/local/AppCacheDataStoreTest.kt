@@ -39,7 +39,6 @@ class AppCacheDataStoreTest {
         `when`(validFileDir.isDirectory).thenReturn(true)
         `when`(validFileDir.listFiles()).thenReturn(arrayOf(dummyFile, dummyFile))
         `when`(validFileItem.isDirectory).thenReturn(false)
-        `when`(validFileItem.listFiles()).thenReturn(arrayOf(dummyFile))
 
         val mockFileList = arrayListOf<File>().apply {
             (0..10).forEach {
@@ -73,6 +72,12 @@ class AppCacheDataStoreTest {
         )
         val testObserver = appCacheDataStore.getCurrentCacheSize().test()
         testObserver.assertComplete()
+        /*
+         * 44 MB - since we provided total:
+         * - 6 of 'validItemFile' each 4 MB
+         * - 5 of `dummyFile` each 2 MB
+         * Therefore: 6 * 4 + 5 * 2 = 44 MB
+         */
         assert(testObserver.values().first() == 44L)
     }
 
