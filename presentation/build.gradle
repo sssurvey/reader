@@ -18,8 +18,8 @@ android {
         applicationId "com.haomins.reader3"
         minSdkVersion com.haomins.buildsrc.Configs.MIN_SDK_VERSION
         targetSdkVersion com.haomins.buildsrc.Configs.TARGET_SDK_VERSION
-        versionCode 17
-        versionName "0.4.6"
+        versionCode 18
+        versionName "0.4.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
