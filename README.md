@@ -10,10 +10,10 @@ The reader application is a client application for the website <https://theoldre
 <table align="center">
 	<tr>
 		<th style="padding: 5px 20px 5px 5px;">
-    		<img src="https://github.com/sssurvey/reader/blob/documentation-better-read-me/readmeRes/sources_list.png?raw=true" alt="source list screenshot with half dark mode" height="400px" style="margin:0px 50px"/>
+    		<img src="https://github.com/sssurvey/reader/blob/documentation-better-read-me/readmeRes/sources_list.png?raw=true" alt="source list screenshot with light mode" height="400px" style="margin:0px 50px"/>
 		</th>
 		<th style="padding: 5px 20px 5px 5px;">
-    		<img src="https://github.com/sssurvey/reader/blob/documentation-better-read-me/readmeRes/add_articles.png?raw=true" alt="add source screenshot with half dark mode" height="400px" style="margin:0px 50px"/>
+    		<img src="https://github.com/sssurvey/reader/blob/documentation-better-read-me/readmeRes/article_list.png?raw=true" alt="article list screenshot with light mode" height="400px" style="margin:0px 50px"/>
 		</th>
 		<th style="padding: 5px 20px 5px 5px;">
     		<img src="https://github.com/sssurvey/reader/blob/develop/readmeRes/article_details.png?raw=true" alt="read article details webview" height="400px" style="margin:0px 50px"/>
