@@ -15,11 +15,11 @@ android {
     compileSdk com.haomins.buildsrc.Configs.TARGET_SDK_VERSION
 
     defaultConfig {
-        applicationId "com.haomins.reader2"
+        applicationId "com.haomins.reader3"
         minSdkVersion com.haomins.buildsrc.Configs.MIN_SDK_VERSION
         targetSdkVersion com.haomins.buildsrc.Configs.TARGET_SDK_VERSION
-        versionCode 16
-        versionName "0.4.5"
+        versionCode 17
+        versionName "0.4.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

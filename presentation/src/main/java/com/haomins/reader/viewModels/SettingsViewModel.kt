@@ -21,7 +21,7 @@ class SettingsViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "SettingsViewModel"
-        private const val FILE_PROVIDER_AUTH = "com.haomins.fileprovider"
+        private const val FILE_PROVIDER_AUTH = "com.haomins.reader3.fileprovider"
     }
 
     fun enableDarkMode() {

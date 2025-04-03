@@ -44,7 +44,7 @@
         <!-- Providers -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.haomins.fileprovider"
+            android:authorities="com.haomins.reader3.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
