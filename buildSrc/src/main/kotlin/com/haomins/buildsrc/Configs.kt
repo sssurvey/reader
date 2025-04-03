@@ -8,5 +8,5 @@ object Configs {
 
     // TODO: [ISSUE-182] remove the JvmField once migrated to kts for all build scrips.
     @JvmField
-    val JAVA_VERSION = JavaVersion.VERSION_17
+    val JAVA_VERSION = JavaVersion.VERSION_21
 }
