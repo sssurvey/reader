@@ -16,7 +16,7 @@ The reader application is a client application for the website <https://theoldre
     		<img src="https://github.com/sssurvey/reader/blob/master/readmeRes/article_list.png?raw=true" alt="article list screenshot with light mode" height="400px" style="margin:0px 50px"/>
 		</th>
 		<th style="padding: 5px 20px 5px 5px;">
-    		<img src="https://github.com/sssurvey/reader/blob/master/readmeRes/?raw=true" alt="read article details webview" height="400px" style="margin:0px 50px"/>
+    		<img src="https://github.com/sssurvey/reader/blob/master/readmeRes/article_details.png?raw=true" alt="read article details webview" height="400px" style="margin:0px 50px"/>
 		</th>
 	</tr>
 </table>
