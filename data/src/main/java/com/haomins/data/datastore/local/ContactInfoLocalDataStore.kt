@@ -6,7 +6,7 @@ import javax.inject.Inject
 class ContactInfoLocalDataStore @Inject constructor() : ContactInfoLocalRepository {
 
     companion object {
-        private const val FEEDBACK_EMAIL = "youngmobileachiever@gmail.com"
+        private const val FEEDBACK_EMAIL = "youngmobileachievers@gmail.com"
         private const val THE_OLD_READ_WEBSITE = "www.theoldreader.com"
     }
 

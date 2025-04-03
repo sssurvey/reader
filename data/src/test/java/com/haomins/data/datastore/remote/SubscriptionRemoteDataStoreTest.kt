@@ -1,7 +1,7 @@
 package com.haomins.data.datastore.remote
 
-import android.content.SharedPreferences
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.domain.common.SharedPrefUtils
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.subscription.SubscriptionItemModel
 import io.reactivex.Single
@@ -12,7 +12,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import java.util.*
+import java.util.Calendar
 
 class SubscriptionRemoteDataStoreTest {
 
@@ -20,7 +20,7 @@ class SubscriptionRemoteDataStoreTest {
     lateinit var mockTheOldReaderService: TheOldReaderService
 
     @Mock
-    lateinit var mockSharedPreference: SharedPreferences
+    lateinit var mockSharedPrefUtils: SharedPrefUtils
 
     private lateinit var subscriptionRemoteDataStore: SubscriptionRemoteDataStore
 
@@ -29,7 +29,7 @@ class SubscriptionRemoteDataStoreTest {
         MockitoAnnotations.initMocks(this)
         subscriptionRemoteDataStore = SubscriptionRemoteDataStore(
             theOldReaderService = mockTheOldReaderService,
-            sharedPreferences = mockSharedPreference
+            sharedPrefUtils = mockSharedPrefUtils
         )
     }
 
@@ -42,16 +42,14 @@ class SubscriptionRemoteDataStoreTest {
 
         fun mockHelper() {
 
-            `when`(mockSharedPreference.getString(SharedPreferenceKey.AUTH_CODE_KEY.string, ""))
+            `when`(mockSharedPrefUtils.getString(SharedPreferenceKey.AUTH_CODE_KEY))
                 .thenReturn("test_key")
 
             `when`(
                 mockTheOldReaderService.loadSubscriptionSourceList(
                     headerAuthValue = TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                            + mockSharedPreference.getString(
-                        SharedPreferenceKey.AUTH_CODE_KEY.string,
-                        ""
-                    )
+                            + mockSharedPrefUtils
+                        .getString(SharedPreferenceKey.AUTH_CODE_KEY)
                 )
             ).thenReturn(
                 Single.fromCallable(::generateSourceListResponse)
@@ -79,16 +77,17 @@ class SubscriptionRemoteDataStoreTest {
 
         fun mockHelper() {
 
-            `when`(mockSharedPreference.getString(SharedPreferenceKey.AUTH_CODE_KEY.string, ""))
+            `when`(
+                mockSharedPrefUtils
+                    .getString(SharedPreferenceKey.AUTH_CODE_KEY)
+            )
                 .thenReturn("test_key")
 
             `when`(
                 mockTheOldReaderService.loadSubscriptionSourceList(
                     headerAuthValue = TheOldReaderService.AUTH_HEADER_VALUE_PREFIX
-                            + mockSharedPreference.getString(
-                        SharedPreferenceKey.AUTH_CODE_KEY.string,
-                        ""
-                    )
+                            + mockSharedPrefUtils
+                        .getString(SharedPreferenceKey.AUTH_CODE_KEY)
                 )
             ).thenReturn(
                 Single.error(testException)

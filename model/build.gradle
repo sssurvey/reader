@@ -4,11 +4,11 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility com.haomins.buildsrc.Configs.JAVA_VERSION
+    targetCompatibility com.haomins.buildsrc.Configs.JAVA_VERSION
 }
 
 dependencies {
-    implementation dataModelDependencies
-    testImplementation dataModelTestDependencies
+    implementation com.haomins.buildsrc.Dependencies.modelDependencies
+    testImplementation com.haomins.buildsrc.Dependencies.dataModelTestDependencies
 }

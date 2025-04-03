@@ -1,7 +1,6 @@
-package com.haomins.data.di
+package com.haomins.wiring
 
 import android.content.Context
-import androidx.room.RoomDatabase
 import com.haomins.data.db.AppDatabase
 import com.haomins.data.db.dao.ArticleDao
 import com.haomins.data.db.dao.SubscriptionDao

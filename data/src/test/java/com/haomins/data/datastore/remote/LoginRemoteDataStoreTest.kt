@@ -1,7 +1,7 @@
 package com.haomins.data.datastore.remote
 
-import android.content.SharedPreferences
 import com.haomins.data.service.TheOldReaderService
+import com.haomins.domain.common.SharedPrefUtils
 import com.haomins.model.SharedPreferenceKey
 import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
@@ -15,7 +15,6 @@ import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.any
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import java.util.concurrent.TimeUnit
@@ -26,10 +25,7 @@ class LoginRemoteDataStoreTest {
     lateinit var mockTheOldReaderService: TheOldReaderService
 
     @Mock
-    lateinit var mockSharedPreferences: SharedPreferences
-
-    @Mock
-    lateinit var mockSharedPreferencesEditor: SharedPreferences.Editor
+    lateinit var mockSharedPrefUtils: SharedPrefUtils
 
     private lateinit var loginRemoteDataStore: LoginRemoteDataStore
     private val testScheduler = TestScheduler()
@@ -40,7 +36,7 @@ class LoginRemoteDataStoreTest {
         MockitoAnnotations.initMocks(this)
         loginRemoteDataStore = LoginRemoteDataStore(
             theOldReaderService = mockTheOldReaderService,
-            sharedPreferences = mockSharedPreferences
+            sharedPrefUtils = mockSharedPrefUtils,
         )
     }
 
@@ -51,18 +47,7 @@ class LoginRemoteDataStoreTest {
     @Test
     fun `test start() login call success`() {
 
-        fun mockBehavior() {
-            `when`(mockSharedPreferences.edit()).thenReturn(mockSharedPreferencesEditor)
-            `when`(
-                mockSharedPreferencesEditor.putString(
-                    any(),
-                    any()
-                )
-            ).thenReturn(mockSharedPreferencesEditor)
-        }
-
         mockOldReaderServiceBehavior(throwException = false)
-        mockBehavior()
 
         val observer = TestObserver<UserAuthResponseModel>()
         loginRemoteDataStore
@@ -73,9 +58,9 @@ class LoginRemoteDataStoreTest {
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         observer.assertComplete()
         verify(
-            mockSharedPreferencesEditor,
+            mockSharedPrefUtils,
             times(1)
-        ).putString(SharedPreferenceKey.AUTH_CODE_KEY.string, "testAuth")
+        ).putValue(SharedPreferenceKey.AUTH_CODE_KEY, "testAuth")
         assertEquals(1, observer.valueCount())
         assertEquals("testAuth", observer.values().first().auth)
     }
@@ -83,17 +68,7 @@ class LoginRemoteDataStoreTest {
     @Test
     fun `test start() login call fail`() {
 
-        fun mockBehavior() {
-            `when`(mockSharedPreferences.edit()).thenReturn(mockSharedPreferencesEditor)
-            `when`(
-                mockSharedPreferencesEditor.remove(
-                    any()
-                )
-            ).thenReturn(mockSharedPreferencesEditor)
-        }
-
         mockOldReaderServiceBehavior(throwException = true)
-        mockBehavior()
 
         val observer = TestObserver<UserAuthResponseModel>()
         loginRemoteDataStore
@@ -104,9 +79,9 @@ class LoginRemoteDataStoreTest {
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         observer.assertError(testException)
         verify(
-            mockSharedPreferencesEditor,
+            mockSharedPrefUtils,
             times(1)
-        ).remove(SharedPreferenceKey.AUTH_CODE_KEY.string)
+        ).removeValue(SharedPreferenceKey.AUTH_CODE_KEY)
     }
 
     @Test
@@ -139,15 +114,16 @@ class LoginRemoteDataStoreTest {
         )
             .thenReturn(
                 if (!throwException) {
-                    Single.timer(100, TimeUnit.MILLISECONDS, testScheduler).flatMap {
-                        Single.just(
-                            UserAuthResponseModel(
-                                sid = "testSid",
-                                lsid = "testLsid",
-                                auth = "testAuth"
+                    Single.timer(100, TimeUnit.MILLISECONDS, testScheduler)
+                        .flatMap {
+                            Single.just(
+                                UserAuthResponseModel(
+                                    sid = "testSid",
+                                    lsid = "testLsid",
+                                    auth = "testAuth"
+                                )
                             )
-                        )
-                    }
+                        }
                 } else {
                     Single.error(testException)
                 }

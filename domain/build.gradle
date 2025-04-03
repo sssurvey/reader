@@ -4,12 +4,12 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility com.haomins.buildsrc.Configs.JAVA_VERSION
+    targetCompatibility com.haomins.buildsrc.Configs.JAVA_VERSION
 }
 
 dependencies {
-    implementation domainDependencies
-    api project(':model')
-    testImplementation domainTestImplementation
+    implementation com.haomins.buildsrc.Dependencies.domainDependencies
+    implementation project(':model')
+    testImplementation com.haomins.buildsrc.Dependencies.domainTestImplementation
 }

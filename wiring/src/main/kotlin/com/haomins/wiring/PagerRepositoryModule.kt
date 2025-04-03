@@ -1,4 +1,4 @@
-package com.haomins.data.di
+package com.haomins.wiring
 
 import com.haomins.data.datastore.paging.ArticleListPagerDataStore
 import com.haomins.domain.repositories.ArticleListPagerRepository

@@ -1,7 +1,7 @@
 package com.haomins.data.datastore.local
 
 import com.haomins.data.db.dao.ArticleDao
-import com.haomins.data.util.DateUtils
+import com.haomins.domain.common.DateUtils
 import com.haomins.model.entity.ArticleEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver

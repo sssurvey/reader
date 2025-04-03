@@ -5,39 +5,31 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk com.haomins.buildsrc.Configs.TARGET_SDK_VERSION
     defaultConfig {
-        minSdkVersion 26
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion com.haomins.buildsrc.Configs.MIN_SDK_VERSION
+        targetSdkVersion com.haomins.buildsrc.Configs.TARGET_SDK_VERSION
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility com.haomins.buildsrc.Configs.JAVA_VERSION
+        targetCompatibility com.haomins.buildsrc.Configs.JAVA_VERSION
+    }
+
+    kotlinOptions {
+        jvmTarget = com.haomins.buildsrc.Configs.JAVA_VERSION.toString()
     }
 
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.haomins.ui'
 }
 
 dependencies {
-    implementation uiDependencies
+    implementation com.haomins.buildsrc.Dependencies.uiDependencies
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
