@@ -16,7 +16,6 @@ class LoginRemoteDataStore @Inject constructor(
     override fun login(userName: String, userPassword: String): Single<UserAuthResponseModel> {
         return theOldReaderService
             .loginUser(userName, userPassword)
-            // TODO: [ISSUE-206] move these to Login.kt
             .doOnError {
                 sharedPrefUtils.removeValue(SharedPreferenceKey.AUTH_CODE_KEY)
             }
