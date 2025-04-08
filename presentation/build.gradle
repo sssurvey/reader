@@ -47,6 +47,8 @@ android {
 }
 
 dependencies {
+    debugImplementation com.haomins.buildsrc.Dependencies.appDebugDependencies
+
     implementation project(':ui')
     implementation project(':wiring')
     implementation project(':model')

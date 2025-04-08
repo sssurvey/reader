@@ -50,6 +50,11 @@ object Dependencies {
     )
 
     @JvmField
+    val appDebugDependencies = listOf(
+        "com.squareup.leakcanary:leakcanary-android:2.14"
+    )
+
+    @JvmField
     val appKaptDependencies = listOf(
         "android.arch.lifecycle:compiler:$ANDROID_ARCH_LIFECYCLE_VERSION",
         "com.github.bumptech.glide:compiler:$GLIDE_VERSION",
