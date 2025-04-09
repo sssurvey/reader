@@ -13,13 +13,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object PreferenceModule {
 
-    private const val SHARED_PREFERENCE_NAME = "READER_SHARED_PREF"
+    private const val SHARED_PREFERENCE_NAME = ".READER_SHARED_PREF"
 
     @Singleton
     @Provides
     fun provideSharedPreference(application: Application): SharedPreferences {
         return application.getSharedPreferences(
-            SHARED_PREFERENCE_NAME,
+            application.packageName + SHARED_PREFERENCE_NAME,
             Context.MODE_PRIVATE
         )
     }
