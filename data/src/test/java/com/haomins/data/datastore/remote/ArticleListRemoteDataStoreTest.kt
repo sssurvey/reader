@@ -1,8 +1,8 @@
 package com.haomins.data.datastore.remote
 
 import com.haomins.data.MockTheOldReaderService
-import com.haomins.domain.common.SharedPrefUtils
-import com.haomins.model.SharedPreferenceKey
+import com.haomins.domain.common.PrefUtils
+import com.haomins.model.PreferenceKey
 import com.haomins.model.remote.article.ArticleResponseModel
 import io.reactivex.observers.TestObserver
 import org.junit.After
@@ -11,11 +11,11 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.times
-import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.Spy
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.wheneverBlocking
 
 class ArticleListRemoteDataStoreTest {
 
@@ -25,14 +25,14 @@ class ArticleListRemoteDataStoreTest {
     val mockTheOldReaderService = MockTheOldReaderService()
 
     @Mock
-    lateinit var mockSharedPrefUtils: SharedPrefUtils
+    lateinit var mockPrefUtils: PrefUtils
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         articleListRemoteDataStore = ArticleListRemoteDataStore(
             theOldReaderService = mockTheOldReaderService,
-            sharedPrefUtils = mockSharedPrefUtils,
+            prefUtils = mockPrefUtils,
         )
         mockHelper()
     }
@@ -75,10 +75,9 @@ class ArticleListRemoteDataStoreTest {
     }
 
     private fun mockHelper() {
-        `when`(
-            mockSharedPrefUtils
-                .getString(SharedPreferenceKey.AUTH_CODE_KEY)
-        )
-            .thenReturn("test_auth_code")
+        wheneverBlocking {
+            mockPrefUtils
+                .getString(PreferenceKey.AUTH_CODE_KEY)
+        }.thenReturn("test_auth_code")
     }
 }

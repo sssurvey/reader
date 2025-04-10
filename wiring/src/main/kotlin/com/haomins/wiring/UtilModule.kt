@@ -1,9 +1,9 @@
 package com.haomins.wiring
 
+import com.haomins.data.util.DataStorePrefUtilsImpl
 import com.haomins.data.util.DateUtilsImpl
-import com.haomins.data.util.SharedPrefUtilsImpl
 import com.haomins.domain.common.DateUtils
-import com.haomins.domain.common.SharedPrefUtils
+import com.haomins.domain.common.PrefUtils
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,8 +16,8 @@ interface UtilModule {
 
     @Singleton
     @Binds
-    fun provideSharedPrefUtils(sharedPrefUtilsImpl: SharedPrefUtilsImpl)
-            : SharedPrefUtils
+    fun provideDefaultPrefDataStore(dataStorePrefUtilsImpl: DataStorePrefUtilsImpl)
+            : PrefUtils
 
 
     @Singleton

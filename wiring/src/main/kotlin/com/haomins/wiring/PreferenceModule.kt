@@ -1,8 +1,11 @@
 package com.haomins.wiring
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
+import com.haomins.domain.qualifiers.DefaultPrefDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,16 +16,20 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object PreferenceModule {
 
-    private const val SHARED_PREFERENCE_NAME = "READER_SHARED_PREF"
+    private const val DEFAULT_PREFERENCE_NAME = "READER_DEFAULT_PREF"
 
     @Singleton
     @Provides
-    fun provideSharedPreference(application: Application): SharedPreferences {
-        return application.getSharedPreferences(
-            "${application.packageName}" +
-                    "." +
-                    SHARED_PREFERENCE_NAME,
-            Context.MODE_PRIVATE
+    @DefaultPrefDataStore
+    fun provideDefaultPrefDataStore(application: Application): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.create(
+            produceFile = {
+                application.preferencesDataStoreFile(
+                    "${application.packageName}" +
+                            "." +
+                            DEFAULT_PREFERENCE_NAME
+                )
+            }
         )
     }
 }
