@@ -7,7 +7,7 @@ class SharedPreferenceKeyTest {
 
     @Test
     fun getString() {
-        assertTrue(SharedPreferenceKey.AUTH_CODE_KEY.string == "AUTH_CODE")
-        assertTrue(SharedPreferenceKey.IS_DARK_MODE_ENABLED.string == "IS_DARK_MODE_ENABLED")
+        assertTrue(PreferenceKey.AUTH_CODE_KEY.string == "AUTH_CODE")
+        assertTrue(PreferenceKey.IS_DARK_MODE_ENABLED.string == "IS_DARK_MODE_ENABLED")
     }
 }

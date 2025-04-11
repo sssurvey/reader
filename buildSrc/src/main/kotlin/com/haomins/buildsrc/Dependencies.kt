@@ -22,6 +22,8 @@ object Dependencies {
     private const val ANDROIDX_TEST_JUNIT_VERSION = "1.1.5"
     private const val PAGING_VERSION = "3.1.1"
     private const val GSON_VERSION = "2.10.1"
+    private const val DATA_STORE_PREF_CORE_VERSION = "1.1.4"
+    private const val KOTLIN_COROUTINE_VERSION = "1.10.2"
 
     // TODO: [ISSUE-182] remove the JvmField once migrated to kts for all build scrips.
     @JvmField
@@ -46,7 +48,8 @@ object Dependencies {
         "com.github.bumptech.glide:glide:$GLIDE_VERSION",
         "com.github.bumptech.glide:annotations:$GLIDE_VERSION",
         "com.google.dagger:hilt-android:$HILT_VERSION",
-        "androidx.paging:paging-runtime:$PAGING_VERSION"
+        "androidx.paging:paging-runtime:$PAGING_VERSION",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:$KOTLIN_COROUTINE_VERSION",
     )
 
     @JvmField
@@ -81,6 +84,8 @@ object Dependencies {
         "androidx.paging:paging-runtime:$PAGING_VERSION",
         "androidx.paging:paging-rxjava2:$PAGING_VERSION",
         "androidx.room:room-paging:$ROOM_VERSION",
+        "androidx.datastore:datastore-preferences:$DATA_STORE_PREF_CORE_VERSION",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:$KOTLIN_COROUTINE_VERSION",
     )
 
     @JvmField
@@ -154,6 +159,7 @@ object Dependencies {
         "com.squareup.okhttp3:logging-interceptor:3.8.0",
         "androidx.room:room-runtime:$ROOM_VERSION",
         "com.google.dagger:hilt-android:$HILT_VERSION",
+        "androidx.datastore:datastore-preferences:$DATA_STORE_PREF_CORE_VERSION",
     )
 
     val wiringKaptDependencies = listOf(

@@ -1,8 +1,8 @@
 package com.haomins.data.datastore.remote
 
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.common.SharedPrefUtils
-import com.haomins.model.SharedPreferenceKey
+import com.haomins.domain.common.PrefUtils
+import com.haomins.model.PreferenceKey
 import com.haomins.model.remote.subscription.AddSourceResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -14,11 +14,13 @@ import org.mockito.Mockito.times
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyBlocking
+import org.mockito.kotlin.wheneverBlocking
 
 class AddSourceRemoteDataStoreTest {
 
     @Mock
-    lateinit var mockSharedPrefUtils: SharedPrefUtils
+    lateinit var mockPrefUtils: PrefUtils
 
     @Mock
     lateinit var mockTheOldReaderService: TheOldReaderService
@@ -30,7 +32,7 @@ class AddSourceRemoteDataStoreTest {
         MockitoAnnotations.initMocks(this)
         addSourceRemoteDataStore = AddSourceRemoteDataStore(
             mockTheOldReaderService,
-            mockSharedPrefUtils,
+            mockPrefUtils,
         )
     }
 
@@ -49,9 +51,9 @@ class AddSourceRemoteDataStoreTest {
             )
         )
 
-        `when`(
-            mockSharedPrefUtils.getString(SharedPreferenceKey.AUTH_CODE_KEY)
-        ).thenReturn(testAuthKey)
+        wheneverBlocking {
+            mockPrefUtils.getString(PreferenceKey.AUTH_CODE_KEY)
+        }.thenReturn(testAuthKey)
 
         `when`(
             mockTheOldReaderService.addSubscription(
@@ -68,8 +70,9 @@ class AddSourceRemoteDataStoreTest {
 
         testObserver.assertSubscribed()
 
-        verify(mockSharedPrefUtils, times(1))
-            .getString(SharedPreferenceKey.AUTH_CODE_KEY)
+        verifyBlocking(mockPrefUtils) {
+            getString(PreferenceKey.AUTH_CODE_KEY)
+        }
 
         verify(mockTheOldReaderService, times(1)).addSubscription(
             headerAuthValue = TheOldReaderService.AUTH_HEADER_VALUE_PREFIX + testAuthKey,

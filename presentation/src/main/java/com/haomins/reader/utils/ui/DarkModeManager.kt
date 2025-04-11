@@ -1,21 +1,24 @@
 package com.haomins.reader.utils.ui
 
 import androidx.appcompat.app.AppCompatDelegate
-import com.haomins.domain.common.SharedPrefUtils
+import com.haomins.domain.common.PrefUtils
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class DarkModeManager @Inject constructor(
-    private val sharedPrefUtils: SharedPrefUtils,
+    private val prefUtils: PrefUtils,
 ) {
 
     fun initialize() {
         when {
             followSystemDarkMode() ->
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
             checkIsCurrentDarkModeEnabled() ->
                 enableDarkMode()
+
             else ->
                 disableDarkMode()
         }
@@ -31,18 +34,33 @@ class DarkModeManager @Inject constructor(
         saveDarkModeSettings(false)
     }
 
+    // TODO: [ISSUE-226] remove `runBlocking {}`
     fun checkIsCurrentDarkModeEnabled(): Boolean {
-        return sharedPrefUtils.getBoolean(com.haomins.model.SharedPreferenceKey.IS_DARK_MODE_ENABLED)
+        return runBlocking {
+            prefUtils.getBoolean(com.haomins.model.PreferenceKey.IS_DARK_MODE_ENABLED)
+        }
     }
 
+    // TODO: [ISSUE-226] remove `runBlocking {}`
     private fun followSystemDarkMode(): Boolean {
-        return !sharedPrefUtils.contains(com.haomins.model.SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS)
+        return runBlocking {
+            !prefUtils.containsBoolean(com.haomins.model.PreferenceKey.OVERRIDE_DARK_MODE_SETTINGS)
+        }
     }
 
+    // TODO: [ISSUE-226] remove `runBlocking {}`
     private fun saveDarkModeSettings(isEnabled: Boolean) {
-        with(sharedPrefUtils) {
-            putValue(com.haomins.model.SharedPreferenceKey.OVERRIDE_DARK_MODE_SETTINGS, true)
-            putValue(com.haomins.model.SharedPreferenceKey.IS_DARK_MODE_ENABLED, isEnabled)
+        with(prefUtils) {
+            runBlocking {
+                putValue(
+                    com.haomins.model.PreferenceKey.OVERRIDE_DARK_MODE_SETTINGS,
+                    true
+                )
+                putValue(
+                    com.haomins.model.PreferenceKey.IS_DARK_MODE_ENABLED,
+                    isEnabled
+                )
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.haomins.data.datastore.remote
 
 import com.haomins.data.service.TheOldReaderService
-import com.haomins.domain.common.SharedPrefUtils
-import com.haomins.model.SharedPreferenceKey
+import com.haomins.domain.common.PrefUtils
+import com.haomins.model.PreferenceKey
 import com.haomins.model.remote.user.UserAuthResponseModel
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
@@ -15,8 +15,7 @@ import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyBlocking
 import java.util.concurrent.TimeUnit
 
 class LoginRemoteDataStoreTest {
@@ -25,7 +24,7 @@ class LoginRemoteDataStoreTest {
     lateinit var mockTheOldReaderService: TheOldReaderService
 
     @Mock
-    lateinit var mockSharedPrefUtils: SharedPrefUtils
+    lateinit var mockPrefUtils: PrefUtils
 
     private lateinit var loginRemoteDataStore: LoginRemoteDataStore
     private val testScheduler = TestScheduler()
@@ -36,7 +35,7 @@ class LoginRemoteDataStoreTest {
         MockitoAnnotations.initMocks(this)
         loginRemoteDataStore = LoginRemoteDataStore(
             theOldReaderService = mockTheOldReaderService,
-            sharedPrefUtils = mockSharedPrefUtils,
+            prefUtils = mockPrefUtils,
         )
     }
 
@@ -57,10 +56,9 @@ class LoginRemoteDataStoreTest {
         observer.assertSubscribed()
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         observer.assertComplete()
-        verify(
-            mockSharedPrefUtils,
-            times(1)
-        ).putValue(SharedPreferenceKey.AUTH_CODE_KEY, "testAuth")
+        verifyBlocking(mockPrefUtils) {
+            putValue(PreferenceKey.AUTH_CODE_KEY, "testAuth")
+        }
         assertEquals(1, observer.valueCount())
         assertEquals("testAuth", observer.values().first().auth)
     }
@@ -78,10 +76,9 @@ class LoginRemoteDataStoreTest {
         observer.assertSubscribed()
         testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
         observer.assertError(testException)
-        verify(
-            mockSharedPrefUtils,
-            times(1)
-        ).removeValue(SharedPreferenceKey.AUTH_CODE_KEY)
+        verifyBlocking(mockPrefUtils) {
+            removeStringValue(PreferenceKey.AUTH_CODE_KEY)
+        }
     }
 
     @Test
