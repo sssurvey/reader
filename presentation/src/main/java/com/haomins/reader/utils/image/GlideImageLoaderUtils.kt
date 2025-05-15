@@ -29,6 +29,10 @@ class ReaderGlideModule : AppGlideModule() {
             .setLogLevel(Log.ERROR)
             .setSourceExecutor(getCustomGlideExecutor())
     }
+
+    override fun isManifestParsingEnabled(): Boolean {
+        return false
+    }
 }
 
 class GlideImageLoaderUtils @Inject constructor(
