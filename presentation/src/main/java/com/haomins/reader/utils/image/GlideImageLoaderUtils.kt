@@ -10,7 +10,7 @@ import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.engine.executor.GlideExecutor
 import com.bumptech.glide.module.AppGlideModule
-import com.haomins.data.R
+import com.haomins.reader.R
 import java.net.URL
 import javax.inject.Inject
 
